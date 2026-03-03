@@ -4,11 +4,15 @@ const authRoutes = require("./routes/authRoutes");
 const CustmerRoutes = require("./routes/Custmerroutes");
 const packageRoutes = require("./routes/packagesRoutes");
 const busRoutes = require("./routes/busRoutes");
+const bookingRoutes = require("./routes/tourbookingRoutes");
+const staffRoutes = require("./routes/staffRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
+const cors = require("cors");
+const path = require("path");
 
-// Use Bus Route Routes (NEW: For Routes Management)
 const busRouteRoutes = require("./routes/busRouteRoutes");
 
-// Use Bus Booking Routes (NEW: For Booking Tickets)
+// Use Bus Booking Routes
 const busBookingRoutes = require("./routes/busBookingRoutes");
 
 const port = 4000;
@@ -19,8 +23,7 @@ app.use(express.json());
 ConnectMongoDB();
 
 //cors
-const cors = require("cors");
-const path = require("path");
+
 app.use(cors());
 
 // Serve static files (images) from the 'uploads' directory
@@ -41,19 +44,22 @@ app.use("/api/packages", packageRoutes);
 // Use Bus Routes
 app.use("/api/bus", busRoutes);
 
-// Use Bus Route Routes (NEW: For Routes Management)
+// Use Bus Route Routes
 app.use("/api/bus-routes", busRouteRoutes);
 
-// Use Bus Booking Routes (NEW: For Booking Tickets)
+// Use Bus Booking Routes (
 app.use("/api/bus-bookings", busBookingRoutes);
 
-const staffRoutes = require("./routes/staffRoutes");
 app.use("/api/staff", staffRoutes);
 
-const bookingRoutes = require("./routes/bookingRoutes");
 app.use("/api/bookings", bookingRoutes);
 
 app.use("/api/cust", CustmerRoutes);
+
+const hotelRoutes = require("./routes/hotelRoutes");
+app.use("/api/hotels", hotelRoutes);
+
+app.use("/api/payment", paymentRoutes);
 
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)

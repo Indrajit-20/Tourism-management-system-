@@ -31,7 +31,6 @@ const addPackage = async (req, res) => {
       package_name,
       package_type,
       destination,
-      city_id,
       price,
       duration,
       image_url,
@@ -52,12 +51,10 @@ const addPackage = async (req, res) => {
       return res.status(400).json({ message: "Package name already exists" });
     }
 
-    // use the model constructor exported from models/Package.js
     const newpackage = new Packages({
       package_name,
       package_type,
       destination,
-      city_id,
       price,
       duration,
       image_url,
@@ -69,34 +66,34 @@ const addPackage = async (req, res) => {
       exclusive,
       status,
     });
-
     const saved = await newpackage.save();
     res.status(201).json({
       message: "package added succesfully",
       package_details: saved,
     });
   } catch (err) {
-    res.status(500).json({ message: "Server Error" });
+    console.error('Add package error:', err);
+    // Send back the actual error message to help debugging (development only)
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 
-
 //update package
-const updatePackage = async(req,res) =>{
-  const {id} = req.params;
-  try{
-    const updatepkg= await Packages.findByIdAndUpdate(id,req.body,{new:true});
-    if(!updatepkg){
-      res.status(404).json({message:"Package not found"});
+const updatePackage = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const updatepkg = await Packages.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatepkg) {
+      res.status(404).json({ message: "Package not found" });
     }
 
-    res.status(200).json(updatepkg)
-
-  }catch(err){
+    res.status(200).json(updatepkg);
+  } catch (err) {
     res.status(500).json({ message: "Update Failed" }, err.message);
   }
-
-}
+};
 
 //delete package
 
@@ -109,4 +106,10 @@ const deletepackage = async (req, res) => {
   }
 };
 
-module.exports = { getPackage, packageById, addPackage ,deletepackage,updatePackage};
+module.exports = {
+  getPackage,
+  packageById,
+  addPackage,
+  deletepackage,
+  updatePackage,
+};

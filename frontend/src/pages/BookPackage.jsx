@@ -6,10 +6,10 @@ const BookPackage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [packageData, setPackageData] = useState(null);
-  
+
   // Start with 1 person
   const [passengers, setPassengers] = useState([
-    { name: "", age: "", gender: "" }
+    { name: "", age: "", gender: "Male" },
   ]);
 
   // 1. Fetch Package Data
@@ -24,7 +24,6 @@ const BookPackage = () => {
     };
     fetchPackage();
   }, [id]);
-
 
   const addPassenger = () => {
     setPassengers([...passengers, { name: "", age: "", gender: "Male" }]);
@@ -45,7 +44,7 @@ const BookPackage = () => {
     if (!token) return alert("Please login first!");
 
     try {
-      await axios.post(
+      const bookingRes = await axios.post(
         "http://localhost:4000/api/bookings/book",
         {
           package_id: id,
@@ -54,8 +53,29 @@ const BookPackage = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Booking Successful!");
-      navigate("/");
+
+      // --- BASIC RAZORPAY INTEGRATION ---
+      const totalAmountToPay = packageData.price * passengers.length;
+      const resOrder = await axios.post(
+        "http://localhost:4000/api/payment/create-order",
+        { amount: totalAmountToPay }
+      );
+
+      const options = {
+        key: "rzp_test_SMPUHkAalgy2kE",
+        amount: resOrder.data.amount,
+        currency: "INR",
+        name: "Package Booking",
+        order_id: resOrder.data.id,
+        handler: function () {
+          alert("Payment Successful!");
+          navigate("/");
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+      // ------------------------------------
     } catch (err) {
       alert("Booking Failed.");
     }
@@ -70,34 +90,39 @@ const BookPackage = () => {
 
       <div className="card p-4 shadow-sm mt-3">
         <form onSubmit={handleSubmit}>
-          
           {/* Loop through the list to show the boxes */}
           {passengers.map((person, index) => (
             <div key={index} className="border p-3 mb-3 bg-light rounded">
               <h5>Passenger {index + 1}</h5>
-              
+
               <input
                 type="text"
                 className="form-control mb-2"
                 placeholder="Full Name"
                 value={person.name}
-                onChange={(e) => handlePassengerChange(index, "name", e.target.value)}
+                onChange={(e) =>
+                  handlePassengerChange(index, "name", e.target.value)
+                }
                 required
               />
-              
+
               <input
                 type="number"
                 className="form-control mb-2"
                 placeholder="Age"
                 value={person.age}
-                onChange={(e) => handlePassengerChange(index, "age", e.target.value)}
+                onChange={(e) =>
+                  handlePassengerChange(index, "age", e.target.value)
+                }
                 required
               />
-              
+
               <select
                 className="form-select mb-2"
                 value={person.gender}
-                onChange={(e) => handlePassengerChange(index, "gender", e.target.value)}
+                onChange={(e) =>
+                  handlePassengerChange(index, "gender", e.target.value)
+                }
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -106,9 +131,9 @@ const BookPackage = () => {
           ))}
 
           {/* THE NEW EASY BUTTON */}
-          <button 
-            type="button" 
-            className="btn btn-secondary mb-3" 
+          <button
+            type="button"
+            className="btn btn-secondary mb-3"
             onClick={addPassenger}
           >
             + Add Another Person
@@ -117,7 +142,6 @@ const BookPackage = () => {
           <button type="submit" className="btn btn-primary w-100 py-2">
             Confirm & Book ({passengers.length} Travelers)
           </button>
-
         </form>
       </div>
     </div>

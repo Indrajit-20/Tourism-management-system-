@@ -1,7 +1,8 @@
 // Frontend Component for Bus Seat Selection
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 // Simple SVG or CSS Grid Layout for Bus
 // 30 Seeds: Two Columns - Aisle - Two Columns
@@ -110,8 +111,28 @@ const SeatSelection = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Booking Requested!");
-      navigate("/");
+      
+      const totalAmountToPay = selectedSeats.length * route.price_per_seat;
+      const resOrder = await axios.post(
+        "http://localhost:4000/api/payment/create-order",
+        { amount: totalAmountToPay }
+      );
+
+      const options = {
+        key: "rzp_test_SMPUHkAalgy2kE",
+        amount: resOrder.data.amount,
+        currency: "INR",
+        name: "Bus Booking",
+        order_id: resOrder.data.id,
+        handler: function () {
+          alert("Payment Successful!");
+          navigate("/");
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+      
     } catch (err) {
       alert(err.response?.data?.message || "Booking Failed");
     }

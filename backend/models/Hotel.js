@@ -6,11 +6,7 @@ const hotelSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    city_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "City",
-      required: true,
-    },
+      location: { type: String, required: true },
     hotel_type: {
       type: String,
     },

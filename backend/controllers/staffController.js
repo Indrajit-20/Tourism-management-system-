@@ -1,6 +1,6 @@
 const Staff = require("../models/Staff");
 
-// Get all staff (drivers)
+// Get all staff 
 const getStaff = async (req, res) => {
   try {
     const staff = await Staff.find();
@@ -10,7 +10,7 @@ const getStaff = async (req, res) => {
   }
 };
 
-// Add new staff (driver)
+// Add new staff 
 const addStaff = async (req, res) => {
   try {
     const newStaff = new Staff(req.body);

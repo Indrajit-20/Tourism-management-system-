@@ -1,8 +1,7 @@
-// Frontend Component for Admin to View & Approve Bookings
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ManageBusBookings = () => {
+const ManagePackageBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState("All"); // <-- NEW
@@ -14,12 +13,9 @@ const ManageBusBookings = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(
-        "http://localhost:4000/api/bus-bookings/all",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await axios.get("http://localhost:4000/api/bookings/all", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setBookings(res.data);
       setLoading(false);
     } catch (err) {
@@ -31,7 +27,7 @@ const ManageBusBookings = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.put(
-        `http://localhost:4000/api/bus-bookings/status/${id}`,
+        `http://localhost:4000/api/bookings/update-status/${id}`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -48,7 +44,7 @@ const ManageBusBookings = () => {
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2>Bus Booking Requests</h2>
+        <h2>Package Booking Requests</h2>
         <select
           className="form-select w-auto"
           value={filterStatus}
@@ -60,14 +56,14 @@ const ManageBusBookings = () => {
           <option value="Rejected">Rejected</option>
         </select>
       </div>
+
       <table className="table table-hover">
         <thead className="table-dark">
           <tr>
             <th>User</th>
-            <th>Route</th>
-            <th>Date</th>
-            <th>Seats</th>
-            <th>Total</th>
+            <th>Package</th>
+            <th>Travellers</th>
+            <th>Total Amount</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -79,11 +75,8 @@ const ManageBusBookings = () => {
             )
             .map((b) => (
               <tr key={b._id}>
-                <td>{b.custmer_id?.name || "Unknown"}</td>
-                <td>
-                  {b.route_id?.boarding_from} &rarr; {b.route_id?.destination}
-                </td>
-                <td>{new Date(b.travel_date).toLocaleDateString()}</td>
+                <td>{b.Custmer_id?.name || "Unknown"}</td>
+                <td>{b.Package_id?.package_name || "Unknown Package"}</td>
                 <td>{b.travellers}</td>
                 <td>₹{b.total_amount}</td>
                 <td>
@@ -125,4 +118,4 @@ const ManageBusBookings = () => {
   );
 };
 
-export default ManageBusBookings;
+export default ManagePackageBookings;

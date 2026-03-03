@@ -12,6 +12,7 @@ import BookPackage from "./pages/BookPackage"; // Import BookPackage Page
 import BookBus from "./pages/BookBus"; // Import the new Booking Page
 import ManageRoutes from "./pages/ManageRoutes"; // Import the Admin Route Page
 import ManageBusBookings from "./pages/ManageBusBookings"; // Import Admin Bookings Page
+import ManagePackageBookings from "./pages/ManagePackageBookings"; // Import Package Bookings Page
 import SeatSelection from "./pages/SeatSelection"; // Import Seat Selection Page
 
 import Dashboard from "./components/Dashboard";
@@ -38,6 +39,11 @@ function App() {
             <Route path="manage-bus" element={<ManageBus />} />
             <Route path="manage-routes" element={<ManageRoutes />} />{" "}
             {/* Admin Route Page */}
+            <Route path="bookings" element={<ManageBusBookings />} />
+            <Route
+              path="package-bookings"
+              element={<ManagePackageBookings />}
+            />
             <Route path="manage-staff" element={<ManageStaff />} />
             {/* Add Bus Route */}
           </Route>

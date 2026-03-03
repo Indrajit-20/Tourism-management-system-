@@ -53,16 +53,42 @@ const packageBooking = async (req, res) => {
   }
 };
 
+const getAllPackageBookings = async (req, res) => {
+  try {
+    const bookings = await PackageBooking.find()
+      .populate("Package_id", "package_name price")
+      .populate("Custmer_id", "name email");
+    res.status(200).json(bookings);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching bookings", error: error.message });
+  }
+};
 
-const busticketBooking =async (req,res)=>{
-  
-    try{
+const updatePackageBookingStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body; // should be 'Confirmed', 'Rejected', etc.
 
+    const booking = await PackageBooking.findByIdAndUpdate(
+      id,
+      { booking_status: status },
+      { new: true }
+    );
 
-    }catch{
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
 
+    res.status(200).json({ message: `Booking ${status}`, booking });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating booking status", error: error.message });
+  }
+};
 
-    }
-}
-
-module.exports = { packageBooking };
+module.exports = {
+  packageBooking,
+  getAllPackageBookings,
+  updatePackageBookingStatus,
+};

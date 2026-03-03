@@ -5,7 +5,7 @@ const AdminDashboard = () => {
   return (
     <div className="container-fluid">
       <div className="row g-0 ">
-        <div className="col-3 col-md-2 bg-light min-vh-100 d-flex flex-column p-3 sticky">
+        <div className="col-3 col-md-2 bg-light min-vh-100 d-flex flex-column p-3 position-sticky top-0">
           <h5>Admin Menu</h5>
 
           <ul className="nav flex-column">
@@ -45,9 +45,14 @@ const AdminDashboard = () => {
               </Link>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item mb-2">
               <Link className="nav-link" to="bookings">
-                Manage Bookings
+                Manage Bus Bookings
+              </Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link className="nav-link" to="package-bookings">
+                Manage Tour Bookings
               </Link>
             </li>
           </ul>
@@ -64,7 +69,7 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        <div className="col-9 col-md-10 p-5 bg-white">
+        <div className="col-9 col-md-10 p-5 bg-white vh-100 overflow-auto">
           <Outlet />
         </div>
       </div>

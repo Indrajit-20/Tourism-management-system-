@@ -5,14 +5,6 @@ const packageSchema = new mongoose.Schema(
     package_name: { type: String, required: true },
     package_type: { type: String, required: true },
 
-
-    city_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "City",
-      required: true,
-    },
-
-
     hotel_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hotel",
@@ -24,7 +16,6 @@ const packageSchema = new mongoose.Schema(
     image_url: { type: String },
     description: { type: String },
 
-   
     bus_id: { type: mongoose.Schema.Types.ObjectId, ref: "Bus" },
 
     start_date: { type: Date },

@@ -3,6 +3,7 @@ import Register from "./pages/Register";
 import Hompage from "./pages/Hompage";
 import PackagesList from "./pages/PackagesList";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import PackageManagment from "./pages/PackageManagment";
 import AdminDashboard from "./pages/AdminDashboard";
 
@@ -40,6 +41,8 @@ function App() {
         {/* User Cancellations Page */}
         <Route path="/my-bookings" element={<MyBookings />} />{" "}
         {/* User My Bookings Page */}
+        <Route path="/profile" element={<Profile />} />{" "}
+        {/* User Profile Page */}
         {/* Protect Admin Routes */}
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin" element={<AdminDashboard />}>

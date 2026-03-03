@@ -46,11 +46,11 @@ const Header = () => {
           </button>
 
           <div className={navLinksClass}>
-            <Link to="/packages" className="me-3 nav-link main-nav-link">
-              Tour Packages
-            </Link>
-            <Link to="/book-bus" className="me-3 nav-link main-nav-link">
+            <Link to="/book-bus" className="me-3 nav-link">
               Bus Tickets
+            </Link>
+            <Link to="/packages" className="me-3 nav-link">
+              Tour Packages
             </Link>
 
             {!user.loggedIn ? (

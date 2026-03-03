@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Hompage from "./pages/Hompage";
+import PackagesList from "./pages/PackagesList";
 import Login from "./pages/Login";
 import PackageManagment from "./pages/PackageManagment";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -23,6 +24,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Hompage />} />
+        <Route path="/packages" element={<PackagesList />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/packages/:id" element={<BookPackage />} />

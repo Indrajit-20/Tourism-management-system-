@@ -66,7 +66,7 @@ const BookPackage = () => {
         amount: resOrder.data.amount,
         currency: "INR",
         name: "Package Booking",
-        order_id: resOrder.data.id,
+        order_id: resOrder.data.id, 
         handler: function () {
           alert("Payment Successful!");
           navigate("/");

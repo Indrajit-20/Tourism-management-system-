@@ -25,13 +25,19 @@ const Login = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/auth/login",
-        payload
+        payload,
       );
 
       if (response.status === 200) {
-        // Save token and role to localStorage
+        // Save token, role and name to localStorage
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
+        if (response.data.name) {
+          localStorage.setItem("username", response.data.name);
+        } else {
+          // fallback to email as name
+          localStorage.setItem("username", payload.email);
+        }
 
         alert("Login successful");
 

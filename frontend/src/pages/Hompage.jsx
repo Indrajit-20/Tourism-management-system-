@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import Navbar from "../components/Navbar";
 import axios from "axios";
 import Packagecard from "../components/Packagecard";
 
@@ -43,7 +42,6 @@ const Hompage = () => {
   return (
     <>
       <Header />
-      <Navbar />
 
       <main className="container my-5">
         {/* --- DYNAMIC BUS PREVIEW SECTION --- */}

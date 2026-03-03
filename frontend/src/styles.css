@@ -1,0 +1,374 @@
+/* ============ GLOBAL STYLES ============ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+html, body {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ============ HEADER STYLES ============ */
+
+.header-banner {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header-wrapper h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-wrapper p {
+  font-size: 1.2rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* ============ NAVBAR STYLES ============ */
+
+.navbar {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 0.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.nav-logo:hover {
+  color: #0056b3;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+/* ============ FOOTER STYLES ============ */
+
+.footer {
+  background: linear-gradient(to right, #0056b3, #343a40);
+  color: white;
+  padding: 40px 20px 20px;
+  margin-top: 50px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.footer-section h4 {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffc107;
+}
+
+.footer-section p {
+  margin: 8px 0;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: #ffc107;
+}
+
+.social-links a {
+  display: inline-block;
+  margin: 4px 0;
+  color: #ddd;
+}
+
+.social-links a:hover {
+  color: #ffc107;
+}
+
+.footer-bottom {
+  border-top: 1px solid #555;
+  padding-top: 20px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.footer-bottom {
+  border-top: 1px solid #555;
+  padding-top: 20px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* ============ UTILITY CLASSES ============ */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-5 {
+  margin-top: 3rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+  margin-bottom: 3rem;
+}
+
+.pt-5 {
+  padding-top: 3rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.center {
+  text-align: center;
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 768px) {
+  .header-banner {
+    padding: 40px 15px;
+  }
+
+  .header-wrapper h1 {
+    font-size: 1.8rem;
+  }
+
+  .header-wrapper p {
+    font-size: 1rem;
+  }
+
+  .nav-menu {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-banner {
+    padding: 40px 15px;
+  }
+
+  .header-wrapper h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-wrapper p {
+    font-size: 0.9rem;
+  }
+
+  .nav-menu {
+    gap: 0.5rem;
+  }
+}
+
+/* ============ HEADER NAV CUSTOMS ============ */
+.logo-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #007bff, #00bcd4);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #007bff;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* small spacing fixes */
+.navbar .nav-link {
+  padding: 0.5rem 0.7rem;
+}
+
+@media (max-width: 576px) {
+  .logo-circle { width: 34px; height: 34px }
+  .avatar { width: 32px; height: 32px }
+}
+
+/* new styles for the rewritten header */
+.site-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.site-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0d6efd;
+}
+
+.site-tag {
+  font-size: 0.75rem;
+  color: #6c757d;
+  line-height: 1;
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links.open { display: flex }
+
+@media (min-width: 992px) {
+  .nav-links { display: flex !important }
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  min-width: 180px;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 2000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  color: #212529;
+}
+
+.dropdown-item:hover { background: #f8f9fa }
+
+.dropdown-divider { height: 1px; background: #e9ecef; margin: 6px 0 }
+
+.user-area { position: relative }
+
+/* quick mobile tweaks */
+@media (max-width: 991px) {
+  .nav-links { position: absolute; top: 64px; right: 12px; background: white; padding: 12px; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.08) }
+}
+
+/* small visual polish */
+.navbar { padding: 0.55rem 0 }
+.site-logo { width: 48px; height: 48px; border-radius: 6px }
+.nav-link { color: #343a40; font-weight: 500 }
+.btn-primary { background-color: #0d6efd; border-color: #0d6efd }
+.btn-outline-primary { color: #0d6efd; border-color: #0d6efd }
+.avatar { font-size: 0.95rem }
+
+.navbar .container { gap: 12px }

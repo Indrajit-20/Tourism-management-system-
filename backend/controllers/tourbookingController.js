@@ -87,8 +87,26 @@ const updatePackageBookingStatus = async (req, res) => {
   }
 };
 
+// Get user's own bookings
+const getMyBookings = async (req, res) => {
+  try {
+    const customer_id = req.user.id;
+
+    const bookings = await PackageBooking.find({ Custmer_id: customer_id })
+      .populate("Package_id", "package_name price")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching bookings", error: error.message });
+  }
+};
+
 module.exports = {
   packageBooking,
   getAllPackageBookings,
   updatePackageBookingStatus,
+  getMyBookings,
 };

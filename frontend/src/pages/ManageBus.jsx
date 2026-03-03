@@ -32,7 +32,11 @@ const ManageBus = () => {
 
   const fetchStaff = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/staff");
+      const token = localStorage.getItem("token");
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const res = await axios.get("http://localhost:4000/api/staff", {
+        headers,
+      });
       setStaffList(res.data);
     } catch (error) {
       console.error("Error fetching staff", error);
@@ -48,8 +52,18 @@ const ManageBus = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:4000/api/bus/add", form);
+      const token = localStorage.getItem("token");
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      await axios.post("http://localhost:4000/api/bus/add", form, { headers });
       alert("Bus added successfully!");
+      setForm({
+        bus_number: "",
+        bus_name: "",
+        bus_type: "AC",
+        total_seats: 30,
+        driver_id: "",
+        status: "Active",
+      });
       fetchBuses(); // Refresh list
     } catch (error) {
       console.error("Error adding bus", error);
@@ -61,7 +75,11 @@ const ManageBus = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this bus?")) {
       try {
-        await axios.delete(`http://localhost:4000/api/bus/delete/${id}`);
+        const token = localStorage.getItem("token");
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
+        await axios.delete(`http://localhost:4000/api/bus/delete/${id}`, {
+          headers,
+        });
         fetchBuses();
       } catch (error) {
         console.error("Error deleting bus", error);
@@ -124,6 +142,7 @@ const ManageBus = () => {
               <select
                 name="driver_id"
                 className="form-control"
+                value={form.driver_id}
                 onChange={handleChange}
                 required
               >

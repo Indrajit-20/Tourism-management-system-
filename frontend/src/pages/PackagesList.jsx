@@ -6,6 +6,7 @@ import Packagecard from "../components/Packagecard";
 
 const PackagesList = () => {
   const [packages, setPackages] = useState([]);
+  const [ratings, setRatings] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,6 +14,20 @@ const PackagesList = () => {
       try {
         const res = await axios.get("http://localhost:4000/api/packages");
         setPackages(res.data);
+
+        // Fetch ratings for each package
+        const ratingsData = {};
+        for (const pkg of res.data) {
+          try {
+            const ratingRes = await axios.get(
+              `http://localhost:4000/api/feedback/rating/package/${pkg._id}`
+            );
+            ratingsData[pkg._id] = ratingRes.data;
+          } catch (err) {
+            ratingsData[pkg._id] = { average_rating: 0, total_reviews: 0 };
+          }
+        }
+        setRatings(ratingsData);
       } catch (err) {
         console.error("Error fetching packages", err);
       } finally {
@@ -21,6 +36,10 @@ const PackagesList = () => {
     };
     fetchPackages();
   }, []);
+
+  const renderStars = (stars) => {
+    return "⭐".repeat(Math.round(stars)) + "☆".repeat(5 - Math.round(stars));
+  };
 
   return (
     <>
@@ -33,6 +52,16 @@ const PackagesList = () => {
           <div className="row">
             {packages.map((pkg) => (
               <div className="col-md-4 mb-4" key={pkg._id}>
+                {/* Show rating above package card */}
+                <div className="mb-2 text-center">
+                  <div className="text-warning">
+                    {renderStars(ratings[pkg._id]?.average_rating || 0)}
+                  </div>
+                  <small className="text-muted">
+                    {ratings[pkg._id]?.average_rating || 0}/5 (
+                    {ratings[pkg._id]?.total_reviews || 0} reviews)
+                  </small>
+                </div>
                 <Packagecard
                   id={pkg._id}
                   image_url={pkg.image_url}

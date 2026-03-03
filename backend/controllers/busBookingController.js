@@ -17,7 +17,6 @@ const bookBusTicket = async (req, res) => {
     const route = await BusRoute.findById(route_id);
     if (!route) return res.status(404).json({ message: "Route not found" });
 
-    
     const existingBookings = await BusTicketBooking.find({
       route_id: route_id,
       travel_date: travel_date,
@@ -26,12 +25,9 @@ const bookBusTicket = async (req, res) => {
     });
 
     if (existingBookings.length > 0) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "Some seats are already booked. Please refresh and try again.",
-        });
+      return res.status(400).json({
+        message: "Some seats are already booked. Please refresh and try again.",
+      });
     }
 
     // 3. Calculate Price
@@ -52,12 +48,10 @@ const bookBusTicket = async (req, res) => {
 
     await newBooking.save();
 
-    res
-      .status(201)
-      .json({
-        message: "Bus Ticket Requested! Waiting for Admin Approval.",
-        booking: newBooking,
-      });
+    res.status(201).json({
+      message: "Bus Ticket Requested! Waiting for Admin Approval.",
+      booking: newBooking,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Booking failed", error: error.message });
@@ -117,9 +111,29 @@ const getBookedSeats = async (req, res) => {
   }
 };
 
+// 5. Get user's own bookings
+const getMyBookings = async (req, res) => {
+  try {
+    const customer_id = req.user.id;
+
+    const bookings = await BusTicketBooking.find({ custmer_id: customer_id })
+      .populate("custmer_id", "name email")
+      .populate({
+        path: "route_id",
+        populate: { path: "bus_id", select: "bus_name bus_number" },
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching bookings", error });
+  }
+};
+
 module.exports = {
   bookBusTicket,
   getAllBookings,
   updateBookingStatus,
   getBookedSeats,
+  getMyBookings,
 };

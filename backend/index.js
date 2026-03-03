@@ -7,6 +7,8 @@ const busRoutes = require("./routes/busRoutes");
 const bookingRoutes = require("./routes/tourbookingRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
+const cancellationRoutes = require("./routes/cancellationRoutes");
 const cors = require("cors");
 const path = require("path");
 
@@ -60,6 +62,10 @@ const hotelRoutes = require("./routes/hotelRoutes");
 app.use("/api/hotels", hotelRoutes);
 
 app.use("/api/payment", paymentRoutes);
+
+app.use("/api/feedback", feedbackRoutes);
+
+app.use("/api/cancellation", cancellationRoutes);
 
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)

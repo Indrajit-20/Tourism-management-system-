@@ -79,8 +79,8 @@ const Header = () => {
                     <Link to="/profile" className="dropdown-item">
                       Update profile
                     </Link>
-                    <Link to="/history" className="dropdown-item">
-                      History
+                    <Link to="/my-bookings" className="dropdown-item">
+                      My Bookings
                     </Link>
                     <Link to="/cancellations" className="dropdown-item">
                       Cancellations

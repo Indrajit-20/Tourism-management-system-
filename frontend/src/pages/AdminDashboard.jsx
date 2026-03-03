@@ -55,6 +55,16 @@ const AdminDashboard = () => {
                 Manage Tour Bookings
               </Link>
             </li>
+            <li className="nav-item mb-2">
+              <Link className="nav-link" to="feedback">
+                Manage Feedback
+              </Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link className="nav-link" to="cancellations">
+                Manage Cancellations
+              </Link>
+            </li>
           </ul>
 
           <button

@@ -15,6 +15,10 @@ import ManageRoutes from "./pages/ManageRoutes"; // Import the Admin Route Page
 import ManageBusBookings from "./pages/ManageBusBookings"; // Import Admin Bookings Page
 import ManagePackageBookings from "./pages/ManagePackageBookings"; // Import Package Bookings Page
 import SeatSelection from "./pages/SeatSelection"; // Import Seat Selection Page
+import ManageFeedback from "./pages/ManageFeedback"; // Import Feedback Page
+import ManageCancellations from "./pages/ManageCancellations"; // Import Cancellations Page
+import MyCancellations from "./pages/MyCancellations"; // Import My Cancellations Page
+import MyBookings from "./pages/MyBookings"; // Import My Bookings Page
 
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
@@ -32,6 +36,10 @@ function App() {
         {/* Public Booking Page */}
         <Route path="/book-seats" element={<SeatSelection />} />{" "}
         {/* Seat Selection Page */}
+        <Route path="/cancellations" element={<MyCancellations />} />{" "}
+        {/* User Cancellations Page */}
+        <Route path="/my-bookings" element={<MyBookings />} />{" "}
+        {/* User My Bookings Page */}
         {/* Protect Admin Routes */}
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin" element={<AdminDashboard />}>
@@ -47,6 +55,8 @@ function App() {
               element={<ManagePackageBookings />}
             />
             <Route path="manage-staff" element={<ManageStaff />} />
+            <Route path="feedback" element={<ManageFeedback />} />
+            <Route path="cancellations" element={<ManageCancellations />} />
             {/* Add Bus Route */}
           </Route>
         </Route>

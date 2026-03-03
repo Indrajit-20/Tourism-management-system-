@@ -8,7 +8,10 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
     setUser({ loggedIn: false, name: "" });
+    setDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -77,10 +80,10 @@ const Header = () => {
                 {dropdownOpen && (
                   <div className="user-dropdown shadow-sm">
                     <Link to="/profile" className="dropdown-item">
-                      Update profile
+                      Update Profile
                     </Link>
-                    <Link to="/history" className="dropdown-item">
-                      History
+                    <Link to="/booking" className="dropdown-item">
+                      Booking
                     </Link>
                     <Link to="/cancellations" className="dropdown-item">
                       Cancellations

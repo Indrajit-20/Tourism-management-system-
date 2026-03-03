@@ -89,11 +89,14 @@ const login = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // include name for frontend display
+    const displayName = user.name || user.first_name || user.email;
     return res.status(200).json({
       message: `Login successful as ${role}`,
       token: token,
       role: role,
       user_id: user._id,
+      name: displayName,
     });
   } catch (err) {
     res.status(500).json({ message: "Login Failed", error: err.message });

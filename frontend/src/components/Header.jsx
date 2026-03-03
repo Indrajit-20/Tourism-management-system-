@@ -1,13 +1,103 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-  return (
-    <>
-    <div className='center'>TSM HomPage</div>
-    
-    
-    </>
-  )
-}
+  const [user, setUser] = useState({ loggedIn: false, name: "" });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-export default Header
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    setUser({ loggedIn: false, name: "" });
+  };
+
+  useEffect(() => {
+    const name = localStorage.getItem("username");
+    if (name) setUser({ loggedIn: true, name });
+  }, []);
+
+  const navLinksClass = menuOpen ? "nav-links open" : "nav-links";
+
+  return (
+    <header>
+      <nav className="navbar bg-white shadow-sm">
+        <div className="container d-flex align-items-center justify-content-between">
+          <Link
+            to="/"
+            className="d-flex align-items-center text-decoration-none"
+          >
+            <img
+              src="/src/assets/logo.jpg"
+              alt="logo"
+              className="me-2 site-logo"
+              onError={(e) => (e.target.style.display = "none")}
+            />
+            <div>
+              <div className="site-name">FlyVedya Tourism</div>
+              <div className="site-tag">Travel made simple</div>
+            </div>
+          </Link>
+
+          <button
+            className="btn btn-light d-lg-none"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            ☰
+          </button>
+
+          <div className={navLinksClass}>
+            <Link to="/packages" className="me-3 nav-link main-nav-link">
+              Tour Packages
+            </Link>
+            <Link to="/book-bus" className="me-3 nav-link main-nav-link">
+              Bus Tickets
+            </Link>
+
+            {!user.loggedIn ? (
+              <div className="d-flex align-items-center">
+                <Link to="/login" className="btn btn-outline-primary me-2">
+                  Login
+                </Link>
+                <Link to="/register" className="btn btn-primary">
+                  Register
+                </Link>
+              </div>
+            ) : (
+              <div className="user-area">
+                <button
+                  className="btn btn-light d-flex align-items-center"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  <div className="avatar me-2">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="me-2">{user.name}</span>▾
+                </button>
+
+                {dropdownOpen && (
+                  <div className="user-dropdown shadow-sm">
+                    <Link to="/profile" className="dropdown-item">
+                      Update profile
+                    </Link>
+                    <Link to="/history" className="dropdown-item">
+                      History
+                    </Link>
+                    <Link to="/cancellations" className="dropdown-item">
+                      Cancellations
+                    </Link>
+                    <div className="dropdown-divider" />
+                    <button className="dropdown-item" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+};
+
+export default Header;

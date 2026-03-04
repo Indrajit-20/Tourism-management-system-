@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Packagecard from "../components/Packagecard";
 
 const PackagesList = () => {
@@ -41,33 +39,31 @@ const PackagesList = () => {
     return "⭐".repeat(Math.round(stars)) + "☆".repeat(5 - Math.round(stars));
   };
 
+  if (loading) {
+    return <div>Loading packages...</div>;
+  }
+
   return (
     <>
-      <Header />
-      <div className="container my-5">
-        <h2 className="text-center mb-4">Our Tour Packages</h2>
-        {loading ? (
-          <div className="text-center">Loading...</div>
-        ) : (
-          <div className="row">
-            {packages.map((pkg) => (
-              <div className="col-md-4 mb-4" key={pkg._id}>
-                <Packagecard
-                  id={pkg._id}
-                  image_url={pkg.image_url}
-                  package_name={pkg.package_name}
-                  destination={pkg.destination}
-                  price={pkg.price}
-                  duration={pkg.duration}
-                  rating={ratings[pkg._id]?.average_rating || 0}
-                  totalReviews={ratings[pkg._id]?.total_reviews || 0}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Tour Packages</h2>
+        <div className="row">
+          {packages.map((pkg) => (
+            <div className="col-md-4 mb-4" key={pkg._id}>
+              <Packagecard
+                id={pkg._id}
+                image_url={pkg.image_url}
+                package_name={pkg.package_name}
+                destination={pkg.destination}
+                price={pkg.price}
+                duration={pkg.duration}
+                rating={ratings[pkg._id]?.average_rating || 0}
+                totalReviews={ratings[pkg._id]?.total_reviews || 0}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <Footer />
     </>
   );
 };

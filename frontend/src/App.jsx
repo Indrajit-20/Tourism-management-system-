@@ -11,6 +11,7 @@ import ManageCustmer from "./pages/ManageCustmer";
 import ManageBus from "./pages/ManageBus"; // Import Bus Page
 import ManageStaff from "./pages/ManageStaff"; // Import Staff Page
 import BookPackage from "./pages/BookPackage"; // Import BookPackage Page
+import PackageDetails from "./pages/PackageDetails";
 import BookBus from "./pages/BookBus"; // Import the new Booking Page
 import ManageRoutes from "./pages/ManageRoutes"; // Import the Admin Route Page
 import ManageBusBookings from "./pages/ManageBusBookings"; // Import Admin Bookings Page
@@ -24,28 +25,35 @@ import MyInvoices from "./pages/MyInvoices"; // Import My Invoices Page
 
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
+import PublicLayout from "./components/PublicLayout"; // Import Layout
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Hompage />} />
-        <Route path="/packages" element={<PackagesList />} />
+        {/* Pages WITHOUT Header/Footer */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/packages/:id" element={<BookPackage />} />
-        <Route path="/book-bus" element={<BookBus />} />{" "}
-        {/* Public Booking Page */}
-        <Route path="/book-seats" element={<SeatSelection />} />{" "}
-        {/* Seat Selection Page */}
-        <Route path="/cancellations" element={<MyCancellations />} />{" "}
-        {/* User Cancellations Page */}
-        <Route path="/my-bookings" element={<MyBookings />} />{" "}
-        {/* User My Bookings Page */}
-        <Route path="/my-invoices" element={<MyInvoices />} />{" "}
-        {/* User Invoices Page */}
-        <Route path="/profile" element={<Profile />} />{" "}
-        {/* User Profile Page */}
+
+        {/* Public Routes WITH Header/Footer */}
+        <Route element={<PublicLayout />}>
+          <Route path="/" element={<Hompage />} />
+          <Route path="/packages" element={<PackagesList />} />
+          <Route path="/package-details/:id" element={<PackageDetails />} />
+          <Route path="/packages/:id" element={<BookPackage />} />
+          <Route path="/book-bus" element={<BookBus />} />{" "}
+          {/* Public Booking Page */}
+          <Route path="/book-seats" element={<SeatSelection />} />{" "}
+          {/* Seat Selection Page */}
+          <Route path="/cancellations" element={<MyCancellations />} />{" "}
+          {/* User Cancellations Page */}
+          <Route path="/my-bookings" element={<MyBookings />} />{" "}
+          {/* User My Bookings Page */}
+          <Route path="/my-invoices" element={<MyInvoices />} />{" "}
+          {/* User Invoices Page */}
+          <Route path="/profile" element={<Profile />} />{" "}
+          {/* User Profile Page */}
+        </Route>
         {/* Protect Admin Routes */}
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/admin" element={<AdminDashboard />}>

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
 
 const MyInvoices = () => {
   const [invoices, setInvoices] = useState([]);
@@ -48,9 +47,8 @@ const MyInvoices = () => {
   if (loading) {
     return (
       <>
-        <Header />
         <div className="container mt-5 text-center">
-          <div className="spinner-border text-primary"></div>
+          <div className="spinner-border text-primary" role="status"></div>
         </div>
       </>
     );
@@ -58,9 +56,10 @@ const MyInvoices = () => {
 
   return (
     <>
-      <Header />
-      <div className="container mt-4">
-        <h2 className="mb-4">My Invoices</h2>
+      <div className="container mt-5">
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <h2>My Invoices</h2>
+        </div>
 
         {invoices.length === 0 ? (
           <div className="alert alert-info">

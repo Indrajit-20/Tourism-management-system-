@@ -43,49 +43,64 @@ const ReviewsDisplay = ({ packageId, routeId, type = "package" }) => {
   };
 
   const renderStars = (stars) => {
-    return "⭐".repeat(stars) + "☆".repeat(5 - stars);
+    return (
+      <div className="text-warning small d-inline-block">
+        {[...Array(5)].map((_, i) => (
+          <i
+            key={i}
+            className={`bi bi-star${i < stars ? "-fill" : ""} me-1 small`}
+          ></i>
+        ))}
+        <span className="ms-1 text-dark fw-bold small">{stars || 0}/5</span>
+      </div>
+    );
   };
 
   if (loading) return <div className="text-center">Loading reviews...</div>;
 
   return (
-    <div className="mt-5 card p-4">
-      <h3>Customer Reviews</h3>
-
-      {/* Rating Summary */}
-      <div className="mb-4 p-3 bg-light rounded">
-        <h4>
-          {renderStars(Math.round(rating.average))} {rating.average}/5
-        </h4>
-        <p className="text-muted">Based on {rating.total_reviews} reviews</p>
+    <div className="mt-4">
+      {/* Simple Header with Total */}
+      <div className="d-flex align-items-center mb-4">
+        <h5 className="fw-bold mb-0 me-3">Reviews</h5>
+        {rating.total_reviews > 0 && (
+          <span className="badge bg-light text-dark border fw-normal p-2">
+            ⭐ {rating.average} ({rating.total_reviews} reviews)
+          </span>
+        )}
       </div>
 
-      {/* Reviews List */}
-      {reviews.length === 0 ? (
-        <p className="text-muted">No reviews yet. Be the first to review!</p>
-      ) : (
-        <div className="reviews-container">
-          {reviews.map((review) => (
-            <div key={review._id} className="border-bottom pb-3 mb-3">
-              <div className="d-flex justify-content-between align-items-start">
+      {/* Simplified Reviews List */}
+      <div className="list-group list-group-flush border-top">
+        {reviews.length === 0 ? (
+          <div className="py-4 text-muted small fst-italic">
+            No reviews yet for this package.
+          </div>
+        ) : (
+          reviews.map((review) => (
+            <div
+              key={review._id}
+              className="list-group-item px-0 py-4 border-bottom shadow-none"
+            >
+              <div className="d-flex justify-content-between align-items-center mb-2">
                 <div>
-                  <h6 className="mb-1">
+                  <span className="fw-bold small text-dark me-2">
                     {review.custmer_id?.first_name}{" "}
-                    {review.custmer_id?.last_name}
-                  </h6>
-                  <p className="text-warning small mb-1">
-                    {renderStars(review.rating)}
-                  </p>
+                    {review.custmer_id?.last_name || ""}
+                  </span>
+                  {renderStars(review.rating)}
                 </div>
-                <small className="text-muted">
+                <small className="text-muted" style={{ fontSize: "0.7rem" }}>
                   {new Date(review.createdAt).toLocaleDateString()}
                 </small>
               </div>
-              <p className="mb-0">{review.review_text}</p>
+              <p className="mb-0 text-secondary small lh-base">
+                {review.review_text}
+              </p>
             </div>
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 };

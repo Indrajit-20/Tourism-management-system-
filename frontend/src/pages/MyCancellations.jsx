@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Header from "../components/Header";
 
 const MyCancellations = () => {
   const [cancellations, setCancellations] = useState([]);
@@ -37,14 +36,11 @@ const MyCancellations = () => {
 
   return (
     <>
-      <Header />
-      <div className="container py-5">
-        <div className="mb-4">
-          <h2 className="mb-2">My Cancellations</h2>
-          <p className="text-muted">
-            View your booking cancellations and refund status
-          </p>
-        </div>
+      <div className="container mt-5">
+        <h2 className="mb-4">My Cancellations</h2>
+        <p className="text-muted mb-4">
+          Here are the bookings you have cancelled.
+        </p>
 
         {error && (
           <div

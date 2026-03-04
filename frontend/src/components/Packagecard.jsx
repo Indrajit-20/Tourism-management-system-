@@ -47,16 +47,16 @@ const Packagecard = ({
           </li>
         </ul>
 
-        <div className="card-body mt-auto p-3 card-actions">
+        <div className="card-body mt-auto p-3 card-actions d-flex justify-content-between">
           <Link
-            to={`/packages/${id}`}
-            className="btn btn-outline-primary btn-sm text-nowrap"
+            to={`/package-details/${id}`}
+            className="btn btn-outline-primary btn-sm flex-fill me-2"
           >
-            Details
+            View Details
           </Link>
           <Link
             to={`/packages/${id}`}
-            className="btn btn-primary btn-sm text-nowrap"
+            className="btn btn-primary btn-sm flex-fill ms-2"
           >
             Book Now
           </Link>

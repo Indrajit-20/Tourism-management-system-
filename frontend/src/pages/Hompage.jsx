@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Packagecard from "../components/Packagecard";
+import ReviewsDisplay from "../components/ReviewsDisplay";
 
 const Hompage = () => {
   const [pkg, setpkg] = useState([]);
@@ -55,62 +54,155 @@ const Hompage = () => {
     loadData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      <Header />
+      {/* Hero Section */}
+      <div
+        className="position-relative overflow-hidden text-center bg-dark text-white shadow-lg"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/bg2.jpg')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "75vh",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8 animate__animated animate__fadeIn">
+              <h1 className="display-2 fw-bold mb-3">
+                Discover Your{" "}
+                <span className="text-primary">Next Adventure</span>
+              </h1>
+              <p className="lead fs-4 mb-5 text-light opacity-75">
+                Explore exclusive tour packages and book your bus tickets with
+                India's most trusted travel partner.
+              </p>
+              <div className="d-flex justify-content-center gap-3">
+                <Link
+                  to="/packages"
+                  className="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow"
+                >
+                  View Packages
+                </Link>
+                <Link
+                  to="/book-bus"
+                  className="btn btn-outline-light btn-lg px-5 py-3 fw-bold rounded-pill"
+                >
+                  Search Bus
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <main className="container my-5">
-        {/* --- DYNAMIC BUS PREVIEW SECTION --- */}
-        <section className="mb-5">
-          <h2 className="text-center mb-4">🚍 Available Bus Services</h2>
+        {/* --- BUS PREVIEW SECTION --- */}
+        <section className="mb-5 pb-4">
+          <div className="row align-items-center mb-4">
+            <div className="col-md-6">
+              <h2 className="display-6 fw-bold mb-0">🚍 Featured Bus Routes</h2>
+              <p className="text-muted">
+                Top destinations from our latest schedule
+              </p>
+            </div>
+          </div>
 
           {featuredRoutes.length > 0 ? (
-            <div className="row">
+            <div className="row g-4">
               {featuredRoutes.map((route) => (
-                <div key={route._id} className="col-md-4 mb-3">
-                  <div className="card shadow-sm h-100 border-primary">
-                    <div className="card-body">
-                      <h5 className="card-title text-primary">
-                        {route.boarding_from} &rarr; {route.destination}
-                      </h5>
-                      <p className="card-text text-muted mb-1">
-                        Bus: {route.bus_id?.bus_number || "Standard"} (
-                        {route.bus_id?.bus_type})
-                      </p>
-                      <p className="fw-bold mb-3">
-                        Rate: ₹{route.price_per_seat}
-                      </p>
+                <div key={route._id} className="col-md-4">
+                  <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-hover">
+                    <div className="card-body p-4">
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+                          Quick Booking
+                        </span>
+                        <h4 className="h5 text-success mb-0 fw-bold">
+                          ₹{route.price_per_seat}
+                        </h4>
+                      </div>
+                      <div className="d-flex align-items-center mb-4">
+                        <div className="flex-grow-1">
+                          <p className="text-uppercase small fw-bold text-muted mb-0">
+                            Origin
+                          </p>
+                          <h5 className="mb-0">{route.boarding_from}</h5>
+                        </div>
+                        <div className="px-3 text-primary">
+                          <i className="bi bi-arrow-right fs-4"></i>
+                        </div>
+                        <div className="flex-grow-1">
+                          <p className="text-uppercase small fw-bold text-muted mb-0">
+                            Destination
+                          </p>
+                          <h5 className="mb-0">{route.destination}</h5>
+                        </div>
+                      </div>
+                      <div className="row g-0 py-2 border-top border-bottom mb-4 text-center bg-light rounded-3">
+                        <div className="col-6 border-end">
+                          <small className="text-muted">Type</small>
+                          <p className="mb-0 small fw-bold">
+                            {route.bus_id?.bus_type || "AC / Sleeper"}
+                          </p>
+                        </div>
+                        <div className="col-6">
+                          <small className="text-muted">Bus No</small>
+                          <p className="mb-0 small fw-bold">
+                            {route.bus_id?.bus_number || "REG-101"}
+                          </p>
+                        </div>
+                      </div>
                       <Link
                         to="/book-bus"
-                        className="btn btn-sm btn-outline-primary w-100"
+                        className="btn btn-primary w-100 py-2 fw-bold"
                       >
-                        Book This Route
+                        Check Availability
                       </Link>
                     </div>
                   </div>
                 </div>
               ))}
-              <div className="col-12 text-center mt-3">
-                <Link to="/book-bus" className="btn btn-primary">
-                  View All Bus Routes
-                </Link>
-              </div>
             </div>
           ) : (
-            <div className="alert alert-warning text-center">
-              No Bus Routes Found. (Please add routes in Admin Panel first)
-              <br />
-              <Link
-                to="/book-bus"
-                className="btn btn-sm btn-outline-secondary mt-2"
-              >
-                Go to Bus Booking Page
+            <div className="text-center p-5 bg-light rounded-4">
+              <h4 className="text-muted">
+                No featured routes available currently.
+              </h4>
+              <Link to="/book-bus" className="btn btn-outline-secondary mt-3">
+                Browse all routes
               </Link>
             </div>
           )}
         </section>
 
-        <h2 className="mb-4 border-bottom pb-2">Popular Tour Packages</h2>
+        {/* --- TOUR PACKAGES SECTION --- */}
+        <div className="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
+          <div>
+            <h2 className="display-6 fw-bold mb-0">🌴 Popular Tour Packages</h2>
+            <p className="text-muted mb-0">
+              Unforgettable experiences curated just for you
+            </p>
+          </div>
+          <Link
+            to="/packages"
+            className="btn btn-link text-primary fw-bold text-decoration-none p-0"
+          >
+            View All <i className="bi bi-chevron-right"></i>
+          </Link>
+        </div>
 
         {loading ? (
           <div className="text-center">Loading Packages...</div>
@@ -133,8 +225,6 @@ const Hompage = () => {
           </div>
         )}
       </main>
-
-      <Footer />
     </>
   );
 };

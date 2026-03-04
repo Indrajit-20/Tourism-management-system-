@@ -25,7 +25,7 @@ const Login = () => {
 
       const response = await axios.post(
         "http://localhost:4000/api/auth/login",
-        payload,
+        payload
       );
 
       if (response.status === 200) {
@@ -45,7 +45,8 @@ const Login = () => {
         if (response.data.role === "admin") {
           navigate("/admin");
         } else {
-          navigate("/");
+          // Manual reload to refresh Header state
+          window.location.href = "/";
         }
       }
     } catch (err) {

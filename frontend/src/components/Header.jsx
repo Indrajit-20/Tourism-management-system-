@@ -72,9 +72,9 @@ const Header = () => {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <div className="avatar me-2">
-                    {user.name.charAt(0).toUpperCase()}
+                    {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </div>
-                  <span className="me-2">{user.name}</span>▾
+                  <span className="me-2">{user?.name || "User"}</span>▾
                 </button>
 
                 {dropdownOpen && (

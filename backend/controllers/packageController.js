@@ -13,9 +13,11 @@ const getPackage = async (req, res) => {
 //find by id
 const packageById = async (req, res) => {
   try {
-    const pkg = await Packages.findById(req.params.id);
+    const pkg = await Packages.findById(req.params.id)
+      .populate("hotel_id", "hotel_name address rating")
+      .populate("bus_id", "bus_number bus_type");
     if (!pkg) {
-      res.status(200).json({ message: "Package not found" });
+      return res.status(404).json({ message: "Package not found" });
     }
     res.status(200).json(pkg);
   } catch (err) {
@@ -72,7 +74,7 @@ const addPackage = async (req, res) => {
       package_details: saved,
     });
   } catch (err) {
-    console.error('Add package error:', err);
+    console.error("Add package error:", err);
     // Send back the actual error message to help debugging (development only)
     res.status(500).json({ message: "Server Error", error: err.message });
   }

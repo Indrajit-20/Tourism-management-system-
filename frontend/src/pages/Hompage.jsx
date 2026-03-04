@@ -21,7 +21,7 @@ const Hompage = () => {
       const ratingPromises = res.data.map(async (p) => {
         try {
           const r = await axios.get(
-            `http://localhost:4000/api/feedback/rating/package/${p._id}`
+            `http://localhost:4000/api/feedback/rating/package/${p._id}`,
           );
           ratingsData[p._id] = r.data;
         } catch (e) {

@@ -109,10 +109,7 @@ const Profile = () => {
         {/* Top Navigation Row */}
         <div className="row justify-content-center mb-4">
           <div className="col-lg-8 d-flex justify-content-between align-items-center">
-            <button
-              className="btn btn-outline-dark shadow-sm bg-white"
-              onClick={() => navigate("/")}
-            >
+            <button className="btn btn-primary" onClick={() => navigate("/")}>
               <i className="bi bi-house-door me-2"></i> ← Back to Home
             </button>
             <h2 className="fw-bold mb-0 text-dark">Profile</h2>

@@ -49,6 +49,9 @@ const Header = () => {
           </button>
 
           <div className={navLinksClass}>
+            <Link to="/" className="me-3 nav-link active">
+              Home
+            </Link>
             <Link to="/book-bus" className="me-3 nav-link">
               Bus Tickets
             </Link>

@@ -5,7 +5,6 @@ const BusTicketBooking = require("../models/BusTicketBooking");
 const bookBusTicket = async (req, res) => {
   try {
     const { route_id, seat_numbers, travel_date } = req.body;
-    // seat_numbers = ["1A", "2B"]
 
     if (!seat_numbers || seat_numbers.length === 0) {
       return res.status(400).json({ message: "No seats selected" });
@@ -20,7 +19,7 @@ const bookBusTicket = async (req, res) => {
     const existingBookings = await BusTicketBooking.find({
       route_id: route_id,
       travel_date: travel_date,
-      seat_numbers: { $in: seat_numbers }, // Check if ANY requested seat is already taken
+      seat_numbers: { $in: seat_numbers },
       booking_status: { $ne: "Rejected" },
     });
 
@@ -40,10 +39,10 @@ const bookBusTicket = async (req, res) => {
       custmer_id: customer_id,
       travel_date: travel_date,
       travellers: seats_count,
-      seat_numbers: seat_numbers, // Save specific seats
+      seat_numbers: seat_numbers,
       price_per_seat: route.price_per_seat,
       total_amount: total_amount,
-      booking_status: "Pending", // Changed from Confirmed to Pending
+      booking_status: "Pending",
     });
 
     await newBooking.save();

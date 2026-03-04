@@ -9,6 +9,7 @@ const staffRoutes = require("./routes/staffRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const feedbackRoutes = require("./routes/feedbackRoutes");
 const cancellationRoutes = require("./routes/cancellationRoutes");
+const adminStatsRoutes = require("./routes/adminStatsRoutes");
 const cors = require("cors");
 const path = require("path");
 
@@ -66,6 +67,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/feedback", feedbackRoutes);
 
 app.use("/api/cancellation", cancellationRoutes);
+app.use("/api/admin-stats", adminStatsRoutes);
 
 // Invoice routes
 const invoiceRoutes = require("./routes/invoiceRoutes");

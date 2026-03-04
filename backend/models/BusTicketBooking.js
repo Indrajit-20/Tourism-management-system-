@@ -14,7 +14,7 @@ const busBookingSchema = new mongoose.Schema(
       required: true,
     },
 
-    travel_date: { type: Date, required: true }, // The ONLY place the date is saved!
+    travel_date: { type: Date, required: true },
     seat_numbers: { type: [String], required: true }, // e.g. ["1A", "1B"]
     travellers: { type: Number, required: true },
     price_per_seat: { type: Number, required: true },

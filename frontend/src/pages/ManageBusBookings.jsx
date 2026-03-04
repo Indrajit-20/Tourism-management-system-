@@ -84,7 +84,11 @@ const ManageBusBookings = () => {
                   {b.route_id?.boarding_from} &rarr; {b.route_id?.destination}
                 </td>
                 <td>{new Date(b.travel_date).toLocaleDateString()}</td>
-                <td>{b.travellers}</td>
+                <td>
+                  <span className="badge bg-info">
+                    {b.seat_numbers?.join(", ") || b.travellers}
+                  </span>
+                </td>
                 <td>₹{b.total_amount}</td>
                 <td>
                   <span

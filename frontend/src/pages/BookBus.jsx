@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const BookBus = () => {
   const [routes, setRoutes] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState(null); // Which route user clicked "Book" on
+  const [selectedRoute, setSelectedRoute] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({
     date: "",
     seats: 1,
@@ -15,7 +15,6 @@ const BookBus = () => {
   useEffect(() => {
     const fetchRoutes = async () => {
       try {
-        // Ensure this matches your backend route
         const res = await axios.get("http://localhost:4000/api/bus-routes/");
         setRoutes(res.data);
       } catch (err) {
@@ -66,6 +65,7 @@ const BookBus = () => {
                   Bus Type: {route.bus_id?.bus_type || "Standard"} | Bus No:{" "}
                   {route.bus_id?.bus_number}
                 </p>
+
                 <div className="d-flex justify-content-between align-items-center mt-3">
                   <div>
                     <div className="fw-bold">
@@ -80,7 +80,7 @@ const BookBus = () => {
                   </h4>
                 </div>
 
-                {/* If this route is selected, show booking form, else show "Book" button */}
+                {/* If this route is selected, show booking form */}
                 {selectedRoute?._id === route._id ? (
                   <form
                     onSubmit={handleBook}
@@ -96,6 +96,7 @@ const BookBus = () => {
                         onChange={handleChange}
                       />
                     </div>
+
                     <div className="mb-2">
                       <label className="small">Seats</label>
                       <input

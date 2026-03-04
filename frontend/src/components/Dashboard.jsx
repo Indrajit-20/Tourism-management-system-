@@ -17,7 +17,7 @@ const Dashboard = () => {
     const fetchStats = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/api/admin-stats/dashboard-stats"
+          "http://localhost:4000/api/admin-stats/dashboard-stats",
         );
         if (res.data) setStats(res.data);
       } catch (err) {
@@ -131,13 +131,15 @@ const Dashboard = () => {
       {/* Recent Transactions Table */}
       <div className="card border-0 shadow-sm rounded-4 p-0 overflow-hidden">
         <div className="card-header bg-white border-bottom p-4">
-          <h5 className="mb-0 fw-bold">Recent Payments & Bookings</h5>
+          <h5 className="mb-0 fw-bold p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end">
+            Recent Payments & Bookings
+          </h5>
         </div>
         <div className="card-body p-0">
           <div className="table-responsive">
             <table className="table table-hover align-middle mb-0">
-              <thead className="bg-light">
-                <tr className="text-muted small text-uppercase">
+              <thead className="bg-light color-muted">
+                <tr className="text-muted small text-uppercase ">
                   <th className="px-4 py-3">Customer</th>
                   <th className="py-3">Type</th>
                   <th className="py-3">Date</th>

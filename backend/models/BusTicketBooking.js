@@ -20,6 +20,7 @@ const busBookingSchema = new mongoose.Schema(
     price_per_seat: { type: Number, required: true },
     total_amount: { type: Number, required: true },
     booking_status: { type: String, default: "Confirmed" },
+    payment_status: { type: String, default: "Pending" }, // Pending, Paid, Failed
     status: { type: String, default: "Active" },
   },
   { timestamps: true }

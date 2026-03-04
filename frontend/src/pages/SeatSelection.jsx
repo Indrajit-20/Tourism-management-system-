@@ -165,59 +165,70 @@ const SeatSelection = () => {
       return;
     }
 
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat");
+      return;
+    }
+
     try {
-      // Re-fetch booked seats to check for race condition
+      // Step 1: Check if seats are still available
       const checkRes = await axios.get(
         `http://localhost:4000/api/bus-bookings/seats?route_id=${route._id}&travel_date=${date}`
       );
       const latestBookedSeats = checkRes.data;
 
-      // Check if any selected seat was just booked by someone else
       const conflictSeats = selectedSeats.filter((seat) =>
         latestBookedSeats.includes(seat)
       );
 
       if (conflictSeats.length > 0) {
         alert(
-          `Sorry! Seat(s) ${conflictSeats.join(
+          `Seat(s) ${conflictSeats.join(
             ", "
-          )} were just booked by another user. Please select different seats.`
+          )} already booked. Please select other seats.`
         );
-        setBookedSeats(latestBookedSeats); // Update UI to show newly booked seats
+        setBookedSeats(latestBookedSeats);
         setSelectedSeats(
           selectedSeats.filter((s) => !conflictSeats.includes(s))
-        ); // Remove conflicting seats from selection
+        );
         return;
       }
 
-      const bookRes = await axios.post(
-        "http://localhost:4000/api/bus-bookings/book",
-        {
-          route_id: route._id,
-          travel_date: date,
-          seat_numbers: selectedSeats,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      // Save booking ID
-      const bookingId = bookRes.data.booking._id;
-
-      const totalAmountToPay = selectedSeats.length * route.price_per_seat;
-      const resOrder = await axios.post(
+      // Step 2: Create payment order
+      const totalAmount = selectedSeats.length * route.price_per_seat;
+      const orderRes = await axios.post(
         "http://localhost:4000/api/payment/create-order",
-        { amount: totalAmountToPay }
+        { amount: totalAmount }
       );
 
+      // Step 3: Open Razorpay
       const options = {
         key: "rzp_test_SMPUHkAalgy2kE",
-        amount: resOrder.data.amount,
+        amount: orderRes.data.amount,
         currency: "INR",
         name: "Bus Booking",
-        order_id: resOrder.data.id,
-        handler: function () {
-          alert("Payment Successful! Your booking is confirmed.");
-          navigate("/");
+        order_id: orderRes.data.id,
+        handler: async function (response) {
+          // Step 4: Payment SUCCESS - Now create booking
+          try {
+            await axios.post(
+              "http://localhost:4000/api/bus-bookings/book",
+              {
+                route_id: route._id,
+                travel_date: date,
+                seat_numbers: selectedSeats,
+                payment_id: response.razorpay_payment_id,
+              },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            alert("Payment Successful! Booking Confirmed.");
+            navigate("/my-bookings");
+          } catch (err) {
+            alert(
+              err.response?.data?.message ||
+                "Booking failed after payment. Contact support."
+            );
+          }
         },
       };
 

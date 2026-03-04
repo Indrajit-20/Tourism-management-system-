@@ -20,22 +20,49 @@ const invoiceSchema = new mongoose.Schema(
       enum: ["Package", "Bus"],
       required: true,
     },
+
+    // Booking Details
     description: {
       type: String,
       required: true,
     },
+    booking_date: {
+      type: Date,
+    },
+    travel_date: {
+      type: Date,
+    },
+    travellers: {
+      type: Number,
+      default: 1,
+    },
+
+    // For Bus bookings
+    seat_numbers: {
+      type: [String],
+    },
+    bus_details: {
+      type: String,
+    },
+
+    // For Package bookings
+    package_duration: {
+      type: String,
+    },
+
+    // Payment Info
     amount: {
       type: Number,
       required: true,
     },
-    tax: {
-      type: Number,
-      default: 0,
+    payment_method: {
+      type: String,
+      default: "Online (Razorpay)",
     },
-    total: {
-      type: Number,
-      required: true,
+    transaction_id: {
+      type: String,
     },
+
     status: {
       type: String,
       enum: ["Pending", "Paid", "Refunded"],

@@ -27,19 +27,40 @@ const MyInvoices = () => {
   };
 
   const printInvoice = (inv) => {
+    const travelDate = inv.travel_date
+      ? new Date(inv.travel_date).toLocaleDateString()
+      : "-";
+
     const content = `
-      Invoice: #${inv.invoice_number}
-      Type: ${inv.booking_type}
-      Description: ${inv.description}
+      ========================================
+                  TRAVEL INVOICE
+      ========================================
+      
+      Invoice No: #${inv.invoice_number}
       Date: ${new Date(inv.createdAt).toLocaleDateString()}
-      --------------------------
-      Amount: ₹${inv.amount?.toFixed(2)}
-      Tax (18%): ₹${inv.tax?.toFixed(2)}
-      Total: ₹${inv.total?.toFixed(2)}
+      
+      ----------------------------------------
+      ${inv.booking_type}: ${inv.description}
+      Travel Date: ${travelDate}
+      Travellers: ${inv.travellers || 1}
+      ${
+        inv.booking_type === "Bus" && inv.seat_numbers?.length
+          ? `Seats: ${inv.seat_numbers.join(", ")}`
+          : ""
+      }
+      
+      ----------------------------------------
+      Total Amount: ₹${inv.amount?.toFixed(2)}
+      Payment: ${inv.payment_method || "Online"}
       Status: ${inv.status}
+      ========================================
     `;
     const w = window.open();
-    w.document.write("<pre>" + content + "</pre>");
+    w.document.write(
+      "<pre style='font-family: monospace; padding: 20px;'>" +
+        content +
+        "</pre>"
+    );
     w.print();
     w.close();
   };
@@ -83,22 +104,45 @@ const MyInvoices = () => {
                     </span>
                   </div>
                   <div className="card-body">
-                    <p className="text-muted mb-2">{inv.description}</p>
-                    <hr />
-                    <div className="d-flex justify-content-between">
-                      <span>Amount:</span>
-                      <span>₹{inv.amount?.toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <span>Tax (18%):</span>
-                      <span>₹{inv.tax?.toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between fw-bold mt-2 pt-2 border-top">
-                      <span>Total:</span>
-                      <span className="text-success">
-                        ₹{inv.total?.toFixed(2)}
-                      </span>
-                    </div>
+                    <h6 className="card-title">{inv.description}</h6>
+
+                    <table className="table table-sm table-borderless mb-0 small">
+                      <tbody>
+                        {inv.travel_date && (
+                          <tr>
+                            <td className="text-muted">Travel Date</td>
+                            <td className="text-end">
+                              {new Date(inv.travel_date).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        )}
+                        <tr>
+                          <td className="text-muted">Travellers</td>
+                          <td className="text-end">{inv.travellers || 1}</td>
+                        </tr>
+                        {inv.booking_type === "Bus" &&
+                          inv.seat_numbers?.length > 0 && (
+                            <tr>
+                              <td className="text-muted">Seats</td>
+                              <td className="text-end">
+                                {inv.seat_numbers.join(", ")}
+                              </td>
+                            </tr>
+                          )}
+                        <tr>
+                          <td className="text-muted">Payment</td>
+                          <td className="text-end">
+                            {inv.payment_method || "Online"}
+                          </td>
+                        </tr>
+                        <tr className="border-top">
+                          <td className="fw-bold">Total</td>
+                          <td className="text-end fw-bold text-success">
+                            ₹{inv.amount?.toFixed(2)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <div className="card-footer bg-white d-flex justify-content-between align-items-center">
                     <small className="text-muted">

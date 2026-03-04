@@ -69,6 +69,10 @@ app.use("/api/feedback", feedbackRoutes);
 app.use("/api/cancellation", cancellationRoutes);
 app.use("/api/admin-stats", adminStatsRoutes);
 
+// Refund routes
+const refundRoutes = require("./routes/refundRoutes");
+app.use("/api/refunds", refundRoutes);
+
 // Invoice routes
 const invoiceRoutes = require("./routes/invoiceRoutes");
 app.use("/api/invoice", invoiceRoutes);

@@ -24,4 +24,26 @@ const addBusRoute = async (req, res) => {
   }
 };
 
-module.exports = { getBusRoutes, addBusRoute };
+// 3. Update a Bus Route (Admin)
+const updateBusRoute = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const route = await BusRoute.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json({ message: "Route updated successfully", route });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating route", error });
+  }
+};
+
+// 4. Delete a Bus Route (Admin)
+const deleteBusRoute = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await BusRoute.findByIdAndDelete(id);
+    res.status(200).json({ message: "Route deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting route", error });
+  }
+};
+
+module.exports = { getBusRoutes, addBusRoute, updateBusRoute, deleteBusRoute };

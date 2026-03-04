@@ -1,21 +1,22 @@
 const BusRoute = require("../models/BusRoute");
 const BusTicketBooking = require("../models/BusTicketBooking");
 
-// 1. Book a Bus Ticket
+// 1. Book a Bus Ticket (Called AFTER payment success)
 const bookBusTicket = async (req, res) => {
   try {
-    const { route_id, seat_numbers, travel_date } = req.body;
+    const { route_id, seat_numbers, travel_date, payment_id } = req.body;
 
     if (!seat_numbers || seat_numbers.length === 0) {
       return res.status(400).json({ message: "No seats selected" });
     }
 
-    const customer_id = req.user.id; // From token
+    const customer_id = req.user.id;
 
     // 1. Find the Route
     const route = await BusRoute.findById(route_id);
     if (!route) return res.status(404).json({ message: "Route not found" });
 
+    // 2. Check if seats are already booked
     const existingBookings = await BusTicketBooking.find({
       route_id: route_id,
       travel_date: travel_date,
@@ -25,7 +26,8 @@ const bookBusTicket = async (req, res) => {
 
     if (existingBookings.length > 0) {
       return res.status(400).json({
-        message: "Some seats are already booked. Please refresh and try again.",
+        message:
+          "Some seats are already booked. Please select different seats.",
       });
     }
 
@@ -33,7 +35,7 @@ const bookBusTicket = async (req, res) => {
     const seats_count = seat_numbers.length;
     const total_amount = route.price_per_seat * seats_count;
 
-    // 4. Create Booking
+    // 4. Create Booking (Payment already done)
     const newBooking = new BusTicketBooking({
       route_id: route_id,
       custmer_id: customer_id,
@@ -42,13 +44,14 @@ const bookBusTicket = async (req, res) => {
       seat_numbers: seat_numbers,
       price_per_seat: route.price_per_seat,
       total_amount: total_amount,
-      booking_status: "Pending",
+      booking_status: "Confirmed",
+      payment_status: "Paid",
     });
 
     await newBooking.save();
 
     res.status(201).json({
-      message: "Bus Ticket Requested! Waiting for Admin Approval.",
+      message: "Booking Confirmed!",
       booking: newBooking,
     });
   } catch (error) {
@@ -92,11 +95,12 @@ const getBookedSeats = async (req, res) => {
   try {
     const { route_id, travel_date } = req.query;
 
-    // Find all bookings for this route on this date
+    // Find all bookings for this route on this date WHERE PAYMENT IS DONE
     const bookings = await BusTicketBooking.find({
       route_id: route_id,
       travel_date: travel_date,
-      booking_status: { $ne: "Rejected" }, // Ignore rejected bookings
+      booking_status: { $ne: "Rejected" },
+      payment_status: "Paid", // Only count paid bookings as booked seats
     });
 
     // Extract all seat numbers into a single flat array
@@ -110,7 +114,51 @@ const getBookedSeats = async (req, res) => {
   }
 };
 
-// 5. Get user's own bookings
+// 5. Confirm Payment - Mark booking as Paid
+const confirmPayment = async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+
+    const booking = await BusTicketBooking.findByIdAndUpdate(
+      booking_id,
+      { payment_status: "Paid" },
+      { new: true }
+    );
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.status(200).json({ message: "Payment confirmed", booking });
+  } catch (error) {
+    res.status(500).json({ message: "Error confirming payment", error });
+  }
+};
+
+// 6. Cancel Unpaid Booking - Delete if payment failed
+const cancelUnpaidBooking = async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+
+    const booking = await BusTicketBooking.findById(booking_id);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Only delete if payment was not completed
+    if (booking.payment_status !== "Paid") {
+      await BusTicketBooking.findByIdAndDelete(booking_id);
+      return res.status(200).json({ message: "Booking cancelled" });
+    }
+
+    res.status(400).json({ message: "Cannot cancel paid booking" });
+  } catch (error) {
+    res.status(500).json({ message: "Error cancelling booking", error });
+  }
+};
+
+// 7. Get user's own bookings
 const getMyBookings = async (req, res) => {
   try {
     const customer_id = req.user.id;
@@ -134,5 +182,7 @@ module.exports = {
   getAllBookings,
   updateBookingStatus,
   getBookedSeats,
+  confirmPayment,
+  cancelUnpaidBooking,
   getMyBookings,
 };

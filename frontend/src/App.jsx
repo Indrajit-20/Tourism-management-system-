@@ -22,6 +22,7 @@ import ManageCancellations from "./pages/ManageCancellations"; // Import Cancell
 import MyCancellations from "./pages/MyCancellations"; // Import My Cancellations Page
 import MyBookings from "./pages/MyBookings"; // Import My Bookings Page
 import MyInvoices from "./pages/MyInvoices"; // Import My Invoices Page
+import RefundReport from "./pages/RefundReport"; // Import Refund Report Page
 
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
@@ -71,6 +72,7 @@ function App() {
             <Route path="manage-staff" element={<ManageStaff />} />
             <Route path="feedback" element={<ManageFeedback />} />
             <Route path="cancellations" element={<ManageCancellations />} />
+            <Route path="refunds" element={<RefundReport />} />
             {/* Add Bus Route */}
           </Route>
         </Route>

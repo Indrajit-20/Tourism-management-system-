@@ -36,15 +36,21 @@ const ManageCancellations = () => {
   const handleMarkDone = async (cancellationId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(
-        `http://localhost:4000/api/cancellation/admin/mark-done/${cancellationId}`,
-        {},
+
+      // First create refund record
+      await axios.post(
+        "http://localhost:4000/api/refunds/create",
+        {
+          cancellation_id: cancellationId,
+          refund_mode: "Online",
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
       setSuccessMessage("Refund marked as done");
       setTimeout(() => setSuccessMessage(""), 3000);
       fetchCancellations();

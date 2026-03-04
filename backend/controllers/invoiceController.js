@@ -4,7 +4,7 @@ const BusTicketBooking = require("../models/BusTicketBooking");
 
 const createInvoice = async (req, res) => {
   try {
-    const { booking_id, booking_type } = req.body;
+    const { booking_id, booking_type, transaction_id } = req.body;
     const custmer_id = req.user.id;
 
     const exists = await Invoice.findOne({ booking_id });
@@ -13,6 +13,12 @@ const createInvoice = async (req, res) => {
 
     let description = "Booking";
     let amount = 100;
+    let booking_date = new Date();
+    let travel_date = null;
+    let travellers = 1;
+    let seat_numbers = [];
+    let bus_details = "";
+    let package_duration = "";
 
     if (booking_type === "Package") {
       const b = await PackageBooking.findById(booking_id).populate(
@@ -21,17 +27,28 @@ const createInvoice = async (req, res) => {
       if (b) {
         description = b.Package_id?.package_name || "Tour Package";
         amount = b.total_amount || 100;
+        booking_date = b.createdAt || new Date();
+        travel_date = b.travel_date;
+        travellers = b.number_of_traveller || 1;
+        package_duration = b.Package_id?.duration || "";
       }
     } else {
-      const b = await BusTicketBooking.findById(booking_id).populate(
-        "route_id"
-      );
+      const b = await BusTicketBooking.findById(booking_id)
+        .populate("route_id")
+        .populate("bus_id");
       if (b) {
         description =
           (b.route_id?.boarding_from || "") +
           " to " +
           (b.route_id?.destination || "");
         amount = b.total_amount || 100;
+        booking_date = b.createdAt || new Date();
+        travel_date = b.travel_date;
+        seat_numbers = b.seat_numbers || [];
+        travellers = seat_numbers.length || 1;
+        bus_details = b.bus_id
+          ? `${b.bus_id.bus_type} - ${b.bus_id.bus_name} (${b.bus_id.bus_number})`
+          : "";
       }
     }
 
@@ -41,9 +58,15 @@ const createInvoice = async (req, res) => {
       booking_id,
       booking_type,
       description,
+      booking_date,
+      travel_date,
+      travellers,
+      seat_numbers,
+      bus_details,
+      package_duration,
       amount,
-      tax: amount * 0.18,
-      total: amount * 1.18,
+      payment_method: "Online (Razorpay)",
+      transaction_id: transaction_id || "",
       status: "Paid",
     });
     await invoice.save();

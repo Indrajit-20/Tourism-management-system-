@@ -16,13 +16,17 @@ const MyCancellations = () => {
       setLoading(true);
       setError("");
       const token = localStorage.getItem("token");
-      const response = await axios.get("/api/cancellation/my-cancellations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:4000/api/cancellation/my-cancellations",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCancellations(response.data || []);
     } catch (err) {
+      console.error(err);
       setError(
         err.response?.data?.message || "Failed to fetch your cancellations"
       );

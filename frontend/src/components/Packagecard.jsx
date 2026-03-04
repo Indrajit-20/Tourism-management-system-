@@ -8,10 +8,19 @@ const Packagecard = ({
   price,
   duration,
   image_url,
+  rating,
+  totalReviews,
 }) => {
   return (
     <>
       <div className={`card`} style={{ width: "18rem" }}>
+        {rating > 0 && (
+          <div className="position-absolute top-0 end-0 m-2">
+            <span className="badge bg-warning text-dark shadow-sm">
+              ⭐ {rating} ({totalReviews})
+            </span>
+          </div>
+        )}
         <img
           src={`http://localhost:4000/uploads/${image_url}`}
           className={`card-img-top`}

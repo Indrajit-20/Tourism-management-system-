@@ -20,6 +20,7 @@ import ManageFeedback from "./pages/ManageFeedback"; // Import Feedback Page
 import ManageCancellations from "./pages/ManageCancellations"; // Import Cancellations Page
 import MyCancellations from "./pages/MyCancellations"; // Import My Cancellations Page
 import MyBookings from "./pages/MyBookings"; // Import My Bookings Page
+import MyInvoices from "./pages/MyInvoices"; // Import My Invoices Page
 
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
@@ -41,6 +42,8 @@ function App() {
         {/* User Cancellations Page */}
         <Route path="/my-bookings" element={<MyBookings />} />{" "}
         {/* User My Bookings Page */}
+        <Route path="/my-invoices" element={<MyInvoices />} />{" "}
+        {/* User Invoices Page */}
         <Route path="/profile" element={<Profile />} />{" "}
         {/* User Profile Page */}
         {/* Protect Admin Routes */}

@@ -52,16 +52,6 @@ const PackagesList = () => {
           <div className="row">
             {packages.map((pkg) => (
               <div className="col-md-4 mb-4" key={pkg._id}>
-                {/* Show rating above package card */}
-                <div className="mb-2 text-center">
-                  <div className="text-warning">
-                    {renderStars(ratings[pkg._id]?.average_rating || 0)}
-                  </div>
-                  <small className="text-muted">
-                    {ratings[pkg._id]?.average_rating || 0}/5 (
-                    {ratings[pkg._id]?.total_reviews || 0} reviews)
-                  </small>
-                </div>
                 <Packagecard
                   id={pkg._id}
                   image_url={pkg.image_url}
@@ -69,6 +59,8 @@ const PackagesList = () => {
                   destination={pkg.destination}
                   price={pkg.price}
                   duration={pkg.duration}
+                  rating={ratings[pkg._id]?.average_rating || 0}
+                  totalReviews={ratings[pkg._id]?.total_reviews || 0}
                 />
               </div>
             ))}

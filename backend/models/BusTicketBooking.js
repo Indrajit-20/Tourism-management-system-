@@ -10,7 +10,7 @@ const busBookingSchema = new mongoose.Schema(
 
     custmer_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Customer",
+      ref: "Custmer",
       required: true,
     },
 

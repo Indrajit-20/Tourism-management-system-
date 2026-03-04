@@ -25,15 +25,21 @@ const MyBookings = () => {
       const token = localStorage.getItem("token");
 
       // Fetch package bookings
-      const packageRes = await axios.get("/api/bookings/my-bookings", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const packageRes = await axios.get(
+        "http://localhost:4000/api/bookings/my-bookings",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setPackageBookings(packageRes.data || []);
 
       // Fetch bus bookings
-      const busRes = await axios.get("/api/bus-bookings/my-bookings", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const busRes = await axios.get(
+        "http://localhost:4000/api/bus-bookings/my-bookings",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setBusBookings(busRes.data || []);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to load bookings");
@@ -46,7 +52,7 @@ const MyBookings = () => {
     setSelectedBooking({
       id: booking._id,
       type: type,
-      amount: booking.total_amount, // Simplified redundant ternary operator
+      amount: booking.total_amount,
     });
     setShowCancelModal(true);
   };
@@ -54,7 +60,34 @@ const MyBookings = () => {
   const handleCancelSuccess = () => {
     setShowCancelModal(false);
     setSelectedBooking(null);
-    fetchBookings();
+    fetchBookings(); // Refresh list to show updated status
+  };
+
+  const closeModal = () => {
+    setShowCancelModal(false);
+    setSelectedBooking(null);
+  };
+
+  // Generate invoice for a booking
+  const handleGetInvoice = async (bookingId, bookingType) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        "http://localhost:4000/api/invoice/create",
+        { booking_id: bookingId, booking_type: bookingType },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("Invoice created! Go to My Invoices to view it.");
+    } catch (err) {
+      if (err.response?.data?.message === "Invoice already exists") {
+        alert("Invoice already exists! Go to My Invoices to view it.");
+      } else {
+        alert(
+          "Error creating invoice: " +
+            (err.response?.data?.message || err.message)
+        );
+      }
+    }
   };
 
   if (loading) {
@@ -127,7 +160,9 @@ const MyBookings = () => {
                           <p className="text-muted mb-1">
                             <small>Travellers</small>
                           </p>
-                          <p className="mb-0">{booking.travellers || 0} people</p>
+                          <p className="mb-0">
+                            {booking.travellers || 0} people
+                          </p>
                         </div>
 
                         <div className="mb-3">
@@ -148,12 +183,43 @@ const MyBookings = () => {
                           </p>
                         </div>
 
-                        <button
-                          className="btn btn-danger w-100"
-                          onClick={() => handleCancelClick(booking, "package")}
-                        >
-                          Cancel Booking
-                        </button>
+                        <div className="mb-3">
+                          <p className="text-muted mb-1">
+                            <small>Status</small>
+                          </p>
+                          <span
+                            className={`badge ${
+                              booking.booking_status === "Cancelled"
+                                ? "bg-danger"
+                                : booking.booking_status === "Confirmed"
+                                ? "bg-success"
+                                : "bg-warning text-dark"
+                            }`}
+                          >
+                            {booking.booking_status}
+                          </span>
+                        </div>
+
+                        {booking.booking_status !== "Cancelled" && (
+                          <div className="d-flex gap-2">
+                            <button
+                              className="btn btn-outline-primary flex-grow-1"
+                              onClick={() =>
+                                handleGetInvoice(booking._id, "Package")
+                              }
+                            >
+                              Get Invoice
+                            </button>
+                            <button
+                              className="btn btn-danger flex-grow-1"
+                              onClick={() =>
+                                handleCancelClick(booking, "package")
+                              }
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -215,12 +281,41 @@ const MyBookings = () => {
                           </p>
                         </div>
 
-                        <button
-                          className="btn btn-danger w-100"
-                          onClick={() => handleCancelClick(booking, "bus")}
-                        >
-                          Cancel Booking
-                        </button>
+                        <div className="mb-3">
+                          <p className="text-muted mb-1">
+                            <small>Status</small>
+                          </p>
+                          <span
+                            className={`badge ${
+                              booking.booking_status === "Cancelled"
+                                ? "bg-danger"
+                                : booking.booking_status === "Confirmed"
+                                ? "bg-success"
+                                : "bg-warning text-dark"
+                            }`}
+                          >
+                            {booking.booking_status}
+                          </span>
+                        </div>
+
+                        {booking.booking_status !== "Cancelled" && (
+                          <div className="d-flex gap-2">
+                            <button
+                              className="btn btn-outline-primary flex-grow-1"
+                              onClick={() =>
+                                handleGetInvoice(booking._id, "Bus")
+                              }
+                            >
+                              Get Invoice
+                            </button>
+                            <button
+                              className="btn btn-danger flex-grow-1"
+                              onClick={() => handleCancelClick(booking, "bus")}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -237,10 +332,7 @@ const MyBookings = () => {
             bookingId={selectedBooking.id}
             bookingType={selectedBooking.type === "package" ? "Package" : "Bus"}
             amount={selectedBooking.amount}
-            onClose={() => {
-              setShowCancelModal(false);
-              setSelectedBooking(null);
-            }}
+            onClose={closeModal}
             onSuccess={handleCancelSuccess}
           />
         )}

@@ -17,11 +17,14 @@ const ManageCancellations = () => {
       setLoading(true);
       setError("");
       const token = localStorage.getItem("token");
-      const response = await axios.get("/api/cancellation/admin/all", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:4000/api/cancellation/admin/all",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setCancellations(response.data || []);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to fetch cancellations");
@@ -34,7 +37,7 @@ const ManageCancellations = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `/api/cancellation/admin/mark-done/${cancellationId}`,
+        `http://localhost:4000/api/cancellation/admin/mark-done/${cancellationId}`,
         {},
         {
           headers: {

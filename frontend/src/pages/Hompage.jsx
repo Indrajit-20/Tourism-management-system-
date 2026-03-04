@@ -7,6 +7,7 @@ import Packagecard from "../components/Packagecard";
 
 const Hompage = () => {
   const [pkg, setpkg] = useState([]);
+  const [ratings, setRatings] = useState({});
   const [featuredRoutes, setFeaturedRoutes] = useState([]); // State for Bus Routes
   const [loading, setLoading] = useState(true);
 
@@ -15,6 +16,21 @@ const Hompage = () => {
     try {
       const res = await axios.get("http://localhost:4000/api/packages");
       setpkg(res.data);
+
+      // Fetch ratings (parallel)
+      const ratingsData = {};
+      const ratingPromises = res.data.map(async (p) => {
+        try {
+          const r = await axios.get(
+            `http://localhost:4000/api/feedback/rating/package/${p._id}`
+          );
+          ratingsData[p._id] = r.data;
+        } catch (e) {
+          ratingsData[p._id] = { average_rating: 0, total_reviews: 0 };
+        }
+      });
+      await Promise.all(ratingPromises);
+      setRatings(ratingsData);
     } catch (err) {
       console.error("Error fetching packages", err);
     }
@@ -109,6 +125,8 @@ const Hompage = () => {
                   destination={p.destination}
                   price={p.price}
                   duration={p.duration}
+                  rating={ratings[p._id]?.average_rating || 0}
+                  totalReviews={ratings[p._id]?.total_reviews || 0}
                 />
               </div>
             ))}

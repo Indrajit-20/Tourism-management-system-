@@ -67,6 +67,10 @@ app.use("/api/feedback", feedbackRoutes);
 
 app.use("/api/cancellation", cancellationRoutes);
 
+// Invoice routes
+const invoiceRoutes = require("./routes/invoiceRoutes");
+app.use("/api/invoice", invoiceRoutes);
+
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)
 );

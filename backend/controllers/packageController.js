@@ -14,7 +14,7 @@ const getPackage = async (req, res) => {
 const packageById = async (req, res) => {
   try {
     const pkg = await Packages.findById(req.params.id)
-      .populate("hotel_id", "hotel_name address rating")
+      .populate("hotel_id", "name location hotel_type")
       .populate("bus_id", "bus_number bus_type");
     if (!pkg) {
       return res.status(404).json({ message: "Package not found" });

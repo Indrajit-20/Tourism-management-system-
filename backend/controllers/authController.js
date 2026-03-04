@@ -86,7 +86,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: role, name: user.name || user.first_name },
       "tsm",
-      { expiresIn: "1h" }
+      { expiresIn: "2h" }
     );
 
     // include name for frontend display

@@ -22,114 +22,152 @@ const PackageDetails = () => {
   if (!packageData) return <h3 className="text-center mt-5">Loading...</h3>;
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
-        <div className="row g-0">
-          <div className="col-md-6">
-            <img
-              src={`http://localhost:4000/uploads/${packageData.image_url}`}
-              className="img-fluid rounded-start h-100"
-              alt={packageData.package_name}
-              style={{ objectFit: "cover" }}
-            />
+    <div
+      style={{
+        backgroundColor: "#f9f9f9",
+        minHeight: "100vh",
+        paddingTop: "30px",
+      }}
+    >
+      <div className="container">
+        {/* Header with Image & Title */}
+        <div className="row g-4 mb-5">
+          <div className="col-lg-7">
+            <div className="card border-0 shadow overflow-hidden rounded-4">
+              <img
+                src={`http://localhost:4000/uploads/${packageData.image_url}`}
+                className="img-fluid"
+                alt={packageData.package_name}
+                style={{ height: "450px", objectFit: "cover", width: "100%" }}
+              />
+            </div>
           </div>
-          <div className="col-md-6">
-            <div className="card-body p-5">
-              <h2 className="card-title text-primary mb-3">
+
+          <div className="col-lg-5">
+            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
+              <h2 className="fw-bold text-dark mb-3">
                 {packageData.package_name}
               </h2>
-              <h4 className="text-muted mb-4">
-                <i className="bi bi-geo-alt-fill"></i> {packageData.destination}
-              </h4>
-              <p className="card-text fs-5">
+              <p className="text-muted fs-5 mb-4">
+                <i className="bi bi-geo-alt-fill text-primary"></i>{" "}
+                {packageData.destination}
+              </p>
+
+              <p className="text-muted lh-lg mb-4">
                 {packageData.description ||
                   "No description available for this package."}
               </p>
 
-              <div className="row mt-4 mb-4">
-                <div className="col-md-6 border-end">
-                  <h5 className="text-primary fw-bold">🏨 Stay Details</h5>
-                  <p className="mb-0 fw-bold">
-                    {packageData.hotel_id?.hotel_name || "Modern Residency"}
-                  </p>
-                  <p className="small text-muted mb-0">
-                    {packageData.hotel_id?.address || "City Center Area"}
-                  </p>
-                </div>
-                <div className="col-md-6 ps-md-4 mt-3 mt-md-0">
-                  <h5 className="text-primary fw-bold">🗺️ Trip Highlights</h5>
-                  <p className="mb-0 fw-bold">
-                    {packageData.duration} Days of Sightseeing
-                  </p>
-                  <p className="small text-muted">
-                    {packageData.inclusive ||
-                      "Food, Transport & Guide included"}
-                  </p>
-                </div>
-              </div>
-
-              {packageData.exclusive && (
-                <div className="alert alert-warning border shadow-sm small mb-4 text-dark">
-                  <strong>⚠️ Important Note (Exclusions):</strong>{" "}
-                  {packageData.exclusive}
-                </div>
-              )}
-
-              <div className="mt-4 mb-4 p-3 bg-light rounded-3 border">
-                <h5 className="text-secondary fw-bold mb-3 border-bottom pb-2">
-                  <i className="bi bi-star-fill text-warning me-2"></i>Package
-                  Reputation
-                </h5>
-                <div className="d-flex align-items-center mb-2">
-                  <h3 className="mb-0 me-3 fw-bold">4.8</h3>
-                  <div>
-                    <div className="text-warning">
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-fill"></i>
-                      <i className="bi bi-star-half"></i>
-                    </div>
-                    <small className="text-muted">
-                      Based on recent travelers
-                    </small>
+              {/* Price & Duration Boxes */}
+              <div className="row g-3 mb-4">
+                <div className="col-6">
+                  <div className="bg-light p-3 rounded-3 text-center">
+                    <small className="text-muted d-block mb-1">Duration</small>
+                    <h5 className="fw-bold text-primary mb-0">
+                      {packageData.duration} Days
+                    </h5>
                   </div>
                 </div>
-                <p className="small text-muted mb-0">
-                  <i className="bi bi-chat-heart-fill text-danger me-1"></i>
-                  95% of guests recommended this tour for its service and
-                  arrangements.
-                </p>
-              </div>
-
-              <div className="mb-4">
-                <span className="text-muted small">Starting Price</span>
-                <div className="text-primary fs-3 fw-bold">
-                  ₹{packageData.price}
+                <div className="col-6">
+                  <div className="bg-light p-3 rounded-3 text-center">
+                    <small className="text-muted d-block mb-1">Price</small>
+                    <h5 className="fw-bold text-success mb-0">
+                      ₹{packageData.price}
+                    </h5>
+                  </div>
                 </div>
               </div>
 
+              {/* Rating */}
+              <div className="alert alert-info p-3 rounded-3 mb-4">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div>
+                    <small className="text-dark d-block fw-bold">
+                      Guest Rating
+                    </small>
+                    <h5 className="fw-bold text-primary mb-0">⭐ 4.8/5.0</h5>
+                  </div>
+                  <div className="text-end">
+                    <small className="text-dark d-block">95% Recommend</small>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
               <div className="d-grid gap-2">
-                <Link to={`/packages/${id}`} className="btn btn-primary btn-lg">
-                  Book Now
+                <Link
+                  to={`/packages/${id}`}
+                  className="btn btn-primary btn-lg fw-bold rounded-3"
+                >
+                  <i className="bi bi-bag-check me-2"></i>Book Now
                 </Link>
-                <Link to="/" className="btn btn-outline-secondary btn-lg">
-                  Back to Packages
+                <Link
+                  to="/"
+                  className="btn btn-outline-primary btn-lg rounded-3"
+                >
+                  <i className="bi bi-arrow-left me-2"></i>Back
                 </Link>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-5 mb-5 p-5 bg-white rounded-4 shadow-lg border">
-        <div className="text-center mb-5">
-          <h2 className="fw-bold text-dark">Overall Package Reviews</h2>
-          <p className="text-muted">
-            Hear from travelers who experienced this specific tour
-          </p>
+        {/* Details Section */}
+        <div className="row g-4 mb-5">
+          {/* Hotel Info */}
+          <div className="col-lg-6">
+            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
+              <h5 className="fw-bold text-dark mb-3">
+                <i className="bi bi-building text-primary me-2"></i>Hotel & Stay
+              </h5>
+              <div className="bg-light p-3 rounded-3">
+                <p className="fw-bold text-dark mb-1">
+                  {packageData.hotel_id?.name || "Hotel"}
+                </p>
+                <p className="text-muted small mb-0">
+                  📍 {packageData.hotel_id?.location || "Location"}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* What's Included */}
+          <div className="col-lg-6">
+            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
+              <h5 className="fw-bold text-dark mb-3">
+                <i className="bi bi-check-circle text-success me-2"></i>What's
+                Included
+              </h5>
+              <div className="bg-light p-3 rounded-3">
+                <p className="text-dark small mb-0">
+                  {packageData.inclusive || "Food, Transport & Guide"}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <ReviewsDisplay packageId={id} type="package" />
+
+        {/* Exclusions if available */}
+        {packageData.exclusive && (
+          <div className="row g-4 mb-5">
+            <div className="col-12">
+              <div className="alert alert-danger p-4 rounded-4 mb-0">
+                <h5 className="fw-bold text-danger mb-2">
+                  <i className="bi bi-info-circle me-2"></i>Note
+                </h5>
+                <p className="text-danger mb-0">{packageData.exclusive}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Reviews Section */}
+        <div className="card border-0 shadow-lg p-5 rounded-4 bg-white mb-5">
+          <h3 className="fw-bold text-dark text-center mb-4">
+            <i className="bi bi-chat-hearts text-danger me-2"></i>Guest Reviews
+          </h3>
+          <ReviewsDisplay packageId={id} type="package" />
+        </div>
       </div>
     </div>
   );

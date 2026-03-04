@@ -96,7 +96,8 @@ const PackageManagment = () => {
       setFormData(initialFormState);
     } catch (error) {
       console.error("Error saving package", error);
-      const msg = error?.response?.data?.message || error?.message || "Failed to save.";
+      const msg =
+        error?.response?.data?.message || error?.message || "Failed to save.";
       alert("Failed to save package: " + msg);
     }
   };
@@ -107,8 +108,11 @@ const PackageManagment = () => {
     // Fill the form, but make sure the date is formatted correctly for HTML
     setFormData({
       ...initialFormState, // ensures all fields exist
-      ...pkg,              // overwrites with actual data
+      ...pkg, // overwrites with actual data
       start_date: pkg.start_date ? pkg.start_date.split("T")[0] : "",
+      hotel_id:
+        typeof pkg.hotel_id === "object" ? pkg.hotel_id._id : pkg.hotel_id,
+      bus_id: typeof pkg.bus_id === "object" ? pkg.bus_id._id : pkg.bus_id,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -125,7 +129,7 @@ const PackageManagment = () => {
       try {
         const token = localStorage.getItem("token");
         await axios.delete(`http://localhost:4000/api/packages/delete/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         fetchData();
       } catch (error) {
@@ -138,90 +142,184 @@ const PackageManagment = () => {
     <div className="container mt-4">
       {/* --- FORM SECTION --- */}
       <div className="card shadow-sm p-4 mb-5">
-        <h3 className="mb-3">{editingId ? "Edit Tour Package" : "Add Tour Package"}</h3>
+        <h3 className="mb-3">
+          {editingId ? "Edit Tour Package" : "Add Tour Package"}
+        </h3>
 
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
             {/* Package Name */}
             <div className="col-md-6">
               <label className="form-label">Package Name:</label>
-              <input type="text" name="package_name" className="form-control" onChange={handleChange} value={formData.package_name} required />
+              <input
+                type="text"
+                name="package_name"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.package_name}
+                required
+              />
             </div>
 
             {/* Package Type */}
             <div className="col-md-6">
               <label className="form-label">Type:</label>
-              <input type="text" name="package_type" className="form-control" onChange={handleChange} value={formData.package_type} required />
+              <input
+                type="text"
+                name="package_type"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.package_type}
+                required
+              />
             </div>
 
             {/* Destination */}
             <div className="col-md-4">
               <label className="form-label">Destination:</label>
-              <input type="text" name="destination" className="form-control" onChange={handleChange} value={formData.destination} required />
+              <input
+                type="text"
+                name="destination"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.destination}
+                required
+              />
             </div>
 
             {/* Price */}
             <div className="col-md-4">
               <label className="form-label">Price:</label>
-              <input type="number" name="price" className="form-control" onChange={handleChange} value={formData.price} required />
+              <input
+                type="number"
+                name="price"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.price}
+                required
+              />
             </div>
 
             {/* Duration */}
             <div className="col-md-4">
               <label className="form-label">Duration:</label>
-              <input type="text" name="duration" className="form-control" onChange={handleChange} value={formData.duration} required />
+              <input
+                type="text"
+                name="duration"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.duration}
+                required
+              />
             </div>
 
             {/* Start Date */}
             <div className="col-md-4">
               <label className="form-label">Start Date:</label>
-              <input type="date" name="start_date" className="form-control" onChange={handleChange} value={formData.start_date} required />
+              <input
+                type="date"
+                name="start_date"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.start_date}
+                required
+              />
             </div>
 
             {/* IDs */}
             <div className="col-md-4">
               <label className="form-label">Bus ID:</label>
-              <select name="bus_id" className="form-select" onChange={handleChange} value={formData.bus_id}>
+              <select
+                name="bus_id"
+                className="form-select"
+                onChange={handleChange}
+                value={formData.bus_id}
+              >
                 <option value="">Select Bus</option>
-                {buses && buses.map((bus) => (
-                  <option key={bus._id} value={bus._id}>{bus.bus_number} - {bus.bus_type}</option>
-                ))}
+                {buses &&
+                  buses.map((bus) => (
+                    <option key={bus._id} value={bus._id}>
+                      {bus.bus_number} - {bus.bus_type}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="col-md-4">
               <label className="form-label">Hotel ID:</label>
-              <select name="hotel_id" className="form-select" onChange={handleChange} value={formData.hotel_id}>
+              <select
+                name="hotel_id"
+                className="form-select"
+                onChange={handleChange}
+                value={formData.hotel_id}
+              >
                 <option value="">Select Hotel</option>
-                {hotels && hotels.map((hotel) => (
-                  <option key={hotel._id} value={hotel._id}>{hotel.name}, {hotel.location}</option>
-                ))}
+                {hotels &&
+                  hotels.map((hotel) => (
+                    <option key={hotel._id} value={hotel._id}>
+                      {hotel.name}, {hotel.location}
+                    </option>
+                  ))}
               </select>
             </div>
 
             {/* Details */}
             <div className="col-12">
               <label className="form-label">Description:</label>
-              <textarea name="description" className="form-control" onChange={handleChange} value={formData.description}></textarea>
+              <textarea
+                name="description"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.description}
+              ></textarea>
             </div>
             <div className="col-12">
-              <label className="form-label">Image Filename (e.g., goa.jpg):</label>
-              <input type="text" name="image_url" className="form-control" placeholder="Paste the filename here" onChange={handleChange} value={formData.image_url} required />
+              <label className="form-label">
+                Image Filename (e.g., goa.jpg):
+              </label>
+              <input
+                type="text"
+                name="image_url"
+                className="form-control"
+                placeholder="Paste the filename here"
+                onChange={handleChange}
+                value={formData.image_url}
+                required
+              />
             </div>
 
             {/* Includes/Excludes */}
             <div className="col-md-4">
               <label className="form-label">Inclusive:</label>
-              <input type="text" name="inclusive" className="form-control" onChange={handleChange} value={formData.inclusive} required />
+              <input
+                type="text"
+                name="inclusive"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.inclusive}
+                required
+              />
             </div>
             <div className="col-md-4">
               <label className="form-label">Exclusive:</label>
-              <input type="text" name="exclusive" className="form-control" onChange={handleChange} value={formData.exclusive} required />
+              <input
+                type="text"
+                name="exclusive"
+                className="form-control"
+                onChange={handleChange}
+                value={formData.exclusive}
+                required
+              />
             </div>
 
             {/* Status */}
             <div className="col-md-4">
               <label className="form-label">Status:</label>
-              <select name="status" className="form-select" onChange={handleChange} value={formData.status}>
+              <select
+                name="status"
+                className="form-select"
+                onChange={handleChange}
+                value={formData.status}
+              >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
@@ -232,7 +330,11 @@ const PackageManagment = () => {
                 {editingId ? "Update Package" : "Save Package"}
               </button>
               {editingId && (
-                <button type="button" className="btn btn-secondary w-50" onClick={handleCancelEdit}>
+                <button
+                  type="button"
+                  className="btn btn-secondary w-50"
+                  onClick={handleCancelEdit}
+                >
                   Cancel
                 </button>
               )}
@@ -248,7 +350,7 @@ const PackageManagment = () => {
           <tr>
             <th>Image</th>
             <th>Name</th>
-            <th>Destination</th>
+            <th>Duration</th>
             <th>Type</th>
             <th>Price</th>
             <th>Action</th>
@@ -265,14 +367,20 @@ const PackageManagment = () => {
                 />
               </td>
               <td>{pkg.package_name}</td>
-              <td>{pkg.destination}</td>
+              <td>{pkg.duration}</td>
               <td>{pkg.package_type}</td>
               <td>₹{pkg.price}</td>
               <td>
-                <button className="btn btn-sm btn-secondary me-2" onClick={() => handleEdit(pkg)}>
+                <button
+                  className="btn btn-sm btn-secondary me-2"
+                  onClick={() => handleEdit(pkg)}
+                >
                   Edit
                 </button>
-                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(pkg._id)}>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(pkg._id)}
+                >
                   Delete
                 </button>
               </td>

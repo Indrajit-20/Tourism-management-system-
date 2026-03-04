@@ -4,7 +4,7 @@ const BusTicketBooking = require("../models/BusTicketBooking");
 // 1. Book a Bus Ticket (Called AFTER payment success)
 const bookBusTicket = async (req, res) => {
   try {
-    const { route_id, seat_numbers, travel_date, payment_id } = req.body;
+    const { route_id, seat_numbers, travel_date } = req.body;
 
     if (!seat_numbers || seat_numbers.length === 0) {
       return res.status(400).json({ message: "No seats selected" });

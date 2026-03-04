@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const Packagecard = ({
   id,
   package_name,
-  destination,
   price,
   duration,
   image_url,
@@ -35,9 +34,7 @@ const Packagecard = ({
         </div>
 
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="text-muted small">Location:</span> {destination}
-          </li>
+        
           <li className="list-group-item">
             <span className="text-muted small">Duration:</span> {duration}
           </li>

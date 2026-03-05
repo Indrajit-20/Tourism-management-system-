@@ -60,7 +60,7 @@ const BookPackage = () => {
         "http://localhost:4000/api/bookings/book",
         {
           package_id: id,
-          travellers: passengers.length, // The backend just counts how many people are in the list!
+          travellers: passengers.length, 
           passengers: passengers,
         },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -69,7 +69,7 @@ const BookPackage = () => {
       // Save booking ID for feedback
       setBookingId(bookingRes.data.booking._id);
 
-      // --- BASIC RAZORPAY INTEGRATION ---
+     
       // Calculate total amount in a simple way
       let totalAmountToPay = 0;
       for (let i = 0; i < passengers.length; i++) {
@@ -112,7 +112,7 @@ const BookPackage = () => {
 
   if (!packageData) return <h3>Loading...</h3>;
 
-  const currentTotal = 0; // Simple calc logic removed as we use loop below
+  const currentTotal = 0; 
   let totalToDisplay = 0;
   for (let i = 0; i < passengers.length; i++) {
     if (passengers[i].type === "Child") {

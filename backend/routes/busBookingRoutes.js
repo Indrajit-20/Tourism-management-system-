@@ -29,7 +29,7 @@ router.get("/all", authMiddleware, isadmin, getAllBookings);
 // 6. Approve/Reject Booking (Admin Only)
 router.put("/status/:id", authMiddleware, isadmin, updateBookingStatus);
 
-// 7. Get Booked Seats (Public, for map)
-router.get("/seats", getBookedSeats); // e.g. /api/bus-bookings/seats?route_id=...&travel_date=...
+// 7. Get Booked Seats (Public)
+router.get("/seats", getBookedSeats); 
 
 module.exports = router;

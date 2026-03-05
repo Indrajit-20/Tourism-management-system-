@@ -13,7 +13,7 @@ const getBusRoutes = async (req, res) => {
   }
 };
 
-// 2. Add a Bus Route (Admin)
+// 2. Add a Bus Route 
 const addBusRoute = async (req, res) => {
   try {
     const route = new BusRoute(req.body);
@@ -24,7 +24,7 @@ const addBusRoute = async (req, res) => {
   }
 };
 
-// 3. Update a Bus Route (Admin)
+// 3. Update a Bus Route 
 const updateBusRoute = async (req, res) => {
   try {
     const { id } = req.params;

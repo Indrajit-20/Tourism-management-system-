@@ -68,7 +68,7 @@ const login = async (req, res) => {
     }
 
     // Verify Password
-    // Check if the stored password is plaintext (legacy support) or hashed
+    // Check if the stored password 
     let isMatch = false;
     if (user.password && !user.password.startsWith("$2")) {
   

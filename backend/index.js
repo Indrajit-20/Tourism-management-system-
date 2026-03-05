@@ -10,6 +10,10 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const feedbackRoutes = require("./routes/feedbackRoutes");
 const cancellationRoutes = require("./routes/cancellationRoutes");
 const adminStatsRoutes = require("./routes/adminStatsRoutes");
+const hotelRoutes = require("./routes/hotelRoutes");
+const refundRoutes = require("./routes/refundRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
+
 const cors = require("cors");
 const path = require("path");
 
@@ -59,7 +63,6 @@ app.use("/api/bookings", bookingRoutes);
 
 app.use("/api/cust", CustmerRoutes);
 
-const hotelRoutes = require("./routes/hotelRoutes");
 app.use("/api/hotels", hotelRoutes);
 
 app.use("/api/payment", paymentRoutes);
@@ -70,11 +73,9 @@ app.use("/api/cancellation", cancellationRoutes);
 app.use("/api/admin-stats", adminStatsRoutes);
 
 // Refund routes
-const refundRoutes = require("./routes/refundRoutes");
 app.use("/api/refunds", refundRoutes);
 
 // Invoice routes
-const invoiceRoutes = require("./routes/invoiceRoutes");
 app.use("/api/invoice", invoiceRoutes);
 
 app.listen(port, () =>

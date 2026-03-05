@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 
             <li className="nav-item">
               <Link className="nav-link" to="custmer">
-                 Custmer
+                Custmer
               </Link>
             </li>
 
@@ -41,18 +41,18 @@ const AdminDashboard = () => {
 
             <li className="nav-item">
               <Link className="nav-link" to="manage-staff">
-                 Staff
+                Staff
               </Link>
             </li>
 
             <li className="nav-item mb-2">
               <Link className="nav-link" to="bookings">
-                 Bus Bookings
+                Bus Bookings
               </Link>
             </li>
             <li className="nav-item mb-2">
               <Link className="nav-link" to="package-bookings">
-                 Tour Bookings
+                Tour Bookings
               </Link>
             </li>
             <li className="nav-item mb-2">
@@ -62,12 +62,17 @@ const AdminDashboard = () => {
             </li>
             <li className="nav-item mb-2">
               <Link className="nav-link" to="cancellations">
-                 Cancellations
+                Cancellations
               </Link>
             </li>
             <li className="nav-item mb-2">
               <Link className="nav-link " to="refunds">
-               Refund
+                Refund
+              </Link>
+            </li>
+            <li className="nav-item mb-2">
+              <Link className="nav-link text-primary fw-bold" to="reports">
+                📊 Reports
               </Link>
             </li>
           </ul>

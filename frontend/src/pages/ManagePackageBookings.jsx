@@ -75,7 +75,7 @@ const ManagePackageBookings = () => {
             )
             .map((b) => (
               <tr key={b._id}>
-                <td>{b.Custmer_id?.name || "Unknown"}</td>
+                <td>{b.Custmer_id?.first_name || "Unknown"}</td>
                 <td>{b.Package_id?.package_name || "Unknown Package"}</td>
                 <td>{b.travellers}</td>
                 <td>₹{b.total_amount}</td>

@@ -56,10 +56,15 @@ const packageBooking = async (req, res) => {
 const getAllPackageBookings = async (req, res) => {
   try {
     const bookings = await PackageBooking.find()
-      .populate("Package_id", "package_name price")
-      .populate("Custmer_id", "name email");
+      .populate({ path: "Package_id", select: "package_name price" })
+      .populate({ path: "Custmer_id", select: "first_name last_name email" });
+    console.log("Bookings found:", bookings.length);
+    if (bookings.length > 0) {
+      console.log("First booking Package_id:", bookings[0].Package_id);
+    }
     res.status(200).json(bookings);
   } catch (error) {
+    console.error("Error in getAllPackageBookings:", error);
     res
       .status(500)
       .json({ message: "Error fetching bookings", error: error.message });

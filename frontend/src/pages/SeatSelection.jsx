@@ -21,10 +21,6 @@ const BusLayout = ({
       case "ordinary":
         return { rows: 10, cols: ["A", "B", "C", "D"] }; // 40 seats
       case "luxury":
-      case "volvo":
-        return { rows: 8, cols: ["A", "B", "C", "D"] }; // 32 seats
-      case "mini":
-        return { rows: 4, cols: ["A", "B", "C", "D"] }; // 16 seats
       default:
         // If total_seats is provided, calculate rows
         if (totalSeats) {
@@ -45,7 +41,7 @@ const BusLayout = ({
     const isBooked = bookedSeats.includes(seatNum);
     const isSelected = selectedSeats.includes(seatNum);
 
-    let colorClass = "btn-outline-success"; // Available - Green outline
+    let colorClass = "btn-outline-success"; // Available
     let title = "Available - Click to select";
 
     if (isBooked) {

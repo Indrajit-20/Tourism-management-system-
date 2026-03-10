@@ -68,9 +68,19 @@ const Reports = () => {
   const filteredBusBookings = filterByDate(busBookings);
   const packageSales = getPackageSales();
 
+  // Simple PDF Download using browser print
+  const downloadPDF = () => {
+    window.print();
+  };
+
   return (
     <div className="p-3">
-      <h3 className="mb-4">Reports</h3>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h3 className="mb-0">Reports</h3>
+        <button className="btn btn-danger" onClick={downloadPDF}>
+          📄 Download PDF
+        </button>
+      </div>
 
       {/* Date Filter */}
       <div className="row mb-4">
@@ -136,7 +146,15 @@ const Reports = () => {
       {/* Tour Booking Report */}
       {activeTab === "booking" && (
         <div>
-          <h5>Tour Booking Report</h5>
+          <div className="d-flex justify-content-between align-items-center mb-2">
+            <h5 className="mb-0">Tour Booking Report</h5>
+            <button
+              className="btn btn-sm btn-success"
+              onClick={() => downloadCSV("tour")}
+            >
+              📥 Download CSV
+            </button>
+          </div>
           <table className="table table-bordered">
             <thead className="table-light">
               <tr>

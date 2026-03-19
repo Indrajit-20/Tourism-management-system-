@@ -25,7 +25,7 @@ const cancelBooking = async (req, res) => {
       custmer_id,
       booking_id,
       booking_type,
-      refund_amount, // 100% of original amount
+      refund_amount, 
       cancellation_reason: reason,
       status: "Cancelled",
     });

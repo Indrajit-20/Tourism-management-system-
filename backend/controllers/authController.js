@@ -2,6 +2,7 @@ const Custmer = require("../models/Custmer");
 const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const Staff = require("../models/Staff");
 
 //Register
 
@@ -61,6 +62,14 @@ const login = async (req, res) => {
       user = await Admin.findOne({ email });
       role = "admin";
     }
+    // 3️Check Staff
+    if (!user) {
+      user = await Staff.findOne({ email_id: email });
+
+      if (user) {
+        role = user.designation; // driver or guide
+      }
+    }
 
     // If still not found, return error
     if (!user) {
@@ -86,7 +95,7 @@ const login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: role, name: user.name || user.first_name },
       "tsm",
-      { expiresIn: "2h" }
+      { expiresIn: "6h" }
     );
 
     // include name for frontend display

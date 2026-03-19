@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const ConnectMongoDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const CustmerRoutes = require("./routes/Custmerroutes");
@@ -13,6 +14,10 @@ const adminStatsRoutes = require("./routes/adminStatsRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const cron = require("node-cron");
+const {
+  autoCancelExpiredBookings,
+} = require("./controllers/busBookingController");
 
 const cors = require("cors");
 const path = require("path");
@@ -21,6 +26,10 @@ const busRouteRoutes = require("./routes/busRouteRoutes");
 
 // Use Bus Booking Routes
 const busBookingRoutes = require("./routes/busBookingRoutes");
+const busScheduleRoutes = require("./routes/busScheduleRoutes");
+const busTripRoutes = require("./routes/busTripRoutes");
+const ticketRoutes = require("./routes/ticketRoutes"); // ✅ NEW
+const staffDashboardRoutes = require("./routes/staffDashboardRoutes"); // ✅ NEW
 
 const port = 4000;
 const app = express();
@@ -29,6 +38,9 @@ app.use(express.json());
 
 ConnectMongoDB();
 
+cron.schedule("*/5 * * * *", async () => {
+  await autoCancelExpiredBookings();
+});
 //cors
 
 app.use(cors());
@@ -55,11 +67,20 @@ app.use("/api/bus", busRoutes);
 app.use("/api/bus-routes", busRouteRoutes);
 
 // Use Bus Booking Routes (
-app.use("/api/bus-bookings", busBookingRoutes);
+app.use("/api/bus-bookings", busBookingRoutes); //
+
+// Use Bus Schedule Routes
+app.use("/api/bus-schedules", busScheduleRoutes);
+
+// Use Bus Trip Routes
+app.use("/api/bus-trips", busTripRoutes);
 
 app.use("/api/staff", staffRoutes);
 
-app.use("/api/bookings", bookingRoutes);
+// ✅ NEW: Staff Dashboard (assigned trips, schedule, passenger list)
+app.use("/api/staff-dashboard", staffDashboardRoutes);
+
+app.use("/api/bookings", bookingRoutes); //tour
 
 app.use("/api/cust", CustmerRoutes);
 
@@ -77,6 +98,9 @@ app.use("/api/refunds", refundRoutes);
 
 // Invoice routes
 app.use("/api/invoice", invoiceRoutes);
+
+// ✅ NEW: Ticket routes (Download tickets)
+app.use("/api/tickets", ticketRoutes);
 
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)

@@ -5,9 +5,10 @@ const ManageStaff = () => {
   const [staffList, setStaffList] = useState([]);
   const [form, setForm] = useState({
     name: "",
-    designation: "Driver", // Default to Driver for convenience
+    designation: "driver", // ✅ FIXED: Must be lowercase "driver" or "guide"
     contact_no: "",
     email_id: "",
+    password: "", // ✅ NEW: Password field
     dob: "",
     address: "",
   });
@@ -44,16 +45,19 @@ const ManageStaff = () => {
       alert("Staff added successfully!");
       setForm({
         name: "",
-        designation: "Driver",
+        designation: "driver", // ✅ FIXED: lowercase
         contact_no: "",
         email_id: "",
+        password: "", // ✅ NEW
         dob: "",
         address: "",
       });
       fetchStaff();
     } catch (error) {
       console.error("Error adding staff", error);
-      alert("Error adding staff");
+      const errorMessage =
+        error.response?.data?.message || error.message || "Error adding staff";
+      alert(`Error: ${errorMessage}`);
     }
   };
 
@@ -102,9 +106,8 @@ const ManageStaff = () => {
                 className="form-control"
                 onChange={handleChange}
               >
-                <option value="Driver">Driver</option>
-                <option value="Conductor">Tour guide</option>
-                <option value="Other">Other</option>
+                <option value="driver">Driver</option>
+                <option value="guide">Tour Guide</option>
               </select>
             </div>
             <div className="col-md-4 mb-3">
@@ -126,6 +129,18 @@ const ManageStaff = () => {
                 value={form.email_id}
                 className="form-control"
                 onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-4 mb-3">
+              <label>🔐 Password</label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                className="form-control"
+                onChange={handleChange}
+                placeholder="Enter password"
                 required
               />
             </div>

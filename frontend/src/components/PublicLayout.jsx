@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import PaymentNotification from "./PaymentNotification"; // ← ADD line 1
 
 const PublicLayout = () => {
   const { pathname } = useLocation();
@@ -14,6 +15,7 @@ const PublicLayout = () => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Header />
+      <PaymentNotification /> {/* ← ADD line 2 */}
       <main className="flex-grow-1">
         <Outlet />
       </main>
@@ -22,4 +24,4 @@ const PublicLayout = () => {
   );
 };
 
-export default PublicLayout;
+export default PublicLayout

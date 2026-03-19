@@ -1,57 +1,87 @@
-const BusRoute = require("../models/BusRoute");
+const BusTrip = require("../models/BusTrip");
 const BusTicketBooking = require("../models/BusTicketBooking");
+const Custmer = require("../models/Custmer");
 
-// 1. Book a Bus Ticket (Called AFTER payment success)
+// 1. BOOK BUS TICKET (User)
+
 const bookBusTicket = async (req, res) => {
   try {
-    const { route_id, seat_numbers, travel_date } = req.body;
+    const { trip_id, seat_numbers } = req.body;
+    const customer_id = req.user.id;
 
     if (!seat_numbers || seat_numbers.length === 0) {
       return res.status(400).json({ message: "No seats selected" });
     }
 
-    const customer_id = req.user.id;
-
-    // 1. Find the Route
-    const route = await BusRoute.findById(route_id);
-    if (!route) return res.status(404).json({ message: "Route not found" });
-
-    // 2. Check if seats are already booked
-    const existingBookings = await BusTicketBooking.find({
-      route_id: route_id,
-      travel_date: travel_date,
-      seat_numbers: { $in: seat_numbers },
-      booking_status: { $ne: "Rejected" },
+    // Find trip with full details
+    const trip = await BusTrip.findById(trip_id).populate({
+      path: "schedule_id",
+      populate: { path: "route_id" },
     });
+    if (!trip) return res.status(404).json({ message: "Trip not found" });
 
-    if (existingBookings.length > 0) {
+    // Validate seats exist
+    const seatMap = new Map(trip.seats.map((s) => [s.seat_number, s]));
+    const invalidSeats = seat_numbers.filter((s) => !seatMap.has(s));
+    if (invalidSeats.length) {
+      return res
+        .status(400)
+        .json({ message: "Some seats do not exist", invalidSeats });
+    }
+
+    // Check seats are available
+    const alreadyBooked = seat_numbers.filter(
+      (s) => !seatMap.get(s).is_available
+    );
+    if (alreadyBooked.length) {
       return res.status(400).json({
         message:
           "Some seats are already booked. Please select different seats.",
+        alreadyBooked,
       });
     }
 
-    // 3. Calculate Price
-    const seats_count = seat_numbers.length;
-    const total_amount = route.price_per_seat * seats_count;
-
-    // 4. Create Booking (Payment already done)
-    const newBooking = new BusTicketBooking({
-      route_id: route_id,
-      custmer_id: customer_id,
-      travel_date: travel_date,
-      travellers: seats_count,
-      seat_numbers: seat_numbers,
-      price_per_seat: route.price_per_seat,
-      total_amount: total_amount,
-      booking_status: "Confirmed",
-      payment_status: "Paid",
+    // ✅ Calculate total using dynamic per-seat prices
+    let totalAmount = 0;
+    const seatPrices = seat_numbers.map((seatNum) => {
+      const seat = seatMap.get(seatNum);
+      const price =
+        seat.price || trip.schedule_id?.route_id?.price_per_seat || 0;
+      totalAmount += price;
+      return price;
     });
 
+    const avgPrice = Math.round(totalAmount / seat_numbers.length);
+
+    // ✅ FIX: Save booking as PENDING first — no payment yet
+    // ✅ FIX: correct field name customer_id
+    const newBooking = new BusTicketBooking({
+      trip_id,
+      customer_id,
+      travel_date: trip.trip_date,
+      travellers: seat_numbers.length,
+      seat_numbers,
+      seat_prices: seatPrices,
+      price_per_seat: avgPrice,
+      total_amount: totalAmount,
+      booking_status: "Pending",
+      payment_status: "Pending",
+      payment_deadline: null,
+    });
+
+    // ✅ Save booking FIRST before marking seats
     await newBooking.save();
 
+    // ✅ Mark seats as unavailable AFTER booking saved
+    trip.seats = trip.seats.map((seat) =>
+      seat_numbers.includes(seat.seat_number)
+        ? { ...seat.toObject(), is_available: false }
+        : seat
+    );
+    await trip.save();
+
     res.status(201).json({
-      message: "Booking Confirmed!",
+      message: "Booking request submitted! Waiting for admin approval.",
       booking: newBooking,
     });
   } catch (error) {
@@ -60,114 +90,22 @@ const bookBusTicket = async (req, res) => {
   }
 };
 
-// 2. Get All Bookings (Admin)
+// 2. GET ALL BOOKINGS (Admin)
+
 const getAllBookings = async (req, res) => {
   try {
     const bookings = await BusTicketBooking.find()
-      .populate("custmer_id", "name email")
+
+      .populate("customer_id", "first_name last_name email")
       .populate({
-        path: "route_id",
-        populate: { path: "bus_id", select: "bus_number" },
-      });
-    res.status(200).json(bookings);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching bookings", error });
-  }
-};
-
-// 3. Update Booking Status (Admin: Approve/Reject)
-const updateBookingStatus = async (req, res) => {
-  try {
-    const { status } = req.body; // "Confirmed" or "Rejected"
-    const booking = await BusTicketBooking.findByIdAndUpdate(
-      req.params.id,
-      { booking_status: status },
-      { new: true }
-    );
-    res.status(200).json({ message: `Booking ${status}`, booking });
-  } catch (error) {
-    res.status(500).json({ message: "Error updating status", error });
-  }
-};
-
-// 4. Get Booked Seats for a specific Route and Date
-const getBookedSeats = async (req, res) => {
-  try {
-    const { route_id, travel_date } = req.query;
-
-    // Find all bookings for this route on this date WHERE PAYMENT IS DONE
-    const bookings = await BusTicketBooking.find({
-      route_id: route_id,
-      travel_date: travel_date,
-      booking_status: { $ne: "Rejected" },
-      payment_status: "Paid", // Only count paid bookings as booked seats
-    });
-
-    // Extract all seat numbers into a single flat array
-    // bookings = [ { seat_numbers: ["1A", "1B"] }, { seat_numbers: ["2A"] } ]
-    // result = ["1A", "1B", "2A"]
-    const bookedSeats = bookings.flatMap((b) => b.seat_numbers);
-
-    res.status(200).json(bookedSeats);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching seats", error });
-  }
-};
-
-// 5. Confirm Payment - Mark booking as Paid
-const confirmPayment = async (req, res) => {
-  try {
-    const { booking_id } = req.body;
-
-    const booking = await BusTicketBooking.findByIdAndUpdate(
-      booking_id,
-      { payment_status: "Paid" },
-      { new: true }
-    );
-
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
-
-    res.status(200).json({ message: "Payment confirmed", booking });
-  } catch (error) {
-    res.status(500).json({ message: "Error confirming payment", error });
-  }
-};
-
-// 6. Cancel Unpaid Booking - Delete if payment failed
-const cancelUnpaidBooking = async (req, res) => {
-  try {
-    const { booking_id } = req.body;
-
-    const booking = await BusTicketBooking.findById(booking_id);
-
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
-
-    // Only delete if payment was not completed
-    if (booking.payment_status !== "Paid") {
-      await BusTicketBooking.findByIdAndDelete(booking_id);
-      return res.status(200).json({ message: "Booking cancelled" });
-    }
-
-    res.status(400).json({ message: "Cannot cancel paid booking" });
-  } catch (error) {
-    res.status(500).json({ message: "Error cancelling booking", error });
-  }
-};
-
-// 7. Get user's own bookings
-const getMyBookings = async (req, res) => {
-  try {
-    const customer_id = req.user.id;
-
-    const bookings = await BusTicketBooking.find({ custmer_id: customer_id })
-      .populate("custmer_id", "name email")
-      .populate({
-        path: "route_id",
-        populate: { path: "bus_id", select: "bus_name bus_number" },
+        path: "trip_id",
+        populate: [
+          { path: "bus_id", select: "bus_number bus_type" },
+          {
+            path: "schedule_id",
+            populate: { path: "route_id", select: "boarding_from destination" },
+          },
+        ],
       })
       .sort({ createdAt: -1 });
 
@@ -177,12 +115,300 @@ const getMyBookings = async (req, res) => {
   }
 };
 
+// 3. APPROVE OR REJECT BOOKING (Admin)
+
+const updateBookingStatus = async (req, res) => {
+  try {
+    const { status } = req.body; // "Approved" or "Rejected"
+
+    const booking = await BusTicketBooking.findById(req.params.id)
+      .populate("customer_id", "first_name last_name email")
+      .populate({
+        path: "trip_id",
+        populate: {
+          path: "schedule_id",
+          populate: { path: "route_id" },
+        },
+      });
+
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+    if (status === "Approved") {
+      //  Set 30 minute payment deadline
+      const deadline = new Date();
+      deadline.setMinutes(deadline.getMinutes() + 30);
+
+      booking.booking_status = "Approved";
+      booking.payment_deadline = deadline;
+      await booking.save();
+
+      return res.status(200).json({
+        message: "Booking approved. Customer has 30 minutes to pay.",
+        booking,
+      });
+    }
+
+    if (status === "Rejected") {
+      booking.booking_status = "Rejected";
+      await booking.save();
+
+      // Release seats back when rejected
+      const trip = await require("../models/BusTrip").findById(
+        booking.trip_id._id
+      );
+      if (trip) {
+        trip.seats = trip.seats.map((seat) =>
+          booking.seat_numbers.includes(seat.seat_number)
+            ? { ...seat.toObject(), is_available: true }
+            : seat
+        );
+        await trip.save();
+      }
+
+      // Send rejection email
+      if (customerEmail) {
+        await sendBookingRejectedEmail(
+          customerEmail,
+          customerName,
+          booking,
+          routeLabel
+        );
+      }
+
+      return res
+        .status(200)
+        .json({ message: "Booking rejected. Seats released.", booking });
+    }
+
+    res
+      .status(400)
+      .json({ message: "Invalid status. Use Approved or Rejected." });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating status", error });
+  }
+};
+
+// 4. CONFIRM PAYMENT (User pays after approval)
+
+const confirmPayment = async (req, res) => {
+  try {
+    const { booking_id, payment_id } = req.body;
+
+    const booking = await BusTicketBooking.findById(booking_id)
+      .populate("customer_id", "first_name last_name email")
+      .populate({
+        path: "trip_id",
+        populate: {
+          path: "schedule_id",
+          populate: { path: "route_id" },
+        },
+      });
+
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+    // Check booking is approved
+    if (booking.booking_status !== "Approved") {
+      return res.status(400).json({
+        message: "Booking is not approved yet. Please wait for admin approval.",
+      });
+    }
+
+    // Check payment deadline has not expired
+    if (booking.payment_deadline && new Date() > booking.payment_deadline) {
+      // Auto cancel expired booking
+      booking.booking_status = "Cancelled";
+      booking.payment_status = "Failed";
+      await booking.save();
+
+      // Release seats
+      const trip = await require("../models/BusTrip").findById(
+        booking.trip_id._id
+      );
+      if (trip) {
+        trip.seats = trip.seats.map((seat) =>
+          booking.seat_numbers.includes(seat.seat_number)
+            ? { ...seat.toObject(), is_available: true }
+            : seat
+        );
+        await trip.save();
+      }
+
+      return res.status(400).json({
+        message:
+          "Payment deadline expired. Booking has been cancelled. Please book again.",
+      });
+    }
+
+    //  Confirm payment
+    booking.booking_status = "Confirmed";
+    booking.payment_status = "Paid";
+    booking.payment_id = payment_id;
+    await booking.save();
+
+    res.status(200).json({
+      message: "Payment confirmed! Ticket booked successfully.",
+      booking,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error confirming payment", error });
+  }
+};
+
+// 5. AUTO CANCEL EXPIRED BOOKINGS
+
+const autoCancelExpiredBookings = async () => {
+  try {
+    const now = new Date();
+
+    // Find all approved bookings where deadline has passed
+    const expiredBookings = await BusTicketBooking.find({
+      booking_status: "Approved",
+      payment_status: "Pending",
+      payment_deadline: { $lt: now },
+    });
+
+    for (const booking of expiredBookings) {
+      // Cancel booking
+      booking.booking_status = "Cancelled";
+      booking.payment_status = "Failed";
+      await booking.save();
+
+      // Release seats back
+      const BusTrip = require("../models/BusTrip");
+      const trip = await BusTrip.findById(booking.trip_id);
+      if (trip) {
+        trip.seats = trip.seats.map((seat) =>
+          booking.seat_numbers.includes(seat.seat_number)
+            ? { ...seat.toObject(), is_available: true }
+            : seat
+        );
+        await trip.save();
+      }
+
+      console.log(`✅ Auto-cancelled expired booking: ${booking._id}`);
+    }
+
+    if (expiredBookings.length > 0) {
+      console.log(
+        `✅ Auto-cancelled ${expiredBookings.length} expired bookings`
+      );
+    }
+  } catch (err) {
+    console.error("Auto-cancel error:", err.message);
+  }
+};
+
+// 6. GET BOOKED SEATS for a trip
+
+const getBookedSeats = async (req, res) => {
+  try {
+    const { trip_id } = req.query;
+
+    const bookings = await BusTicketBooking.find({
+      trip_id,
+      booking_status: { $nin: ["Rejected", "Cancelled"] },
+    });
+
+    const bookedSeats = bookings.flatMap((b) => b.seat_numbers);
+    res.status(200).json(bookedSeats);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching seats", error });
+  }
+};
+
+// 7. GET MY BOOKINGS (User)
+
+const getMyBookings = async (req, res) => {
+  try {
+    const customer_id = req.user.id;
+
+    const bookings = await BusTicketBooking.find({ customer_id })
+      .populate("customer_id", "first_name last_name email")
+      .populate({
+        path: "trip_id",
+        populate: [
+          { path: "bus_id", select: "bus_name bus_number bus_type" },
+          {
+            path: "schedule_id",
+            populate: { path: "route_id" },
+          },
+        ],
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(bookings);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching bookings", error });
+  }
+};
+
+// ✅ 8. CANCEL BOOKING (User)
+
+const cancelBooking = async (req, res) => {
+  try {
+    const { id: booking_id } = req.params;
+    const customer_id = req.user.id;
+
+    const booking = await BusTicketBooking.findById(booking_id);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Security check — user can only cancel their own booking
+    if (booking.customer_id.toString() !== customer_id) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized: Not your booking" });
+    }
+
+    // Only Pending, Approved, or Confirmed bookings can be cancelled
+    if (
+      booking.booking_status !== "Pending" &&
+      booking.booking_status !== "Approved" &&
+      booking.booking_status !== "Confirmed"
+    ) {
+      return res.status(400).json({
+        message: `Cannot cancel ${booking.booking_status} booking. Only Pending, Approved, or Confirmed bookings can be cancelled.`,
+      });
+    }
+
+    // Cancel the booking
+    booking.booking_status = "Cancelled";
+    booking.payment_status = "Refunded"; // Mark as refunded
+    await booking.save();
+
+    // Release seats back to available
+    const trip = await require("../models/BusTrip").findById(booking.trip_id);
+    if (trip) {
+      trip.seats = trip.seats.map((seat) =>
+        booking.seat_numbers.includes(seat.seat_number)
+          ? { ...seat.toObject(), is_available: true }
+          : seat
+      );
+      await trip.save();
+    }
+
+    res.status(200).json({
+      message: "Booking cancelled successfully. Seats released.",
+      booking,
+    });
+  } catch (error) {
+    console.error("Error cancelling booking:", error);
+    res.status(500).json({
+      message: "Error cancelling booking",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   bookBusTicket,
   getAllBookings,
   updateBookingStatus,
-  getBookedSeats,
   confirmPayment,
-  cancelUnpaidBooking,
+  getBookedSeats,
   getMyBookings,
+  autoCancelExpiredBookings,
+  cancelBooking, // ✅ NEW
 };

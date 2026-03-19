@@ -39,7 +39,7 @@ const ManageBusBookings = () => {
       fetchBookings(); // Refresh list
     } catch (err) {
       console.error(err);
-      alert("Action Failed");
+      alert("Error: " + (err.response?.data?.message || "Action Failed"));
     }
   };
 
@@ -79,9 +79,12 @@ const ManageBusBookings = () => {
             )
             .map((b) => (
               <tr key={b._id}>
-                <td>{b.custmer_id?.name || "Unknown"}</td>
                 <td>
-                  {b.route_id?.boarding_from} &rarr; {b.route_id?.destination}
+                  {b.customer_id?.first_name} {b.customer_id?.last_name}
+                </td>
+                <td>
+                  {b.trip_id?.schedule_id?.route_id?.boarding_from} &rarr;{" "}
+                  {b.trip_id?.schedule_id?.route_id?.destination}
                 </td>
                 <td>{new Date(b.travel_date).toLocaleDateString()}</td>
                 <td>
@@ -95,6 +98,8 @@ const ManageBusBookings = () => {
                     className={`badge ${
                       b.booking_status === "Confirmed"
                         ? "bg-success"
+                        : b.booking_status === "Approved"
+                        ? "bg-info"
                         : b.booking_status === "Pending"
                         ? "bg-warning"
                         : "bg-danger"
@@ -108,7 +113,7 @@ const ManageBusBookings = () => {
                     <>
                       <button
                         className="btn btn-sm btn-success me-2"
-                        onClick={() => handleStatus(b._id, "Confirmed")}
+                        onClick={() => handleStatus(b._id, "Approved")}
                       >
                         Approve
                       </button>

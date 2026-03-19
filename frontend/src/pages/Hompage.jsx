@@ -9,6 +9,10 @@ const Hompage = () => {
   const [ratings, setRatings] = useState({});
   const [featuredRoutes, setFeaturedRoutes] = useState([]); // State for Bus Routes
   const [loading, setLoading] = useState(true);
+  const [showTripsModal, setShowTripsModal] = useState(false); // ✅ Modal state
+  const [selectedRoute, setSelectedRoute] = useState(null); // ✅ Selected route
+  const [trips, setTrips] = useState([]); // ✅ Available trips
+  const [tripsLoading, setTripsLoading] = useState(false); // ✅ Loading state
 
   // Fetch Packages
   const fetchpkg = async () => {
@@ -21,7 +25,7 @@ const Hompage = () => {
       const ratingPromises = res.data.map(async (p) => {
         try {
           const r = await axios.get(
-            `http://localhost:4000/api/feedback/rating/package/${p._id}`,
+            `http://localhost:4000/api/feedback/rating/package/${p._id}`
           );
           ratingsData[p._id] = r.data;
         } catch (e) {
@@ -42,6 +46,41 @@ const Hompage = () => {
       setFeaturedRoutes(res.data.slice(0, 3)); // Only show top 3
     } catch (err) {
       console.error("Error fetching bus routes", err);
+    }
+  };
+
+  // ✅ NEW: Fetch available trips for a route
+  const handleShowTrips = async (route) => {
+    setSelectedRoute(route);
+    setShowTripsModal(true);
+    setTripsLoading(true);
+    setTrips([]);
+
+    try {
+      const today = new Date().toISOString().split("T")[0];
+      // Fetch trips for next 7 days
+      const tripsData = [];
+      for (let i = 0; i < 7; i++) {
+        const date = new Date();
+        date.setDate(date.getDate() + i);
+        const dateStr = date.toISOString().split("T")[0];
+
+        try {
+          const res = await axios.get(
+            `http://localhost:4000/api/bus-trips?route_id=${route._id}&date=${dateStr}`
+          );
+          if (res.data && res.data.length > 0) {
+            tripsData.push(...res.data);
+          }
+        } catch (err) {
+          // Ignore individual date errors
+        }
+      }
+      setTrips(tripsData);
+    } catch (err) {
+      console.error("Error fetching trips", err);
+    } finally {
+      setTripsLoading(false);
     }
   };
 
@@ -165,12 +204,12 @@ const Hompage = () => {
                           </p>
                         </div>
                       </div>
-                      <Link
-                        to="/book-bus"
+                      <button
                         className="btn btn-primary w-100 py-2 fw-bold"
+                        onClick={() => handleShowTrips(route)}
                       >
                         Check Availability
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -225,6 +264,205 @@ const Hompage = () => {
           </div>
         )}
       </main>
+
+      {/* ✅ NEW: AVAILABLE TRIPS MODAL */}
+      {showTripsModal && (
+        <div
+          className="modal d-block"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.5)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 1050,
+            overflow: "auto",
+          }}
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content border-0 shadow-lg">
+              {/* Header */}
+              <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title fw-bold">
+                  🚍 Available Trips - {selectedRoute?.boarding_from} →{" "}
+                  {selectedRoute?.destination}
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={() => {
+                    setShowTripsModal(false);
+                    setSelectedRoute(null);
+                    setTrips([]);
+                  }}
+                />
+              </div>
+
+              {/* Body */}
+              <div
+                className="modal-body p-4"
+                style={{ maxHeight: "500px", overflowY: "auto" }}
+              >
+                {tripsLoading ? (
+                  <div className="text-center py-5">
+                    <div
+                      className="spinner-border text-primary"
+                      role="status"
+                    />
+                    <p className="mt-3">Loading available trips...</p>
+                  </div>
+                ) : trips.length === 0 ? (
+                  <div className="text-center py-5">
+                    <h5 className="text-muted">😞 No trips available</h5>
+                    <p className="text-muted small">
+                      This route doesn't have trips scheduled for the next 7
+                      days
+                    </p>
+                  </div>
+                ) : (
+                  <div className="row g-3">
+                    {trips.map((trip) => {
+                      const booked =
+                        trip.seats?.filter((s) => !s.is_available).length || 0;
+                      const total = trip.seats?.length || 0;
+                      const available = total - booked;
+
+                      return (
+                        <div key={trip._id} className="col-12">
+                          <div className="card border-1">
+                            <div className="card-body">
+                              {/* Date & Time */}
+                              <div className="row align-items-center mb-3">
+                                <div className="col-md-4">
+                                  <h6 className="mb-1 fw-bold">
+                                    📅{" "}
+                                    {new Date(
+                                      trip.trip_date
+                                    ).toLocaleDateString("en-IN", {
+                                      weekday: "short",
+                                      month: "short",
+                                      day: "numeric",
+                                    })}
+                                  </h6>
+                                  <small className="text-muted">
+                                    {trip.schedule_id?.departure_time || "N/A"}{" "}
+                                    → {trip.schedule_id?.arrival_time || "N/A"}
+                                  </small>
+                                </div>
+
+                                {/* Seats Info */}
+                                <div className="col-md-4">
+                                  <div className="text-center">
+                                    <h6 className="mb-1">
+                                      <span className="badge bg-success">
+                                        {available}
+                                      </span>
+                                    </h6>
+                                    <small className="text-muted">
+                                      Seats Available
+                                    </small>
+                                  </div>
+                                </div>
+
+                                {/* Price */}
+                                <div className="col-md-2">
+                                  <h6 className="mb-0 fw-bold text-success">
+                                    ₹{selectedRoute?.price_per_seat}
+                                  </h6>
+                                </div>
+
+                                {/* Book Button */}
+                                <div className="col-md-2">
+                                  <Link
+                                    to="/book-seats"
+                                    state={{
+                                      trip,
+                                      route: selectedRoute,
+                                      date: new Date(trip.trip_date)
+                                        .toISOString()
+                                        .split("T")[0],
+                                    }}
+                                    className="btn btn-sm btn-primary w-100"
+                                  >
+                                    Book
+                                  </Link>
+                                </div>
+                              </div>
+
+                              {/* Boarding Points */}
+                              {trip.boarding_points &&
+                                trip.boarding_points.length > 0 && (
+                                  <div className="mb-2 p-2 bg-light rounded">
+                                    <small className="text-muted d-block">
+                                      📍 Boarding Points:
+                                    </small>
+                                    <small className="fw-500">
+                                      {trip.boarding_points.join(", ")}
+                                    </small>
+                                  </div>
+                                )}
+
+                              {/* Seat Status Bar */}
+                              <div className="mt-2">
+                                <small className="text-muted d-block mb-1">
+                                  Seat Status: {booked} booked, {available}{" "}
+                                  available
+                                </small>
+                                <div
+                                  className="progress"
+                                  style={{ height: "20px" }}
+                                >
+                                  <div
+                                    className="progress-bar bg-danger"
+                                    style={{
+                                      width: `${(booked / total) * 100}%`,
+                                    }}
+                                    title={`${booked} booked`}
+                                  />
+                                  <div
+                                    className="progress-bar bg-success"
+                                    style={{
+                                      width: `${(available / total) * 100}%`,
+                                    }}
+                                    title={`${available} available`}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setShowTripsModal(false);
+                    setSelectedRoute(null);
+                    setTrips([]);
+                  }}
+                >
+                  Close
+                </button>
+                <Link
+                  to="/book-bus"
+                  className="btn btn-primary"
+                  onClick={() => setShowTripsModal(false)}
+                >
+                  View All Routes
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

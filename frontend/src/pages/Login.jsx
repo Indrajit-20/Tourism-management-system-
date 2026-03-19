@@ -25,7 +25,13 @@ const Login = () => {
 
       alert("Login successful");
 
-      navigate(data.role === "admin" ? "/admin" : "/");
+      if (data.role === "admin") {
+        navigate("/admin");
+      } else if (data.role === "driver" || data.role === "guide") {
+        navigate("/staff-dashboard");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       alert(`Login failed: ${err.response?.data?.message || err.message}`);
     }

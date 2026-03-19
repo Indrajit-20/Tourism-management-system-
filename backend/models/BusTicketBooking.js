@@ -5,22 +5,55 @@ const busBookingSchema = new mongoose.Schema(
     route_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "BusRoute",
+    },
+
+    trip_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BusTrip",
       required: true,
     },
 
-    custmer_id: {
+    
+    customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
       required: true,
     },
 
     travel_date: { type: Date, required: true },
-    seat_numbers: { type: [String], required: true }, // e.g. ["1A", "1B"]
-    travellers: { type: Number, required: true },
-    price_per_seat: { type: Number, required: true },
-    total_amount: { type: Number, required: true },
-    booking_status: { type: String, default: "Confirmed" },
-    payment_status: { type: String, default: "Pending" }, // Pending, Paid, Failed
+
+    // Each seat stores its own price (dynamic pricing)
+    seat_numbers: { type: [String], required: true },
+
+    // Store price per seat as array matching seat_numbers
+    seat_prices: { type: [Number], default: [] },
+
+    travellers:     { type: Number, required: true },
+    price_per_seat: { type: Number, required: true }, // average price
+    total_amount:   { type: Number, required: true },
+
+    booking_status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected", "Confirmed", "Cancelled"],
+      default: "Pending",
+    },
+
+    payment_status: {
+      type: String,
+      enum: ["Pending", "Paid", "Failed", "Refunded"],
+      default: "Pending",
+    },
+
+    payment_deadline: {
+      type: Date,
+      default: null,
+    },
+
+    payment_id: {
+      type: String,
+      default: null,
+    },
+
     status: { type: String, default: "Active" },
   },
   { timestamps: true }

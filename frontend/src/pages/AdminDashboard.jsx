@@ -40,6 +40,12 @@ const AdminDashboard = () => {
             </li>
 
             <li className="nav-item">
+              <Link className="nav-link" to="manage-schedules">
+                Schedules
+              </Link>
+            </li>
+
+            <li className="nav-item">
               <Link className="nav-link" to="manage-staff">
                 Staff
               </Link>
@@ -73,6 +79,11 @@ const AdminDashboard = () => {
             <li className="nav-item mb-2">
               <Link className="nav-link text-primary fw-bold" to="reports">
                 📊 Reports
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="manage-trips">
+                Manage Trips
               </Link>
             </li>
           </ul>

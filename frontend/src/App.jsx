@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import PackageManagment from "./pages/PackageManagment";
 import AdminDashboard from "./pages/AdminDashboard";
+import StaffDashboard from "./pages/StaffDashboard"; // Import Staff Dashboard
 
 import ManageCustmer from "./pages/ManageCustmer";
 import ManageBus from "./pages/ManageBus"; // Import Bus Page
@@ -14,6 +15,7 @@ import BookPackage from "./pages/BookPackage"; // Import BookPackage Page
 import PackageDetails from "./pages/PackageDetails";
 import BookBus from "./pages/BookBus"; // Import the new Booking Page
 import ManageRoutes from "./pages/ManageRoutes"; // Import the Admin Route Page
+import ManageSchedules from "./pages/ManageSchedules";
 import ManageBusBookings from "./pages/ManageBusBookings"; // Import Admin Bookings Page
 import ManagePackageBookings from "./pages/ManagePackageBookings"; // Import Package Bookings Page
 import SeatSelection from "./pages/SeatSelection"; // Import Seat Selection Page
@@ -28,6 +30,7 @@ import Reports from "./pages/Reports"; // Import Reports Page
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import PublicLayout from "./components/PublicLayout"; // Import Layout
+import ManageTripsByDate from "./pages/ManageTripsByDate"; // Import ManageTripsByDate Page
 
 function App() {
   return (
@@ -64,6 +67,7 @@ function App() {
             <Route path="manage-package" element={<PackageManagment />} />
             <Route path="manage-bus" element={<ManageBus />} />
             <Route path="manage-routes" element={<ManageRoutes />} />{" "}
+            <Route path="manage-schedules" element={<ManageSchedules />} />
             {/* Admin Route Page */}
             <Route path="bookings" element={<ManageBusBookings />} />
             <Route
@@ -75,8 +79,14 @@ function App() {
             <Route path="cancellations" element={<ManageCancellations />} />
             <Route path="refunds" element={<RefundReport />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="manage-trips" element={<ManageTripsByDate />} />
             {/* Add Bus Route */}
           </Route>
+        </Route>
+
+        {/* ✅ NEW: Protect Staff Routes */}
+        <Route element={<ProtectedRoute allowedRoles={["driver", "guide"]} />}>
+          <Route path="/staff-dashboard" element={<StaffDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

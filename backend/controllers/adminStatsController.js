@@ -47,7 +47,7 @@ exports.getDashboardStats = async (req, res) => {
     const recentBusBookings = await BusTicketBooking.find()
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("custmer_id", "first_name last_name email");
+      .populate("customer_id", "first_name last_name email");
 
     // Combine and format the recent transactions
     const combinedTransactions = [
@@ -64,8 +64,8 @@ exports.getDashboardStats = async (req, res) => {
       ...recentBusBookings.map((b) => ({
         id: b._id,
         type: "Bus Booking",
-        customerName: b.custmer_id
-          ? `${b.custmer_id.first_name} ${b.custmer_id.last_name}`
+        customerName: b.customer_id
+          ? `${b.customer_id.first_name} ${b.customer_id.last_name}`
           : "Guest",
         amount: b.total_amount || 0,
         date: b.createdAt,

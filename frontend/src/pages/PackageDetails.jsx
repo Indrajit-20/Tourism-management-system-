@@ -1,11 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import ReviewsDisplay from "../components/ReviewsDisplay";
+import "../css/packageDetails.css";
+
+const API_BASE_URL = "http://localhost:4000";
+
+const formatDate = (value) => {
+  if (!value) return "-";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return "-";
+  return parsed.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
+const parseMultiValue = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.filter(Boolean);
+  return String(value)
+    .split(/\n|,/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+};
+
+const toImageUrl = (value) => {
+  if (!value) return "https://via.placeholder.com/1200x700?text=Tour+Package";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `${API_BASE_URL}/uploads/${value}`;
+};
 
 const PackageDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [packageData, setPackageData] = useState(null);
+  const [activeTab, setActiveTab] = useState("itinerary");
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPackage = async () => {
@@ -13,160 +46,369 @@ const PackageDetails = () => {
         const res = await axios.get(`http://localhost:4000/api/packages/${id}`);
         setPackageData(res.data);
       } catch (err) {
-        console.error("Error fetching package details");
+        console.error("Error fetching package details", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchPackage();
   }, [id]);
 
-  if (!packageData) return <h3 className="text-center mt-5">Loading...</h3>;
+  const imageList = useMemo(() => {
+    if (!packageData) return [];
+    if (
+      Array.isArray(packageData.image_urls) &&
+      packageData.image_urls.length
+    ) {
+      return packageData.image_urls.map((img) => toImageUrl(img));
+    }
+    if (packageData.image_url) return [toImageUrl(packageData.image_url)];
+    return [toImageUrl(null)];
+  }, [packageData]);
+
+  const itineraryItems = useMemo(() => {
+    if (!packageData?.itinerary) return [];
+    if (Array.isArray(packageData.itinerary))
+      return packageData.itinerary.filter(Boolean);
+    return String(packageData.itinerary)
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }, [packageData]);
+
+  const sightseeingItems = useMemo(
+    () => parseMultiValue(packageData?.sightseeing),
+    [packageData],
+  );
+
+  const inclusionItems = useMemo(
+    () => parseMultiValue(packageData?.inclusive),
+    [packageData],
+  );
+
+  const exclusionItems = useMemo(
+    () => parseMultiValue(packageData?.exclusive),
+    [packageData],
+  );
+
+  const transportText = useMemo(() => {
+    const busType = packageData?.bus_id?.bus_type;
+    const busName = packageData?.bus_id?.bus_name;
+    if (busType && busName) return `${busType} (${busName})`;
+    if (busType) return busType;
+    return "-";
+  }, [packageData]);
+
+  const availableSeats = useMemo(() => {
+    if (typeof packageData?.available_seats === "number") {
+      return packageData.available_seats;
+    }
+
+    const totalSeats = Number(packageData?.bus_id?.total_seats) || 0;
+    const bookedTravellers = Number(packageData?.booked_travellers) || 0;
+    if (!totalSeats) return "-";
+    return Math.max(totalSeats - bookedTravellers, 0);
+  }, [packageData]);
+
+  if (loading) return <h3 className="text-center mt-5">Loading...</h3>;
+  if (!packageData)
+    return <h3 className="text-center mt-5">Package not found.</h3>;
+
+  const selectedImage = imageList[selectedImageIndex] || imageList[0];
+  const hotels = Array.isArray(packageData.hotels) ? packageData.hotels : [];
+
+  const tabs = [
+    { key: "itinerary", label: "Itinerary" },
+    { key: "sightseeing", label: "Sightseeing" },
+    { key: "inclusions", label: "Inclusions" },
+    { key: "hotels", label: "Hotels" },
+    { key: "reviews", label: "Reviews" },
+  ];
+
+  const renderTabContent = () => {
+    if (activeTab === "itinerary") {
+      if (!itineraryItems.length) {
+        return <p className="pd-empty">No itinerary available.</p>;
+      }
+
+      return (
+        <div className="pd-list">
+          {itineraryItems.map((item, index) => (
+            <div key={`iti-${index}`} className="pd-list-item">
+              <span className="pd-list-index">Day {index + 1}</span>
+              <p>{item}</p>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (activeTab === "sightseeing") {
+      if (!sightseeingItems.length) {
+        return <p className="pd-empty">No sightseeing data available.</p>;
+      }
+
+      return (
+        <div className="pd-chip-grid">
+          {sightseeingItems.map((item, index) => (
+            <span key={`sight-${index}`} className="pd-chip">
+              {item}
+            </span>
+          ))}
+        </div>
+      );
+    }
+
+    if (activeTab === "inclusions") {
+      return (
+        <div className="pd-two-column">
+          <div className="pd-panel">
+            <h6>Included</h6>
+            {inclusionItems.length ? (
+              <ul>
+                {inclusionItems.map((item, index) => (
+                  <li key={`inc-${index}`}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="pd-empty">No inclusions specified.</p>
+            )}
+          </div>
+
+          <div className="pd-panel pd-panel-danger">
+            <h6>Not Included</h6>
+            {exclusionItems.length ? (
+              <ul>
+                {exclusionItems.map((item, index) => (
+                  <li key={`exc-${index}`}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p className="pd-empty">No exclusions specified.</p>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    if (activeTab === "hotels") {
+      if (!hotels.length) {
+        return <p className="pd-empty">No hotels attached to this package.</p>;
+      }
+
+      return (
+        <div className="pd-list">
+          {hotels.map((hotel) => (
+            <div key={hotel._id || hotel.name} className="pd-hotel-card">
+              <div>
+                <h6>{hotel.name || "Hotel"}</h6>
+                <p>{hotel.location || "Location not available"}</p>
+              </div>
+              <span className="pd-hotel-type">
+                {hotel.hotel_type || "Stay"}
+              </span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return <ReviewsDisplay packageId={id} type="package" />;
+  };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#f9f9f9",
-        minHeight: "100vh",
-        paddingTop: "30px",
-      }}
-    >
-      <div className="container">
-        {/* Header with Image & Title */}
-        <div className="row g-4 mb-5">
-          <div className="col-lg-7">
-            <div className="card border-0 shadow overflow-hidden rounded-4">
-              <img
-                src={`http://localhost:4000/uploads/${packageData.image_url}`}
-                className="img-fluid"
-                alt={packageData.package_name}
-                style={{ height: "450px", objectFit: "cover", width: "100%" }}
-              />
-            </div>
-          </div>
-
-          <div className="col-lg-5">
-            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
-              <h2 className="fw-bold text-dark mb-3">
-                {packageData.package_name}
-              </h2>
-              <p className="text-muted fs-5 mb-4">
-                <i className="bi bi-geo-alt-fill text-primary"></i>{" "}
-                {packageData.destination}
-              </p>
-
-              <p className="text-muted lh-lg mb-4">
-                {packageData.description ||
-                  "No description available for this package."}
-              </p>
-
-              {/* Price & Duration Boxes */}
-              <div className="row g-3 mb-4">
-                <div className="col-6">
-                  <div className="bg-light p-3 rounded-3 text-center">
-                    <small className="text-muted d-block mb-1">Duration</small>
-                    <h5 className="fw-bold text-primary mb-0">
-                      {packageData.duration} Days
-                    </h5>
-                  </div>
-                </div>
-                <div className="col-6">
-                  <div className="bg-light p-3 rounded-3 text-center">
-                    <small className="text-muted d-block mb-1">Price</small>
-                    <h5 className="fw-bold text-success mb-0">
-                      ₹{packageData.price}
-                    </h5>
-                  </div>
-                </div>
-              </div>
-
-              {/* Rating */}
-              <div className="alert alert-info p-3 rounded-3 mb-4">
-                <div className="d-flex align-items-center justify-content-between">
-                  <div>
-                    <small className="text-dark d-block fw-bold">
-                      Guest Rating
-                    </small>
-                    <h5 className="fw-bold text-primary mb-0">⭐ 4.8/5.0</h5>
-                  </div>
-                  <div className="text-end">
-                    <small className="text-dark d-block">95% Recommend</small>
-                  </div>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div className="d-grid gap-2">
-                <Link
-                  to={`/packages/${id}`}
-                  className="btn btn-primary btn-lg fw-bold rounded-3"
-                >
-                  <i className="bi bi-bag-check me-2"></i>Book Now
-                </Link>
-                <Link
-                  to="/"
-                  className="btn btn-outline-primary btn-lg rounded-3"
-                >
-                  <i className="bi bi-arrow-left me-2"></i>Back
-                </Link>
-              </div>
-            </div>
-          </div>
+    <div className="pd-page">
+      <div className="container py-4">
+        <div className="pd-breadcrumb">
+          <Link to="/">Home</Link>
+          <span>/</span>
+          <Link to="/packages">Tour Packages</Link>
+          <span>/</span>
+          <strong>{packageData.package_name}</strong>
         </div>
 
-        {/* Details Section */}
-        <div className="row g-4 mb-5">
-          {/* Hotel Info */}
-          <div className="col-lg-6">
-            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
-              <h5 className="fw-bold text-dark mb-3">
-                <i className="bi bi-building text-primary me-2"></i>Hotel & Stay
-              </h5>
-              <div className="bg-light p-3 rounded-3">
-                <p className="fw-bold text-dark mb-1">
-                  {packageData.hotel_id?.name || "Hotel"}
-                </p>
-                <p className="text-muted small mb-0">
-                  📍 {packageData.hotel_id?.location || "Location"}
-                </p>
+        <div className="row g-4">
+          <div className="col-lg-8">
+            <div className="pd-card pd-gallery-card mb-4">
+              <div className="pd-image-stage">
+                <img
+                  src={selectedImage}
+                  alt={packageData.package_name}
+                  className="pd-main-image"
+                />
+
+                {imageList.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="pd-image-nav pd-image-nav-left"
+                      onClick={() =>
+                        setSelectedImageIndex((prev) =>
+                          prev === 0 ? imageList.length - 1 : prev - 1,
+                        )
+                      }
+                    >
+                      {"<"}
+                    </button>
+                    <button
+                      type="button"
+                      className="pd-image-nav pd-image-nav-right"
+                      onClick={() =>
+                        setSelectedImageIndex((prev) =>
+                          prev === imageList.length - 1 ? 0 : prev + 1,
+                        )
+                      }
+                    >
+                      {">"}
+                    </button>
+                  </>
+                )}
+
+                <div className="pd-image-counter">
+                  {selectedImageIndex + 1} / {imageList.length}
+                </div>
               </div>
+
+              <div className="pd-thumbs">
+                {imageList.map((img, index) => (
+                  <img
+                    key={`img-${index}`}
+                    src={img}
+                    alt={`${packageData.package_name}-${index + 1}`}
+                    className={`pd-thumb ${selectedImageIndex === index ? "active" : ""}`}
+                    onClick={() => setSelectedImageIndex(index)}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="pd-card mb-4">
+              <div className="pd-body">
+                <div className="pd-title-row">
+                  <h1>{packageData.package_name}</h1>
+                  <span className="pd-type-badge">
+                    {packageData.package_type || "Tour"}
+                  </span>
+                </div>
+
+                <p className="pd-route">
+                  <strong>{packageData.source_city || "-"}</strong>
+                  <span>{" -> "}</span>
+                  <strong>{packageData.destination || "-"}</strong>
+                </p>
+
+                <p className="pd-description">
+                  {packageData.description ||
+                    "No description available for this package."}
+                </p>
+
+                <div className="row g-2">
+                  <div className="col-6 col-md-3">
+                    <div className="pd-info-box">
+                      <small>Start Date</small>
+                      <strong>{formatDate(packageData.start_date)}</strong>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="pd-info-box">
+                      <small>End Date</small>
+                      <strong>{formatDate(packageData.end_date)}</strong>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="pd-info-box">
+                      <small>Duration</small>
+                      <strong>{packageData.duration || "-"}</strong>
+                    </div>
+                  </div>
+                  <div className="col-6 col-md-3">
+                    <div className="pd-info-box">
+                      <small>Transport</small>
+                      <strong>{transportText}</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="pd-card">
+              <div className="pd-tab-row">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    className={`pd-tab-btn ${activeTab === tab.key ? "active" : ""}`}
+                    onClick={() => setActiveTab(tab.key)}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="pd-tab-content">{renderTabContent()}</div>
             </div>
           </div>
 
-          {/* What's Included */}
-          <div className="col-lg-6">
-            <div className="card border-0 shadow-lg p-4 rounded-4 h-100">
-              <h5 className="fw-bold text-dark mb-3">
-                <i className="bi bi-check-circle text-success me-2"></i>What's
-                Included
-              </h5>
-              <div className="bg-light p-3 rounded-3">
-                <p className="text-dark small mb-0">
-                  {packageData.inclusive || "Food, Transport & Guide"}
-                </p>
+          <div className="col-lg-4">
+            <div className="pd-sticky">
+              <div className="pd-card pd-side-card">
+                <div className="pd-price-wrap">
+                  <small>Per Person</small>
+                  <h2>Rs. {packageData.price || "-"}</h2>
+                </div>
+
+                <div className="pd-divider" />
+
+                <div className="row g-2 mb-3">
+                  <div className="col-6">
+                    <div className="pd-mini-info">
+                      <small>Status</small>
+                      <strong>{packageData.tour_status || "Scheduled"}</strong>
+                    </div>
+                  </div>
+                  <div className="col-6">
+                    <div className="pd-mini-info">
+                      <small>Available Seats</small>
+                      <strong>{availableSeats}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pd-mini-info mb-3">
+                  <small>Boarding Points</small>
+                  <strong>
+                    {parseMultiValue(packageData.boarding_points)
+                      .slice(0, 2)
+                      .join(", ") || "-"}
+                  </strong>
+                </div>
+
+                <div className="d-grid gap-2">
+                  <Link
+                    to={`/packages/${id}/select-seats`}
+                    className="btn btn-primary btn-lg"
+                  >
+                    Book Now
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary btn-lg"
+                    onClick={() => navigate(-1)}
+                  >
+                    Back
+                  </button>
+                </div>
+              </div>
+
+              <div className="pd-help-card">
+                <h6>Need help with booking?</h6>
+                <p>Our support team is available to help you plan your tour.</p>
+                <a href="tel:+911234567890" className="btn btn-light w-100">
+                  Call Support
+                </a>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Exclusions if available */}
-        {packageData.exclusive && (
-          <div className="row g-4 mb-5">
-            <div className="col-12">
-              <div className="alert alert-danger p-4 rounded-4 mb-0">
-                <h5 className="fw-bold text-danger mb-2">
-                  <i className="bi bi-info-circle me-2"></i>Note
-                </h5>
-                <p className="text-danger mb-0">{packageData.exclusive}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Reviews Section */}
-        <div className="card border-0 shadow-lg p-5 rounded-4 bg-white mb-5">
-          <h3 className="fw-bold text-dark text-center mb-4">
-            <i className="bi bi-chat-hearts text-danger me-2"></i>Guest Reviews
-          </h3>
-          <ReviewsDisplay packageId={id} type="package" />
         </div>
       </div>
     </div>

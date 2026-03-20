@@ -12,12 +12,15 @@ const feedbackRoutes = require("./routes/feedbackRoutes");
 const cancellationRoutes = require("./routes/cancellationRoutes");
 const adminStatsRoutes = require("./routes/adminStatsRoutes");
 const hotelRoutes = require("./routes/hotelRoutes");
+const stateRoutes = require("./routes/stateRoutes");
+const cityRoutes = require("./routes/cityRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const cron = require("node-cron");
 const {
   autoCancelExpiredBookings,
 } = require("./controllers/busBookingController");
+const { autoUpdateTourStatuses } = require("./controllers/packageController");
 
 const cors = require("cors");
 const path = require("path");
@@ -40,6 +43,10 @@ ConnectMongoDB();
 
 cron.schedule("*/5 * * * *", async () => {
   await autoCancelExpiredBookings();
+});
+
+cron.schedule("*/30 * * * *", async () => {
+  await autoUpdateTourStatuses();
 });
 //cors
 
@@ -85,6 +92,8 @@ app.use("/api/bookings", bookingRoutes); //tour
 app.use("/api/cust", CustmerRoutes);
 
 app.use("/api/hotels", hotelRoutes);
+app.use("/api/states", stateRoutes);
+app.use("/api/cities", cityRoutes);
 
 app.use("/api/payment", paymentRoutes);
 
@@ -105,3 +114,7 @@ app.use("/api/tickets", ticketRoutes);
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)
 );
+
+autoUpdateTourStatuses().catch((error) => {
+  console.error("Failed to auto-update tour statuses on startup:", error.message);
+});

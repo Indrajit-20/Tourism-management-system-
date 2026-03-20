@@ -12,6 +12,7 @@ import ManageCustmer from "./pages/ManageCustmer";
 import ManageBus from "./pages/ManageBus"; // Import Bus Page
 import ManageStaff from "./pages/ManageStaff"; // Import Staff Page
 import BookPackage from "./pages/BookPackage"; // Import BookPackage Page
+import PackageSeatSelection from "./pages/PackageSeatSelection";
 import PackageDetails from "./pages/PackageDetails";
 import BookBus from "./pages/BookBus"; // Import the new Booking Page
 import ManageRoutes from "./pages/ManageRoutes"; // Import the Admin Route Page
@@ -21,6 +22,7 @@ import ManagePackageBookings from "./pages/ManagePackageBookings"; // Import Pac
 import SeatSelection from "./pages/SeatSelection"; // Import Seat Selection Page
 import ManageFeedback from "./pages/ManageFeedback"; // Import Feedback Page
 import ManageCancellations from "./pages/ManageCancellations"; // Import Cancellations Page
+import ManageHotels from "./pages/ManageHotels";
 import MyCancellations from "./pages/MyCancellations"; // Import My Cancellations Page
 import MyBookings from "./pages/MyBookings"; // Import My Bookings Page
 import MyInvoices from "./pages/MyInvoices"; // Import My Invoices Page
@@ -45,6 +47,10 @@ function App() {
           <Route path="/" element={<Hompage />} />
           <Route path="/packages" element={<PackagesList />} />
           <Route path="/package-details/:id" element={<PackageDetails />} />
+          <Route
+            path="/packages/:id/select-seats"
+            element={<PackageSeatSelection />}
+          />
           <Route path="/packages/:id" element={<BookPackage />} />
           <Route path="/book-bus" element={<BookBus />} />{" "}
           {/* Public Booking Page */}
@@ -65,6 +71,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="custmer" element={<ManageCustmer />} />
             <Route path="manage-package" element={<PackageManagment />} />
+            <Route path="manage-hotels" element={<ManageHotels />} />
             <Route path="manage-bus" element={<ManageBus />} />
             <Route path="manage-routes" element={<ManageRoutes />} />{" "}
             <Route path="manage-schedules" element={<ManageSchedules />} />

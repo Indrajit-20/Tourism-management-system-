@@ -1,0 +1,210 @@
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import BusLayout from "../components/BusLayout";
+
+const getSeatSurcharge = (seatNumber) => {
+  const seatIndex = Number(String(seatNumber).replace(/\D/g, ""));
+  if (!seatIndex || Number.isNaN(seatIndex)) return 0;
+  if (seatIndex <= 4) return 300;
+  if (seatIndex <= 10) return 150;
+  return 0;
+};
+
+const buildSeatLayout = (totalSeats, busType, basePrice) => {
+  const isSleeper = /sleeper/i.test(String(busType || ""));
+  const seats = [];
+
+  if (isSleeper) {
+    const upperCount = Math.ceil(totalSeats / 2);
+    const lowerCount = totalSeats - upperCount;
+
+    for (let i = 1; i <= upperCount; i++) {
+      seats.push({
+        seat_number: `U${i}`,
+        row: Math.ceil(i / 2),
+        column: i % 2 === 0 ? 2 : 1,
+        type: "upper",
+        price: basePrice + getSeatSurcharge(`U${i}`),
+      });
+    }
+
+    for (let i = 1; i <= lowerCount; i++) {
+      seats.push({
+        seat_number: `L${i}`,
+        row: Math.ceil(i / 2),
+        column: i % 2 === 0 ? 2 : 1,
+        type: "lower",
+        price: basePrice + getSeatSurcharge(`L${i}`),
+      });
+    }
+
+    return seats;
+  }
+
+  for (let i = 1; i <= totalSeats; i++) {
+    seats.push({
+      seat_number: `S${i}`,
+      row: Math.ceil(i / 4),
+      column: ((i - 1) % 4) + 1,
+      type: "seat",
+      price: basePrice + getSeatSurcharge(`S${i}`),
+    });
+  }
+
+  return seats;
+};
+
+const PackageSeatSelection = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [packageData, setPackageData] = useState(null);
+  const [seatLayout, setSeatLayout] = useState([]);
+  const [bookedSeats, setBookedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [packageRes, bookedRes] = await Promise.all([
+          axios.get(`http://localhost:4000/api/packages/${id}`),
+          axios.get(`http://localhost:4000/api/bookings/package-seats/${id}`),
+        ]);
+
+        const pkg = packageRes.data;
+        const totalSeats = Number(pkg?.bus_id?.total_seats) || 0;
+        const layout = buildSeatLayout(
+          totalSeats,
+          pkg?.bus_id?.bus_type,
+          Number(pkg?.price) || 0,
+        );
+        const layoutSeatNumbers = layout.map((seat) => seat.seat_number);
+        const alreadyBooked = (bookedRes.data?.booked_seats || []).map((seat) =>
+          String(seat).toUpperCase(),
+        );
+
+        setPackageData(pkg);
+        setSeatLayout(layout);
+        setBookedSeats(alreadyBooked);
+
+        const previousSelection = Array.isArray(location.state?.selectedSeats)
+          ? location.state.selectedSeats
+          : [];
+        const allowedSelection = previousSelection
+          .map((seat) => String(seat).trim().toUpperCase())
+          .filter(
+            (seat) =>
+              layoutSeatNumbers.includes(seat) && !alreadyBooked.includes(seat),
+          );
+
+        setSelectedSeats(allowedSelection);
+      } catch (error) {
+        console.error("Error loading seat map", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, location.state]);
+
+  const toggleSeat = (seatNumber) => {
+    if (bookedSeats.includes(seatNumber)) return;
+
+    if (selectedSeats.includes(seatNumber)) {
+      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+      return;
+    }
+
+    setSelectedSeats([...selectedSeats, seatNumber]);
+  };
+
+  const goToPassengerDetails = () => {
+    if (selectedSeats.length === 0) {
+      alert("Please select at least one seat.");
+      return;
+    }
+
+    navigate(`/packages/${id}`, {
+      state: { selectedSeats },
+    });
+  };
+
+  if (loading) return <h3 className="text-center mt-5">Loading seat map...</h3>;
+
+  if (!packageData) {
+    return <h3 className="text-center mt-5">Package not found.</h3>;
+  }
+
+  return (
+    <div className="container mt-5">
+      <div className="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <h2 className="mb-1">Select Seats</h2>
+          <p className="text-muted mb-0">{packageData.package_name}</p>
+        </div>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={() => navigate(`/package-details/${id}`)}
+        >
+          Back
+        </button>
+      </div>
+
+      <div className="alert alert-info">
+        Step 1: Select seats first. Step 2: Fill passenger details for the same
+        number of seats.
+      </div>
+
+      <div className="d-flex flex-wrap gap-2 mb-4">
+        <span className="badge bg-secondary">Available</span>
+        <span className="badge bg-success">Selected</span>
+        <span className="badge bg-danger">Booked</span>
+      </div>
+
+      {seatLayout.length === 0 ? (
+        <div className="alert alert-warning">
+          Bus seat data is not configured for this package.
+        </div>
+      ) : (
+        <div className="mb-4">
+          <BusLayout
+            seatLayout={seatLayout}
+            bookedSeats={bookedSeats}
+            selectedSeats={selectedSeats}
+            onSeatClick={toggleSeat}
+            busType={packageData?.bus_id?.bus_type || "AC"}
+          />
+        </div>
+      )}
+
+      <div className="card shadow-sm p-3 mb-4">
+        <h5 className="mb-2">Selected Seats</h5>
+        {selectedSeats.length === 0 ? (
+          <p className="text-muted mb-0">No seat selected yet.</p>
+        ) : (
+          <div className="d-flex flex-wrap gap-2">
+            {selectedSeats.map((seat) => (
+              <span key={seat} className="badge bg-success">
+                {seat}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button
+        className="btn btn-primary btn-lg w-100"
+        onClick={goToPassengerDetails}
+      >
+        Continue to Passenger Details ({selectedSeats.length} seat
+        {selectedSeats.length !== 1 ? "s" : ""})
+      </button>
+    </div>
+  );
+};
+
+export default PackageSeatSelection;

@@ -19,6 +19,24 @@ const packageBookingSchema = new mongoose.Schema(
       default: 1,
     },
 
+    seat_numbers: {
+      type: [String],
+      default: [],
+    },
+
+    seat_price_details: {
+      type: [
+        {
+          seat_number: String,
+          age: Number,
+          base_fare: Number,
+          seat_surcharge: Number,
+          final_fare: Number,
+        },
+      ],
+      default: [],
+    },
+
     price_per_person: {
       type: Number,
       required: true,

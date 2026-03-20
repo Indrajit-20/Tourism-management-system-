@@ -4,9 +4,27 @@ import { Link } from "react-router-dom";
 import Packagecard from "../components/Packagecard";
 import ReviewsDisplay from "../components/ReviewsDisplay";
 
+const mapPackageFromDb = (pkg) => ({
+  id: pkg?._id,
+  package_name: pkg?.package_name,
+  source_city: pkg?.source_city || pkg?.start || pkg?.source,
+  destination: pkg?.destination || pkg?.destination_city,
+  start_date: pkg?.start_date,
+  end_date: pkg?.end_date,
+  image_urls: pkg?.image_urls,
+  image_url: pkg?.image_url,
+  price: pkg?.price,
+  duration: pkg?.duration,
+  transport: pkg?.bus_id?.bus_type
+    ? `${pkg.bus_id.bus_type}${pkg?.bus_id?.bus_name ? ` Bus` : ""}`
+    : "-",
+  seatBadgeText: pkg?.bus_id?.total_seats
+    ? `🔥 ${pkg.bus_id.total_seats} Seats`
+    : null,
+});
+
 const Hompage = () => {
   const [pkg, setpkg] = useState([]);
-  const [ratings, setRatings] = useState({});
   const [featuredRoutes, setFeaturedRoutes] = useState([]); // State for Bus Routes
   const [loading, setLoading] = useState(true);
   const [showTripsModal, setShowTripsModal] = useState(false); // ✅ Modal state
@@ -19,21 +37,6 @@ const Hompage = () => {
     try {
       const res = await axios.get("http://localhost:4000/api/packages");
       setpkg(res.data);
-
-      // Fetch ratings (parallel)
-      const ratingsData = {};
-      const ratingPromises = res.data.map(async (p) => {
-        try {
-          const r = await axios.get(
-            `http://localhost:4000/api/feedback/rating/package/${p._id}`
-          );
-          ratingsData[p._id] = r.data;
-        } catch (e) {
-          ratingsData[p._id] = { average_rating: 0, total_reviews: 0 };
-        }
-      });
-      await Promise.all(ratingPromises);
-      setRatings(ratingsData);
     } catch (err) {
       console.error("Error fetching packages", err);
     }
@@ -67,7 +70,7 @@ const Hompage = () => {
 
         try {
           const res = await axios.get(
-            `http://localhost:4000/api/bus-trips?route_id=${route._id}&date=${dateStr}`
+            `http://localhost:4000/api/bus-trips?route_id=${route._id}&date=${dateStr}`,
           );
           if (res.data && res.data.length > 0) {
             tripsData.push(...res.data);
@@ -247,20 +250,27 @@ const Hompage = () => {
           <div className="text-center">Loading Packages...</div>
         ) : (
           <div className="row">
-            {pkg.map((p) => (
-              <div className="col-md-4 mb-4" key={p._id}>
-                <Packagecard
-                  id={p._id}
-                  image_url={p.image_url}
-                  package_name={p.package_name}
-                  destination={p.destination}
-                  price={p.price}
-                  duration={p.duration}
-                  rating={ratings[p._id]?.average_rating || 0}
-                  totalReviews={ratings[p._id]?.total_reviews || 0}
-                />
-              </div>
-            ))}
+            {pkg.map((p) => {
+              const packageData = mapPackageFromDb(p);
+              return (
+                <div className="col-md-4 mb-4" key={p._id}>
+                  <Packagecard
+                    id={packageData.id}
+                    source_city={packageData.source_city}
+                    destination={packageData.destination}
+                    start_date={packageData.start_date}
+                    end_date={packageData.end_date}
+                    image_urls={packageData.image_urls}
+                    image_url={packageData.image_url}
+                    package_name={packageData.package_name}
+                    price={packageData.price}
+                    duration={packageData.duration}
+                    transport={packageData.transport}
+                    seatBadgeText={packageData.seatBadgeText}
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
       </main>
@@ -338,7 +348,7 @@ const Hompage = () => {
                                   <h6 className="mb-1 fw-bold">
                                     📅{" "}
                                     {new Date(
-                                      trip.trip_date
+                                      trip.trip_date,
                                     ).toLocaleDateString("en-IN", {
                                       weekday: "short",
                                       month: "short",

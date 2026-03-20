@@ -28,6 +28,12 @@ const AdminDashboard = () => {
             </li>
 
             <li className="nav-item">
+              <Link className="nav-link" to="manage-hotels">
+                Manage Hotels
+              </Link>
+            </li>
+
+            <li className="nav-item">
               <Link className="nav-link" to="manage-bus">
                 Manage Buses
               </Link>

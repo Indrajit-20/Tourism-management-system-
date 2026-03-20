@@ -1,0 +1,253 @@
+.pkg-card {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #dce6fb;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(41, 88, 183, 0.16);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.pkg-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px rgba(41, 88, 183, 0.2);
+}
+
+.pkg-image-wrap {
+  position: relative;
+  height: 205px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #b9c4e7 0%, #868fa6 100%);
+}
+
+.pkg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pkg-image-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 29, 48, 0.1) 0%, rgba(23, 29, 48, 0.38) 100%);
+  pointer-events: none;
+}
+
+.pkg-count-pill,
+.pkg-seat-pill {
+  position: absolute;
+  z-index: 2;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 10px;
+  color: #ffffff;
+}
+
+.pkg-count-pill {
+  top: 12px;
+  left: 12px;
+  background: rgba(91, 98, 117, 0.88);
+}
+
+.pkg-seat-pill {
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #ff7a5f, #eb4f7a);
+}
+
+.pkg-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border: 1px solid #2f3342;
+  border-radius: 10px;
+  background: rgba(111, 118, 137, 0.9);
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.pkg-nav:hover {
+  background: rgba(74, 82, 102, 0.95);
+}
+
+.pkg-nav-left {
+  left: 12px;
+}
+
+.pkg-nav-right {
+  right: 12px;
+}
+
+.pkg-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.pkg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.pkg-dot.active {
+  width: 26px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.pkg-body {
+  padding: 14px 14px 12px;
+}
+
+.pkg-title {
+  margin: 0 0 8px;
+  color: #202027;
+  font-size: 24px;
+  font-size: clamp(18px, 1.25vw, 24px);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.pkg-route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-size: clamp(14px, 1.05vw, 18px);
+  font-weight: 600;
+}
+
+.pkg-source {
+  color: #1c66ff;
+}
+
+.pkg-arrow {
+  color: #a5aab7;
+}
+
+.pkg-destination {
+  color: #2e3038;
+}
+
+.pkg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pkg-cell {
+  border-radius: 12px;
+  border: 1px solid #d6e0f4;
+  background: #edf2fb;
+  padding: 10px 10px;
+  text-align: center;
+}
+
+.pkg-cell small {
+  display: block;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #768095;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pkg-cell strong {
+  color: #1c66ff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.pkg-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid #e6eaf4;
+}
+
+.pkg-price-block {
+  min-width: 115px;
+}
+
+.pkg-price-block small {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #98a1b4;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.pkg-price {
+  color: #1c66ff;
+  font-size: 34px;
+  font-size: clamp(24px, 1.7vw, 34px);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.pkg-actions {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.pkg-actions .btn {
+  border-radius: 12px;
+  font-size: 16px;
+  font-size: clamp(13px, 0.95vw, 16px);
+  font-weight: 600;
+  padding: 8px 16px;
+}
+
+@media (max-width: 768px) {
+  .pkg-image-wrap {
+    height: 190px;
+  }
+
+  .pkg-nav {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .pkg-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pkg-price-block {
+    min-width: 0;
+    text-align: left;
+  }
+
+  .pkg-actions {
+    justify-content: stretch;
+  }
+
+  .pkg-actions .btn {
+    flex: 1;
+    text-align: center;
+  }
+}

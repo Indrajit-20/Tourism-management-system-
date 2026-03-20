@@ -11,7 +11,7 @@ const ManageBus = () => {
     bus_name: "",
     bus_type: "AC",
     total_seats: 30,
-    driver_id: "", // You will need to put a valid User ID here
+    driver_ids: [""],
     status: "Active",
   });
 
@@ -48,20 +48,67 @@ const ManageBus = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const addDriverInput = () => {
+    if (form.driver_ids.length >= 2) {
+      alert("Maximum 2 drivers allowed.");
+      return;
+    }
+    setForm((prev) => ({ ...prev, driver_ids: [...prev.driver_ids, ""] }));
+  };
+
+  const removeDriverInput = (index) => {
+    setForm((prev) => {
+      if (prev.driver_ids.length === 1) return prev;
+      return {
+        ...prev,
+        driver_ids: prev.driver_ids.filter((_, i) => i !== index),
+      };
+    });
+  };
+
+  const updateDriverInput = (index, value) => {
+    setForm((prev) => ({
+      ...prev,
+      driver_ids: prev.driver_ids.map((driverId, i) =>
+        i === index ? value : driverId,
+      ),
+    }));
+  };
+
   // 4. Submit New Bus
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const cleanDriverIds = form.driver_ids
+        .map((driverId) => driverId.trim())
+        .filter(Boolean);
+
+      if (!cleanDriverIds.length) {
+        alert("Please select at least 1 driver.");
+        return;
+      }
+      if (cleanDriverIds.length > 2) {
+        alert("Maximum 2 drivers allowed.");
+        return;
+      }
+
       const token = localStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      await axios.post("http://localhost:4000/api/bus/add", form, { headers });
+      await axios.post(
+        "http://localhost:4000/api/bus/add",
+        {
+          ...form,
+          driver_ids: cleanDriverIds,
+        },
+        { headers },
+      );
       alert("Bus added successfully!");
       setForm({
         bus_number: "",
         bus_name: "",
         bus_type: "AC",
         total_seats: 30,
-        driver_id: "",
+        driver_ids: [""],
         status: "Active",
       });
       fetchBuses(); // Refresh list
@@ -137,23 +184,46 @@ const ManageBus = () => {
                 required
               />
             </div>
-            {/* Staff Dropdown (Drivers) */}
+            {/* Staff Dropdowns (Multiple Drivers) */}
             <div className="col-md-6 mb-2">
-              <select
-                name="driver_id"
-                className="form-control"
-                value={form.driver_id}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Driver</option>
-                {/* Populate with staffList */}
-                {staffList.map((driver) => (
-                  <option key={driver._id} value={driver._id}>
-                    {driver.name} ({driver.designation})
-                  </option>
-                ))}
-              </select>
+              <label className="form-label">Drivers (min 1, max 2)</label>
+              {form.driver_ids.map((driverId, index) => (
+                <div className="d-flex gap-2 mb-2" key={`driver-${index}`}>
+                  <select
+                    className="form-control"
+                    value={driverId}
+                    onChange={(e) => updateDriverInput(index, e.target.value)}
+                    required
+                  >
+                    <option value="">Select Driver</option>
+                    {staffList
+                      .filter((staff) =>
+                        (staff.designation || "")
+                          .toLowerCase()
+                          .includes("driver"),
+                      )
+                      .map((driver) => (
+                        <option key={driver._id} value={driver._id}>
+                          {driver.name} ({driver.designation})
+                        </option>
+                      ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary"
+                    onClick={addDriverInput}
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger"
+                    onClick={() => removeDriverInput(index)}
+                  >
+                    -
+                  </button>
+                </div>
+              ))}
             </div>
             <div className="col-md-6 mb-2">
               <select
@@ -178,6 +248,7 @@ const ManageBus = () => {
             <th>Name</th>
             <th>Type</th>
             <th>Seats</th>
+            <th>Drivers</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -189,6 +260,17 @@ const ManageBus = () => {
               <td>{bus.bus_name}</td>
               <td>{bus.bus_type}</td>
               <td>{bus.total_seats}</td>
+              <td>
+                {Array.isArray(bus.driver_ids) && bus.driver_ids.length
+                  ? bus.driver_ids
+                      .map((driver) =>
+                        typeof driver === "object"
+                          ? driver.name || "Unknown"
+                          : "Assigned",
+                      )
+                      .join(", ")
+                  : bus.driver_id?.name || "-"}
+              </td>
               <td>{bus.status}</td>
               <td>
                 <button

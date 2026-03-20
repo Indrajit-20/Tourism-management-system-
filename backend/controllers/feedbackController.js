@@ -1,10 +1,19 @@
 // filepath: backend/controllers/feedbackController.js
 const Feedback = require("../models/Feedback");
+const Package = require("../models/Package");
+const PackageBooking = require("../models/PackageBooking");
 
 // 1. Submit Feedback (Customer after booking)
 const submitFeedback = async (req, res) => {
   try {
-    const { rating, review_text, package_booking_id, bus_booking_id, package_id, route_id } = req.body;
+    const {
+      rating,
+      review_text,
+      package_booking_id,
+      bus_booking_id,
+      package_id,
+      route_id,
+    } = req.body;
     const custmer_id = req.user.id; // From token
 
     // Validate rating
@@ -16,21 +25,67 @@ const submitFeedback = async (req, res) => {
       return res.status(400).json({ message: "Review text is required" });
     }
 
-    // Create feedback
-    const feedback = new Feedback({
-      custmer_id,
-      package_booking_id: package_booking_id || null,
-      bus_booking_id: bus_booking_id || null,
-      package_id: package_id || null,
-      route_id: route_id || null,
-      rating,
-      review_text,
-    });
+    // Step 1: Identify which package is being reviewed.
+    let targetPackageId = package_id || null;
 
-    await feedback.save();
+    if (package_booking_id) {
+      const booking = await PackageBooking.findById(package_booking_id);
+      if (!booking) {
+        return res.status(404).json({ message: "Package booking not found" });
+      }
+      if (String(booking.Custmer_id) !== String(custmer_id)) {
+        return res
+          .status(403)
+          .json({ message: "You can review only your own booking" });
+      }
+      targetPackageId = booking.Package_id;
+    }
+
+    // Step 2: For package reviews, ensure booked user + completed tour.
+    if (targetPackageId) {
+      const bookingExists = await PackageBooking.exists({
+        Package_id: targetPackageId,
+        Custmer_id: custmer_id,
+      });
+      if (!bookingExists) {
+        return res
+          .status(403)
+          .json({ message: "You can review only packages you have booked" });
+      }
+
+      const pkg = await Package.findById(targetPackageId, "tour_status");
+      if (!pkg) {
+        return res.status(404).json({ message: "Package not found" });
+      }
+      if (pkg.tour_status !== "Completed") {
+        return res.status(400).json({
+          message: "You can submit or update review only after tour is completed",
+        });
+      }
+    }
+
+    // Step 3: Upsert review so customer can update later.
+    const filter = targetPackageId
+      ? { custmer_id, package_id: targetPackageId }
+      : { custmer_id, route_id };
+
+    const feedback = await Feedback.findOneAndUpdate(
+      filter,
+      {
+        $set: {
+          package_booking_id: package_booking_id || null,
+          bus_booking_id: bus_booking_id || null,
+          package_id: targetPackageId || null,
+          route_id: route_id || null,
+          rating,
+          review_text,
+        },
+      },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
 
     res.status(201).json({
-      message: "Feedback submitted successfully",
+      message: "Feedback saved successfully",
       feedback,
     });
   } catch (error) {

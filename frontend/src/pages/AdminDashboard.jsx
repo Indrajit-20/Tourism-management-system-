@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   return (
     <div className="container-fluid">
       <div className="row g-0 ">
@@ -84,7 +85,7 @@ const AdminDashboard = () => {
             </li>
             <li className="nav-item mb-2">
               <Link className="nav-link text-primary fw-bold" to="reports">
-                📊 Reports
+                Reports
               </Link>
             </li>
             <li className="nav-item">
@@ -99,6 +100,7 @@ const AdminDashboard = () => {
             onClick={() => {
               localStorage.removeItem("token");
               localStorage.removeItem("role");
+              localStorage.removeItem("username");
               window.location.href = "/login";
             }}
           >

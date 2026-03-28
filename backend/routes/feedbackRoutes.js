@@ -9,7 +9,6 @@ const {
   getPackageRating,
   getRouteRating,
   getAllFeedback,
-  deleteFeedback,
 } = require("../controllers/feedbackController");
 
 // 1. Submit Feedback (Logged-in user)
@@ -29,8 +28,5 @@ router.get("/rating/route/:route_id", getRouteRating);
 
 // 6. Get All Feedback (Admin Only)
 router.get("/admin/all", authMiddleware, isadmin, getAllFeedback);
-
-// 7. Delete Feedback (Admin Only)
-router.delete("/delete/:id", authMiddleware, isadmin, deleteFeedback);
 
 module.exports = router;

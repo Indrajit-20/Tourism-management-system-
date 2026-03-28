@@ -155,9 +155,9 @@ const Hompage = () => {
         <section className="mb-5 pb-4">
           <div className="row align-items-center mb-4">
             <div className="col-md-6">
-              <h2 className="display-6 fw-bold mb-0">🚍 Featured Bus Routes</h2>
+              <h2 className="display-6 fw-bold mb-0">🚍 Bus Routes</h2>
               <p className="text-muted">
-                Top destinations from our latest schedule
+                Top destinations
               </p>
             </div>
           </div>
@@ -233,7 +233,7 @@ const Hompage = () => {
         {/* --- TOUR PACKAGES SECTION --- */}
         <div className="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
           <div>
-            <h2 className="display-6 fw-bold mb-0">🌴 Popular Tour Packages</h2>
+            <h2 className="display-6 fw-bold mb-0">🌴  Tour Packages</h2>
             <p className="text-muted mb-0">
               Unforgettable experiences curated just for you
             </p>

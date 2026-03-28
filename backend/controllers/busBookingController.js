@@ -53,8 +53,27 @@ const bookBusTicket = async (req, res) => {
 
     const avgPrice = Math.round(totalAmount / seat_numbers.length);
 
-    // ✅ FIX: Save booking as PENDING first — no payment yet
-    // ✅ FIX: correct field name customer_id
+    // Calculate smart payment deadline based on trip date
+    const calculatePaymentDeadline = (trip_date) => {
+      const now = new Date();
+      const tripDate = new Date(trip_date);
+      const hoursUntilTrip = (tripDate - now) / (1000 * 60 * 60);
+
+      const deadline = new Date();
+
+      if (hoursUntilTrip < 2) {
+        deadline.setHours(deadline.getHours() + 1);
+      } else if (hoursUntilTrip <= 24) {
+        deadline.setHours(deadline.getHours() + 12);
+      } else {
+        deadline.setHours(deadline.getHours() + 24);
+      }
+
+      return deadline;
+    };
+
+    // ✅ AUTO-CONFIRM: Save booking as CONFIRMED immediately
+    // ✅ BUT: Only lock seats AFTER payment is confirmed in confirmPayment()
     const newBooking = new BusTicketBooking({
       trip_id,
       customer_id,
@@ -64,24 +83,16 @@ const bookBusTicket = async (req, res) => {
       seat_prices: seatPrices,
       price_per_seat: avgPrice,
       total_amount: totalAmount,
-      booking_status: "Pending",
+      booking_status: "Confirmed",
       payment_status: "Pending",
-      payment_deadline: null,
+      payment_deadline: calculatePaymentDeadline(trip.trip_date),
     });
 
-    // ✅ Save booking FIRST before marking seats
+    // ✅ Save booking WITHOUT locking seats yet
     await newBooking.save();
 
-    // ✅ Mark seats as unavailable AFTER booking saved
-    trip.seats = trip.seats.map((seat) =>
-      seat_numbers.includes(seat.seat_number)
-        ? { ...seat.toObject(), is_available: false }
-        : seat
-    );
-    await trip.save();
-
     res.status(201).json({
-      message: "Booking request submitted! Waiting for admin approval.",
+      message: "Booking created. Please complete payment to confirm.",
       booking: newBooking,
     });
   } catch (error) {
@@ -136,14 +147,14 @@ const updateBookingStatus = async (req, res) => {
     if (status === "Approved") {
       //  Set 30 minute payment deadline
       const deadline = new Date();
-      deadline.setMinutes(deadline.getMinutes() + 30);
+      deadline.setHours(deadline.getHours() + 24);
 
       booking.booking_status = "Approved";
       booking.payment_deadline = deadline;
       await booking.save();
 
       return res.status(200).json({
-        message: "Booking approved. Customer has 30 minutes to pay.",
+        message: "Booking pending admin approved than do payment",
         booking,
       });
     }
@@ -206,32 +217,18 @@ const confirmPayment = async (req, res) => {
 
     if (!booking) return res.status(404).json({ message: "Booking not found" });
 
-    // Check booking is approved
-    if (booking.booking_status !== "Approved") {
+    // ✅ NEW: Booking should be "Confirmed" (not "Approved")
+    if (booking.booking_status !== "Confirmed") {
       return res.status(400).json({
-        message: "Booking is not approved yet. Please wait for admin approval.",
+        message: "Invalid booking status. Booking must be in Confirmed state.",
       });
     }
 
     // Check payment deadline has not expired
     if (booking.payment_deadline && new Date() > booking.payment_deadline) {
-      // Auto cancel expired booking
       booking.booking_status = "Cancelled";
       booking.payment_status = "Failed";
       await booking.save();
-
-      // Release seats
-      const trip = await require("../models/BusTrip").findById(
-        booking.trip_id._id
-      );
-      if (trip) {
-        trip.seats = trip.seats.map((seat) =>
-          booking.seat_numbers.includes(seat.seat_number)
-            ? { ...seat.toObject(), is_available: true }
-            : seat
-        );
-        await trip.save();
-      }
 
       return res.status(400).json({
         message:
@@ -239,14 +236,26 @@ const confirmPayment = async (req, res) => {
       });
     }
 
-    //  Confirm payment
-    booking.booking_status = "Confirmed";
+    // ✅ CONFIRM PAYMENT AND LOCK SEATS
     booking.payment_status = "Paid";
     booking.payment_id = payment_id;
     await booking.save();
 
+    // ✅ NOW LOCK THE SEATS (only after payment confirmed)
+    const trip = await require("../models/BusTrip").findById(
+      booking.trip_id._id
+    );
+    if (trip) {
+      trip.seats = trip.seats.map((seat) =>
+        booking.seat_numbers.includes(seat.seat_number)
+          ? { ...seat.toObject(), is_available: false }
+          : seat
+      );
+      await trip.save();
+    }
+
     res.status(200).json({
-      message: "Payment confirmed! Ticket booked successfully.",
+      message: "Payment confirmed! Seats locked. Ticket booked successfully.",
       booking,
     });
   } catch (error) {

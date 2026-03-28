@@ -29,22 +29,8 @@ const ManageFeedback = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Delete this feedback?")) {
-      try {
-        const token = localStorage.getItem("token");
-        await axios.delete(
-          `http://localhost:4000/api/feedback/delete/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        alert("Feedback deleted");
-        fetchFeedback();
-      } catch (err) {
-        console.error("Error deleting feedback", err);
-        alert("Error deleting feedback");
-      }
-    }
+    // Delete is disabled in UI by requirement.
+    return;
   };
 
   const renderStars = (stars) => {
@@ -90,15 +76,16 @@ const ManageFeedback = () => {
                   <div className="d-flex justify-content-between align-items-start mb-2">
                     <div>
                       <h6 className="card-title mb-1">
-                        {fb.custmer_id?.first_name}{" "}
-                        {fb.custmer_id?.last_name}
+                        {fb.custmer_id?.first_name} {fb.custmer_id?.last_name}
                       </h6>
                       <small className="text-muted">
                         {fb.custmer_id?.email}
                       </small>
                     </div>
                     <div className="text-end">
-                      <div className="text-warning">{renderStars(fb.rating)}</div>
+                      <div className="text-warning">
+                        {renderStars(fb.rating)}
+                      </div>
                       <small className="text-muted">{fb.rating}/5</small>
                     </div>
                   </div>
@@ -106,9 +93,18 @@ const ManageFeedback = () => {
                   {/* What they reviewed */}
                   <p className="small text-muted mb-2">
                     {fb.package_id ? (
-                      <>📦 Package: <strong>{fb.package_id.package_name}</strong></>
+                      <>
+                        📦 Package:{" "}
+                        <strong>{fb.package_id.package_name}</strong>
+                      </>
                     ) : (
-                      <>🚌 Route: <strong>{fb.route_id?.boarding_from} → {fb.route_id?.destination}</strong></>
+                      <>
+                        🚌 Route:{" "}
+                        <strong>
+                          {fb.route_id?.boarding_from} →{" "}
+                          {fb.route_id?.destination}
+                        </strong>
+                      </>
                     )}
                   </p>
 
@@ -120,12 +116,6 @@ const ManageFeedback = () => {
                     <small className="text-muted">
                       {new Date(fb.createdAt).toLocaleDateString()}
                     </small>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(fb._id)}
-                    >
-                      Delete
-                    </button>
                   </div>
                 </div>
               </div>

@@ -396,11 +396,7 @@ const MyBookings = () => {
         <>
           <h5 className="mb-3">Bus Bookings</h5>
 
-          {/* Booking flow info */}
-          <div className="alert alert-info mb-4">
-            <strong>How it works:</strong> You Book → Admin Approves → You Pay
-            within 30 mins → Ticket Confirmed ✅
-          </div>
+        
 
           {/* No bookings message */}
           {filteredBookings.length === 0 ? (
@@ -513,8 +509,8 @@ const MyBookings = () => {
 
                         {/* Column 5 — Action buttons */}
                         <div className="col-md-2 text-end">
-                          {/* APPROVED — show countdown timer + Pay Now button */}
-                          {booking.booking_status === "Approved" &&
+                          {/* CONFIRMED — show countdown timer + Pay Now button (if not yet paid) */}
+                          {booking.booking_status === "Confirmed" &&
                             booking.payment_status === "Pending" && (
                               <div>
                                 {booking.payment_deadline && (
@@ -540,39 +536,25 @@ const MyBookings = () => {
                               </div>
                             )}
 
-                          {/* PENDING — show cancel + waiting message */}
-                          {booking.booking_status === "Pending" && (
-                            <div>
-                              <small className="text-muted d-block mb-2">
-                                ⏳ Waiting for admin
-                              </small>
-                              <button
-                                className="btn btn-outline-danger btn-sm w-100"
-                                onClick={() => handleCancelBooking(booking)}
-                              >
-                                ❌ Cancel
-                              </button>
-                            </div>
-                          )}
-
-                          {/* CONFIRMED — show download + cancel + details */}
-                          {booking.booking_status === "Confirmed" && (
-                            <div>
-                              <button
-                                className="btn btn-primary btn-sm w-100 mb-2"
-                                onClick={() => handleDownloadTicket(booking)}
-                              >
-                                📥 Download Ticket
-                              </button>
-                              <button
-                                className="btn btn-outline-danger btn-sm w-100 mb-2"
-                                onClick={() => handleCancelBooking(booking)}
-                              >
-                                ❌ Cancel
-                              </button>
-                              <small className="text-success d-block">
-                                ✅ Confirmed
-                              </small>
+                          {/* CONFIRMED + PAID — show download + cancel + details */}
+                          {booking.booking_status === "Confirmed" &&
+                            booking.payment_status === "Paid" && (
+                              <div>
+                                <button
+                                  className="btn btn-primary btn-sm w-100 mb-2"
+                                  onClick={() => handleDownloadTicket(booking)}
+                                >
+                                  📥 Download Ticket
+                                </button>
+                                <button
+                                  className="btn btn-outline-danger btn-sm w-100 mb-2"
+                                  onClick={() => handleCancelBooking(booking)}
+                                >
+                                  ❌ Cancel
+                                </button>
+                                <small className="text-success d-block">
+                                  ✅ Confirmed & Paid
+                                </small>
                               {booking.payment_id && (
                                 <small
                                   className="text-muted d-block"

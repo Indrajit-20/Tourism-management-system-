@@ -12,6 +12,7 @@ const Header = () => {
     localStorage.removeItem("role");
     setUser({ loggedIn: false, name: "" });
     setDropdownOpen(false);
+    window.location.href = "/login";
   };
 
   useEffect(() => {

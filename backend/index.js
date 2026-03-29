@@ -16,11 +16,12 @@ const stateRoutes = require("./routes/stateRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 const cron = require("node-cron");
 const {
   autoCancelExpiredBookings,
 } = require("./controllers/busBookingController");
-const { autoUpdateTourStatuses } = require("./controllers/packageController");
+const { runAllAutoTasks } = require("./utils/autoCompleteHelper"); // ✅ NEW: Auto-complete helper
 
 const cors = require("cors");
 const path = require("path");
@@ -33,6 +34,7 @@ const busScheduleRoutes = require("./routes/busScheduleRoutes");
 const busTripRoutes = require("./routes/busTripRoutes");
 const ticketRoutes = require("./routes/ticketRoutes"); // ✅ NEW
 const staffDashboardRoutes = require("./routes/staffDashboardRoutes"); // ✅ NEW
+const tourScheduleRoutes = require("./routes/tourScheduleRoutes"); // ✅ NEW: Tour departures
 
 const port = 4000;
 const app = express();
@@ -45,8 +47,9 @@ cron.schedule("*/5 * * * *", async () => {
   await autoCancelExpiredBookings();
 });
 
-cron.schedule("*/30 * * * *", async () => {
-  await autoUpdateTourStatuses();
+// ✅ NEW: Run tour auto-complete and booking maintenance every hour
+cron.schedule("0 * * * *", async () => {
+  await runAllAutoTasks();
 });
 //cors
 
@@ -87,6 +90,10 @@ app.use("/api/staff", staffRoutes);
 // ✅ NEW: Staff Dashboard (assigned trips, schedule, passenger list)
 app.use("/api/staff-dashboard", staffDashboardRoutes);
 
+// ✅ NEW: Tour Departures (individual package tour runs / schedules)
+app.use("/api/tour-schedules", tourScheduleRoutes);
+app.use("/api/departures", tourScheduleRoutes);
+
 app.use("/api/bookings", bookingRoutes); //tour
 
 app.use("/api/cust", CustmerRoutes);
@@ -101,6 +108,7 @@ app.use("/api/feedback", feedbackRoutes);
 
 app.use("/api/cancellation", cancellationRoutes);
 app.use("/api/admin-stats", adminStatsRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Refund routes
 app.use("/api/refunds", refundRoutes);
@@ -114,7 +122,3 @@ app.use("/api/tickets", ticketRoutes);
 app.listen(port, () =>
   console.log(`server started at http://localhost:${port}`)
 );
-
-autoUpdateTourStatuses().catch((error) => {
-  console.error("Failed to auto-update tour statuses on startup:", error.message);
-});

@@ -7,6 +7,8 @@ const {
   updatePackage,
   deletepackage,
 } = require("../controllers/packageController");
+const { getPackageDepartures } = require("../controllers/tourScheduleController");
+const { getFeedbackByPackage } = require("../controllers/feedbackController");
 const { authMiddleware, isadmin } = require("../middleware/authmiddleware");
 const uploadPackageImages = require("../middleware/packageUploadMiddleware");
 
@@ -19,6 +21,8 @@ router.post(
   uploadPackageImages.array("images", 6),
   addPackage
 ); //add package post request
+router.get("/:package_id/departures", getPackageDepartures);
+router.get("/:package_id/reviews", getFeedbackByPackage);
 router.get("/:id", packageById); //get package by id
 router.put(
   "/update/:id",

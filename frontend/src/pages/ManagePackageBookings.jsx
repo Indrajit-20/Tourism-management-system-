@@ -4,7 +4,13 @@ import axios from "axios";
 const ManagePackageBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filterStatus, setFilterStatus] = useState("All"); // <-- NEW
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  const normalizeStatus = (status) => String(status || "").toLowerCase();
+  const toLabel = (status) => {
+    const normalized = normalizeStatus(status);
+    return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  };
 
   useEffect(() => {
     fetchBookings();
@@ -29,7 +35,7 @@ const ManagePackageBookings = () => {
       await axios.put(
         `http://localhost:4000/api/bookings/update-status/${id}`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(`Booking ${newStatus}!`);
       fetchBookings(); // Refresh list
@@ -50,10 +56,11 @@ const ManagePackageBookings = () => {
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
         >
-          <option value="All">All Bookings</option>
-          <option value="Pending">Pending Only</option>
-          <option value="Confirmed">Confirmed</option>
-          <option value="Rejected">Rejected</option>
+          <option value="all">All Bookings</option>
+          <option value="pending">Pending Only</option>
+          <option value="approved">Approved</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="rejected">Rejected</option>
         </select>
       </div>
 
@@ -71,7 +78,9 @@ const ManagePackageBookings = () => {
         <tbody>
           {bookings
             .filter(
-              (b) => filterStatus === "All" || b.booking_status === filterStatus
+              (b) =>
+                filterStatus === "all" ||
+                normalizeStatus(b.booking_status) === filterStatus,
             )
             .map((b) => (
               <tr key={b._id}>
@@ -82,28 +91,30 @@ const ManagePackageBookings = () => {
                 <td>
                   <span
                     className={`badge ${
-                      b.booking_status === "Confirmed"
+                      normalizeStatus(b.booking_status) === "confirmed"
                         ? "bg-success"
-                        : b.booking_status === "Pending"
-                        ? "bg-warning"
-                        : "bg-danger"
+                        : normalizeStatus(b.booking_status) === "approved"
+                          ? "bg-info text-dark"
+                          : normalizeStatus(b.booking_status) === "pending"
+                            ? "bg-warning"
+                            : "bg-danger"
                     }`}
                   >
-                    {b.booking_status}
+                    {toLabel(b.booking_status)}
                   </span>
                 </td>
                 <td>
-                  {b.booking_status === "Pending" && (
+                  {normalizeStatus(b.booking_status) === "pending" && (
                     <>
                       <button
                         className="btn btn-sm btn-success me-2"
-                        onClick={() => handleStatus(b._id, "Confirmed")}
+                        onClick={() => handleStatus(b._id, "approved")}
                       >
                         Approve
                       </button>
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() => handleStatus(b._id, "Rejected")}
+                        onClick={() => handleStatus(b._id, "rejected")}
                       >
                         Reject
                       </button>

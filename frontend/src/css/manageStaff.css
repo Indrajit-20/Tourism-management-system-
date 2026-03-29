@@ -1,0 +1,55 @@
+.manage-staff-page {
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+  border: 1px solid #c9d8f0;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.manage-staff-title {
+  font-weight: 700;
+  color: #1d2a40;
+  margin-bottom: 14px;
+}
+
+.manage-staff-card {
+  border: 1px solid #b8c9e6 !important;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.manage-staff-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2d3d;
+}
+
+.manage-staff-field .form-control {
+  border: 1px solid #9eb6dc;
+  border-radius: 8px;
+  padding: 9px 10px;
+}
+
+.manage-staff-field .form-control:focus {
+  border-color: #4f79be;
+  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+}
+
+.manage-staff-table-wrap {
+  border: 1px solid #a7bddf;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.manage-staff-table {
+  margin-bottom: 0;
+}
+
+.manage-staff-table thead th {
+  border-color: #6f85a8 !important;
+}
+
+.manage-staff-table tbody td {
+  border-color: #c3cfdf !important;
+  vertical-align: middle;
+}

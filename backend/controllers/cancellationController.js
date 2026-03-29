@@ -2,12 +2,155 @@
 const Cancellation = require("../models/Cancellation");
 const BusTicketBooking = require("../models/BusTicketBooking");
 const PackageBooking = require("../models/PackageBooking");
+const TourSchedule = require("../models/TourSchedule");
+
+const PACKAGE_CANCEL_ALLOWED_STATUSES = new Set(["pending", "approved", "confirmed"]);
+
+const toDayStart = (value) => {
+  const date = new Date(value);
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
+
+const getDayDifference = (fromDate, toDate) => {
+  const msInDay = 24 * 60 * 60 * 1000;
+  return Math.round((toDayStart(toDate) - toDayStart(fromDate)) / msInDay);
+};
+
+const calculatePackageRefund = ({ booking, schedule }) => {
+  const bookingStatus = String(booking.booking_status || "").toLowerCase();
+  const totalPaid = Number(booking.total_amount || 0);
+
+  if (!PACKAGE_CANCEL_ALLOWED_STATUSES.has(bookingStatus)) {
+    return {
+      allowed: false,
+      message: "This booking cannot be cancelled",
+    };
+  }
+
+  if (bookingStatus === "pending" || bookingStatus === "approved") {
+    return {
+      allowed: true,
+      refundAmount: 0,
+      refundPercent: 0,
+      nonRefundableAmount: totalPaid,
+      reason: "Not paid yet",
+    };
+  }
+
+  if (!schedule?.start_date) {
+    return {
+      allowed: false,
+      message: "Unable to calculate refund without schedule start date",
+    };
+  }
+
+  const today = new Date();
+  const startDate = new Date(schedule.start_date);
+  const daysDiff = getDayDifference(today, startDate);
+
+  if (daysDiff < 0) {
+    return {
+      allowed: false,
+      message: "Cannot cancel after travel date",
+    };
+  }
+
+  let refundPercent = 0;
+  if (daysDiff >= 15) refundPercent = 100;
+  else if (daysDiff >= 7) refundPercent = 80;
+  else if (daysDiff >= 3) refundPercent = 60;
+  else refundPercent = 40;
+
+  const refundAmount = Math.round((totalPaid * refundPercent) / 100);
+  return {
+    allowed: true,
+    refundAmount,
+    refundPercent,
+    nonRefundableAmount: Math.max(totalPaid - refundAmount, 0),
+    reason: `Refund ${refundPercent}% as per cancellation policy`,
+  };
+};
+
+const releasePackageSeats = async (booking) => {
+  if (!booking?.tour_schedule_id) return;
+
+  const schedule = await TourSchedule.findById(booking.tour_schedule_id);
+  if (!schedule) return;
+
+  const bookedSet = new Set(
+    (booking.seat_numbers || []).map((seat) => String(seat).toUpperCase())
+  );
+
+  schedule.seats = (schedule.seats || []).map((seat) => {
+    const seatNo = String(seat.seat_number || "").toUpperCase();
+    if (!bookedSet.has(seatNo)) return seat;
+
+    return {
+      ...seat.toObject(),
+      is_booked: false,
+      booked_by: null,
+    };
+  });
+
+  schedule.available_seats = (schedule.seats || []).filter((seat) => !seat.is_booked).length;
+  if (schedule.available_seats > 0 && schedule.departure_status === "BookingFull") {
+    schedule.departure_status = "Locked";
+  }
+
+  await schedule.save();
+};
+
+const getPackageCancellationPreview = async (req, res) => {
+  try {
+    const { booking_id } = req.body;
+    const custmer_id = req.user.id;
+
+    if (!booking_id) {
+      return res.status(400).json({ message: "booking_id is required" });
+    }
+
+    const booking = await PackageBooking.findOne({ _id: booking_id, Custmer_id: custmer_id });
+    if (!booking) {
+      return res.status(404).json({ message: "Package booking not found" });
+    }
+
+    const status = String(booking.booking_status || "").toLowerCase();
+    if (status === "completed") {
+      return res.status(400).json({ message: "Completed booking cannot be cancelled" });
+    }
+    if (status === "cancelled") {
+      return res.status(400).json({ message: "Booking is already cancelled" });
+    }
+
+    const schedule = booking.tour_schedule_id
+      ? await TourSchedule.findById(booking.tour_schedule_id, "start_date")
+      : null;
+
+    const refundInfo = calculatePackageRefund({ booking, schedule });
+    if (!refundInfo.allowed) {
+      return res.status(400).json({ message: refundInfo.message });
+    }
+
+    return res.status(200).json({
+      booking_id,
+      amount_paid: Number(booking.total_amount || 0),
+      refund_amount: refundInfo.refundAmount,
+      non_refundable_amount: refundInfo.nonRefundableAmount,
+      refund_percent: refundInfo.refundPercent,
+      reason: refundInfo.reason,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Error preparing cancellation preview", error: error.message });
+  }
+};
 
 // User cancels a booking
 const cancelBooking = async (req, res) => {
   try {
-    const { booking_id, booking_type, refund_amount, reason } = req.body;
+    const { booking_id, booking_type, reason } = req.body;
     const custmer_id = req.user.id;
+    let refund_amount = 0;
 
     // 1. Update the original booking status
     if (booking_type === "Bus") {
@@ -15,9 +158,43 @@ const cancelBooking = async (req, res) => {
         booking_status: "Cancelled",
       });
     } else if (booking_type === "Package") {
-      await PackageBooking.findByIdAndUpdate(booking_id, {
-        booking_status: "Cancelled",
-      });
+      const pkgBooking = await PackageBooking.findOne({ _id: booking_id, Custmer_id: custmer_id });
+      if (!pkgBooking) {
+        return res.status(404).json({ message: "Package booking not found" });
+      }
+
+      const normalizedStatus = String(pkgBooking.booking_status || "").toLowerCase();
+      if (normalizedStatus === "completed") {
+        return res.status(400).json({ message: "Completed booking cannot be cancelled" });
+      }
+      if (normalizedStatus === "cancelled") {
+        return res.status(400).json({ message: "Booking is already cancelled" });
+      }
+
+      const schedule = pkgBooking.tour_schedule_id
+        ? await TourSchedule.findById(pkgBooking.tour_schedule_id, "start_date")
+        : null;
+      const refundInfo = calculatePackageRefund({ booking: pkgBooking, schedule });
+      if (!refundInfo.allowed) {
+        return res.status(400).json({ message: refundInfo.message });
+      }
+
+      refund_amount = refundInfo.refundAmount;
+
+      pkgBooking.booking_status = "cancelled";
+      pkgBooking.cancelled_by = "customer";
+      pkgBooking.cancellation_reason = reason || "Cancelled by user";
+      pkgBooking.cancelled_at = new Date();
+      pkgBooking.refund_amount = refund_amount;
+      pkgBooking.refund_status = refund_amount > 0 ? "pending" : "none";
+      if (refund_amount > 0 && pkgBooking.payment_status === "paid") {
+        pkgBooking.payment_status = "refunded";
+      }
+      await pkgBooking.save();
+
+      await releasePackageSeats(pkgBooking);
+    } else {
+      return res.status(400).json({ message: "Invalid booking_type" });
     }
 
     // 2. Create cancellation record
@@ -102,6 +279,7 @@ const getMyCancellations = async (req, res) => {
 };
 
 module.exports = {
+  getPackageCancellationPreview,
   cancelBooking,
   getAllCancellations,
   markRefundDone,

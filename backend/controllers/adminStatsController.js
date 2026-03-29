@@ -29,7 +29,7 @@ exports.getDashboardStats = async (req, res) => {
 
     // 6. Pending Bookings (Updated to use 'booking_status')
     const pendingPackages = await PackageBooking.countDocuments({
-      booking_status: "Pending",
+      booking_status: "pending",
     });
     const pendingBuses = await BusTicketBooking.countDocuments({
       booking_status: "Pending",

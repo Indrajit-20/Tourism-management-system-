@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const { authMiddleware, isadmin } = require("../middleware/authmiddleware");
 const {
+  getPackageCancellationPreview,
   cancelBooking,
   getAllCancellations,
   markRefundDone,
@@ -10,6 +11,7 @@ const {
 } = require("../controllers/cancellationController");
 
 // User cancels booking
+router.post("/preview", authMiddleware, getPackageCancellationPreview);
 router.post("/cancel", authMiddleware, cancelBooking);
 
 // User: Get their own cancellations

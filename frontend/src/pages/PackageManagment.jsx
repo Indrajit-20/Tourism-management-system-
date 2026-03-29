@@ -8,19 +8,14 @@ const initialFormState = {
   package_type: "",
   source_city: "Ahmedabad",
   destination: "",
-  price: "",
   duration: "",
   description: "",
-  bus_id: "",
   tour_guide: "",
   sightseeing: "",
   itinerary: "",
-  start_date: "",
-  end_date: "",
   inclusive: "",
   exclusive: "",
   status: "Active",
-  tour_status: "Scheduled",
 };
 
 const PackageManagment = () => {
@@ -28,7 +23,6 @@ const PackageManagment = () => {
   const [editingId, setEditingId] = useState(null);
 
   const [packages, setPackages] = useState([]);
-  const [buses, setBuses] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [hotelsList, setHotelsList] = useState([]);
 
@@ -40,15 +34,13 @@ const PackageManagment = () => {
 
   const fetchData = async () => {
     try {
-      const [pkgRes, busRes, staffRes, hotelRes] = await Promise.all([
+      const [pkgRes, staffRes, hotelRes] = await Promise.all([
         axios.get(`${apiBase}/api/packages`),
-        axios.get(`${apiBase}/api/bus`),
         axios.get(`${apiBase}/api/staff`),
         axios.get(`${apiBase}/api/hotels`),
       ]);
 
       setPackages(pkgRes.data || []);
-      setBuses(busRes.data || []);
       setStaffList(staffRes.data || []);
       setHotelsList(hotelRes.data || []);
     } catch (error) {
@@ -144,17 +136,12 @@ const PackageManagment = () => {
       payload.append("package_type", formData.package_type);
       payload.append("source_city", formData.source_city || "Ahmedabad");
       payload.append("destination", formData.destination);
-      payload.append("price", formData.price);
       payload.append("duration", formData.duration);
       payload.append("description", formData.description);
-      payload.append("bus_id", formData.bus_id);
       payload.append("tour_guide", formData.tour_guide);
-      payload.append("start_date", formData.start_date);
-      payload.append("end_date", formData.end_date);
       payload.append("inclusive", formData.inclusive);
       payload.append("exclusive", formData.exclusive);
       payload.append("status", formData.status);
-      payload.append("tour_status", formData.tour_status);
       payload.append("itinerary", formData.itinerary);
       payload.append(
         "sightseeing",
@@ -203,23 +190,17 @@ const PackageManagment = () => {
       package_type: pkg.package_type || "",
       source_city: pkg.source_city || "Ahmedabad",
       destination: pkg.destination || "",
-      price: pkg.price || "",
       duration: pkg.duration || "",
       description: pkg.description || "",
-      bus_id:
-        typeof pkg.bus_id === "object" ? pkg.bus_id?._id : pkg.bus_id || "",
       tour_guide:
         typeof pkg.tour_guide === "object"
           ? pkg.tour_guide?._id
           : pkg.tour_guide || "",
-      start_date: pkg.start_date ? pkg.start_date.split("T")[0] : "",
-      end_date: pkg.end_date ? pkg.end_date.split("T")[0] : "",
       inclusive: pkg.inclusive || "",
       exclusive: pkg.exclusive || "",
       sightseeing: (pkg.sightseeing || []).join(", "),
       itinerary: pkg.itinerary || "",
       status: pkg.status || "Active",
-      tour_status: pkg.tour_status || "Scheduled",
     });
 
     const hotels = (pkg.hotels || []).map((h) =>
@@ -257,23 +238,6 @@ const PackageManagment = () => {
   );
 
   const selectedImageCount = imageInputs.filter(Boolean).length;
-
-  const formatDate = (dateValue) => {
-    if (!dateValue) return "-";
-    const parsed = new Date(dateValue);
-    if (Number.isNaN(parsed.getTime())) return "-";
-    return parsed.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
-  const getTourStatusBadgeClass = (tourStatus) => {
-    if (tourStatus === "Completed") return "bg-success-subtle text-success";
-    if (tourStatus === "Running") return "bg-warning-subtle text-warning";
-    return "bg-primary-subtle text-primary";
-  };
 
   return (
     <div className="container mt-4 mb-5">
@@ -334,18 +298,6 @@ const PackageManagment = () => {
             </div>
 
             <div className="col-md-4">
-              <label className="form-label">Price</label>
-              <input
-                type="number"
-                name="price"
-                className="form-control"
-                value={formData.price}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="col-md-4">
               <label className="form-label">Duration</label>
               <input
                 type="text"
@@ -355,47 +307,6 @@ const PackageManagment = () => {
                 onChange={handleChange}
                 required
               />
-            </div>
-
-            <div className="col-md-4">
-              <label className="form-label">Start Date</label>
-              <input
-                type="date"
-                name="start_date"
-                className="form-control"
-                value={formData.start_date}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="col-md-4">
-              <label className="form-label">End Date</label>
-              <input
-                type="date"
-                name="end_date"
-                className="form-control"
-                value={formData.end_date}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="col-md-4">
-              <label className="form-label">Bus (from Bus list)</label>
-              <select
-                name="bus_id"
-                className="form-select"
-                value={formData.bus_id}
-                onChange={handleChange}
-              >
-                <option value="">Select Bus</option>
-                {buses.map((bus) => (
-                  <option key={bus._id} value={bus._id}>
-                    {bus.bus_number} - {bus.bus_name} ({bus.bus_type})
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div className="col-md-4">
@@ -583,20 +494,6 @@ const PackageManagment = () => {
               </select>
             </div>
 
-            <div className="col-md-2">
-              <label className="form-label">Tour Status</label>
-              <select
-                name="tour_status"
-                className="form-select"
-                value={formData.tour_status}
-                onChange={handleChange}
-              >
-                <option value="Scheduled">Scheduled</option>
-                <option value="Running">Running</option>
-                <option value="Completed">Completed</option>
-              </select>
-            </div>
-
             <div className="col-12 mt-2 d-flex gap-2">
               <button type="submit" className="btn btn-primary w-100">
                 {editingId ? "Update Package" : "Save Package"}
@@ -630,9 +527,6 @@ const PackageManagment = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Price</th>
                 <th>Destination</th>
                 <th>Duration</th>
                 <th>Status</th>
@@ -675,28 +569,12 @@ const PackageManagment = () => {
                     <td>{pkg.package_type || "-"}</td>
                     <td>
                       <div className="fw-semibold">
-                        {formatDate(pkg.start_date)}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="fw-semibold">
-                        {formatDate(pkg.end_date)}
-                      </div>
-                    </td>
-                    <td className="fw-semibold">Rs. {pkg.price}</td>
-                    <td>
-                      <div className="fw-semibold">
                         {pkg.destination || "-"}
                       </div>
                     </td>
                     <td>{pkg.duration || "-"}</td>
                     <td>
                       <div className="d-flex flex-column gap-1">
-                        <span
-                          className={`badge ${getTourStatusBadgeClass(pkg.tour_status || "Scheduled")}`}
-                        >
-                          {pkg.tour_status || "Scheduled"}
-                        </span>
                         <span
                           className={`badge ${
                             pkg.status === "Active"

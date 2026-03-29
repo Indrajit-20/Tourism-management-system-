@@ -15,7 +15,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "normalize:package-status": "node scripts/normalizePackageBookingStatus.js"
   },
   "keywords": [],
   "author": "",

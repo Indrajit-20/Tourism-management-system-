@@ -13,7 +13,8 @@ const packageSchema = new mongoose.Schema(
       ref: "Hotel",
     }],
 
-    price: { type: Number, required: true },
+    // Deprecated package-level price. Pricing is managed on TourSchedule.
+    price: { type: Number },
     duration: { type: String, required: true },
     
     // Support multiple images
@@ -21,12 +22,10 @@ const packageSchema = new mongoose.Schema(
     
     description: { type: String },
 
-    // Linking 1 Bus and 1 Tour Guide
-    bus_id: { type: mongoose.Schema.Types.ObjectId, ref: "Bus" },
+    // Tour Guide (optional)
     tour_guide: { type: mongoose.Schema.Types.ObjectId, ref: "Staff" },
 
-    start_date: { type: Date },
-    end_date: { type: Date },
+    // Package-level inclusions/exclusions (not departure-specific)
     inclusive: { type: String },
     exclusive: { type: String },
 
@@ -40,13 +39,6 @@ const packageSchema = new mongoose.Schema(
     itinerary: { type: String },
 
     status: { type: String, default: "Active" },
-    
-    // Tour Lifecycle
-    tour_status: { 
-      type: String, 
-      enum: ["Scheduled", "Running", "Completed"], 
-      default: "Scheduled" 
-    },
   },
   { timestamps: true }
 );

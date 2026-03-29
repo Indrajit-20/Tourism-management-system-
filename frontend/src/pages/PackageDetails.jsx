@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import ReviewsDisplay from "../components/ReviewsDisplay";
+import TourDepartureSelector from "../components/TourDepartureSelector";
 import "../css/packageDetails.css";
 
 const API_BASE_URL = "http://localhost:4000";
@@ -38,6 +39,7 @@ const PackageDetails = () => {
   const [packageData, setPackageData] = useState(null);
   const [activeTab, setActiveTab] = useState("itinerary");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedDeparture, setSelectedDeparture] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -92,23 +94,24 @@ const PackageDetails = () => {
   );
 
   const transportText = useMemo(() => {
-    const busType = packageData?.bus_id?.bus_type;
-    const busName = packageData?.bus_id?.bus_name;
+    const busType = selectedDeparture?.bus_id?.bus_type;
+    const busName = selectedDeparture?.bus_id?.bus_name;
     if (busType && busName) return `${busType} (${busName})`;
     if (busType) return busType;
     return "-";
-  }, [packageData]);
+  }, [selectedDeparture]);
 
   const availableSeats = useMemo(() => {
-    if (typeof packageData?.available_seats === "number") {
-      return packageData.available_seats;
+    if (typeof selectedDeparture?.available_seats === "number") {
+      return selectedDeparture.available_seats;
     }
 
-    const totalSeats = Number(packageData?.bus_id?.total_seats) || 0;
-    const bookedTravellers = Number(packageData?.booked_travellers) || 0;
+    const totalSeats = Number(selectedDeparture?.total_seats) || 0;
+    const bookedTravellers =
+      totalSeats - (Number(selectedDeparture?.available_seats) || 0);
     if (!totalSeats) return "-";
     return Math.max(totalSeats - bookedTravellers, 0);
-  }, [packageData]);
+  }, [selectedDeparture]);
 
   if (loading) return <h3 className="text-center mt-5">Loading...</h3>;
   if (!packageData)
@@ -305,14 +308,16 @@ const PackageDetails = () => {
                 <div className="row g-2">
                   <div className="col-6 col-md-3">
                     <div className="pd-info-box">
-                      <small>Start Date</small>
-                      <strong>{formatDate(packageData.start_date)}</strong>
+                      <small>Schedule Start</small>
+                      <strong>
+                        {formatDate(selectedDeparture?.start_date)}
+                      </strong>
                     </div>
                   </div>
                   <div className="col-6 col-md-3">
                     <div className="pd-info-box">
-                      <small>End Date</small>
-                      <strong>{formatDate(packageData.end_date)}</strong>
+                      <small>Schedule End</small>
+                      <strong>{formatDate(selectedDeparture?.end_date)}</strong>
                     </div>
                   </div>
                   <div className="col-6 col-md-3">
@@ -354,7 +359,12 @@ const PackageDetails = () => {
               <div className="pd-card pd-side-card">
                 <div className="pd-price-wrap">
                   <small>Per Person</small>
-                  <h2>Rs. {packageData.price || "-"}</h2>
+                  <h2>
+                    Rs.{" "}
+                    {selectedDeparture?.price ??
+                      selectedDeparture?.price_per_person ??
+                      "Select schedule"}
+                  </h2>
                 </div>
 
                 <div className="pd-divider" />
@@ -362,8 +372,10 @@ const PackageDetails = () => {
                 <div className="row g-2 mb-3">
                   <div className="col-6">
                     <div className="pd-mini-info">
-                      <small>Status</small>
-                      <strong>{packageData.tour_status || "Scheduled"}</strong>
+                      <small>Schedule Status</small>
+                      <strong>
+                        {selectedDeparture?.departure_status || "Not selected"}
+                      </strong>
                     </div>
                   </div>
                   <div className="col-6">
@@ -383,13 +395,38 @@ const PackageDetails = () => {
                   </strong>
                 </div>
 
+                <div className="mb-3">
+                  <TourDepartureSelector
+                    packageId={id}
+                    onSelect={(dep) => setSelectedDeparture(dep)}
+                  />
+                </div>
+
                 <div className="d-grid gap-2">
-                  <Link
-                    to={`/packages/${id}/select-seats`}
-                    className="btn btn-primary btn-lg"
+                  <button
+                    className={`btn btn-lg ${
+                      selectedDeparture
+                        ? "btn-primary"
+                        : "btn-secondary disabled"
+                    }`}
+                    disabled={!selectedDeparture}
+                    onClick={() => {
+                      if (selectedDeparture) {
+                        navigate(
+                          `/packages/${id}/select-seats?schedule=${selectedDeparture._id}`,
+                          {
+                            state: { selectedDeparture },
+                          },
+                        );
+                      } else {
+                        alert("Please select a schedule first");
+                      }
+                    }}
                   >
-                    Book Now
-                  </Link>
+                    {selectedDeparture
+                      ? "✓ Proceed to Seat Selection"
+                      : "📅 Select Schedule First"}
+                  </button>
                   <button
                     type="button"
                     className="btn btn-outline-primary btn-lg"

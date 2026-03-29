@@ -1,5 +1,37 @@
 const Packages = require("../models/Package");
-const PackageBooking = require("../models/PackageBooking");
+const TourSchedule = require("../models/TourSchedule");
+const fs = require("fs/promises");
+const path = require("path");
+
+const packageUploadsDir = path.join(__dirname, "..", "uploads", "packages");
+
+const toPackageImagePath = (imageRef) => {
+  if (!imageRef || typeof imageRef !== "string") return null;
+  const normalized = imageRef.replace(/\\/g, "/").trim();
+  if (!normalized.startsWith("packages/")) return null;
+
+  const fileName = path.basename(normalized);
+  if (!fileName) return null;
+
+  return path.join(packageUploadsDir, fileName);
+};
+
+const deletePackageImages = async (imageRefs = []) => {
+  const deleteTasks = imageRefs
+    .map(toPackageImagePath)
+    .filter(Boolean)
+    .map(async (filePath) => {
+      try {
+        await fs.unlink(filePath);
+      } catch (error) {
+        if (error.code !== "ENOENT") {
+          console.warn("Failed to delete package image:", filePath, error.message);
+        }
+      }
+    });
+
+  await Promise.all(deleteTasks);
+};
 
 const attachAvailableSeats = async (packages) => {
   const packageList = Array.isArray(packages) ? packages : [packages];
@@ -8,35 +40,43 @@ const attachAvailableSeats = async (packages) => {
 
   const packageIds = validPackages.map((pkg) => pkg._id);
 
-  const bookingCounts = await PackageBooking.aggregate([
+  const scheduleAvailability = await TourSchedule.aggregate([
     {
       $match: {
-        Package_id: { $in: packageIds },
-        booking_status: { $nin: ["Cancelled", "Rejected"] },
+        package_id: { $in: packageIds },
+        departure_status: { $in: ["Open", "BookingFull", "Locked"] },
       },
     },
     {
       $group: {
-        _id: "$Package_id",
-        booked_travellers: { $sum: { $ifNull: ["$travellers", 1] } },
+        _id: "$package_id",
+        total_available_seats: { $sum: { $ifNull: ["$available_seats", 0] } },
+        total_seats: { $sum: { $ifNull: ["$total_seats", 0] } },
       },
     },
   ]);
 
-  const bookingMap = new Map(
-    bookingCounts.map((row) => [String(row._id), row.booked_travellers || 0])
+  const availabilityMap = new Map(
+    scheduleAvailability.map((row) => [
+      String(row._id),
+      {
+        available: row.total_available_seats || 0,
+        total: row.total_seats || 0,
+      },
+    ])
   );
 
   const withAvailability = validPackages.map((pkgDoc) => {
     const pkg = pkgDoc.toObject ? pkgDoc.toObject() : pkgDoc;
-    const totalSeats = Number(pkg?.bus_id?.total_seats) || 0;
-    const bookedTravellers = bookingMap.get(String(pkg._id)) || 0;
-    const availableSeats = Math.max(totalSeats - bookedTravellers, 0);
+    const availability = availabilityMap.get(String(pkg._id)) || {
+      available: 0,
+      total: 0,
+    };
 
     return {
       ...pkg,
-      booked_travellers: bookedTravellers,
-      available_seats: totalSeats ? availableSeats : null,
+      available_seats: availability.available,
+      total_seats: availability.total,
     };
   });
 
@@ -65,70 +105,11 @@ const toArray = (value) => {
   return [];
 };
 
-// Auto status rules:
-// - end date passed -> Completed
-// - start date reached -> Running
-// - future start date -> Scheduled
-const autoUpdateTourStatuses = async () => {
-  const now = new Date();
-  const startOfToday = new Date(now);
-  startOfToday.setHours(0, 0, 0, 0);
-  const endOfToday = new Date(now);
-  endOfToday.setHours(23, 59, 59, 999);
-
-  const packages = await Packages.find(
-    {
-      $or: [
-        { start_date: { $exists: true, $ne: null } },
-        { end_date: { $exists: true, $ne: null } },
-      ],
-    },
-    "start_date end_date tour_status"
-  ).lean();
-
-  const updates = [];
-
-  for (const pkg of packages) {
-    let nextStatus = pkg.tour_status || "Scheduled";
-
-    if (pkg.end_date && new Date(pkg.end_date) < startOfToday) {
-      nextStatus = "Completed";
-    } else if (pkg.start_date && new Date(pkg.start_date) <= endOfToday) {
-      nextStatus = "Running";
-    } else if (pkg.start_date && new Date(pkg.start_date) > endOfToday) {
-      nextStatus = "Scheduled";
-    }
-
-    if (nextStatus !== pkg.tour_status) {
-      updates.push({
-        updateOne: {
-          filter: { _id: pkg._id },
-          update: { $set: { tour_status: nextStatus } },
-        },
-      });
-    }
-  }
-
-  if (updates.length) {
-    await Packages.bulkWrite(updates);
-  }
-
-  return { updated: updates.length };
-};
-
 //show package
 const getPackage = async (req, res) => {
   try {
     const findpackage = await Packages.find()
       .populate("hotels", "name location hotel_type state_id city_id status")
-      .populate({
-        path: "bus_id",
-        select: "bus_number bus_name bus_type total_seats driver_id driver_ids",
-        populate: [
-          { path: "driver_id", select: "name designation" },
-          { path: "driver_ids", select: "name designation" },
-        ],
-      })
       .populate("tour_guide", "name designation");
 
     const packageWithAvailability = await attachAvailableSeats(findpackage);
@@ -143,14 +124,6 @@ const packageById = async (req, res) => {
   try {
     const pkg = await Packages.findById(req.params.id)
       .populate("hotels", "name location hotel_type state_id city_id status")
-      .populate({
-        path: "bus_id",
-        select: "bus_number bus_name bus_type total_seats driver_id driver_ids",
-        populate: [
-          { path: "driver_id", select: "name designation" },
-          { path: "driver_ids", select: "name designation" },
-        ],
-      })
       .populate("tour_guide", "name designation");
     if (!pkg) {
       return res.status(404).json({ message: "Package not found" });
@@ -172,20 +145,15 @@ const addPackage = async (req, res) => {
       package_type,
       source_city,
       destination,
-      price,
       duration,
       image_urls, // New
       description,
-      bus_id,
       hotels,
       tour_guide, // New
       boarding_points, // New
       pickup_points,
       sightseeing, // New
       itinerary, // New
-      tour_status, // New
-      start_date,
-      end_date,
       inclusive,
       exclusive,
       status,
@@ -215,20 +183,15 @@ const addPackage = async (req, res) => {
       package_type,
       source_city: source_city || "Ahmedabad",
       destination,
-      price,
       duration,
       image_urls: uploadedImages.length ? uploadedImages : toArray(image_urls),
       description,
-      bus_id,
       hotels: toArray(hotels),
       tour_guide,
       boarding_points: mergedBoardingPoints,
       pickup_points: mergedBoardingPoints,
       sightseeing: toArray(sightseeing),
       itinerary,
-      tour_status,
-      start_date,
-      end_date,
       inclusive,
       exclusive,
       status,
@@ -248,7 +211,19 @@ const addPackage = async (req, res) => {
 //update package
 const updatePackage = async (req, res) => {
   const { id } = req.params;
+  const uploadedImages = (req.files || []).map(
+    (file) => `packages/${file.filename}`
+  );
+
   try {
+    const existingPackage = await Packages.findById(id);
+    if (!existingPackage) {
+      if (uploadedImages.length) {
+        await deletePackageImages(uploadedImages);
+      }
+      return res.status(404).json({ message: "Package not found" });
+    }
+
     // Keep one list for boarding/pick-up points during update as well.
     const mergedBoardingPoints = toArray(req.body.boarding_points);
     if (!mergedBoardingPoints.length) {
@@ -264,9 +239,11 @@ const updatePackage = async (req, res) => {
       sightseeing: toArray(req.body.sightseeing),
     };
 
-    const uploadedImages = (req.files || []).map(
-      (file) => `packages/${file.filename}`
-    );
+    delete payload.tour_status;
+    delete payload.start_date;
+    delete payload.end_date;
+    delete payload.price;
+
     if (uploadedImages.length) {
       payload.image_urls = uploadedImages;
     }
@@ -274,12 +251,19 @@ const updatePackage = async (req, res) => {
     const updatepkg = await Packages.findByIdAndUpdate(id, payload, {
       new: true,
     });
-    if (!updatepkg) {
-      res.status(404).json({ message: "Package not found" });
+
+    if (payload.image_urls) {
+      const nextImages = new Set((payload.image_urls || []).map(String));
+      const previousImages = (existingPackage.image_urls || []).map(String);
+      const removedImages = previousImages.filter((imageRef) => !nextImages.has(imageRef));
+      await deletePackageImages(removedImages);
     }
 
     res.status(200).json(updatepkg);
   } catch (err) {
+    if (uploadedImages.length) {
+      await deletePackageImages(uploadedImages);
+    }
     res.status(500).json({ message: "Update Failed" }, err.message);
   }
 };
@@ -288,7 +272,14 @@ const updatePackage = async (req, res) => {
 
 const deletepackage = async (req, res) => {
   try {
+    const pkg = await Packages.findById(req.params.id);
+    if (!pkg) {
+      return res.status(404).json({ message: "Package not found" });
+    }
+
+    await deletePackageImages(pkg.image_urls || []);
     await Packages.findByIdAndDelete(req.params.id);
+
     res.status(200).json({ message: "Package deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: "Server Error" }, err);
@@ -301,5 +292,4 @@ module.exports = {
   addPackage,
   deletepackage,
   updatePackage,
-  autoUpdateTourStatuses,
 };

@@ -7,12 +7,15 @@ const {
   getAllPackageBookings,
   updatePackageBookingStatus,
   getMyBookings,
+  confirmPackagePayment,
 } = require("../controllers/tourbookingController");
 const { authMiddleware, isadmin } = require("../middleware/authmiddleware");
+const uploadBookingAadhaar = require("../middleware/bookingUploadMiddleware");
 
 // User routes
 router.get("/package-seats/:package_id", getPackageBookedSeats);
-router.post("/book", authMiddleware, packageBooking);
+router.post("/book", authMiddleware, uploadBookingAadhaar.single("aadhaar_photo"), packageBooking);
+router.post("/confirm-payment", authMiddleware, confirmPackagePayment);
 router.get("/my-bookings", authMiddleware, getMyBookings);
 
 // Admin routes

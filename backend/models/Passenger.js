@@ -23,6 +23,16 @@ const PassengerSchema = new mongoose.Schema(
       enum: ["Male", "Female", "Other"],
       required: true,
     },
+    is_lead: {
+      type: Boolean,
+      default: false,
+    },
+    aadhaar_number: {
+      type: String,
+    },
+    aadhaar_photo: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

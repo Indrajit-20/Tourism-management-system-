@@ -59,8 +59,14 @@ const PackageSeatSelection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const scheduleIdFromQuery =
+    queryParams.get("schedule") || queryParams.get("departure");
 
   const [packageData, setPackageData] = useState(null);
+  const [selectedDeparture, setSelectedDeparture] = useState(
+    location.state?.selectedDeparture || null,
+  );
   const [seatLayout, setSeatLayout] = useState([]);
   const [bookedSeats, setBookedSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -69,24 +75,43 @@ const PackageSeatSelection = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [packageRes, bookedRes] = await Promise.all([
-          axios.get(`http://localhost:4000/api/packages/${id}`),
-          axios.get(`http://localhost:4000/api/bookings/package-seats/${id}`),
+        const packageReq = axios.get(
+          `http://localhost:4000/api/packages/${id}`,
+        );
+        const departureId = selectedDeparture?._id || scheduleIdFromQuery;
+
+        if (!departureId) {
+          alert("Please select a schedule first.");
+          navigate(`/package-details/${id}`);
+          return;
+        }
+
+        const [packageRes, departureRes, seatsRes] = await Promise.all([
+          packageReq,
+          axios.get(`http://localhost:4000/api/tour-schedules/${departureId}`),
+          axios.get(
+            `http://localhost:4000/api/tour-schedules/${departureId}/seats`,
+          ),
         ]);
 
         const pkg = packageRes.data;
-        const totalSeats = Number(pkg?.bus_id?.total_seats) || 0;
+        const departure = departureRes.data;
+        const totalSeats = Number(departure?.total_seats) || 0;
+        const basePrice = Number(
+          departure?.price ?? departure?.price_per_person ?? 0,
+        );
         const layout = buildSeatLayout(
           totalSeats,
-          pkg?.bus_id?.bus_type,
-          Number(pkg?.price) || 0,
+          departure?.bus_id?.bus_type,
+          basePrice,
         );
         const layoutSeatNumbers = layout.map((seat) => seat.seat_number);
-        const alreadyBooked = (bookedRes.data?.booked_seats || []).map((seat) =>
-          String(seat).toUpperCase(),
-        );
+        const alreadyBooked = (seatsRes.data?.seats || [])
+          .filter((seat) => seat.is_booked)
+          .map((seat) => String(seat.seat_number).toUpperCase());
 
         setPackageData(pkg);
+        setSelectedDeparture(departure);
         setSeatLayout(layout);
         setBookedSeats(alreadyBooked);
 
@@ -109,7 +134,13 @@ const PackageSeatSelection = () => {
     };
 
     fetchData();
-  }, [id, location.state]);
+  }, [
+    id,
+    location.state,
+    scheduleIdFromQuery,
+    navigate,
+    selectedDeparture?._id,
+  ]);
 
   const toggleSeat = (seatNumber) => {
     if (bookedSeats.includes(seatNumber)) return;
@@ -128,9 +159,12 @@ const PackageSeatSelection = () => {
       return;
     }
 
-    navigate(`/packages/${id}`, {
-      state: { selectedSeats },
-    });
+    navigate(
+      `/packages/${id}?schedule=${selectedDeparture?._id || scheduleIdFromQuery}`,
+      {
+        state: { selectedSeats, selectedDeparture },
+      },
+    );
   };
 
   if (loading) return <h3 className="text-center mt-5">Loading seat map...</h3>;
@@ -145,6 +179,14 @@ const PackageSeatSelection = () => {
         <div>
           <h2 className="mb-1">Select Seats</h2>
           <p className="text-muted mb-0">{packageData.package_name}</p>
+          {selectedDeparture?.start_date && (
+            <small className="text-muted">
+              Schedule:{" "}
+              {new Date(selectedDeparture.start_date).toLocaleDateString(
+                "en-IN",
+              )}
+            </small>
+          )}
         </div>
         <button
           className="btn btn-outline-secondary"
@@ -176,7 +218,7 @@ const PackageSeatSelection = () => {
             bookedSeats={bookedSeats}
             selectedSeats={selectedSeats}
             onSeatClick={toggleSeat}
-            busType={packageData?.bus_id?.bus_type || "AC"}
+            busType={selectedDeparture?.bus_id?.bus_type || "AC"}
           />
         </div>
       )}

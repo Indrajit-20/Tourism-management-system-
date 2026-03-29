@@ -33,6 +33,7 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
 import PublicLayout from "./components/PublicLayout"; // Import Layout
 import ManageTripsByDate from "./pages/ManageTripsByDate"; // Import ManageTripsByDate Page
+import TourSchedulesManagement from "./pages/TourSchedulesManagement"; // Import Tour Schedules Management
 
 function App() {
   return (
@@ -71,6 +72,10 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="custmer" element={<ManageCustmer />} />
             <Route path="manage-package" element={<PackageManagment />} />
+            <Route
+              path="manage-tour-schedules"
+              element={<TourSchedulesManagement />}
+            />
             <Route path="manage-hotels" element={<ManageHotels />} />
             <Route path="manage-bus" element={<ManageBus />} />
             <Route path="manage-routes" element={<ManageRoutes />} />{" "}

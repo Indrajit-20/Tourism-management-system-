@@ -137,7 +137,9 @@ const Packagecard = ({
       <div className="pkg-footer">
         <div className="pkg-price-block">
           <small>Per Person</small>
-          <strong className="pkg-price">Rs. {price || "-"}</strong>
+          <strong className="pkg-price">
+            {price ? `Rs. ${price}` : "Select schedule"}
+          </strong>
         </div>
 
         <div className="pkg-actions">

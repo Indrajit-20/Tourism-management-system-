@@ -72,7 +72,11 @@ const MyBookings = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("All"); // filter by status
   const [bookingTypeFilter, setBookingTypeFilter] = useState("All");
+  const [reviewDrafts, setReviewDrafts] = useState({});
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
+  const normalizeStatus = (value) => String(value || "").toLowerCase();
 
   // Load bookings when page opens
   useEffect(() => {
@@ -93,10 +97,44 @@ const MyBookings = () => {
 
       setBookings(busRes.data || []);
       setPackageBookings(packageRes.data || []);
+
+      const notificationRes = await axios.get(`${API}/api/notifications/my`, {
+        headers,
+      });
+      setNotifications(notificationRes.data?.notifications || []);
+      setUnreadCount(Number(notificationRes.data?.unread_count || 0));
     } catch (err) {
       console.error("Error fetching bookings", err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const markNotificationRead = async (notificationId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${API}/api/notifications/${notificationId}/read`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      fetchMyBookings();
+    } catch (err) {
+      console.error("Error marking notification read", err);
+    }
+  };
+
+  const markAllNotificationsRead = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${API}/api/notifications/mark-all-read`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      fetchMyBookings();
+    } catch (err) {
+      console.error("Error marking all notifications read", err);
     }
   };
 
@@ -127,15 +165,16 @@ const MyBookings = () => {
 
   // Show colored badge for booking status
   const getStatusBadge = (status) => {
-    if (status === "Pending")
+    const normalized = String(status || "").toLowerCase();
+    if (normalized === "pending")
       return <span className="badge bg-warning text-dark">Pending</span>;
-    if (status === "Approved")
+    if (normalized === "approved")
       return <span className="badge bg-info text-dark">Approved</span>;
-    if (status === "Confirmed")
+    if (normalized === "confirmed")
       return <span className="badge bg-success">Confirmed</span>;
-    if (status === "Rejected")
+    if (normalized === "rejected")
       return <span className="badge bg-danger">Rejected</span>;
-    if (status === "Cancelled")
+    if (normalized === "cancelled")
       return <span className="badge bg-secondary">Cancelled</span>;
     return <span className="badge bg-secondary">{status}</span>;
   };
@@ -284,10 +323,11 @@ const MyBookings = () => {
   };
 
   const handleCancelPackageBooking = async (booking) => {
+    const normalizedStatus = String(booking.booking_status || "").toLowerCase();
     if (
-      booking.booking_status !== "Pending" &&
-      booking.booking_status !== "Confirmed" &&
-      booking.booking_status !== "Approved"
+      normalizedStatus !== "pending" &&
+      normalizedStatus !== "confirmed" &&
+      normalizedStatus !== "approved"
     ) {
       alert(
         "Only pending, approved, or confirmed package bookings can be cancelled.",
@@ -295,21 +335,33 @@ const MyBookings = () => {
       return;
     }
 
-    if (
-      !window.confirm("Are you sure you want to cancel this package booking?")
-    ) {
-      return;
-    }
-
     try {
       const token = localStorage.getItem("token");
+
+      const previewRes = await axios.post(
+        `${API}/api/cancellation/preview`,
+        { booking_id: booking._id },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      const preview = previewRes.data;
+      const confirmText = [
+        `Amount paid: Rs. ${preview.amount_paid || 0}`,
+        `Refund amount: Rs. ${preview.refund_amount || 0}`,
+        `Non-refundable amount: Rs. ${preview.non_refundable_amount || 0}`,
+        "",
+        "Do you want to proceed with cancellation?",
+      ].join("\n");
+
+      if (!window.confirm(confirmText)) {
+        return;
+      }
 
       await axios.post(
         `${API}/api/cancellation/cancel`,
         {
           booking_id: booking._id,
           booking_type: "Package",
-          refund_amount: booking.total_amount || 0,
           reason: "Cancelled by user from My Bookings",
         },
         { headers: { Authorization: `Bearer ${token}` } },
@@ -322,6 +374,86 @@ const MyBookings = () => {
     }
   };
 
+  const handlePayNowPackage = async (booking) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const orderRes = await axios.post(`${API}/api/payment/create-order`, {
+        amount: booking.total_amount,
+      });
+
+      const options = {
+        key: "rzp_test_SMPUHkAalgy2kE",
+        amount: orderRes.data.amount,
+        currency: "INR",
+        name: "Tour Package Payment",
+        description: booking.Package_id?.package_name || "Tour Booking",
+        order_id: orderRes.data.id,
+        handler: async (response) => {
+          await axios.post(
+            `${API}/api/bookings/confirm-payment`,
+            {
+              booking_id: booking._id,
+              payment_id: response.razorpay_payment_id,
+            },
+            { headers: { Authorization: `Bearer ${token}` } },
+          );
+          alert("Payment successful! Booking confirmed.");
+          fetchMyBookings();
+        },
+        modal: {
+          ondismiss: () =>
+            alert("Payment cancelled. You can pay again from My Bookings."),
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      alert(
+        err.response?.data?.message || "Unable to process package payment.",
+      );
+    }
+  };
+
+  const handleReviewChange = (bookingId, field, value) => {
+    setReviewDrafts((prev) => ({
+      ...prev,
+      [bookingId]: {
+        rating: prev[bookingId]?.rating || 5,
+        review_text: prev[bookingId]?.review_text || "",
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleSubmitReview = async (booking) => {
+    try {
+      const token = localStorage.getItem("token");
+      const draft = reviewDrafts[booking._id] || { rating: 5, review_text: "" };
+
+      if (!draft.review_text || !String(draft.review_text).trim()) {
+        alert("Please write a review before submitting.");
+        return;
+      }
+
+      await axios.post(
+        `${API}/api/feedback/submit`,
+        {
+          package_booking_id: booking._id,
+          rating: Number(draft.rating || 5),
+          review_text: String(draft.review_text).trim(),
+        },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      alert("Review submitted successfully.");
+      fetchMyBookings();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to submit review.");
+    }
+  };
+
   // Filter bookings based on selected filter tab
   const filteredBookings =
     filter === "All"
@@ -331,7 +463,9 @@ const MyBookings = () => {
   const filteredPackageBookings =
     filter === "All"
       ? packageBookings
-      : packageBookings.filter((b) => b.booking_status === filter);
+      : packageBookings.filter(
+          (b) => normalizeStatus(b.booking_status) === normalizeStatus(filter),
+        );
 
   // Count approved bookings (to show red notification dot)
   const approvedCount = bookings.filter(
@@ -351,6 +485,45 @@ const MyBookings = () => {
   return (
     <div className="container mt-4">
       <h2 className="fw-bold mb-3">My Bookings</h2>
+
+      {notifications.length > 0 && (
+        <div className="card border-warning mb-3">
+          <div className="card-header d-flex justify-content-between align-items-center bg-warning-subtle">
+            <strong>
+              Notifications {unreadCount > 0 ? `(${unreadCount} unread)` : ""}
+            </strong>
+            {unreadCount > 0 && (
+              <button
+                className="btn btn-sm btn-outline-dark"
+                onClick={markAllNotificationsRead}
+              >
+                Mark all as read
+              </button>
+            )}
+          </div>
+          <div className="list-group list-group-flush">
+            {notifications.slice(0, 5).map((item) => (
+              <div
+                key={item._id}
+                className="list-group-item d-flex justify-content-between align-items-start"
+              >
+                <div>
+                  <div className="fw-semibold">{item.title}</div>
+                  <div className="small text-muted">{item.message}</div>
+                </div>
+                {!item.is_read && (
+                  <button
+                    className="btn btn-sm btn-outline-secondary"
+                    onClick={() => markNotificationRead(item._id)}
+                  >
+                    Read
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="d-flex gap-2 mb-3 flex-wrap">
         {["All", "Bus", "Package"].map((type) => (
@@ -395,8 +568,6 @@ const MyBookings = () => {
       {(bookingTypeFilter === "All" || bookingTypeFilter === "Bus") && (
         <>
           <h5 className="mb-3">Bus Bookings</h5>
-
-        
 
           {/* No bookings message */}
           {filteredBookings.length === 0 ? (
@@ -555,16 +726,16 @@ const MyBookings = () => {
                                 <small className="text-success d-block">
                                   ✅ Confirmed & Paid
                                 </small>
-                              {booking.payment_id && (
-                                <small
-                                  className="text-muted d-block"
-                                  style={{ fontSize: "0.7rem" }}
-                                >
-                                  ID: {booking.payment_id.slice(-8)}
-                                </small>
-                              )}
-                            </div>
-                          )}
+                                {booking.payment_id && (
+                                  <small
+                                    className="text-muted d-block"
+                                    style={{ fontSize: "0.7rem" }}
+                                  >
+                                    ID: {booking.payment_id.slice(-8)}
+                                  </small>
+                                )}
+                              </div>
+                            )}
 
                           {/* REJECTED — show status */}
                           {booking.booking_status === "Rejected" && (
@@ -653,10 +824,14 @@ const MyBookings = () => {
                               {getPackageRouteName(booking)}
                             </small>
                             <small className="text-muted d-block mt-1">
-                              Start: {formatDate(packageInfo.start_date)}
+                              Start:{" "}
+                              {formatDate(
+                                booking?.tour_schedule_id?.start_date,
+                              )}
                             </small>
                             <small className="text-muted d-block">
-                              End: {formatDate(packageInfo.end_date)}
+                              End:{" "}
+                              {formatDate(booking?.tour_schedule_id?.end_date)}
                             </small>
                           </div>
 
@@ -711,8 +886,20 @@ const MyBookings = () => {
                           </div>
 
                           <div className="col-md-2 text-end">
-                            {booking.booking_status !== "Cancelled" &&
-                            booking.booking_status !== "Rejected" ? (
+                            {normalizeStatus(booking.booking_status) ===
+                              "approved" && (
+                              <button
+                                className="btn btn-success btn-sm w-100 mb-2"
+                                onClick={() => handlePayNowPackage(booking)}
+                              >
+                                💳 Pay Now
+                              </button>
+                            )}
+
+                            {normalizeStatus(booking.booking_status) !==
+                              "cancelled" &&
+                            normalizeStatus(booking.booking_status) !==
+                              "rejected" ? (
                               <button
                                 className="btn btn-outline-danger btn-sm w-100"
                                 onClick={() =>
@@ -725,6 +912,77 @@ const MyBookings = () => {
                               <small className="text-muted">No actions</small>
                             )}
                           </div>
+
+                          {normalizeStatus(booking.booking_status) ===
+                            "completed" &&
+                            !booking.review_submitted && (
+                              <div className="col-12 mt-2">
+                                <div className="border rounded p-3 bg-light">
+                                  <h6 className="mb-2">Write a Review</h6>
+                                  <div className="row g-2">
+                                    <div className="col-md-2">
+                                      <select
+                                        className="form-select"
+                                        value={
+                                          reviewDrafts[booking._id]?.rating || 5
+                                        }
+                                        onChange={(e) =>
+                                          handleReviewChange(
+                                            booking._id,
+                                            "rating",
+                                            e.target.value,
+                                          )
+                                        }
+                                      >
+                                        {[5, 4, 3, 2, 1].map((value) => (
+                                          <option key={value} value={value}>
+                                            {value} Star
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                    <div className="col-md-8">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Share your experience"
+                                        value={
+                                          reviewDrafts[booking._id]
+                                            ?.review_text || ""
+                                        }
+                                        onChange={(e) =>
+                                          handleReviewChange(
+                                            booking._id,
+                                            "review_text",
+                                            e.target.value,
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                    <div className="col-md-2 d-grid">
+                                      <button
+                                        className="btn btn-primary"
+                                        onClick={() =>
+                                          handleSubmitReview(booking)
+                                        }
+                                      >
+                                        Submit
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                          {normalizeStatus(booking.booking_status) ===
+                            "completed" &&
+                            booking.review_submitted && (
+                              <div className="col-12 mt-2">
+                                <small className="text-success">
+                                  Review already submitted for this booking.
+                                </small>
+                              </div>
+                            )}
                         </div>
                       </div>
                     </div>

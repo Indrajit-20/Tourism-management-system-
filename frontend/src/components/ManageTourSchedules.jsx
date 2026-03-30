@@ -60,7 +60,7 @@ const ManageTourSchedules = ({ packageId, packageName }) => {
 
   const fetchBuses = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/bus`);
+      const res = await axios.get(`${API_BASE_URL}/api/bus?category=tour`);
       setBuses(res.data);
     } catch (err) {
       console.error("Error fetching buses:", err);

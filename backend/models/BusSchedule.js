@@ -41,6 +41,9 @@ const BusScheduleSchema = new mongoose.Schema(
     // Default boarding points for this schedule
     boarding_points: [String],
 
+    // Default drop points for this schedule
+    drop_points: [String],
+
     // Base seat price / default fare (can be overridden per trip)
     base_price: { type: Number, default: 0 },
 

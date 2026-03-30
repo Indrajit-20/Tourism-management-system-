@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { to12HourDisplay } from "../utils/timeFormat";
 
 const API = "http://localhost:4000";
 
@@ -58,7 +59,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/trip/${trip_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       setSelectedTrip(res.data.trip);
@@ -76,7 +77,7 @@ const StaffDashboard = () => {
       await axios.put(
         `${API}/api/staff-dashboard/trip/${trip_id}/status`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       alert(`✅ Trip status updated to ${newStatus}`);
@@ -86,13 +87,6 @@ const StaffDashboard = () => {
       console.error("Error updating status", err);
       alert(err.response?.data?.message || "Error updating status");
     }
-  };
-
-  // Format time
-  const formatTime = (time) => {
-    if (!time) return "--";
-    const [hours, minutes] = time.split(":").slice(0, 2);
-    return `${hours}:${minutes}`;
   };
 
   // Format date
@@ -272,11 +266,13 @@ const StaffDashboard = () => {
                           </p>
                           <p className="mb-2">
                             <strong>Time:</strong>{" "}
-                            {formatTime(
-                              trip.schedule_id.route_id.departure_time
+                            {to12HourDisplay(
+                              trip.schedule_id.route_id.departure_time,
                             )}{" "}
                             -{" "}
-                            {formatTime(trip.schedule_id.route_id.arrival_time)}
+                            {to12HourDisplay(
+                              trip.schedule_id.route_id.arrival_time,
+                            )}
                           </p>
                         </div>
 
@@ -353,8 +349,8 @@ const StaffDashboard = () => {
                           </p>
                           <p className="mb-2">
                             <strong>Time:</strong>{" "}
-                            {formatTime(
-                              trip.schedule_id.route_id.departure_time
+                            {to12HourDisplay(
+                              trip.schedule_id.route_id.departure_time,
                             )}
                           </p>
                         </div>
@@ -458,8 +454,8 @@ const StaffDashboard = () => {
                     <div className="col-md-6 mb-2">
                       <small className="text-muted">Time</small>
                       <p className="mb-0">
-                        {formatTime(selectedTrip.route.departureTime)} -{" "}
-                        {formatTime(selectedTrip.route.arrivalTime)}
+                        {to12HourDisplay(selectedTrip.route.departureTime)} -{" "}
+                        {to12HourDisplay(selectedTrip.route.arrivalTime)}
                       </p>
                     </div>
                     <div className="col-md-6 mb-2">

@@ -1,0 +1,88 @@
+.manage-bus-page {
+  padding: 14px;
+  border: 1px solid #d6deea;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f8fbff 0%, #f1f6ff 100%);
+}
+
+.manage-bus-title {
+  margin-bottom: 20px;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.manage-bus-card {
+  border: 1px solid #cfd9e8;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.manage-bus-label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.manage-bus-input {
+  min-height: 42px;
+  border: 1px solid #cfd8e3;
+  border-radius: 10px;
+}
+
+.manage-bus-input:focus {
+  border-color: #2f6fed;
+  box-shadow: 0 0 0 0.18rem rgba(47, 111, 237, 0.2);
+}
+
+.manage-bus-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.manage-bus-count-item {
+  border: 1px solid #d8e0ee;
+  border-radius: 12px;
+  background: #f8fbff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-bus-count-item span {
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.manage-bus-count-item strong {
+  color: #0f172a;
+  font-size: 1.15rem;
+}
+
+.manage-bus-table-wrap {
+  margin-top: 14px;
+  border: 1px solid #cfd9e8;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.manage-bus-table {
+  margin-bottom: 0;
+  min-width: 1020px;
+}
+
+.manage-bus-table th,
+.manage-bus-table td {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .manage-bus-counts {
+    grid-template-columns: 1fr;
+  }
+}

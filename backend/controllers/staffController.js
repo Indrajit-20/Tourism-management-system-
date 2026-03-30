@@ -1,57 +1,7 @@
 const Staff = require("../models/Staff");
 const bcrypt = require("bcryptjs");
-const DOB_ERROR_MESSAGE = "Invalid dob. Use dd/mm/yyyy or yyyy-mm-dd";
-
-const formatDobDMY = (value) => {
-  if (!value) return null;
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
-
-  const day = String(date.getUTCDate()).padStart(2, "0");
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const year = date.getUTCFullYear();
-
-  return `${day}/${month}/${year}`;
-};
-
-const parseDobInput = (value) => {
-  if (!value) return null;
-
-  // If already a Date object, return it if valid.
-  if (value instanceof Date) {
-    return Number.isNaN(value.getTime()) ? null : value;
-  }
-
-  const text = String(value).trim();
-  if (!text) return null;
-
-  // Format 1: dd/mm/yyyy
-  if (text.includes("/")) {
-    const parts = text.split("/");
-    if (parts.length !== 3) return null;
-
-    const [day, month, year] = parts;
-    if (day.length !== 2 || month.length !== 2 || year.length !== 4) return null;
-
-    const parsed = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
-  }
-
-  // Format 2: yyyy-mm-dd
-  if (text.includes("-")) {
-    const parts = text.split("-");
-    if (parts.length !== 3) return null;
-
-    const [year, month, day] = parts;
-    if (year.length !== 4 || month.length !== 2 || day.length !== 2) return null;
-
-    const parsed = new Date(`${year}-${month}-${day}T00:00:00.000Z`);
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
-  }
-
-  return null;
-};
+const { toDMY } = require("../utils/dobHelper");
+const DOB_ERROR_MESSAGE = "Invalid dob. Use DD-MM-YYYY or YYYY-MM-DD";
 
 const toStaffResponse = (staffDoc) => {
   const staff = staffDoc.toObject ? staffDoc.toObject() : { ...staffDoc };
@@ -59,8 +9,8 @@ const toStaffResponse = (staffDoc) => {
   // Never send password back to frontend.
   delete staff.password;
 
-  // Send DOB in dd/mm/yyyy only.
-  staff.dob = formatDobDMY(staff.dob);
+  // Send DOB in DD-MM-YYYY only.
+  staff.dob = toDMY(staff.dob);
 
   return staff;
 };
@@ -97,8 +47,8 @@ const addStaff = async (req, res) => {
         .json({ message: "Staff with this email already exists" });
     }
 
-    const parsedDob = parseDobInput(dob);
-    if (!parsedDob) {
+    const normalizedDob = toDMY(dob);
+    if (!normalizedDob) {
       return res.status(400).json({ message: DOB_ERROR_MESSAGE });
     }
 
@@ -110,7 +60,7 @@ const addStaff = async (req, res) => {
       contact_no,
       email_id,
       password: hashedPassword,
-      dob: parsedDob,
+      dob: normalizedDob,
       address,
     });
 
@@ -164,11 +114,11 @@ const updateStaff = async (req, res) => {
     if (email_id) staff.email_id = email_id;
 
     if (dob) {
-      const parsedDob = parseDobInput(dob);
-      if (!parsedDob) {
+      const normalizedDob = toDMY(dob);
+      if (!normalizedDob) {
         return res.status(400).json({ message: DOB_ERROR_MESSAGE });
       }
-      staff.dob = parsedDob;
+      staff.dob = normalizedDob;
     }
 
     if (address) staff.address = address;

@@ -55,7 +55,7 @@ const SeatSelection = () => {
     setError(null);
     try {
       const res = await axios.get(
-        `${API}/api/bus-trips?route_id=${route._id}&date=${date}`
+        `${API}/api/bus-trips?route_id=${route._id}&date=${date}`,
       );
       const foundTrip = (res.data || [])[0];
 
@@ -78,7 +78,7 @@ const SeatSelection = () => {
   const fetchBookedSeats = async (tripId) => {
     try {
       const res = await axios.get(
-        `${API}/api/bus-bookings/seats?trip_id=${tripId}`
+        `${API}/api/bus-bookings/seats?trip_id=${tripId}`,
       );
       setBookedSeats(res.data || []);
     } catch (err) {
@@ -129,22 +129,22 @@ const SeatSelection = () => {
     try {
       // ── STEP 1: Re-check seats are still free ──
       const checkRes = await axios.get(
-        `${API}/api/bus-bookings/seats?trip_id=${trip._id}`
+        `${API}/api/bus-bookings/seats?trip_id=${trip._id}`,
       );
       const latestBooked = checkRes.data || [];
       const conflictSeats = selectedSeats.filter((s) =>
-        latestBooked.includes(s)
+        latestBooked.includes(s),
       );
 
       if (conflictSeats.length > 0) {
         alert(
           `Seat(s) ${conflictSeats.join(
-            ", "
-          )} were just booked. Please reselect.`
+            ", ",
+          )} were just booked. Please reselect.`,
         );
         setBookedSeats(latestBooked);
         setSelectedSeats(
-          selectedSeats.filter((s) => !conflictSeats.includes(s))
+          selectedSeats.filter((s) => !conflictSeats.includes(s)),
         );
         setSubmitting(false);
         return;
@@ -157,7 +157,7 @@ const SeatSelection = () => {
       const orderRes = await axios.post(
         `${API}/api/payment/create-order`,
         { amount: totalAmount },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       const { id: orderId } = orderRes.data;
 
@@ -186,7 +186,7 @@ const SeatSelection = () => {
                 trip_id: trip._id,
                 seat_numbers: selectedSeats,
               },
-              { headers: { Authorization: `Bearer ${token}` } }
+              { headers: { Authorization: `Bearer ${token}` } },
             );
 
             const booking = bookingRes.data.booking;
@@ -198,7 +198,7 @@ const SeatSelection = () => {
                 booking_id: booking._id,
                 payment_id: response.razorpay_payment_id,
               },
-              { headers: { Authorization: `Bearer ${token}` } }
+              { headers: { Authorization: `Bearer ${token}` } },
             );
 
             alert("✅ Payment successful! Your ticket is confirmed.");
@@ -206,7 +206,7 @@ const SeatSelection = () => {
           } catch (err) {
             console.error("Booking after payment failed:", err);
             alert(
-              "Payment received but booking failed. Please contact support."
+              "Payment received but booking failed. Please contact support.",
             );
             navigate("/my-bookings");
           }
@@ -232,7 +232,8 @@ const SeatSelection = () => {
     } catch (err) {
       console.error("Error:", err);
       alert(
-        err.response?.data?.message || "Something went wrong. Please try again."
+        err.response?.data?.message ||
+          "Something went wrong. Please try again.",
       );
       setSubmitting(false);
     }
@@ -268,7 +269,9 @@ const SeatSelection = () => {
 
   const total = calculateTotal();
   const busType = route.bus_id?.bus_type || "AC";
-  const isSleeper = busType === "Sleeper";
+  const layoutType = route.bus_id?.layout_type || "seater";
+  const isSleeper = String(layoutType) === "sleeper";
+  const isDoubleDecker = String(layoutType) === "double_decker";
   const seatLayout = trip?.seats || [];
 
   return (
@@ -277,10 +280,20 @@ const SeatSelection = () => {
       <div className="text-center mb-4">
         <h3 className="fw-bold">Select {isSleeper ? "Berths" : "Seats"}</h3>
         <p className="text-muted mb-2">
-          {route.boarding_from} → {route.destination} · {date}
+          {route.board_point || route.boarding_from} →{" "}
+          {route.drop_point || route.destination} · {date}
         </p>
-        <span className={`badge me-2 ${isSleeper ? "bg-primary" : "bg-info"}`}>
-          {isSleeper ? "Sleeper" : busType} Bus
+        <span
+          className={`badge me-2 ${
+            isSleeper
+              ? "bg-primary"
+              : isDoubleDecker
+                ? "bg-warning text-dark"
+                : "bg-info"
+          }`}
+        >
+          {isSleeper ? "Sleeper" : isDoubleDecker ? "Double Decker" : busType}{" "}
+          Bus
         </span>
         <span className="badge bg-secondary">
           Bus No: {route.bus_id?.bus_number}
@@ -327,6 +340,7 @@ const SeatSelection = () => {
             selectedSeats={selectedSeats}
             onSeatClick={handleSeatClick}
             busType={busType}
+            layoutType={layoutType}
           />
         </div>
 
@@ -341,7 +355,8 @@ const SeatSelection = () => {
             <div className="mb-2">
               <small className="text-muted d-block">Route</small>
               <strong>
-                {route.boarding_from} → {route.destination}
+                {route.board_point || route.boarding_from} →{" "}
+                {route.drop_point || route.destination}
               </strong>
             </div>
 
@@ -382,7 +397,7 @@ const SeatSelection = () => {
               ) : (
                 selectedSeats.map((seatNumber) => {
                   const seat = trip?.seats?.find(
-                    (s) => s.seat_number === seatNumber
+                    (s) => s.seat_number === seatNumber,
                   );
                   return (
                     <div

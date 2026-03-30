@@ -3,6 +3,7 @@ const Package = require("../models/Package");
 const Bus = require("../models/Bus");
 const BusTrip = require("../models/BusTrip");
 const { autoCompleteTours } = require("../utils/autoCompleteHelper");
+const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
 const SCHEDULE_STATUS = {
   DRAFT: "Draft",
@@ -247,19 +248,14 @@ const createTourDeparture = async (req, res) => {
       return res.status(400).json({ message: "Bus must have total_seats configured" });
     }
 
-    // Generate seat map based on bus type
-    const isSleeper = /sleeper/i.test(String(bus.bus_type || ""));
-    const seats = [];
-    if (isSleeper) {
-      const upperCount = Math.ceil(totalSeats / 2);
-      const lowerCount = totalSeats - upperCount;
-      for (let i = 1; i <= upperCount; i++) seats.push({ seat_number: `U${i}`, is_booked: false });
-      for (let i = 1; i <= lowerCount; i++) seats.push({ seat_number: `L${i}`, is_booked: false });
-    } else {
-      for (let i = 1; i <= totalSeats; i++) {
-        seats.push({ seat_number: `S${i}`, is_booked: false });
-      }
-    }
+    // Use the same seat-map generator as route buses so both flows stay consistent.
+    const seats = buildSeatLayout({
+      totalSeats,
+      layoutType: bus.layout_type,
+      busType: bus.bus_type,
+      basePrice: schedulePrice,
+      includeBookingFields: true,
+    });
 
     const requestedStatus =
       departure_status && [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)
@@ -324,7 +320,7 @@ const getPackageDepartures = async (req, res) => {
     }
 
     const departures = await TourSchedule.find(query)
-      .populate("bus_id", "bus_name bus_number bus_type total_seats")
+      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats")
       .populate({
         path: "package_id",
         select: "package_name source_city destination duration tour_guide",
@@ -352,7 +348,7 @@ const getPackageDepartures = async (req, res) => {
 const getAllDepartures = async (req, res) => {
   try {
     const departures = await TourSchedule.find({})
-      .populate("bus_id", "bus_name bus_number bus_type total_seats")
+      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats")
       .populate({
         path: "package_id",
         select: "package_name source_city destination duration",
@@ -380,7 +376,7 @@ const getTourDeparture = async (req, res) => {
 
     const departure = await TourSchedule.findById(id)
       .populate("package_id")
-      .populate("bus_id", "bus_name bus_number bus_type total_seats");
+      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats");
 
     if (!departure) {
       return res.status(404).json({ message: "Schedule not found" });

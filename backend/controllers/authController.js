@@ -3,6 +3,7 @@ const Admin = require("../models/admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Staff = require("../models/Staff");
+const { toDMY } = require("../utils/dobHelper");
 
 //Register
 
@@ -24,6 +25,13 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Custmer already register" });
     }
 
+    const normalizedDob = toDMY(dob);
+    if (!normalizedDob) {
+      return res
+        .status(400)
+        .json({ message: "Invalid dob. Use DD-MM-YYYY or YYYY-MM-DD" });
+    }
+
     // hash password before saving
     const hashed = await bcrypt.hash(password, 10);
 
@@ -31,7 +39,7 @@ const register = async (req, res) => {
       first_name,
       last_name,
       email,
-      dob,
+      dob: normalizedDob,
       phone_no,
       password: hashed,
       gender,

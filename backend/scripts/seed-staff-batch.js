@@ -8,7 +8,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9872614530",
     email_id: "aarav@gmail.com",
-    dob: new Date("1997-04-12"),
+    dob: "12-04-1997",
     address: "14, Navrangpura Society, Ahmedabad, Gujarat",
   },
   {
@@ -16,7 +16,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9817345268",
     email_id: "vivaan@gmail.com",
-    dob: new Date("1995-09-03"),
+    dob: "03-09-1995",
     address: "27, Satellite Road, Ahmedabad, Gujarat",
   },
   {
@@ -24,7 +24,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9825061743",
     email_id: "aditya@gmail.com",
-    dob: new Date("1998-01-21"),
+    dob: "21-01-1998",
     address: "9, Maninagar East, Ahmedabad, Gujarat",
   },
   {
@@ -32,7 +32,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9863125479",
     email_id: "rohan@gmail.com",
-    dob: new Date("1996-06-18"),
+    dob: "18-06-1996",
     address: "33, Vastrapur Lake Road, Ahmedabad, Gujarat",
   },
   {
@@ -40,7 +40,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9891452673",
     email_id: "kunal@gmail.com",
-    dob: new Date("1999-02-10"),
+    dob: "10-02-1999",
     address: "51, Chandkheda Main Road, Ahmedabad, Gujarat",
   },
   {
@@ -48,7 +48,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9812674503",
     email_id: "sandeep@gmail.com",
-    dob: new Date("1994-11-26"),
+    dob: "26-11-1994",
     address: "11, Paldi Cross Lane, Ahmedabad, Gujarat",
   },
   {
@@ -56,7 +56,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9887132456",
     email_id: "mahesh@gmail.com",
-    dob: new Date("1993-08-14"),
+    dob: "14-08-1993",
     address: "42, Bopal Ghuma Road, Ahmedabad, Gujarat",
   },
   {
@@ -64,7 +64,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9842507316",
     email_id: "prakash@gmail.com",
-    dob: new Date("1992-12-30"),
+    dob: "30-12-1992",
     address: "6, Naranpura Bhuyangdev Road, Ahmedabad, Gujarat",
   },
   {
@@ -72,7 +72,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9837642510",
     email_id: "nitin@gmail.com",
-    dob: new Date("1998-05-07"),
+    dob: "07-05-1998",
     address: "75, Gota Jagatpur Road, Ahmedabad, Gujarat",
   },
   {
@@ -80,7 +80,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9879031642",
     email_id: "harish@gmail.com",
-    dob: new Date("1991-03-16"),
+    dob: "16-03-1991",
     address: "18, Nikol Naroda Road, Ahmedabad, Gujarat",
   },
   {
@@ -88,7 +88,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9824713650",
     email_id: "rahul@gmail.com",
-    dob: new Date("1994-02-08"),
+    dob: "08-02-1994",
     address: "64, Bodakdev Ring Road, Ahmedabad, Gujarat",
   },
   {
@@ -96,7 +96,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9898012743",
     email_id: "manoj@gmail.com",
-    dob: new Date("1993-10-22"),
+    dob: "22-10-1993",
     address: "8, Ranip Railway Colony, Ahmedabad, Gujarat",
   },
   {
@@ -104,7 +104,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9819257340",
     email_id: "deepak@gmail.com",
-    dob: new Date("1996-04-11"),
+    dob: "11-04-1996",
     address: "16, Odhav Industrial Estate Road, Ahmedabad, Gujarat",
   },
   {
@@ -112,7 +112,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9886042157",
     email_id: "jignesh@gmail.com",
-    dob: new Date("1992-09-05"),
+    dob: "05-09-1992",
     address: "45, Sola Science City Road, Ahmedabad, Gujarat",
   },
   {
@@ -120,7 +120,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9875461230",
     email_id: "bhavesh@gmail.com",
-    dob: new Date("1990-12-17"),
+    dob: "17-12-1990",
     address: "3, Ambawadi Cross Road, Ahmedabad, Gujarat",
   },
   {
@@ -128,7 +128,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9862317450",
     email_id: "imran@gmail.com",
-    dob: new Date("1995-07-29"),
+    dob: "29-07-1995",
     address: "52, Jamalpur City Wall Road, Ahmedabad, Gujarat",
   },
   {
@@ -136,7 +136,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9831276504",
     email_id: "tarun@gmail.com",
-    dob: new Date("1998-11-01"),
+    dob: "01-11-1998",
     address: "24, SG Highway Service Lane, Ahmedabad, Gujarat",
   },
   {
@@ -144,7 +144,7 @@ const staffSeed = [
     designation: "driver",
     contact_no: "9843067215",
     email_id: "yash@gmail.com",
-    dob: new Date("1999-06-13"),
+    dob: "13-06-1999",
     address: "29, Motera Stadium Road, Ahmedabad, Gujarat",
   },
   {
@@ -152,7 +152,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9864502731",
     email_id: "meera@gmail.com",
-    dob: new Date("1997-10-09"),
+    dob: "09-10-1997",
     address: "22, Prahlad Nagar Garden Road, Ahmedabad, Gujarat",
   },
   {
@@ -160,7 +160,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9821347650",
     email_id: "kavya@gmail.com",
-    dob: new Date("1999-07-04"),
+    dob: "04-07-1999",
     address: "39, Thaltej Shilaj Road, Ahmedabad, Gujarat",
   },
   {
@@ -168,7 +168,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9892761453",
     email_id: "neha@gmail.com",
-    dob: new Date("1996-01-28"),
+    dob: "28-01-1996",
     address: "12, Memnagar Gurukul Road, Ahmedabad, Gujarat",
   },
   {
@@ -176,7 +176,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9815067324",
     email_id: "pooja@gmail.com",
-    dob: new Date("1995-05-19"),
+    dob: "19-05-1995",
     address: "47, Sabarmati Riverfront Road, Ahmedabad, Gujarat",
   },
   {
@@ -184,7 +184,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9847612350",
     email_id: "anjali@gmail.com",
-    dob: new Date("1998-09-23"),
+    dob: "23-09-1998",
     address: "5, Isanpur Vatva Road, Ahmedabad, Gujarat",
   },
   {
@@ -192,7 +192,7 @@ const staffSeed = [
     designation: "guide",
     contact_no: "9884527301",
     email_id: "sneha@gmail.com",
-    dob: new Date("1997-02-15"),
+    dob: "15-02-1997",
     address: "31, Shahibaug Circuit House Road, Ahmedabad, Gujarat",
   },
 ];

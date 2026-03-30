@@ -1,0 +1,115 @@
+.manage-routes-page {
+  padding: 18px;
+  border: 1px solid #c9d8f0;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+}
+
+.manage-routes-title {
+  margin-bottom: 14px;
+  color: #1d2a40;
+  font-weight: 700;
+}
+
+.manage-routes-card {
+  border: 1px solid #b8c9e6 !important;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.manage-routes-label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #1f2d3d;
+}
+
+.manage-routes-input {
+  min-height: 42px;
+  border: 1px solid #9eb6dc;
+  border-radius: 8px;
+}
+
+.manage-routes-input:focus {
+  border-color: #4f79be;
+  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+}
+
+.manage-routes-submit-btn {
+  border: 1px solid #355f9f;
+  background: linear-gradient(135deg, #5078be 0%, #355f9f 100%);
+  font-weight: 600;
+}
+
+.manage-routes-submit-btn:hover {
+  background: linear-gradient(135deg, #3f67aa 0%, #2f5590 100%);
+}
+
+.manage-routes-cancel-btn {
+  font-weight: 600;
+}
+
+.manage-routes-total-card {
+  min-height: 42px;
+  border: 1px solid #c8d7ee;
+  border-radius: 10px;
+  background: #f6f9ff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-routes-total-card span {
+  color: #42556f;
+  font-size: 0.9rem;
+}
+
+.manage-routes-total-card strong {
+  color: #16263a;
+  font-size: 1.1rem;
+}
+
+.manage-routes-table-wrap {
+  margin-top: 14px;
+  border: 1px solid #a7bddf;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.manage-routes-table {
+  margin-bottom: 0;
+  min-width: 1020px;
+}
+
+.manage-routes-table th,
+.manage-routes-table td {
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.manage-routes-table-head th {
+  border-color: #6f85a8 !important;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.manage-routes-table tbody td {
+  border-color: #c3cfdf !important;
+}
+
+.manage-routes-edit-btn {
+  border-color: #355f9f;
+}
+
+.manage-routes-delete-btn {
+  border-color: #b54752;
+}
+
+@media (max-width: 768px) {
+  .manage-routes-total-card {
+    min-height: auto;
+  }
+}

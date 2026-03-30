@@ -4,7 +4,19 @@ const busSchema = new mongoose.Schema(
   {
     bus_number: { type: String, required: true },
     bus_name: { type: String, required: true },
+    bus_category: {
+      type: String,
+      enum: ["route", "tour"],
+      default: "route",
+      required: true,
+    },
     bus_type: { type: String, required: true },
+    layout_type: {
+      type: String,
+      enum: ["seater", "sleeper", "double_decker"],
+      default: "seater",
+      required: true,
+    },
     total_seats: { type: Number, required: true },
     driver_ids: {
       type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Staff" }],

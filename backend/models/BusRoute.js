@@ -11,7 +11,9 @@ const busRouteSchema = new mongoose.Schema({
   },
 
   boarding_from: { type: String, required: true },
+  board_point: { type: String, default: "" },
   destination: { type: String, required: true },
+  drop_point: { type: String, default: "" },
 
   departure_time: { type: String, required: true }, 
   arrival_time: { type: String, required: true },

@@ -5,6 +5,31 @@ import axios from "axios";
 const Profile = () => {
   const navigate = useNavigate();
 
+  const normalizeDateForInput = (value) => {
+    if (!value) return "";
+    const text = String(value).trim();
+    if (/^\d{2}-\d{2}-\d{4}$/.test(text)) {
+      const [dd, mm, yyyy] = text.split("-");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(text)) {
+      const [dd, mm, yyyy] = text.split("/");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+    return text.split("T")[0];
+  };
+
+  const formatIndianDate = (value) => {
+    if (!value) return "Not set";
+    const text = String(value).trim();
+    if (/^\d{2}-\d{2}-\d{4}$/.test(text)) return text;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+      const [yyyy, mm, dd] = text.split("-");
+      return `${dd}-${mm}-${yyyy}`;
+    }
+    return "Not set";
+  };
+
   // State variables
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -46,7 +71,7 @@ const Profile = () => {
       setLastName(userProfile.last_name || "");
       setEmail(userProfile.email || "");
       setPhoneNo(userProfile.phone_no || "");
-      setDateOfBirth(userProfile.dob ? userProfile.dob.split("T")[0] : "");
+      setDateOfBirth(normalizeDateForInput(userProfile.dob));
       setGender(userProfile.gender || "");
       setAddress(userProfile.address || "");
 
@@ -88,7 +113,7 @@ const Profile = () => {
   const cancelEditing = () => {
     setFirstName(profile.first_name || "");
     setLastName(profile.last_name || "");
-    setDateOfBirth(profile.dob ? profile.dob.split("T")[0] : "");
+    setDateOfBirth(normalizeDateForInput(profile.dob));
     setGender(profile.gender || "");
     setAddress(profile.address || "");
     setIsEditing(false);
@@ -169,7 +194,7 @@ const Profile = () => {
                       <ProfileField label="Phone" value={phoneNo} />
                       <ProfileField
                         label="Birth Date"
-                        value={dateOfBirth || "Not set"}
+                        value={formatIndianDate(dateOfBirth)}
                       />
                       <ProfileField
                         label="Gender"

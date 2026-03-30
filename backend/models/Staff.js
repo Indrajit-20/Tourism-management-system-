@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { DMY_REGEX } = require("../utils/dobHelper");
 
 const staffSchema = new mongoose.Schema(
   {
@@ -16,7 +17,14 @@ const staffSchema = new mongoose.Schema(
 
     password: { type: String, required: true },
 
-    dob: { type: Date, required: true },
+    dob: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (value) => DMY_REGEX.test(String(value || "")),
+        message: "dob must be in DD-MM-YYYY format",
+      },
+    },
 
     address: { type: String, required: true }
   },

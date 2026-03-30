@@ -1,6 +1,7 @@
 const BusTrip = require("../models/BusTrip");
 const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
+const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
 // HELPER: Does this schedule run on this date?
 
@@ -19,75 +20,6 @@ const scheduleRunsOnDate = (schedule, date) => {
     default:
       return true;
   }
-};
-
-// here  Calculate seat price based on position
-//
-// Pricing rules:
-//   First 2 rows  → base price + 10%  (premium front seats)
-//   Middle rows   → base price        (normal seats)
-//   Last 2 rows   → base price - 10%  (budget back seats)
-//   Sleeper type  → row price + 30%   (sleeper premium)
-
-const getSeatPrice = (row, totalRows, seatType, basePrice) => {
-  let price = basePrice;
-
-  // Row based pricing
-  if (row <= 2) {
-    // First 2 rows — 10% premium
-    price = Math.round(basePrice * 1.1);
-  } else if (row >= totalRows - 1) {
-    // Last 2 rows — 10% discount
-    price = Math.round(basePrice * 0.9);
-  } else {
-    // Middle rows — normal price
-    price = basePrice;
-  }
-
-  // Sleeper seats — 30% extra on top of row price
-  if (seatType === "sleeper") {
-    price = Math.round(price * 1.3);
-  }
-
-  return price;
-};
-
-// ─────────────────────────────────────────────
-// HELPER: Generate seat layout with dynamic prices
-// ─────────────────────────────────────────────
-const createSeatLayout = (totalSeats, busType, basePrice) => {
-  const seats = [];
-  const letters = ["A", "B", "C", "D"];
-  const seatsPerRow = busType === "Sleeper" ? 2 : 4;
-  let seatCount = 0;
-
-  // Calculate total rows for pricing logic
-  const totalRows = Math.ceil(totalSeats / seatsPerRow);
-
-  for (let row = 1; seatCount < totalSeats; row++) {
-    for (let col = 0; col < seatsPerRow && seatCount < totalSeats; col++) {
-      // Determine seat type
-      let seatType = "aisle";
-      if (col === 0 || col === seatsPerRow - 1) seatType = "window";
-      if (busType === "Sleeper") seatType = "sleeper";
-
-      // Calculate price for this specific seat
-      const seatPrice = getSeatPrice(row, totalRows, seatType, basePrice);
-
-      seats.push({
-        seat_number: `${row}${letters[col] || ""}`,
-        row: row,
-        column: col + 1,
-        type: seatType,
-        price: seatPrice, // ✅ NEW: each seat has its own price
-        is_available: true,
-      });
-
-      seatCount++;
-    }
-  }
-
-  return seats;
 };
 
 // ─────────────────────────────────────────────
@@ -122,7 +54,7 @@ const autoGenerateTrips = async (schedule, bus) => {
 
     // Get base price from route
     const basePrice =
-      schedule.base_price || schedule.route_id?.price_per_seat || 500;
+      schedule.route_id?.price_per_seat || schedule.base_price || 500;
 
     // Create the trip
     const newTrip = new BusTrip({
@@ -131,7 +63,13 @@ const autoGenerateTrips = async (schedule, bus) => {
       driver_id: schedule.driver_id || bus.driver_id,
       trip_date: tripDate,
       boarding_points: schedule.boarding_points || [],
-      seats: createSeatLayout(bus.total_seats, bus.bus_type, basePrice),
+      seats: buildSeatLayout({
+        totalSeats: bus.total_seats,
+        layoutType: bus.layout_type,
+        busType: bus.bus_type,
+        basePrice,
+        includeAvailability: true,
+      }),
     });
 
     await newTrip.save();
@@ -176,7 +114,7 @@ const createTrip = async (req, res) => {
     }
 
     const basePrice =
-      schedule.base_price || schedule.route_id?.price_per_seat || 500;
+      schedule.route_id?.price_per_seat || schedule.base_price || 500;
 
     const trip = new BusTrip({
       schedule_id,
@@ -184,7 +122,13 @@ const createTrip = async (req, res) => {
       driver_id: driver_id || schedule.driver_id || bus.driver_id,
       trip_date,
       boarding_points: boarding_points || schedule.boarding_points || [],
-      seats: createSeatLayout(bus.total_seats, bus.bus_type, basePrice),
+      seats: buildSeatLayout({
+        totalSeats: bus.total_seats,
+        layoutType: bus.layout_type,
+        busType: bus.bus_type,
+        basePrice,
+        includeAvailability: true,
+      }),
     });
 
     await trip.save();
@@ -259,7 +203,13 @@ const getTrips = async (req, res) => {
         driver_id: schedule.driver_id || bus.driver_id,
         trip_date: tripDate,
         boarding_points: schedule.boarding_points || [],
-        seats: createSeatLayout(bus.total_seats, bus.bus_type, basePrice),
+        seats: buildSeatLayout({
+          totalSeats: bus.total_seats,
+          layoutType: bus.layout_type,
+          busType: bus.bus_type,
+          basePrice,
+          includeAvailability: true,
+        }),
       });
       await newTrip.save();
 
@@ -356,5 +306,4 @@ module.exports = {
   updateTrip,
   deleteTrip,
   autoGenerateTrips,
-  createSeatLayout,
 };

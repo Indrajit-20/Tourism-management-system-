@@ -3,16 +3,13 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import BusLayout from "../components/BusLayout";
 
-const getSeatSurcharge = (seatNumber) => {
-  const seatIndex = Number(String(seatNumber).replace(/\D/g, ""));
-  if (!seatIndex || Number.isNaN(seatIndex)) return 0;
-  if (seatIndex <= 4) return 300;
-  if (seatIndex <= 10) return 150;
-  return 0;
-};
-
-const buildSeatLayout = (totalSeats, busType, basePrice) => {
-  const isSleeper = /sleeper/i.test(String(busType || ""));
+const buildSeatLayout = (totalSeats, layoutType, busType, basePrice) => {
+  const normalizedLayout = String(layoutType || "").toLowerCase();
+  const isSleeper =
+    normalizedLayout === "sleeper" || /sleeper/i.test(String(busType || ""));
+  const isDoubleDecker =
+    normalizedLayout === "double_decker" ||
+    /double\s*-?\s*decker/i.test(String(busType || ""));
   const seats = [];
 
   if (isSleeper) {
@@ -24,8 +21,8 @@ const buildSeatLayout = (totalSeats, busType, basePrice) => {
         seat_number: `U${i}`,
         row: Math.ceil(i / 2),
         column: i % 2 === 0 ? 2 : 1,
-        type: "upper",
-        price: basePrice + getSeatSurcharge(`U${i}`),
+        type: "sleeper",
+        price: basePrice,
       });
     }
 
@@ -34,8 +31,35 @@ const buildSeatLayout = (totalSeats, busType, basePrice) => {
         seat_number: `L${i}`,
         row: Math.ceil(i / 2),
         column: i % 2 === 0 ? 2 : 1,
-        type: "lower",
-        price: basePrice + getSeatSurcharge(`L${i}`),
+        type: "sleeper",
+        price: basePrice,
+      });
+    }
+
+    return seats;
+  }
+
+  if (isDoubleDecker) {
+    const upperCount = Math.ceil(totalSeats / 2);
+    const lowerCount = totalSeats - upperCount;
+
+    for (let i = 1; i <= upperCount; i++) {
+      seats.push({
+        seat_number: `U${i}`,
+        row: Math.ceil(i / 4),
+        column: ((i - 1) % 4) + 1,
+        type: "seat",
+        price: basePrice,
+      });
+    }
+
+    for (let i = 1; i <= lowerCount; i++) {
+      seats.push({
+        seat_number: `L${i}`,
+        row: Math.ceil(i / 4),
+        column: ((i - 1) % 4) + 1,
+        type: "seat",
+        price: basePrice,
       });
     }
 
@@ -48,7 +72,7 @@ const buildSeatLayout = (totalSeats, busType, basePrice) => {
       row: Math.ceil(i / 4),
       column: ((i - 1) % 4) + 1,
       type: "seat",
-      price: basePrice + getSeatSurcharge(`S${i}`),
+      price: basePrice,
     });
   }
 
@@ -102,17 +126,38 @@ const PackageSeatSelection = () => {
         );
         const layout = buildSeatLayout(
           totalSeats,
+          departure?.bus_id?.layout_type,
           departure?.bus_id?.bus_type,
           basePrice,
         );
-        const layoutSeatNumbers = layout.map((seat) => seat.seat_number);
+        const apiSeats = Array.isArray(seatsRes.data?.seats)
+          ? seatsRes.data.seats
+          : [];
+        const hasCoordinates = apiSeats.every(
+          (seat) =>
+            Number.isFinite(Number(seat.row)) &&
+            Number.isFinite(Number(seat.column)),
+        );
+        const normalizedLayout =
+          apiSeats.length > 0 && hasCoordinates
+            ? apiSeats.map((seat) => ({
+                ...seat,
+                row: Number(seat.row),
+                column: Number(seat.column),
+                type: seat.type || "seat",
+                price: Number(seat.price ?? basePrice),
+              }))
+            : layout;
+        const layoutSeatNumbers = normalizedLayout.map(
+          (seat) => seat.seat_number,
+        );
         const alreadyBooked = (seatsRes.data?.seats || [])
           .filter((seat) => seat.is_booked)
           .map((seat) => String(seat.seat_number).toUpperCase());
 
         setPackageData(pkg);
         setSelectedDeparture(departure);
-        setSeatLayout(layout);
+        setSeatLayout(normalizedLayout);
         setBookedSeats(alreadyBooked);
 
         const previousSelection = Array.isArray(location.state?.selectedSeats)
@@ -219,6 +264,7 @@ const PackageSeatSelection = () => {
             selectedSeats={selectedSeats}
             onSeatClick={toggleSeat}
             busType={selectedDeparture?.bus_id?.bus_type || "AC"}
+            layoutType={selectedDeparture?.bus_id?.layout_type || "seater"}
           />
         </div>
       )}

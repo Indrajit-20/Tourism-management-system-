@@ -4,6 +4,17 @@ import React, { useEffect, useState } from "react";
 const ManageCustmer = () => {
   const [custmer, setcustmer] = useState([]);
 
+  const formatIndianDate = (value) => {
+    if (!value) return "-";
+    const text = String(value).trim();
+    if (/^\d{2}-\d{2}-\d{4}$/.test(text)) return text;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+      const [yyyy, mm, dd] = text.split("-");
+      return `${dd}-${mm}-${yyyy}`;
+    }
+    return "-";
+  };
+
   const fetchCustmer = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -64,7 +75,7 @@ const ManageCustmer = () => {
                   <td>{cust.email}</td>
                   <td>{cust.phone_no}</td>
                   <td>{cust.gender}</td>
-                  <td>{cust.dob}</td>
+                  <td>{formatIndianDate(cust.dob)}</td>
                   <td>
                     <button
                       className="btn btn-danger btn-sm"

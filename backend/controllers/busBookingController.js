@@ -3,7 +3,6 @@ const BusTicketBooking = require("../models/BusTicketBooking");
 const Custmer = require("../models/Custmer");
 
 // 1. BOOK BUS TICKET (User)
-
 const bookBusTicket = async (req, res) => {
   try {
     const { trip_id, seat_numbers } = req.body;
@@ -114,7 +113,10 @@ const getAllBookings = async (req, res) => {
           { path: "bus_id", select: "bus_number bus_type" },
           {
             path: "schedule_id",
-            populate: { path: "route_id", select: "boarding_from destination" },
+            populate: {
+              path: "route_id",
+              select: "boarding_from board_point destination drop_point",
+            },
           },
         ],
       })

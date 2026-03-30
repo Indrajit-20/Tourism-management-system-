@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { DMY_REGEX } = require("../utils/dobHelper");
 
 const custmerSchema = new mongoose.Schema(
   {
@@ -17,8 +18,12 @@ const custmerSchema = new mongoose.Schema(
       unique: true,
     },
     dob: {
-      type: Date,
+      type: String,
       required: true,
+      validate: {
+        validator: (value) => DMY_REGEX.test(String(value || "")),
+        message: "dob must be in DD-MM-YYYY format",
+      },
     },
     phone_no: {
       type: Number,

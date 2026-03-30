@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { to12HourDisplay, toMinutes } from "../utils/timeFormat";
 
 const BookBus = () => {
   const [routes, setRoutes] = useState([]);
@@ -81,9 +82,11 @@ const BookBus = () => {
   // ✅ NEW: Calculate duration between departure and arrival
   const getDuration = (departure, arrival) => {
     if (!departure || !arrival) return "";
-    const [dh, dm] = departure.split(":").map(Number);
-    const [ah, am] = arrival.split(":").map(Number);
-    let mins = ah * 60 + am - (dh * 60 + dm);
+    const departureMinutes = toMinutes(departure);
+    const arrivalMinutes = toMinutes(arrival);
+    if (departureMinutes === null || arrivalMinutes === null) return "";
+
+    let mins = arrivalMinutes - departureMinutes;
     if (mins < 0) mins += 24 * 60;
     const h = Math.floor(mins / 60);
     const m = mins % 60;
@@ -92,8 +95,12 @@ const BookBus = () => {
 
   // ✅ KEPT: Filter routes based on search
   const filteredRoutes = routes.filter((route) => {
-    const from = route.boarding_from.toLowerCase();
-    const to = route.destination.toLowerCase();
+    const from = String(
+      route.board_point || route.boarding_from || "",
+    ).toLowerCase();
+    const to = String(
+      route.drop_point || route.destination || "",
+    ).toLowerCase();
     const matchFrom = from.includes(searchFrom.toLowerCase());
     const matchTo = to.includes(searchTo.toLowerCase());
     return matchFrom && matchTo;
@@ -277,10 +284,10 @@ const BookBus = () => {
                       {/* Departure */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {route.departure_time}
+                          {to12HourDisplay(route.departure_time)}
                         </div>
                         <small className="text-muted">
-                          {route.boarding_from}
+                          {route.board_point || route.boarding_from}
                         </small>
                       </div>
 
@@ -303,10 +310,10 @@ const BookBus = () => {
                       {/* Arrival */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {route.arrival_time}
+                          {to12HourDisplay(route.arrival_time)}
                         </div>
                         <small className="text-muted">
-                          {route.destination}
+                          {route.drop_point || route.destination}
                         </small>
                       </div>
                     </div>

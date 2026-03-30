@@ -3,6 +3,7 @@ const PackageBooking = require("../models/PackageBooking");
 const Passenger = require("../models/Passenger");
 const TourSchedule = require("../models/TourSchedule");
 const { createNotification } = require("../utils/notificationHelper");
+const { buildSeatNumbers } = require("../utils/seatLayoutHelper");
 
 const BOOKING_STATUS = {
   PENDING: "pending",
@@ -34,33 +35,6 @@ const toDayStart = (value) => {
 const getDayDifference = (fromDate, toDate) => {
   const msInDay = 24 * 60 * 60 * 1000;
   return Math.round((toDate - fromDate) / msInDay);
-};
-
-const buildSeatNumbers = (totalSeats, busType) => {
-  const isSleeper = /sleeper/i.test(String(busType || ""));
-  const seats = [];
-
-  if (isSleeper) {
-    const upperCount = Math.ceil(totalSeats / 2);
-    const lowerCount = totalSeats - upperCount;
-
-    for (let i = 1; i <= upperCount; i++) seats.push(`U${i}`);
-    for (let i = 1; i <= lowerCount; i++) seats.push(`L${i}`);
-    return seats;
-  }
-
-  for (let i = 1; i <= totalSeats; i++) {
-    seats.push(`S${i}`);
-  }
-  return seats;
-};
-
-const getSeatSurcharge = (seatNumber) => {
-  const seatIndex = Number(String(seatNumber).replace(/\D/g, ""));
-  if (!seatIndex || Number.isNaN(seatIndex)) return 0;
-  if (seatIndex <= 4) return 300;
-  if (seatIndex <= 10) return 150;
-  return 0;
 };
 
 const getBaseFareByAge = (age, packagePrice) => {
@@ -200,7 +174,7 @@ const packageBooking = async (req, res) => {
 
     const tourSchedule = await TourSchedule.findById(tour_schedule_id).populate(
       "bus_id",
-      "total_seats bus_type"
+      "total_seats bus_type layout_type"
     );
 
     if (!tourSchedule) {
@@ -247,7 +221,11 @@ const packageBooking = async (req, res) => {
     }
 
     const validSeatNumbers = new Set(
-      buildSeatNumbers(totalSeats, tourSchedule?.bus_id?.bus_type)
+      buildSeatNumbers(
+        totalSeats,
+        tourSchedule?.bus_id?.layout_type,
+        tourSchedule?.bus_id?.bus_type,
+      )
     );
     const invalidSeats = normalizedSeats.filter((seat) => !validSeatNumbers.has(seat));
     if (invalidSeats.length) {
@@ -319,15 +297,14 @@ const packageBooking = async (req, res) => {
       const person = passengers[i];
       const seatNumber = normalizedSeats[i];
       const baseFare = getBaseFareByAge(person.age, schedulePrice);
-      const seatSurcharge = getSeatSurcharge(seatNumber);
-      const finalFare = baseFare + seatSurcharge;
+      const finalFare = baseFare;
 
       totalamount += finalFare;
       seatPriceDetails.push({
         seat_number: seatNumber,
         age: Number(person.age),
         base_fare: baseFare,
-        seat_surcharge: seatSurcharge,
+        seat_surcharge: 0,
         final_fare: finalFare,
       });
     }

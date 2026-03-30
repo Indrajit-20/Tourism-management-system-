@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Hotel = require("../models/Hotel");
+const City = require("../models/City");
 const { authMiddleware, isadmin } = require("../middleware/authmiddleware");
 
 router.get("/", async (req, res) => {
@@ -33,6 +34,14 @@ router.post("/", authMiddleware, isadmin, async (req, res) => {
         .json({ message: "name, city_id, state_id and location are required" });
     }
 
+    const city = await City.findById(city_id).select("state_id state city_name");
+    if (!city) {
+      return res.status(400).json({ message: "Invalid city selected" });
+    }
+    if (!city.state_id || String(city.state_id) !== String(state_id)) {
+      return res.status(400).json({ message: "Selected city does not belong to selected state" });
+    }
+
     const hotel = await Hotel.create({
       name,
       city_id,
@@ -55,6 +64,16 @@ router.post("/", authMiddleware, isadmin, async (req, res) => {
 
 router.put("/:id", authMiddleware, isadmin, async (req, res) => {
   try {
+    const nextStateId = req.body.state_id;
+    const nextCityId = req.body.city_id;
+
+    if (nextStateId && nextCityId) {
+      const city = await City.findById(nextCityId).select("state_id");
+      if (!city || !city.state_id || String(city.state_id) !== String(nextStateId)) {
+        return res.status(400).json({ message: "Selected city does not belong to selected state" });
+      }
+    }
+
     const updated = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

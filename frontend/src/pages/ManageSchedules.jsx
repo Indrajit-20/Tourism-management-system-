@@ -1,28 +1,67 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../css/manageSchedules.css";
+
+const findCityKey = (value) => {
+  const text = String(value || "")
+    .trim()
+    .toLowerCase();
+  if (text.includes("ahmedabad")) return "ahmedabad";
+  if (text.includes("surat")) return "surat";
+  if (text.includes("rajkot")) return "rajkot";
+  if (text.includes("vadodara") || text.includes("vado")) return "vadodara";
+  if (text.includes("bhavnagar") || text.includes("bav")) return "bhavnagar";
+  return "";
+};
+
+const boardingPointByCity = {
+  ahmedabad: "Maninagar",
+  surat: "Udhna Darwaja",
+  rajkot: "Madhapar Chowk",
+  vadodara: "Central Bus Station",
+  bhavnagar: "Nilambaug Circle",
+};
+
+const dropPointByCity = {
+  ahmedabad: "Geeta Mandir Bus Stand",
+  surat: "Surat Central Bus Stand",
+  rajkot: "Raiya Circle",
+  vadodara: "Vadodara Central Bus Stand",
+  bhavnagar: "Bhavnagar Bus Depot",
+};
+
+const suggestBoardingPoint = (city) => {
+  const key = findCityKey(city);
+  return boardingPointByCity[key] || String(city || "").trim();
+};
+
+const suggestDropPoint = (city) => {
+  const key = findCityKey(city);
+  return dropPointByCity[key] || String(city || "").trim();
+};
 
 const ManageSchedules = () => {
-
   // ── All data lists ──
   const [schedules, setSchedules] = useState([]);
   const [routes, setRoutes] = useState([]);
+  const [buses, setBuses] = useState([]);
   const [drivers, setDrivers] = useState([]);
 
   // ── Form fields ──
   const [editingId, setEditingId] = useState(null); // null = adding new, id = editing
   const [title, setTitle] = useState("");
   const [routeId, setRouteId] = useState("");
-  const [departureTime, setDepartureTime] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
   const [frequency, setFrequency] = useState("Daily");
   const [daysOfWeek, setDaysOfWeek] = useState([]);
-  const [boardingPoints, setBoardingPoints] = useState("");
+  const [boardingPoint, setBoardingPoint] = useState("");
+  const [dropPoint, setDropPoint] = useState("");
   const [driverId, setDriverId] = useState("");
-  const [basePrice, setBasePrice] = useState("");
   const [status, setStatus] = useState("Active");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [driverLoadMessage, setDriverLoadMessage] = useState("");
 
   // ── Load everything when page opens ──
   useEffect(() => {
@@ -34,23 +73,59 @@ const ManageSchedules = () => {
     try {
       const token = localStorage.getItem("token");
 
-      // Fetch schedules, routes and staff at same time
-      const schedulesRes = await axios.get("http://localhost:4000/api/bus-schedules");
-      const routesRes    = await axios.get("http://localhost:4000/api/bus-routes");
-      const staffRes     = await axios.get("http://localhost:4000/api/staff", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const [schedulesRes, routesRes, busesRes] = await Promise.all([
+        axios.get("http://localhost:4000/api/bus-schedules"),
+        axios.get("http://localhost:4000/api/bus-routes"),
+        axios.get("http://localhost:4000/api/bus"),
+      ]);
 
       setSchedules(schedulesRes.data || []);
       setRoutes(routesRes.data || []);
+      setBuses(busesRes.data || []);
+      setDriverLoadMessage("");
 
-      // ✅ FIX: Only show drivers (not guides) in dropdown
-      // ✅ FIX: Staff model has 'name' field not 'first_name last_name'
-      const onlyDrivers = staffRes.data.filter(s => s.designation === "driver");
-      setDrivers(onlyDrivers);
-
+      // Keep route/schedule dropdown usable even if staff token is expired.
+      if (token) {
+        try {
+          const staffRes = await axios.get("http://localhost:4000/api/staff", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const onlyDrivers = (staffRes.data || []).filter((s) =>
+            String(s.designation || "")
+              .toLowerCase()
+              .includes("driver"),
+          );
+          setDrivers(onlyDrivers);
+          if (onlyDrivers.length === 0) {
+            setDriverLoadMessage("No drivers found in staff records.");
+          }
+        } catch (staffErr) {
+          console.warn(
+            "Unable to load drivers",
+            staffErr?.response?.data || staffErr.message,
+          );
+          setDrivers([]);
+          if (staffErr?.response?.status === 401) {
+            setDriverLoadMessage(
+              "Session expired. Please login again to load drivers.",
+            );
+          } else if (staffErr?.response?.status === 403) {
+            setDriverLoadMessage("Admin access is required to load drivers.");
+          } else {
+            setDriverLoadMessage("Unable to load drivers right now.");
+          }
+        }
+      } else {
+        setDrivers([]);
+        setDriverLoadMessage("Login as admin to load drivers.");
+      }
     } catch (err) {
       console.error("Error loading data", err);
+      setSchedules([]);
+      setRoutes([]);
+      setBuses([]);
+      setDrivers([]);
+      setDriverLoadMessage("Failed to load schedules and routes.");
     } finally {
       setLoading(false);
     }
@@ -61,20 +136,34 @@ const ManageSchedules = () => {
     setEditingId(null);
     setTitle("");
     setRouteId("");
-  
     setFrequency("Daily");
     setDaysOfWeek([]);
-    setBoardingPoints("");
+    setBoardingPoint("");
+    setDropPoint("");
     setDriverId("");
- 
     setStatus("Active");
+  };
+
+  const handleRouteChange = (newRouteId) => {
+    setRouteId(newRouteId);
+    const selectedRoute = routes.find((r) => r._id === newRouteId);
+    if (!selectedRoute) return;
+
+    if (!boardingPoint) {
+      const board = suggestBoardingPoint(selectedRoute.boarding_from);
+      setBoardingPoint(board);
+    }
+    if (!dropPoint) {
+      const drop = suggestDropPoint(selectedRoute.destination);
+      setDropPoint(drop);
+    }
   };
 
   // ── Toggle a day on/off for Custom frequency ──
   const toggleDay = (dayValue) => {
     if (daysOfWeek.includes(dayValue)) {
       // Remove day if already selected
-      setDaysOfWeek(daysOfWeek.filter(d => d !== dayValue));
+      setDaysOfWeek(daysOfWeek.filter((d) => d !== dayValue));
     } else {
       // Add day if not selected
       setDaysOfWeek([...daysOfWeek, dayValue]);
@@ -94,33 +183,38 @@ const ManageSchedules = () => {
     try {
       // Build the data to send to backend
       const payload = {
-        title:           title,
-        route_id:        routeId,
-        driver_id:       driverId || undefined,
-        frequency:       frequency,
+        title: title,
+        route_id: routeId,
+        driver_id: driverId || undefined,
+        frequency: frequency,
         // Only send days_of_week if frequency is Custom
-        days_of_week:    frequency === "Custom" ? daysOfWeek : [],
-        // Convert "Stop A, Stop B" string into ["Stop A", "Stop B"] array
-        boarding_points: boardingPoints.split(",").map(s => s.trim()).filter(Boolean),
-      
-        status:          status,
+        days_of_week: frequency === "Custom" ? daysOfWeek : [],
+        // Single point only (business rule)
+        boarding_points: boardingPoint ? [boardingPoint.trim()] : [],
+        drop_points: dropPoint ? [dropPoint.trim()] : [],
+        status: status,
       };
 
       const headers = { Authorization: `Bearer ${token}` };
 
       if (editingId) {
         // Update existing schedule
-        await axios.put(`http://localhost:4000/api/bus-schedules/${editingId}`, payload, { headers });
+        await axios.put(
+          `http://localhost:4000/api/bus-schedules/${editingId}`,
+          payload,
+          { headers },
+        );
         alert("Schedule updated!");
       } else {
         // Create new schedule
-        await axios.post("http://localhost:4000/api/bus-schedules", payload, { headers });
+        await axios.post("http://localhost:4000/api/bus-schedules", payload, {
+          headers,
+        });
         alert("Schedule created!");
       }
 
       resetForm();
       fetchAllData(); // Refresh the list
-
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Failed to save schedule.");
@@ -135,14 +229,13 @@ const ManageSchedules = () => {
     setTitle(schedule.title || "");
     // ✅ FIX: route_id from backend is a populated object, so use ._id
     setRouteId(schedule.route_id?._id || schedule.route_id || "");
-   
     setFrequency(schedule.frequency || "Daily");
     setDaysOfWeek(schedule.days_of_week || []);
-    // Convert array ["Stop A", "Stop B"] back to string "Stop A, Stop B"
-    setBoardingPoints((schedule.boarding_points || []).join(", "));
+    setBoardingPoint((schedule.boarding_points || [])[0] || "");
+    setDropPoint((schedule.drop_points || [])[0] || "");
     // ✅ FIX: driver_id from backend is a populated object, so use ._id
     setDriverId(schedule.driver_id?._id || schedule.driver_id || "");
-   
+
     setStatus(schedule.status || "Active");
 
     // Scroll to top so user can see the form
@@ -151,11 +244,12 @@ const ManageSchedules = () => {
 
   // ── Delete a schedule ──
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this schedule?")) return;
+    if (!window.confirm("Are you sure you want to delete this schedule?"))
+      return;
     const token = localStorage.getItem("token");
     try {
       await axios.delete(`http://localhost:4000/api/bus-schedules/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       alert("Schedule deleted!");
       fetchAllData();
@@ -169,33 +263,87 @@ const ManageSchedules = () => {
   // So we can directly use .boarding_from and .destination
   const getRouteLabel = (routeObj) => {
     if (!routeObj) return "-";
-    // If it's a populated object, use it directly
-    if (routeObj.boarding_from) {
-      return `${routeObj.boarding_from} → ${routeObj.destination}`;
+    // Route label must stay city-level: From city -> To city
+    if (routeObj.boarding_from || routeObj.destination) {
+      return `${routeObj.boarding_from || "-"} → ${routeObj.destination || "-"}`;
     }
     // Fallback: find in routes list by id
-    const found = routes.find(r => r._id === routeObj);
-    return found ? `${found.boarding_from} → ${found.destination}` : "-";
+    const found = routes.find((r) => r._id === routeObj);
+    return found
+      ? `${found.boarding_from || "-"} → ${found.destination || "-"}`
+      : "-";
   };
 
-  if (loading) return <div className="text-center mt-5">Loading schedules...</div>;
+  const filteredSchedules = schedules.filter((schedule) => {
+    const search = searchText.trim().toLowerCase();
+    if (!search) return true;
+
+    const titleText = String(schedule.title || "").toLowerCase();
+    const frequencyText = String(schedule.frequency || "").toLowerCase();
+    const routeText = getRouteLabel(schedule.route_id).toLowerCase();
+
+    return (
+      titleText.includes(search) ||
+      frequencyText.includes(search) ||
+      routeText.includes(search)
+    );
+  });
+
+  const selectedRoute = routes.find((r) => String(r._id) === String(routeId));
+  const selectedBusId = String(
+    selectedRoute?.bus_id?._id || selectedRoute?.bus_id || "",
+  );
+
+  const assignedDriverIds = new Set(
+    buses
+      .filter((bus) => String(bus._id) !== selectedBusId)
+      .flatMap((bus) => {
+        if (Array.isArray(bus.driver_ids) && bus.driver_ids.length) {
+          return bus.driver_ids.map((driver) =>
+            typeof driver === "object" ? String(driver._id) : String(driver),
+          );
+        }
+        return bus.driver_id
+          ? [String(bus.driver_id._id || bus.driver_id)]
+          : [];
+      }),
+  );
+
+  const availableOverrideDrivers = drivers.filter((driver) => {
+    const id = String(driver._id || "");
+    if (!id) return false;
+    return !assignedDriverIds.has(id) || id === String(driverId || "");
+  });
+
+  const totalSchedules = schedules.length;
+
+  if (loading)
+    return <div className="text-center mt-5">Loading schedules...</div>;
 
   return (
-    <div className="container mt-4">
-      <h2>Manage Schedules</h2>
+    <div className="container mt-4 manage-schedules-page">
+      <h2 className="manage-schedules-title">Manage Schedules</h2>
 
       {/* ───────────── ADD / EDIT FORM ───────────── */}
-      <div className="card p-4 mb-4">
-        <h5>{editingId ? "Edit Schedule" : "Create New Schedule"}</h5>
+      <div className="card p-4 mb-4 shadow-sm manage-schedules-card">
+        <h5 className="mb-3">
+          {editingId ? "Edit Schedule" : "Create New Schedule"}
+        </h5>
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
-
             {/* Route Dropdown */}
             <div className="col-md-6">
-              <label className="form-label">Route *</label>
-              <select className="form-select" value={routeId} onChange={e => setRouteId(e.target.value)} required>
+              <label className="form-label manage-schedules-label">
+                Route *
+              </label>
+              <select
+                className="form-select manage-schedules-input"
+                value={routeId}
+                onChange={(e) => handleRouteChange(e.target.value)}
+                required
+              >
                 <option value="">Select a route...</option>
-                {routes.map(r => (
+                {routes.map((r) => (
                   <option key={r._id} value={r._id}>
                     {r.boarding_from} → {r.destination}
                   </option>
@@ -205,22 +353,29 @@ const ManageSchedules = () => {
 
             {/* Title */}
             <div className="col-md-6">
-              <label className="form-label">Schedule Title *</label>
+              <label className="form-label manage-schedules-label">
+                Schedule Title *
+              </label>
               <input
-                type="text" className="form-control"
+                type="text"
+                className="form-control manage-schedules-input"
                 placeholder="e.g. Morning Express"
                 value={title}
-                onChange={e => setTitle(e.target.value)}
+                onChange={(e) => setTitle(e.target.value)}
                 required
               />
             </div>
 
-          
-
             {/* Frequency */}
             <div className="col-md-3">
-              <label className="form-label">Frequency</label>
-              <select className="form-select" value={frequency} onChange={e => setFrequency(e.target.value)}>
+              <label className="form-label manage-schedules-label">
+                Frequency
+              </label>
+              <select
+                className="form-select manage-schedules-input"
+                value={frequency}
+                onChange={(e) => setFrequency(e.target.value)}
+              >
                 <option value="Daily">Daily</option>
                 <option value="Weekdays">Weekdays (Mon–Fri)</option>
                 <option value="Weekends">Weekends (Sat–Sun)</option>
@@ -228,24 +383,16 @@ const ManageSchedules = () => {
               </select>
             </div>
 
-           
-
-            {/* Driver Dropdown */}
-            <div className="col-md-6">
-              {/*  FIX: uses driver.name from Staff model */}
-              <label className="form-label">Driver (optional)</label>
-              <select className="form-select" value={driverId} onChange={e => setDriverId(e.target.value)}>
-                <option value="">Use bus default driver</option>
-                {drivers.map(d => (
-                  <option key={d._id} value={d._id}>{d.name}</option>
-                ))}
-              </select>
-            </div>
-
             {/* Status */}
             <div className="col-md-6">
-              <label className="form-label">Status</label>
-              <select className="form-select" value={status} onChange={e => setStatus(e.target.value)}>
+              <label className="form-label manage-schedules-label">
+                Status
+              </label>
+              <select
+                className="form-select manage-schedules-input"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
@@ -254,14 +401,19 @@ const ManageSchedules = () => {
             {/* Custom Days — only show when frequency is Custom */}
             {frequency === "Custom" && (
               <div className="col-12">
-                <label className="form-label">Select Days</label>
+                <label className="form-label manage-schedules-label">
+                  Select Days
+                </label>
                 <div className="d-flex flex-wrap gap-2">
                   {[
-                    { label: "Sun", value: 0 }, { label: "Mon", value: 1 },
-                    { label: "Tue", value: 2 }, { label: "Wed", value: 3 },
-                    { label: "Thu", value: 4 }, { label: "Fri", value: 5 },
+                    { label: "Sun", value: 0 },
+                    { label: "Mon", value: 1 },
+                    { label: "Tue", value: 2 },
+                    { label: "Wed", value: 3 },
+                    { label: "Thu", value: 4 },
+                    { label: "Fri", value: 5 },
                     { label: "Sat", value: 6 },
-                  ].map(day => (
+                  ].map((day) => (
                     <button
                       key={day.value}
                       type="button"
@@ -275,90 +427,172 @@ const ManageSchedules = () => {
               </div>
             )}
 
-            {/* Boarding Points */}
+            {/* Boarding Point */}
             <div className="col-12">
-              <label className="form-label">Boarding Points (comma separated)</label>
+              <label className="form-label manage-schedules-label">
+                Boarding Point
+              </label>
               <input
-                type="text" className="form-control"
-                placeholder="Stop A, Stop B, Stop C"
-                value={boardingPoints}
-                onChange={e => setBoardingPoints(e.target.value)}
+                type="text"
+                className="form-control manage-schedules-input"
+                placeholder="e.g. Paldi Cross Road"
+                value={boardingPoint}
+                onChange={(e) => setBoardingPoint(e.target.value)}
               />
             </div>
 
-          </div>{/* end row */}
+            <div className="col-12">
+              <label className="form-label manage-schedules-label">
+                Drop Point
+              </label>
+              <input
+                type="text"
+                className="form-control manage-schedules-input"
+                placeholder="e.g. Surat Bus Depot"
+                value={dropPoint}
+                onChange={(e) => setDropPoint(e.target.value)}
+              />
+            </div>
+
+            {/* Driver Dropdown */}
+            <div className="col-12">
+              <label className="form-label manage-schedules-label">
+                Driver (optional override)
+              </label>
+              <select
+                className="form-select manage-schedules-input"
+                value={driverId}
+                onChange={(e) => setDriverId(e.target.value)}
+              >
+                <option value="">Use bus default driver</option>
+                {availableOverrideDrivers.map((d) => (
+                  <option key={d._id} value={d._id}>
+                    {d.name}
+                  </option>
+                ))}
+              </select>
+              <small className="text-muted d-block mt-1">
+                Only drivers not assigned to other buses are shown.
+              </small>
+              {driverLoadMessage ? (
+                <small className="text-muted d-block mt-1">
+                  {driverLoadMessage}
+                </small>
+              ) : null}
+            </div>
+          </div>
+          {/* end row */}
 
           {/* Buttons */}
           <div className="mt-3 d-flex gap-2">
             <button type="submit" className="btn btn-primary" disabled={saving}>
-              {saving ? "Saving..." : editingId ? "Update Schedule" : "Create Schedule"}
+              {saving
+                ? "Saving..."
+                : editingId
+                  ? "Update Schedule"
+                  : "Create Schedule"}
             </button>
             {editingId && (
-              <button type="button" className="btn btn-secondary" onClick={resetForm}>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={resetForm}
+              >
                 Cancel
               </button>
             )}
           </div>
-
         </form>
       </div>
 
       {/* ───────────── SCHEDULES LIST TABLE ───────────── */}
-      <div className="card p-3">
-        <h5>All Schedules</h5>
+      <div className="card p-3 mb-3 manage-schedules-card">
+        <div className="row g-3 align-items-end mb-3">
+          <div className="col-md-8">
+            <label className="form-label manage-schedules-label">
+              Search Schedules
+            </label>
+            <input
+              type="text"
+              className="form-control manage-schedules-input"
+              placeholder="Search by route, title, or frequency"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
+          <div className="col-md-4">
+            <div className="manage-schedules-count-item">
+              <span>Total Schedules</span>
+              <strong>{totalSchedules}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {schedules.length === 0 ? (
-          <p className="text-muted">No schedules created yet.</p>
-        ) : (
-          <div className="table-responsive">
-            <table className="table table-bordered table-hover">
-              <thead className="table-dark">
-                <tr>
-                  <th>Route</th>
-                  <th>Title</th>
-                  <th>Frequency</th>
-                  <th>Time</th>
-                  <th>Price</th>
-                  <th>Driver</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {schedules.map(schedule => (
-                  <tr key={schedule._id}>
+      {filteredSchedules.length === 0 ? (
+        <div className="manage-schedules-table-wrap p-3">
+          <p className="text-muted mb-0">No schedules created yet.</p>
+        </div>
+      ) : (
+        <div className="table-responsive manage-schedules-table-wrap">
+          <table className="table table-bordered table-striped table-sm align-middle manage-schedules-table">
+            <thead className="table-dark">
+              <tr>
+                <th>SNo</th>
+                <th>Route</th>
+                <th>Title</th>
+                <th>Frequency</th>
+                <th>Time</th>
+                <th>Price</th>
+                <th>Boarding Point</th>
+                <th>Drop Point</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredSchedules.map((schedule, index) => (
+                <tr key={schedule._id}>
+                  <td>{index + 1}</td>
 
-                    {/* ✅ FIX: pass full route_id object to getRouteLabel */}
-                    <td>{getRouteLabel(schedule.route_id)}</td>
+                  {/* ✅ FIX: pass full route_id object to getRouteLabel */}
+                  <td>{getRouteLabel(schedule.route_id)}</td>
 
-                    <td>{schedule.title}</td>
+                  <td>{schedule.title}</td>
 
-                    <td>
-                      {schedule.frequency}
-                      {/* Show selected days if Custom */}
-                      {schedule.frequency === "Custom" && schedule.days_of_week?.length > 0 && (
+                  <td>
+                    {schedule.frequency}
+                    {/* Show selected days if Custom */}
+                    {schedule.frequency === "Custom" &&
+                      schedule.days_of_week?.length > 0 && (
                         <div className="small text-muted">
                           Days: {schedule.days_of_week.join(", ")}
                         </div>
                       )}
-                    </td>
+                  </td>
 
-                    <td>{schedule.departure_time} → {schedule.arrival_time}</td>
+                  <td>
+                    {schedule.departure_time} → {schedule.arrival_time}
+                  </td>
 
-                    <td>₹{schedule.base_price || 0}</td>
+                  <td>₹{schedule.base_price || 0}</td>
 
-                    {/* ✅ FIX: driver uses .name field from Staff model */}
-                    <td>{schedule.driver_id?.name || "Bus default"}</td>
+                  <td>{schedule.boarding_points?.[0] || "-"}</td>
 
-                    <td>
-                      <span className={`badge ${schedule.status === "Active" ? "bg-success" : "bg-danger"}`}>
-                        {schedule.status}
-                      </span>
-                    </td>
+                  <td>{schedule.drop_points?.[0] || "-"}</td>
 
-                    <td>
+                  <td>
+                    <span
+                      className={`badge ${schedule.status === "Active" ? "bg-success" : "bg-danger"}`}
+                    >
+                      {schedule.status}
+                    </span>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center gap-2">
                       <button
-                        className="btn btn-warning btn-sm me-2"
+                        className="btn btn-primary btn-sm"
                         onClick={() => handleEdit(schedule)}
                       >
                         Edit
@@ -369,16 +603,14 @@ const ManageSchedules = () => {
                       >
                         Delete
                       </button>
-                    </td>
-
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

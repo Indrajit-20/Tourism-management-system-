@@ -18,7 +18,7 @@ const ManageBusBookings = () => {
         "http://localhost:4000/api/bus-bookings/all",
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
       setBookings(res.data);
       setLoading(false);
@@ -33,7 +33,7 @@ const ManageBusBookings = () => {
       await axios.put(
         `http://localhost:4000/api/bus-bookings/status/${id}`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(`Booking ${newStatus}!`);
       fetchBookings(); // Refresh list
@@ -75,7 +75,8 @@ const ManageBusBookings = () => {
         <tbody>
           {bookings
             .filter(
-              (b) => filterStatus === "All" || b.booking_status === filterStatus
+              (b) =>
+                filterStatus === "All" || b.booking_status === filterStatus,
             )
             .map((b) => (
               <tr key={b._id}>
@@ -83,8 +84,11 @@ const ManageBusBookings = () => {
                   {b.customer_id?.first_name} {b.customer_id?.last_name}
                 </td>
                 <td>
-                  {b.trip_id?.schedule_id?.route_id?.boarding_from} &rarr;{" "}
-                  {b.trip_id?.schedule_id?.route_id?.destination}
+                  {b.trip_id?.schedule_id?.route_id?.board_point ||
+                    b.trip_id?.schedule_id?.route_id?.boarding_from}{" "}
+                  &rarr;{" "}
+                  {b.trip_id?.schedule_id?.route_id?.drop_point ||
+                    b.trip_id?.schedule_id?.route_id?.destination}
                 </td>
                 <td>{new Date(b.travel_date).toLocaleDateString()}</td>
                 <td>
@@ -99,10 +103,10 @@ const ManageBusBookings = () => {
                       b.booking_status === "Confirmed"
                         ? "bg-success"
                         : b.booking_status === "Approved"
-                        ? "bg-info"
-                        : b.booking_status === "Pending"
-                        ? "bg-warning"
-                        : "bg-danger"
+                          ? "bg-info"
+                          : b.booking_status === "Pending"
+                            ? "bg-warning"
+                            : "bg-danger"
                     }`}
                   >
                     {b.booking_status}

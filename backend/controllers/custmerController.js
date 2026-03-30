@@ -1,9 +1,20 @@
 const custmer = require("../models/Custmer");
+const { toDMY, dmyToYmd } = require("../utils/dobHelper");
+
+const toCustomerListResponse = (doc) => {
+  const row = doc.toObject ? doc.toObject() : doc;
+  const normalizedDob = toDMY(row.dob);
+  return {
+    ...row,
+    dob: normalizedDob,
+    dob_iso: dmyToYmd(normalizedDob),
+  };
+};
 
 const getCustmer = async (req, res) => {
   try {
-    const cust = await custmer.find();
-    res.status(200).json(cust);
+    const cust = await custmer.find().sort({ createdAt: -1 }).lean();
+    res.status(200).json(cust.map(toCustomerListResponse));
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Server Error" });
@@ -42,7 +53,8 @@ const getProfile = async (req, res) => {
         last_name: user.last_name,
         email: user.email,
         phone_no: user.phone_no,
-        dob: user.dob,
+        dob: toDMY(user.dob),
+        dob_display: toDMY(user.dob),
         gender: user.gender,
         address: user.address,
       },
@@ -67,7 +79,15 @@ const updateProfile = async (req, res) => {
     // Update only allowed fields
     if (first_name) user.first_name = first_name;
     if (last_name) user.last_name = last_name;
-    if (dob) user.dob = dob;
+    if (dob) {
+      const normalizedDob = toDMY(dob);
+      if (!normalizedDob) {
+        return res
+          .status(400)
+          .json({ message: "Invalid dob. Use DD-MM-YYYY or YYYY-MM-DD" });
+      }
+      user.dob = normalizedDob;
+    }
     if (gender) user.gender = gender;
     if (address) user.address = address;
 
@@ -81,7 +101,8 @@ const updateProfile = async (req, res) => {
         last_name: user.last_name,
         email: user.email,
         phone_no: user.phone_no,
-        dob: user.dob,
+        dob: toDMY(user.dob),
+        dob_display: toDMY(user.dob),
         gender: user.gender,
         address: user.address,
       },

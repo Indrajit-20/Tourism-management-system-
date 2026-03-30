@@ -5,6 +5,7 @@ import "../css/manageStaff.css";
 const ManageStaff = () => {
   const [staffList, setStaffList] = useState([]);
   const [designationFilter, setDesignationFilter] = useState("all");
+  const [searchText, setSearchText] = useState("");
   const [editingStaffId, setEditingStaffId] = useState(null);
   const [form, setForm] = useState({
     name: "",
@@ -52,6 +53,10 @@ const ManageStaff = () => {
 
   const toInputDate = (value) => {
     if (!value) return "";
+    if (/^\d{2}-\d{2}-\d{4}$/.test(String(value))) {
+      const [dd, mm, yyyy] = String(value).split("-");
+      return `${yyyy}-${mm}-${dd}`;
+    }
     if (String(value).includes("/")) {
       const parts = String(value).split("/");
       if (parts.length === 3) {
@@ -60,6 +65,17 @@ const ManageStaff = () => {
       }
     }
     return String(value).split("T")[0];
+  };
+
+  const formatIndianDate = (value) => {
+    if (!value) return "-";
+    const text = String(value).trim();
+    if (/^\d{2}-\d{2}-\d{4}$/.test(text)) return text;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) {
+      const [yyyy, mm, dd] = text.split("-");
+      return `${dd}-${mm}-${yyyy}`;
+    }
+    return "-";
   };
 
   const handleSubmit = async (e) => {
@@ -128,10 +144,30 @@ const ManageStaff = () => {
     }
   };
 
-  const filteredStaff =
-    designationFilter === "all"
-      ? staffList
-      : staffList.filter((staff) => staff.designation === designationFilter);
+  const filteredStaff = staffList.filter((staff) => {
+    const byDesignation =
+      designationFilter === "all" || staff.designation === designationFilter;
+    const bySearch =
+      !searchText.trim() ||
+      String(staff.name || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      String(staff.email_id || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase()) ||
+      String(staff.contact_no || "")
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+    return byDesignation && bySearch;
+  });
+
+  const totalStaff = staffList.length;
+  const totalDrivers = staffList.filter(
+    (staff) => staff.designation === "driver",
+  ).length;
+  const totalGuides = staffList.filter(
+    (staff) => staff.designation === "guide",
+  ).length;
 
   return (
     <div className="container mt-4 manage-staff-page">
@@ -244,11 +280,35 @@ const ManageStaff = () => {
       </div>
 
       <div className="card p-3 mb-3 shadow-sm manage-staff-card">
-        <div className="row align-items-end">
-          <div className="col-md-4">
+        <div className="manage-staff-counts mb-3">
+          <div className="manage-staff-count-item">
+            <span>Total Staff</span>
+            <strong>{totalStaff}</strong>
+          </div>
+          <div className="manage-staff-count-item">
+            <span>Total Drivers</span>
+            <strong>{totalDrivers}</strong>
+          </div>
+          <div className="manage-staff-count-item">
+            <span>Total Guides</span>
+            <strong>{totalGuides}</strong>
+          </div>
+        </div>
+
+        <div className="row g-3 align-items-end manage-staff-filter-row">
+          <div className="col-md-6">
+            <label className="form-label">Search Staff</label>
+            <input
+              className="form-control manage-staff-control"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search by name, email, or contact"
+            />
+          </div>
+          <div className="col-md-6">
             <label className="form-label">Filter by Designation</label>
             <select
-              className="form-control"
+              className="form-control manage-staff-control"
               value={designationFilter}
               onChange={(e) => setDesignationFilter(e.target.value)}
             >
@@ -258,6 +318,9 @@ const ManageStaff = () => {
             </select>
           </div>
         </div>
+        <small className="text-muted d-block mt-2">
+          Showing {filteredStaff.length} of {totalStaff} staff
+        </small>
       </div>
 
       {/* --- STAFF LIST TABLE --- */}
@@ -265,6 +328,7 @@ const ManageStaff = () => {
         <table className="table table-bordered table-striped table-sm align-middle manage-staff-table">
           <thead className="table-dark">
             <tr>
+              <th>SNo</th>
               <th>Name</th>
               <th>Designation</th>
               <th>Contact</th>
@@ -275,13 +339,14 @@ const ManageStaff = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredStaff.map((staff) => (
+            {filteredStaff.map((staff, index) => (
               <tr key={staff._id}>
+                <td>{index + 1}</td>
                 <td>{staff.name}</td>
                 <td>{staff.designation}</td>
                 <td>{staff.contact_no}</td>
                 <td>{staff.email_id}</td>
-                <td>{staff.dob || "-"}</td>
+                <td>{formatIndianDate(staff.dob)}</td>
                 <td>{staff.address || "-"}</td>
                 <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">

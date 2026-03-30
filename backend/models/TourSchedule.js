@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const seatSchema = new mongoose.Schema({
   seat_number: { type: String, required: true },
+  row: { type: Number },
+  column: { type: Number },
+  type: { type: String, default: "seat" },
   is_booked: { type: Boolean, default: false },
   booked_by: {
     type: mongoose.Schema.Types.ObjectId,

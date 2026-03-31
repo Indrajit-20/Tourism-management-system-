@@ -2,21 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReviewsDisplay from "../components/ReviewsDisplay";
+import "../css/bookPackage.css";
 
-const getSeatSurcharge = (seatNumber) => {
-  const seatIndex = Number(String(seatNumber).replace(/\D/g, ""));
-  if (!seatIndex || Number.isNaN(seatIndex)) return 0;
-  if (seatIndex <= 4) return 300;
-  if (seatIndex <= 10) return 150;
-  return 0;
+const getBoardingPoint = (packageData) => {
+  const points =
+    packageData?.boarding_points || packageData?.pickup_points || [];
+  if (!Array.isArray(points) || points.length === 0) return "";
+  return points[0] || "";
 };
 
-const getPassengerFare = (person, basePrice) => {
-  const age = Number(person?.age);
-  if (!Number.isNaN(age) && age > 0 && age < 12) {
-    return basePrice / 2;
-  }
-  return basePrice;
+const getFareAfterChildDiscount = (age, basePrice) => {
+  const numericAge = Number(age);
+  const isChild =
+    Number.isFinite(numericAge) && numericAge > 0 && numericAge < 12;
+  return isChild ? basePrice / 2 : basePrice;
+};
+
+const isValidPassengerName = (name) => {
+  const text = String(name || "").trim();
+  if (!text) return false;
+  if (text.length > 60) return false;
+  if (/^\d+$/.test(text)) return false;
+  return true;
+};
+
+const isValidPassengerAge = (age) => {
+  const numericAge = Number(age);
+  return Number.isFinite(numericAge) && numericAge > 0 && numericAge <= 120;
 };
 
 const BookPackage = () => {
@@ -32,7 +44,6 @@ const BookPackage = () => {
   );
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-  const [pickupLocation, setPickupLocation] = useState("");
   const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
 
   const [passengers, setPassengers] = useState([]);
@@ -87,6 +98,39 @@ const BookPackage = () => {
   // Update what the user types in the boxes
   const handlePassengerChange = (index, field, value) => {
     const updated = [...passengers];
+
+    if (field === "aadhaar_number") {
+      const digitsOnly = String(value || "")
+        .replace(/\D/g, "")
+        .slice(0, 12);
+      updated[index][field] = digitsOnly;
+      setPassengers(updated);
+      return;
+    }
+
+    if (field === "name") {
+      const trimmed = String(value || "");
+      if (trimmed.length > 60) {
+        alert("Passenger name cannot be more than 60 characters.");
+        return;
+      }
+      if (/^\d+$/.test(trimmed.trim()) && trimmed.trim().length > 0) {
+        alert("Passenger name cannot be only numeric.");
+        return;
+      }
+    }
+
+    if (field === "age") {
+      const numericAge = Number(value);
+      if (
+        value !== "" &&
+        (!Number.isFinite(numericAge) || numericAge <= 0 || numericAge > 120)
+      ) {
+        alert("please enter correct age");
+        return;
+      }
+    }
+
     updated[index][field] = value;
     setPassengers(updated);
   };
@@ -110,8 +154,9 @@ const BookPackage = () => {
       return alert("Please select a schedule first.");
     }
 
-    if (!pickupLocation) {
-      return alert("Please select pickup location.");
+    const boardingPoint = getBoardingPoint(packageData);
+    if (!boardingPoint) {
+      return alert("Boarding point is not available for this package.");
     }
 
     const leadPassenger = passengers[0] || {};
@@ -126,21 +171,19 @@ const BookPackage = () => {
     }
 
     const invalidPassenger = passengers.find((person) => {
-      const name = String(person?.name || "").trim();
-      const age = Number(person?.age);
+      const name = String(person?.name || "");
+      const age = person?.age;
       const gender = String(person?.gender || "");
       return (
-        !name ||
-        !Number.isFinite(age) ||
-        age <= 0 ||
-        age > 120 ||
+        !isValidPassengerName(name) ||
+        !isValidPassengerAge(age) ||
         !["Male", "Female", "Other"].includes(gender)
       );
     });
 
     if (invalidPassenger) {
       return alert(
-        "Please fill valid passenger details (name, age 1-120, gender).",
+        "Please fill valid passenger details: Name (not numeric, max 60 chars), Age (1-120), and Gender.",
       );
     }
 
@@ -151,7 +194,7 @@ const BookPackage = () => {
       payload.append("package_id", id);
       payload.append("tour_schedule_id", selectedDeparture._id);
       payload.append("travellers", String(passengers.length));
-      payload.append("pickup_location", pickupLocation);
+      payload.append("pickup_location", boardingPoint);
       payload.append("passengers", JSON.stringify(passengers));
       payload.append("seat_numbers", JSON.stringify(selectedSeats));
       payload.append("aadhaar_photo", aadhaarPhoto);
@@ -200,30 +243,34 @@ const BookPackage = () => {
   }
 
   const seatWiseRows = selectedSeats.map((seatNumber, index) => {
-    const person = passengers[index] || {};
     const departurePrice = Number(
       selectedDeparture?.price ?? selectedDeparture?.price_per_person ?? 0,
     );
-    const baseFare = getPassengerFare(person, departurePrice);
-    const seatSurcharge = getSeatSurcharge(seatNumber);
-    const finalFare = baseFare + seatSurcharge;
+    const age = passengers[index]?.age;
+    const fare = getFareAfterChildDiscount(age, departurePrice);
+    const discount = Math.max(departurePrice - fare, 0);
+    const isChild = discount > 0;
 
     return {
       seatNumber,
-      passengerName: person.name || `Passenger ${index + 1}`,
-      baseFare,
-      seatSurcharge,
-      finalFare,
+      passengerName: passengers[index]?.name || `Passenger ${index + 1}`,
+      isChild,
+      baseFare: departurePrice,
+      discount,
+      fare,
     };
   });
 
-  const totalToDisplay = seatWiseRows.reduce(
-    (sum, row) => sum + row.finalFare,
+  const totalToDisplay = seatWiseRows.reduce((sum, row) => sum + row.fare, 0);
+  const totalDiscount = seatWiseRows.reduce(
+    (sum, row) => sum + row.discount,
     0,
   );
+  const childCount = seatWiseRows.filter((row) => row.isChild).length;
+  const boardingPoint = getBoardingPoint(packageData);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5 bp-page">
       <div className="d-flex align-items-center mb-3">
         <button
           className="btn btn-outline-secondary me-3"
@@ -238,36 +285,32 @@ const BookPackage = () => {
         >
           &larr; Change Seats
         </button>
-        <h2 className="mb-0">Passenger Details: {packageData.package_name}</h2>
+        <div>
+          <h2 className="mb-0">Passenger Details</h2>
+          <small className="text-muted">{packageData.package_name}</small>
+        </div>
       </div>
-      <p>
+      <p className="bp-note">
         Price: ₹
         {selectedDeparture?.price ?? selectedDeparture?.price_per_person ?? "-"}{" "}
-        per person. Children below 12 years get 50% off automatically. Seat
-        surcharge: S1-S4 +₹300, S5-S10 +₹150.
+        per person. All seats have the same base fare. Child discount (age under
+        12) is 50%.
       </p>
 
-      <div className="card p-4 shadow-sm mt-3">
+      {childCount > 0 && (
+        <div className="alert alert-success py-2">
+          Child discount applied for {childCount} passenger
+          {childCount > 1 ? "s" : ""}. Total discount: ₹{totalDiscount}
+        </div>
+      )}
+
+      <div className="card p-4 shadow-sm mt-3 bp-card">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="form-label fw-semibold">Pickup Location</label>
-            <select
-              className="form-select"
-              value={pickupLocation}
-              onChange={(e) => setPickupLocation(e.target.value)}
-              required
-            >
-              <option value="">Select pickup location</option>
-              {(
-                packageData.boarding_points ||
-                packageData.pickup_points ||
-                []
-              ).map((point) => (
-                <option key={point} value={point}>
-                  {point}
-                </option>
-              ))}
-            </select>
+            <label className="form-label fw-semibold">Boarding Point</label>
+            <div className="bp-boarding-box">
+              {boardingPoint || "Boarding point not available"}
+            </div>
           </div>
 
           <div className="mb-4">
@@ -302,6 +345,7 @@ const BookPackage = () => {
                       onChange={(e) =>
                         handlePassengerChange(index, "name", e.target.value)
                       }
+                      maxLength={60}
                       required
                     />
                   </div>
@@ -314,6 +358,8 @@ const BookPackage = () => {
                       onChange={(e) =>
                         handlePassengerChange(index, "age", e.target.value)
                       }
+                      min="1"
+                      max="120"
                       required
                     />
                   </div>
@@ -346,7 +392,10 @@ const BookPackage = () => {
                               e.target.value,
                             )
                           }
+                          inputMode="numeric"
                           pattern="\d{12}"
+                          minLength={12}
+                          maxLength={12}
                           required
                         />
                       </div>
@@ -386,8 +435,8 @@ const BookPackage = () => {
                       <th>Seat</th>
                       <th>Passenger</th>
                       <th>Base Fare</th>
-                      <th>Surcharge</th>
-                      <th>Final Fare</th>
+                      <th>Child Discount</th>
+                      <th>Fare</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -396,8 +445,8 @@ const BookPackage = () => {
                         <td>{row.seatNumber}</td>
                         <td>{row.passengerName}</td>
                         <td>₹{row.baseFare}</td>
-                        <td>₹{row.seatSurcharge}</td>
-                        <td className="fw-bold">₹{row.finalFare}</td>
+                        <td>{row.discount > 0 ? `- ₹${row.discount}` : "-"}</td>
+                        <td className="fw-bold">₹{row.fare}</td>
                       </tr>
                     ))}
                   </tbody>

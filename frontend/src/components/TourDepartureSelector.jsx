@@ -7,10 +7,17 @@ const API_BASE_URL = "http://localhost:4000";
  * Shows available tour schedules for a package
  * User selects one to proceed with booking
  */
-const TourDepartureSelector = ({ packageId, onSelect }) => {
+const isScheduleBookable = (schedule) => {
+  const validStatus = ["Open", "Locked"].includes(schedule?.departure_status);
+  const hasSeats = Number(schedule?.available_seats || 0) > 0;
+  return validStatus && hasSeats;
+};
+
+const TourDepartureSelector = ({ packageId, onSelect, initialSelectedId }) => {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDeparture, setSelectedDeparture] = useState(null);
+  const [selectedDepartureId, setSelectedDepartureId] = useState(null);
+  const [hasAutoSelected, setHasAutoSelected] = useState(false);
 
   useEffect(() => {
     const fetchSchedules = async () => {
@@ -27,12 +34,38 @@ const TourDepartureSelector = ({ packageId, onSelect }) => {
     };
 
     if (packageId) {
+      setHasAutoSelected(false);
+      setSelectedDepartureId(null);
       fetchSchedules();
     }
   }, [packageId]);
 
+  useEffect(() => {
+    if (!schedules.length || hasAutoSelected) return;
+
+    const scheduleFromQuery = initialSelectedId
+      ? schedules.find(
+          (schedule) =>
+            String(schedule._id) === String(initialSelectedId) &&
+            isScheduleBookable(schedule),
+        )
+      : null;
+
+    const firstBookableSchedule = schedules.find((schedule) =>
+      isScheduleBookable(schedule),
+    );
+    const defaultSchedule =
+      scheduleFromQuery || firstBookableSchedule || schedules[0];
+
+    if (!defaultSchedule) return;
+
+    setSelectedDepartureId(defaultSchedule._id);
+    if (onSelect) onSelect(defaultSchedule);
+    setHasAutoSelected(true);
+  }, [schedules, initialSelectedId, hasAutoSelected]);
+
   const handleSelect = (departure) => {
-    setSelectedDeparture(departure);
+    setSelectedDepartureId(departure._id);
     if (onSelect) {
       onSelect(departure);
     }
@@ -53,9 +86,9 @@ const TourDepartureSelector = ({ packageId, onSelect }) => {
   return (
     <div className="departure-selector mb-4">
       <h5 className="mb-3">
-        <strong>Select Schedule</strong>
+        <strong>Available Schedules</strong>
       </h5>
-      <div className="row g-3">
+      <div className="tds-row">
         {schedules.map((dep) => {
           const startDate = new Date(dep.start_date);
           const formattedDate = startDate.toLocaleDateString("en-IN", {
@@ -63,19 +96,17 @@ const TourDepartureSelector = ({ packageId, onSelect }) => {
             month: "short",
             year: "numeric",
           });
-          const isSelected = selectedDeparture?._id === dep._id;
-          const isBookable =
-            ["Open", "Locked"].includes(dep.departure_status) &&
-            Number(dep.available_seats || 0) > 0;
+          const isSelected = selectedDepartureId === dep._id;
+          const isBookable = isScheduleBookable(dep);
           const statusLabel =
             dep.departure_status === "BookingFull"
               ? "Booking Full"
               : dep.departure_status;
 
           return (
-            <div key={dep._id} className="col-md-6">
+            <div key={dep._id} className="tds-col">
               <div
-                className={`card p-3 border-2 cursor-pointer ${
+                className={`card p-3 border-2 ${
                   isSelected ? "border-primary bg-light" : "border-secondary"
                 }`}
                 onClick={() => isBookable && handleSelect(dep)}
@@ -86,6 +117,7 @@ const TourDepartureSelector = ({ packageId, onSelect }) => {
               >
                 <div className="d-flex justify-content-between align-items-start mb-2">
                   <div>
+                    <small className="text-muted d-block">Starting Date</small>
                     <h6 className="mb-1">📅 {formattedDate}</h6>
                     <small className="text-muted">
                       Status:{" "}
@@ -99,8 +131,10 @@ const TourDepartureSelector = ({ packageId, onSelect }) => {
 
                 <div className="mt-2">
                   <div className="mb-2">
-                    <strong>₹{dep.price ?? dep.price_per_person}</strong>
-                    <small className="text-muted"> / person</small>
+                    <strong className="tds-price">
+                      ₹{dep.price ?? dep.price_per_person}
+                    </strong>
+                    <small className="tds-price-unit"> / person</small>
                   </div>
 
                   <div className="mb-2">

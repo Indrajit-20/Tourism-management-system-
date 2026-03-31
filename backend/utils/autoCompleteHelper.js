@@ -1,7 +1,6 @@
 // Auto-complete logic for tours/bookings based on dates
 const TourSchedule = require("../models/TourSchedule");
 const PackageBooking = require("../models/PackageBooking");
-const { createNotification } = require("./notificationHelper");
 
 /**
  * Auto-mark schedules as Completed when end_date has passed
@@ -44,24 +43,6 @@ const autoCompleteTours = async () => {
         $set: { booking_status: "completed" },
       }
     );
-
-    const completedBookings = await PackageBooking.find(
-      {
-        tour_schedule_id: { $in: toursToComplete.map((t) => t._id) },
-        booking_status: "completed",
-      },
-      "Custmer_id _id"
-    ).lean();
-
-    for (const booking of completedBookings) {
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Trip Completed",
-        message: "Trip completed! Write a review.",
-        type: "review",
-        meta: { booking_id: booking._id },
-      });
-    }
 
     console.log(
       `[AutoComplete] Updated ${bookingUpdates.modifiedCount} bookings to completed`
@@ -119,14 +100,6 @@ const autoRejectExpiredBookings = async () => {
       }
 
       console.log(`[AutoReject] Booking ${booking._id} auto-rejected`);
-
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Booking Expired",
-        message: "Booking expired - not reviewed in time. Please try again.",
-        type: "booking",
-        meta: { booking_id: booking._id },
-      });
     }
 
     return { rejected: expiredBookings.length };
@@ -184,14 +157,6 @@ const autoCancelUnpaidBookings = async () => {
       }
 
       console.log(`[AutoCancel] Booking ${booking._id} auto-cancelled (payment deadline)`);
-
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Payment Deadline Passed",
-        message: "Payment deadline passed. Booking cancelled.",
-        type: "payment",
-        meta: { booking_id: booking._id },
-      });
     }
 
     return { cancelled: unpaidBookings.length };

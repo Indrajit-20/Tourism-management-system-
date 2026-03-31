@@ -56,7 +56,6 @@ const ManageBusBookings = () => {
 
   const bookingStatusClass = (status) => {
     if (status === "Confirmed") return "bg-success";
-    if (status === "Pending") return "bg-warning text-dark";
     if (status === "Cancelled") return "bg-secondary";
     return "bg-dark";
   };
@@ -93,12 +92,14 @@ const ManageBusBookings = () => {
     const user = `${b.customer_id?.first_name || ""} ${b.customer_id?.last_name || ""}`;
     const busNo = String(b.trip_id?.bus_id?.bus_number || "");
     const busType = String(b.trip_id?.bus_id?.bus_type || "");
+    const layoutType = String(b.trip_id?.bus_id?.layout_type || "");
     const search = searchText.trim().toLowerCase();
     const searchMatch =
       !search ||
       user.toLowerCase().includes(search) ||
       routeCity.toLowerCase().includes(search) ||
       busType.toLowerCase().includes(search) ||
+      layoutType.toLowerCase().includes(search) ||
       busNo.toLowerCase().includes(search) ||
       String(b._id || "")
         .toLowerCase()
@@ -113,9 +114,6 @@ const ManageBusBookings = () => {
   ).length;
   const cancelledCount = bookings.filter(
     (b) => b.booking_status === "Cancelled",
-  ).length;
-  const pendingCount = bookings.filter(
-    (b) => b.booking_status === "Pending",
   ).length;
 
   if (loading) return <div>Loading bookings...</div>;
@@ -135,10 +133,6 @@ const ManageBusBookings = () => {
             <strong>{confirmedCount}</strong>
           </div>
           <div className="manage-bus-bookings-count-item">
-            <span>Pending</span>
-            <strong>{pendingCount}</strong>
-          </div>
-          <div className="manage-bus-bookings-count-item">
             <span>Cancelled</span>
             <strong>{cancelledCount}</strong>
           </div>
@@ -153,12 +147,12 @@ const ManageBusBookings = () => {
               className="form-control manage-bus-bookings-input"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-              placeholder="Search by user, route city, bus number, bus type, or booking ID"
+              placeholder="Search by user, route city, bus number, bus type, layout type, or booking ID"
             />
           </div>
           <div className="col-md-3">
             <label className="form-label manage-bus-bookings-label">
-              Travel Date
+              Filter Date
             </label>
             <input
               type="date"
@@ -177,7 +171,6 @@ const ManageBusBookings = () => {
               onChange={(e) => setFilterStatus(e.target.value)}
             >
               <option value="All">All Bookings</option>
-              <option value="Pending">Pending</option>
               <option value="Confirmed">Confirmed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
@@ -194,11 +187,14 @@ const ManageBusBookings = () => {
           <table className="table table-bordered table-striped table-sm align-middle manage-bus-bookings-table">
             <thead className="table-dark">
               <tr>
+                <th>Sr No</th>
+                <th>Booking ID</th>
                 <th>User</th>
                 <th>Route (City)</th>
                 <th>Board/Drop Point</th>
                 <th>Bus No.</th>
                 <th>Bus Type</th>
+                <th>Layout Type</th>
                 <th>Date</th>
                 <th>Departure</th>
                 <th>Arrival</th>
@@ -211,7 +207,7 @@ const ManageBusBookings = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredBookings.map((b) => {
+              {filteredBookings.map((b, index) => {
                 const route = b.trip_id?.schedule_id?.route_id;
                 const schedule = b.trip_id?.schedule_id;
                 const routeCity = `${route?.boarding_from || "-"} → ${route?.destination || "-"}`;
@@ -222,6 +218,15 @@ const ManageBusBookings = () => {
 
                 return (
                   <tr key={b._id}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <span
+                        className="manage-bus-bookings-id"
+                        title={String(b._id || "-")}
+                      >
+                        {String(b._id || "-")}
+                      </span>
+                    </td>
                     <td>
                       {b.customer_id?.first_name} {b.customer_id?.last_name}
                     </td>
@@ -229,6 +234,7 @@ const ManageBusBookings = () => {
                     <td>{stops}</td>
                     <td>{b.trip_id?.bus_id?.bus_number || "-"}</td>
                     <td>{b.trip_id?.bus_id?.bus_type || "-"}</td>
+                    <td>{b.trip_id?.bus_id?.layout_type || "-"}</td>
                     <td>{formatDate(b.travel_date)}</td>
                     <td>{schedule?.departure_time || "-"}</td>
                     <td>{schedule?.arrival_time || "-"}</td>

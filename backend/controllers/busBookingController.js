@@ -27,7 +27,6 @@ const parseTimeToMinutes = (value) => {
   return h * 60 + m;
 };
 
-// 1. BOOK BUS TICKET (User)
 const bookBusTicket = async (req, res) => {
   try {
     const { trip_id, seat_numbers } = req.body;
@@ -82,7 +81,6 @@ const bookBusTicket = async (req, res) => {
       });
     }
 
-    // ✅ Calculate total using dynamic per-seat prices
     let totalAmount = 0;
     const seatPrices = seat_numbers.map((seatNum) => {
       const seat = seatMap.get(seatNum);
@@ -113,8 +111,6 @@ const bookBusTicket = async (req, res) => {
       return deadline;
     };
 
-    // ✅ AUTO-CONFIRM: Save booking as CONFIRMED immediately
-    // ✅ BUT: Only lock seats AFTER payment is confirmed in confirmPayment()
     const newBooking = new BusTicketBooking({
       trip_id,
       customer_id,
@@ -129,7 +125,6 @@ const bookBusTicket = async (req, res) => {
       payment_deadline: calculatePaymentDeadline(trip.trip_date),
     });
 
-    // ✅ Save booking WITHOUT locking seats yet
     await newBooking.save();
 
     res.status(201).json({
@@ -142,8 +137,6 @@ const bookBusTicket = async (req, res) => {
   }
 };
 
-// 2. GET ALL BOOKINGS (Admin)
-
 const getAllBookings = async (req, res) => {
   try {
     const bookings = await BusTicketBooking.find()
@@ -152,7 +145,7 @@ const getAllBookings = async (req, res) => {
       .populate({
         path: "trip_id",
         populate: [
-          { path: "bus_id", select: "bus_number bus_type" },
+          { path: "bus_id", select: "bus_number bus_type layout_type" },
           {
             path: "schedule_id",
             select: "departure_time arrival_time route_id",
@@ -170,8 +163,6 @@ const getAllBookings = async (req, res) => {
     res.status(500).json({ message: "Error fetching bookings", error });
   }
 };
-
-// 3. UPDATE BOOKING STATUS (Admin)
 
 const updateBookingStatus = async (req, res) => {
   try {
@@ -226,8 +217,6 @@ const updateBookingStatus = async (req, res) => {
   }
 };
 
-// 4. CONFIRM PAYMENT (User pays after booking)
-
 const confirmPayment = async (req, res) => {
   try {
     const { booking_id, payment_id } = req.body;
@@ -263,12 +252,10 @@ const confirmPayment = async (req, res) => {
       });
     }
 
-    // ✅ CONFIRM PAYMENT AND LOCK SEATS
     booking.payment_status = "Paid";
     booking.payment_id = payment_id;
     await booking.save();
 
-    // ✅ NOW LOCK THE SEATS (only after payment confirmed)
     const trip = await require("../models/BusTrip").findById(
       booking.trip_id._id
     );
@@ -400,13 +387,10 @@ const cancelBooking = async (req, res) => {
         .json({ message: "Unauthorized: Not your booking" });
     }
 
-    // Only Pending or Confirmed bookings can be cancelled
-    if (
-      booking.booking_status !== "Pending" &&
-      booking.booking_status !== "Confirmed"
-    ) {
+    // Only confirmed bookings can be cancelled
+    if (booking.booking_status !== "Confirmed") {
       return res.status(400).json({
-        message: `Cannot cancel ${booking.booking_status} booking. Only Pending or Confirmed bookings can be cancelled.`,
+        message: `Cannot cancel ${booking.booking_status} booking. Only Confirmed bookings can be cancelled.`,
       });
     }
 

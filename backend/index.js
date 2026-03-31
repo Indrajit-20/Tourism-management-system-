@@ -16,12 +16,11 @@ const stateRoutes = require("./routes/stateRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
-const notificationRoutes = require("./routes/notificationRoutes");
 const cron = require("node-cron");
 const {
   autoCancelExpiredBookings,
 } = require("./controllers/busBookingController");
-const { runAllAutoTasks } = require("./utils/autoCompleteHelper"); // ✅ NEW: Auto-complete helper
+const { runAllAutoTasks } = require("./utils/autoCompleteHelper");
 
 const cors = require("cors");
 const path = require("path");
@@ -108,7 +107,6 @@ app.use("/api/feedback", feedbackRoutes);
 
 app.use("/api/cancellation", cancellationRoutes);
 app.use("/api/admin-stats", adminStatsRoutes);
-app.use("/api/notifications", notificationRoutes);
 
 // Refund routes
 app.use("/api/refunds", refundRoutes);

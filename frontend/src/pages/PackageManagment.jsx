@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../css/managePackage.css";
 
 const apiBase = "http://localhost:4000";
+const MAX_HOTELS_PER_PACKAGE = 6;
 
 const initialFormState = {
   package_name: "",
@@ -21,30 +23,43 @@ const initialFormState = {
 const PackageManagment = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [editingId, setEditingId] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
   const [packages, setPackages] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [hotelsList, setHotelsList] = useState([]);
 
   const [selectedHotels, setSelectedHotels] = useState([""]);
-  const [boardingPoints, setBoardingPoints] = useState([""]);
+  const [boardingPoint, setBoardingPoint] = useState("");
   const [imageInputs, setImageInputs] = useState([null]);
 
   const token = localStorage.getItem("token");
 
   const fetchData = async () => {
-    try {
-      const [pkgRes, staffRes, hotelRes] = await Promise.all([
-        axios.get(`${apiBase}/api/packages`),
-        axios.get(`${apiBase}/api/staff`),
-        axios.get(`${apiBase}/api/hotels`),
-      ]);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
+    try {
+      const pkgRes = await axios.get(`${apiBase}/api/packages`);
       setPackages(pkgRes.data || []);
+    } catch (error) {
+      console.error("Unable to load packages", error);
+      setPackages([]);
+    }
+
+    try {
+      const staffRes = await axios.get(`${apiBase}/api/staff`, { headers });
       setStaffList(staffRes.data || []);
+    } catch (error) {
+      console.error("Unable to load staff list for guide dropdown", error);
+      setStaffList([]);
+    }
+
+    try {
+      const hotelRes = await axios.get(`${apiBase}/api/hotels`);
       setHotelsList(hotelRes.data || []);
     } catch (error) {
-      console.error("Error loading data", error);
+      console.error("Unable to load hotels list", error);
+      setHotelsList([]);
     }
   };
 
@@ -87,7 +102,15 @@ const PackageManagment = () => {
     );
   };
 
-  const addHotelSelect = () => setSelectedHotels((prev) => [...prev, ""]);
+  const addHotelSelect = () => {
+    setSelectedHotels((prev) => {
+      if (prev.length >= MAX_HOTELS_PER_PACKAGE) {
+        alert(`Maximum ${MAX_HOTELS_PER_PACKAGE} hotels allowed per package.`);
+        return prev;
+      }
+      return [...prev, ""];
+    });
+  };
   const removeHotelSelect = (index) => {
     setSelectedHotels((prev) => {
       if (prev.length === 1) return prev;
@@ -100,23 +123,10 @@ const PackageManagment = () => {
     );
   };
 
-  const addBoardingPoint = () => setBoardingPoints((prev) => [...prev, ""]);
-  const removeBoardingPoint = (index) => {
-    setBoardingPoints((prev) => {
-      if (prev.length === 1) return prev;
-      return prev.filter((_, i) => i !== index);
-    });
-  };
-  const updateBoardingPoint = (index, value) => {
-    setBoardingPoints((prev) =>
-      prev.map((item, i) => (i === index ? value : item)),
-    );
-  };
-
   const resetPackageForm = () => {
     setFormData(initialFormState);
     setSelectedHotels([""]);
-    setBoardingPoints([""]);
+    setBoardingPoint("");
     setImageInputs([null]);
     setEditingId(null);
   };
@@ -149,9 +159,13 @@ const PackageManagment = () => {
       );
 
       const hotelsPayload = cleanStringArray(selectedHotels);
+      if (hotelsPayload.length > MAX_HOTELS_PER_PACKAGE) {
+        alert(`You can select maximum ${MAX_HOTELS_PER_PACKAGE} hotels.`);
+        return;
+      }
       payload.append("hotels", JSON.stringify(hotelsPayload));
 
-      const pointsPayload = cleanStringArray(boardingPoints);
+      const pointsPayload = boardingPoint.trim() ? [boardingPoint.trim()] : [];
       payload.append("boarding_points", JSON.stringify(pointsPayload));
       payload.append("pickup_points", JSON.stringify(pointsPayload));
 
@@ -213,7 +227,7 @@ const PackageManagment = () => {
       : pkg.pickup_points?.length
         ? pkg.pickup_points
         : [""];
-    setBoardingPoints(points);
+    setBoardingPoint(points[0] || "");
 
     setImageInputs([null]);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -237,11 +251,33 @@ const PackageManagment = () => {
     (staff) => (staff.designation || "").toLowerCase() === "guide",
   );
 
+  const getHotelOptionLabel = (hotel) => {
+    const cityName = hotel?.city_id?.city_name || "";
+    const stateName = hotel?.state_id?.state_name || "";
+    const locationName = hotel?.location || "";
+    const placeText = [locationName, cityName, stateName]
+      .filter(Boolean)
+      .join(", ");
+    return placeText ? `${hotel.name} (${placeText})` : hotel.name;
+  };
+
   const selectedImageCount = imageInputs.filter(Boolean).length;
+  const normalizedSearch = searchText.trim().toLowerCase();
+  const filteredPackages = packages.filter((pkg) => {
+    if (!normalizedSearch) return true;
+    const name = String(pkg.package_name || "").toLowerCase();
+    const destination = String(pkg.destination || "").toLowerCase();
+    const type = String(pkg.package_type || "").toLowerCase();
+    return (
+      name.includes(normalizedSearch) ||
+      destination.includes(normalizedSearch) ||
+      type.includes(normalizedSearch)
+    );
+  });
 
   return (
-    <div className="container mt-4 mb-5">
-      <div className="card shadow-sm p-4 mb-4">
+    <div className="container mt-4 mb-5 manage-package-page">
+      <div className="card shadow-sm p-4 mb-4 manage-package-card">
         <h4 className="mb-3">
           {editingId ? "Edit Tour Package" : "Add Tour Package"}
         </h4>
@@ -327,7 +363,9 @@ const PackageManagment = () => {
             </div>
 
             <div className="col-md-6">
-              <label className="form-label">Hotels (one or more, use +)</label>
+              <label className="form-label">
+                Hotels (one or more, max {MAX_HOTELS_PER_PACKAGE})
+              </label>
               {selectedHotels.map((hotelId, index) => (
                 <div className="d-flex gap-2 mb-2" key={`hotel-${index}`}>
                   <select
@@ -338,7 +376,7 @@ const PackageManagment = () => {
                     <option value="">Select Hotel</option>
                     {hotelsList.map((hotel) => (
                       <option key={hotel._id} value={hotel._id}>
-                        {hotel.name}
+                        {getHotelOptionLabel(hotel)}
                       </option>
                     ))}
                   </select>
@@ -361,34 +399,14 @@ const PackageManagment = () => {
             </div>
 
             <div className="col-md-6">
-              <label className="form-label">
-                Pick-up / Boarding Points (admin-defined, use +)
-              </label>
-              {boardingPoints.map((point, index) => (
-                <div className="d-flex gap-2 mb-2" key={`boarding-${index}`}>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={point}
-                    onChange={(e) => updateBoardingPoint(index, e.target.value)}
-                    placeholder="Example: Navrangpura Circle"
-                  />
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    onClick={addBoardingPoint}
-                  >
-                    +
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => removeBoardingPoint(index)}
-                  >
-                    -
-                  </button>
-                </div>
-              ))}
+              <label className="form-label">Pick-up / Boarding Point</label>
+              <input
+                type="text"
+                className="form-control"
+                value={boardingPoint}
+                onChange={(e) => setBoardingPoint(e.target.value)}
+                placeholder="Example: Navrangpura Circle"
+              />
             </div>
 
             <div className="col-12">
@@ -512,17 +530,31 @@ const PackageManagment = () => {
         </form>
       </div>
 
-      <div className="card shadow-sm p-4">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="mb-0">All Packages</h4>
-          <span className="badge bg-light text-dark border">
-            Total: {packages.length}
-          </span>
+      <div className="card shadow-sm p-4 manage-package-card">
+        <h4 className="mb-3">All Packages</h4>
+
+        <div className="row g-3 align-items-end mb-3">
+          <div className="col-md-8">
+            <label className="form-label">Search Packages</label>
+            <input
+              type="text"
+              className="form-control"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search by package name, destination, or type"
+            />
+          </div>
+          <div className="col-md-4">
+            <div className="manage-package-total-item">
+              <span>Total Tour Packages</span>
+              <strong>{packages.length}</strong>
+            </div>
+          </div>
         </div>
 
-        <div className="table-responsive">
-          <table className="table table-bordered table-hover align-middle">
-            <thead className="table-light">
+        <div className="table-responsive manage-package-table-wrap">
+          <table className="table table-bordered table-striped align-middle manage-package-table">
+            <thead className="table-dark">
               <tr>
                 <th>Image</th>
                 <th>Name</th>
@@ -536,7 +568,7 @@ const PackageManagment = () => {
               </tr>
             </thead>
             <tbody>
-              {packages.map((pkg) => {
+              {filteredPackages.map((pkg) => {
                 const firstImage = (pkg.image_urls || [])[0];
 
                 return (
@@ -618,10 +650,10 @@ const PackageManagment = () => {
                   </tr>
                 );
               })}
-              {packages.length === 0 && (
+              {filteredPackages.length === 0 && (
                 <tr>
                   <td colSpan="12" className="text-center text-muted py-4">
-                    No tour packages found. Add your first package above.
+                    No packages match your search.
                   </td>
                 </tr>
               )}

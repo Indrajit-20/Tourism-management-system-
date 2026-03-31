@@ -32,6 +32,7 @@ function getPackageImages(imageUrls, imageUrl) {
 
 const Packagecard = ({
   id,
+  scheduleId,
   package_name,
   source_city,
   destination,
@@ -56,6 +57,13 @@ const Packagecard = ({
   const showNextImage = () => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
+
+  const bookNowPath = scheduleId
+    ? `/packages/${id}/select-seats?schedule=${scheduleId}`
+    : `/packages/${id}/select-seats`;
+  const viewDetailsPath = scheduleId
+    ? `/package-details/${id}?schedule=${scheduleId}`
+    : `/package-details/${id}`;
 
   return (
     <article className="pkg-card h-100">
@@ -116,11 +124,11 @@ const Packagecard = ({
 
         <div className="pkg-grid">
           <div className="pkg-cell">
-            <small>Start</small>
+            <small>Starting Date</small>
             <strong>{formatDisplayDate(start_date)}</strong>
           </div>
           <div className="pkg-cell">
-            <small>End</small>
+            <small>Ending Date</small>
             <strong>{formatDisplayDate(end_date)}</strong>
           </div>
           <div className="pkg-cell">
@@ -143,16 +151,10 @@ const Packagecard = ({
         </div>
 
         <div className="pkg-actions">
-          <Link
-            to={`/package-details/${id}`}
-            className="btn btn-outline-primary btn-sm"
-          >
+          <Link to={viewDetailsPath} className="btn btn-outline-primary btn-sm">
             View Details
           </Link>
-          <Link
-            to={`/packages/${id}/select-seats`}
-            className="btn btn-primary btn-sm"
-          >
+          <Link to={bookNowPath} className="btn btn-primary btn-sm">
             Book Now
           </Link>
         </div>

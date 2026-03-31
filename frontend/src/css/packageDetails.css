@@ -325,6 +325,30 @@
   font-size: 34px;
 }
 
+.pd-price-amount {
+  color: #15803d !important;
+}
+
+.tds-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.tds-col {
+  min-width: 220px;
+  flex: 0 0 220px;
+}
+
+.tds-price {
+  color: #15803d;
+}
+
+.tds-price-unit {
+  color: #64748b;
+}
+
 .pd-divider {
   border-top: 1px solid #e7edfb;
   margin: 12px 0;

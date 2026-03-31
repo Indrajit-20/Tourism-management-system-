@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1280" height="720" viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Uttarakhand">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b3d91"/>
+      <stop offset="55%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="1040" cy="160" r="120" fill="#ffffff" fill-opacity="0.12"/>
+  <circle cx="220" cy="620" r="170" fill="#ffffff" fill-opacity="0.08"/>
+  <rect x="90" y="440" width="1100" height="180" rx="18" fill="#000000" fill-opacity="0.28"/>
+  <text x="130" y="520" font-size="64" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Uttarakhand</text>
+  <text x="132" y="570" font-size="30" fill="#e5f2ff" font-family="Segoe UI, Arial, sans-serif">Spiritual Serenity</text>
+  <text x="132" y="612" font-size="24" fill="#d8e8ff" font-family="Segoe UI, Arial, sans-serif">Curated by Tourism Management System</text>
+</svg>

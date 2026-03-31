@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import ReviewsDisplay from "../components/ReviewsDisplay";
 import TourDepartureSelector from "../components/TourDepartureSelector";
@@ -21,21 +21,33 @@ const formatDate = (value) => {
 const parseMultiValue = (value) => {
   if (!value) return [];
   if (Array.isArray(value)) return value.filter(Boolean);
-  return String(value)
-    .split(/\n|,/)
+
+  const text = String(value).split("\r").join("").split("\n").join(",");
+
+  return text
+    .split(",")
     .map((item) => item.trim())
     .filter(Boolean);
 };
 
 const toImageUrl = (value) => {
   if (!value) return "https://via.placeholder.com/1200x700?text=Tour+Package";
-  if (/^https?:\/\//i.test(value)) return value;
+
+  const lowerValue = String(value).toLowerCase();
+  if (lowerValue.startsWith("http://") || lowerValue.startsWith("https://")) {
+    return value;
+  }
+
   return `${API_BASE_URL}/uploads/${value}`;
 };
 
 const PackageDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const scheduleIdFromQuery = new URLSearchParams(location.search).get(
+    "schedule",
+  );
   const [packageData, setPackageData] = useState(null);
   const [activeTab, setActiveTab] = useState("itinerary");
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -359,12 +371,15 @@ const PackageDetails = () => {
               <div className="pd-card pd-side-card">
                 <div className="pd-price-wrap">
                   <small>Per Person</small>
-                  <h2>
-                    Rs.{" "}
-                    {selectedDeparture?.price ??
-                      selectedDeparture?.price_per_person ??
-                      "Select schedule"}
-                  </h2>
+                  {selectedDeparture ? (
+                    <h2 className="pd-price-amount">
+                      Rs.{" "}
+                      {selectedDeparture?.price ??
+                        selectedDeparture?.price_per_person}
+                    </h2>
+                  ) : (
+                    <h2>Rs. Select schedule</h2>
+                  )}
                 </div>
 
                 <div className="pd-divider" />
@@ -398,6 +413,7 @@ const PackageDetails = () => {
                 <div className="mb-3">
                   <TourDepartureSelector
                     packageId={id}
+                    initialSelectedId={scheduleIdFromQuery}
                     onSelect={(dep) => setSelectedDeparture(dep)}
                   />
                 </div>

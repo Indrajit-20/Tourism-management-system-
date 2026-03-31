@@ -17,10 +17,32 @@ const toDayString = (date) => {
   return `${year}-${month}-${day}`;
 };
 
+const getDurationDays = (durationText) => {
+  const text = String(durationText || "");
+  const match = text.match(/(\d+)\s*day/i);
+  if (!match) return null;
+  const days = Number(match[1]);
+  if (!Number.isInteger(days) || days < 1) return null;
+  return days;
+};
+
+const calculateEndDateFromDuration = (startDate, durationText) => {
+  if (!startDate) return "";
+  const days = getDurationDays(durationText);
+  if (!days) return "";
+
+  const start = new Date(`${startDate}T00:00:00`);
+  if (Number.isNaN(start.getTime())) return "";
+
+  // Example: 6 days trip means end date is start + 5 days.
+  start.setDate(start.getDate() + (days - 1));
+  return toDayString(start);
+};
+
 /**
  * Admin component to create and manage tour schedules for a package
  */
-const ManageTourSchedules = ({ packageId, packageName }) => {
+const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   const [schedules, setSchedules] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -69,6 +91,16 @@ const ManageTourSchedules = ({ packageId, packageName }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "start_date") {
+      setFormData((prev) => ({
+        ...prev,
+        start_date: value,
+        end_date: calculateEndDateFromDuration(value, packageDuration),
+      }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -285,6 +317,12 @@ const ManageTourSchedules = ({ packageId, packageName }) => {
                   Start date must be at least {MIN_ADMIN_SCHEDULE_LEAD_DAYS}{" "}
                   days from today.
                 </small>
+                {!!getDurationDays(packageDuration) && (
+                  <small className="text-muted d-block mt-1">
+                    End date auto-fills from package duration ({packageDuration}
+                    ).
+                  </small>
+                )}
               </div>
 
               <div className="col-md-6 mb-3">

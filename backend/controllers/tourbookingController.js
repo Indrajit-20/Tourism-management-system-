@@ -2,7 +2,6 @@ const Package = require("../models/Package");
 const PackageBooking = require("../models/PackageBooking");
 const Passenger = require("../models/Passenger");
 const TourSchedule = require("../models/TourSchedule");
-const { createNotification } = require("../utils/notificationHelper");
 const { buildSeatNumbers } = require("../utils/seatLayoutHelper");
 
 const BOOKING_STATUS = {
@@ -379,14 +378,6 @@ const packageBooking = async (req, res) => {
         total_amount: totalamount,
         seat_price_details: seatPriceDetails,
       });
-
-    await createNotification({
-      userId: customer_id,
-      title: "Booking Submitted",
-      message: "Booking submitted! Waiting for admin approval.",
-      type: "booking",
-      meta: { booking_id: savedBooking._id, tour_schedule_id },
-    });
   } catch (error) {
     console.error("Error creating booking:", error);
     res.status(500).json({ message: "Server error", error: error.message });
@@ -424,14 +415,6 @@ const confirmPackagePayment = async (req, res) => {
     booking.booking_status = BOOKING_STATUS.CONFIRMED;
     await booking.save();
 
-    await createNotification({
-      userId: booking.Custmer_id,
-      title: "Payment Successful",
-      message: "Payment successful! Booking confirmed.",
-      type: "payment",
-      meta: { booking_id: booking._id },
-    });
-
     return res.status(200).json({
       message: "Package payment confirmed",
       booking,
@@ -448,7 +431,12 @@ const getAllPackageBookings = async (req, res) => {
   try {
     const bookings = await PackageBooking.find()
       .populate({ path: "Package_id", select: "package_name price" })
-      .populate({ path: "Custmer_id", select: "first_name last_name email" });
+      .populate({ path: "Custmer_id", select: "first_name last_name email" })
+      .populate({
+        path: "tour_schedule_id",
+        select: "start_date end_date departure_status",
+      })
+      .sort({ createdAt: -1 });
     console.log("Bookings found:", bookings.length);
     if (bookings.length > 0) {
       console.log("First booking Package_id:", bookings[0].Package_id);
@@ -498,36 +486,6 @@ const updatePackageBookingStatus = async (req, res) => {
       update,
       { new: true }
     );
-
-    if (nextStatus === BOOKING_STATUS.APPROVED) {
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Booking Approved",
-        message: "Booking approved! Pay within 24 hours.",
-        type: "payment",
-        meta: { booking_id: booking._id, payment_deadline: booking.payment_deadline },
-      });
-    }
-
-    if (nextStatus === BOOKING_STATUS.REJECTED) {
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Booking Rejected",
-        message: "Your booking was rejected by admin.",
-        type: "booking",
-        meta: { booking_id: booking._id },
-      });
-    }
-
-    if (nextStatus === BOOKING_STATUS.CANCELLED) {
-      await createNotification({
-        userId: booking.Custmer_id,
-        title: "Booking Cancelled",
-        message: "Your booking was cancelled by admin.",
-        type: "booking",
-        meta: { booking_id: booking._id },
-      });
-    }
 
     if ([BOOKING_STATUS.REJECTED, BOOKING_STATUS.CANCELLED].includes(nextStatus) && booking?.tour_schedule_id) {
       const schedule = await TourSchedule.findById(booking.tour_schedule_id);

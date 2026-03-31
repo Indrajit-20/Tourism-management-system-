@@ -1,0 +1,198 @@
+.manage-package-bookings-page {
+  background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+  border: 1px solid #ccd9ed;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.manage-package-bookings-head {
+  margin-bottom: 14px;
+}
+
+.manage-package-bookings-title {
+  font-weight: 700;
+  color: #1e2b40;
+  margin-bottom: 4px;
+}
+
+.manage-package-bookings-subtitle {
+  color: #52647d;
+}
+
+.manage-package-bookings-card {
+  border: 1px solid #b8c9e6;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.manage-package-bookings-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.manage-package-bookings-count-item {
+  border: 1px solid #c8d7ee;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #f6f9ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-package-bookings-count-item span {
+  color: #42556f;
+  font-size: 0.9rem;
+}
+
+.manage-package-bookings-count-item strong {
+  color: #16263a;
+  font-size: 1.1rem;
+}
+
+.manage-package-bookings-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2d3d;
+}
+
+.manage-package-bookings-input {
+  min-height: 42px;
+  border: 1px solid #9eb6dc;
+  border-radius: 8px;
+}
+
+.manage-package-bookings-input:focus {
+  border-color: #4f79be;
+  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+}
+
+.manage-package-bookings-table-wrap {
+  border: 1px solid #a7bddf;
+  border-radius: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #fff;
+}
+
+.manage-package-bookings-table {
+  margin-bottom: 0;
+  min-width: 1650px;
+}
+
+.manage-package-bookings-table thead th {
+  border-color: #5f789f !important;
+  border-width: 1px !important;
+}
+
+.manage-package-bookings-table tbody td {
+  border-color: #b6c6dd !important;
+  border-width: 1px !important;
+  white-space: nowrap;
+}
+
+.booking-id-chip {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #173158;
+  background: #edf4ff;
+  border: 1px solid #b8cae8;
+  border-radius: 10px;
+  padding: 4px 8px;
+  user-select: text;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+}
+
+.status-chip-pending {
+  background: #fff5d6;
+  color: #8b6400;
+  border-color: #ffe59e;
+}
+
+.status-chip-approved {
+  background: #dff6ff;
+  color: #075d7a;
+  border-color: #a7e5ff;
+}
+
+.status-chip-confirmed {
+  background: #dff7e9;
+  color: #0d6a36;
+  border-color: #afe8c7;
+}
+
+.status-chip-rejected {
+  background: #ffe0df;
+  color: #8d1c18;
+  border-color: #ffb8b6;
+}
+
+.status-chip-cancelled,
+.status-chip-default {
+  background: #eceff3;
+  color: #475569;
+  border-color: #d5dbe4;
+}
+
+.package-bookings-approve-btn {
+  background: #1b8f4b;
+  border-color: #1b8f4b;
+  color: #fff;
+}
+
+.package-bookings-approve-btn:hover {
+  background: #16773f;
+  border-color: #16773f;
+  color: #fff;
+}
+
+.package-bookings-reject-btn {
+  background: #d13a3a;
+  border-color: #d13a3a;
+  color: #fff;
+}
+
+.package-bookings-reject-btn:hover {
+  background: #b02f2f;
+  border-color: #b02f2f;
+  color: #fff;
+}
+
+/* Seat Display Styles */
+.seats-container {
+  display: inline-block;
+  background-color: #06b6d4;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+@media (max-width: 992px) {
+  .manage-package-bookings-counts {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .manage-package-bookings-page {
+    padding: 12px;
+  }
+
+  .manage-package-bookings-counts {
+    grid-template-columns: 1fr;
+  }
+}

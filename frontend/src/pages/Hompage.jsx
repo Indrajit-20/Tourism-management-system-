@@ -4,23 +4,26 @@ import { Link } from "react-router-dom";
 import Packagecard from "../components/Packagecard";
 import ReviewsDisplay from "../components/ReviewsDisplay";
 
-const mapPackageFromDb = (pkg) => ({
+const mapPackageScheduleToCard = (pkg, schedule) => ({
+  cardId: schedule?._id,
   id: pkg?._id,
+  scheduleId: schedule?._id,
   package_name: pkg?.package_name,
   source_city: pkg?.source_city || pkg?.start || pkg?.source,
   destination: pkg?.destination || pkg?.destination_city,
-  start_date: pkg?.start_date,
-  end_date: pkg?.end_date,
+  start_date: schedule?.start_date,
+  end_date: schedule?.end_date,
   image_urls: pkg?.image_urls,
   image_url: pkg?.image_url,
-  price: pkg?.price,
+  price: schedule?.price ?? schedule?.price_per_person,
   duration: pkg?.duration,
-  transport: pkg?.bus_id?.bus_type
-    ? `${pkg.bus_id.bus_type}${pkg?.bus_id?.bus_name ? ` Bus` : ""}`
+  transport: schedule?.bus_id?.bus_type
+    ? `${schedule.bus_id.bus_type}${schedule?.bus_id?.bus_name ? ` Bus` : ""}`
     : "-",
-  seatBadgeText: pkg?.bus_id?.total_seats
-    ? `🔥 ${pkg.bus_id.total_seats} Seats`
-    : null,
+  seatBadgeText:
+    Number(schedule?.available_seats) > 0
+      ? `🔥 ${schedule.available_seats} Seats Left`
+      : null,
 });
 
 const Hompage = () => {
@@ -32,11 +35,41 @@ const Hompage = () => {
   const [trips, setTrips] = useState([]); // ✅ Available trips
   const [tripsLoading, setTripsLoading] = useState(false); // ✅ Loading state
 
-  // Fetch Packages
+  // Fetch only packages that have at least one open schedule.
   const fetchpkg = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/packages");
-      setpkg(res.data);
+      const packageRes = await axios.get("http://localhost:4000/api/packages");
+      const packages = Array.isArray(packageRes.data) ? packageRes.data : [];
+      const cards = [];
+
+      for (const packageItem of packages) {
+        try {
+          const scheduleRes = await axios.get(
+            `http://localhost:4000/api/tour-schedules/package/${packageItem._id}/departures`,
+          );
+          const departures = Array.isArray(scheduleRes.data)
+            ? scheduleRes.data
+            : [];
+
+          for (const dep of departures) {
+            if (Number(dep?.available_seats || 0) > 0) {
+              cards.push(mapPackageScheduleToCard(packageItem, dep));
+            }
+          }
+        } catch (scheduleError) {
+          console.error(
+            `Error fetching schedules for package ${packageItem._id}`,
+            scheduleError,
+          );
+        }
+      }
+
+      cards.sort(
+        (a, b) =>
+          new Date(a.start_date).getTime() - new Date(b.start_date).getTime(),
+      );
+
+      setpkg(cards);
     } catch (err) {
       console.error("Error fetching packages", err);
     }
@@ -256,12 +289,12 @@ const Hompage = () => {
           <div className="text-center">Loading Packages...</div>
         ) : (
           <div className="row">
-            {pkg.map((p) => {
-              const packageData = mapPackageFromDb(p);
+            {pkg.map((packageData) => {
               return (
-                <div className="col-md-4 mb-4" key={p._id}>
+                <div className="col-md-4 mb-4" key={packageData.cardId}>
                   <Packagecard
                     id={packageData.id}
+                    scheduleId={packageData.scheduleId}
                     source_city={packageData.source_city}
                     destination={packageData.destination}
                     start_date={packageData.start_date}
@@ -277,6 +310,13 @@ const Hompage = () => {
                 </div>
               );
             })}
+            {pkg.length === 0 && (
+              <div className="col-12">
+                <div className="alert alert-info text-center mb-0">
+                  No scheduled tour packages are available right now.
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>

@@ -1,0 +1,27 @@
+.bp-page {
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+  border: 1px solid #c9d8f0;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.bp-note {
+  color: #3b4f6a;
+  font-weight: 500;
+}
+
+.bp-card {
+  border: 1px solid #b8c9e6 !important;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.bp-boarding-box {
+  border: 1px solid #9eb6dc;
+  border-radius: 8px;
+  min-height: 42px;
+  padding: 10px 12px;
+  background: #f6f9ff;
+  color: #1f2d3d;
+  font-weight: 600;
+}

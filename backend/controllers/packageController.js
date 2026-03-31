@@ -4,6 +4,7 @@ const fs = require("fs/promises");
 const path = require("path");
 
 const packageUploadsDir = path.join(__dirname, "..", "uploads", "packages");
+const MAX_HOTELS_PER_PACKAGE = 6;
 
 const toPackageImagePath = (imageRef) => {
   if (!imageRef || typeof imageRef !== "string") return null;
@@ -105,21 +106,19 @@ const toArray = (value) => {
   return [];
 };
 
-//show package
 const getPackage = async (req, res) => {
   try {
-    const findpackage = await Packages.find()
+    const packageList = await Packages.find()
       .populate("hotels", "name location hotel_type state_id city_id status")
       .populate("tour_guide", "name designation");
 
-    const packageWithAvailability = await attachAvailableSeats(findpackage);
+    const packageWithAvailability = await attachAvailableSeats(packageList);
     res.status(200).json(packageWithAvailability);
   } catch (err) {
     res.status(500).json({ message: "Server Error" }, err);
   }
 };
 
-//find by id
 const packageById = async (req, res) => {
   try {
     const pkg = await Packages.findById(req.params.id)
@@ -136,36 +135,32 @@ const packageById = async (req, res) => {
   }
 };
 
-//add package
 const addPackage = async (req, res) => {
   try {
-    // Read form fields from request body.
     const {
       package_name,
       package_type,
       source_city,
       destination,
       duration,
-      image_urls, // New
+      image_urls,
       description,
       hotels,
-      tour_guide, // New
-      boarding_points, // New
+      tour_guide,
+      boarding_points,
       pickup_points,
-      sightseeing, // New
-      itinerary, // New
+      sightseeing,
+      itinerary,
       inclusive,
       exclusive,
       status,
     } = req.body;
 
-    // Keep one single pick-up list (boarding_points) for simplicity.
     const mergedBoardingPoints = toArray(boarding_points);
     if (!mergedBoardingPoints.length) {
       mergedBoardingPoints.push(...toArray(pickup_points));
     }
 
-    //check package exists or not
     const existingPackage = await Packages.findOne({
       package_name: package_name,
     });
@@ -173,12 +168,18 @@ const addPackage = async (req, res) => {
       return res.status(400).json({ message: "Package name already exists" });
     }
 
-    // Save uploaded image paths. Files are stored in backend/uploads/packages.
     const uploadedImages = (req.files || []).map(
       (file) => `packages/${file.filename}`
     );
 
-    const newpackage = new Packages({
+    const normalizedHotels = toArray(hotels);
+    if (normalizedHotels.length > MAX_HOTELS_PER_PACKAGE) {
+      return res.status(400).json({
+        message: `Maximum ${MAX_HOTELS_PER_PACKAGE} hotels allowed per package`,
+      });
+    }
+
+    const newPackage = new Packages({
       package_name,
       package_type,
       source_city: source_city || "Ahmedabad",
@@ -186,7 +187,7 @@ const addPackage = async (req, res) => {
       duration,
       image_urls: uploadedImages.length ? uploadedImages : toArray(image_urls),
       description,
-      hotels: toArray(hotels),
+      hotels: normalizedHotels,
       tour_guide,
       boarding_points: mergedBoardingPoints,
       pickup_points: mergedBoardingPoints,
@@ -196,19 +197,17 @@ const addPackage = async (req, res) => {
       exclusive,
       status,
     });
-    const saved = await newpackage.save();
+    const saved = await newPackage.save();
     res.status(201).json({
       message: "package added succesfully",
       package_details: saved,
     });
   } catch (err) {
     console.error("Add package error:", err);
-    // Send back the actual error message to help debugging (development only)
     res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 
-//update package
 const updatePackage = async (req, res) => {
   const { id } = req.params;
   const uploadedImages = (req.files || []).map(
@@ -224,16 +223,25 @@ const updatePackage = async (req, res) => {
       return res.status(404).json({ message: "Package not found" });
     }
 
-    // Keep one list for boarding/pick-up points during update as well.
     const mergedBoardingPoints = toArray(req.body.boarding_points);
     if (!mergedBoardingPoints.length) {
       mergedBoardingPoints.push(...toArray(req.body.pickup_points));
     }
 
+    const normalizedHotels = toArray(req.body.hotels);
+    if (normalizedHotels.length > MAX_HOTELS_PER_PACKAGE) {
+      if (uploadedImages.length) {
+        await deletePackageImages(uploadedImages);
+      }
+      return res.status(400).json({
+        message: `Maximum ${MAX_HOTELS_PER_PACKAGE} hotels allowed per package`,
+      });
+    }
+
     const payload = {
       ...req.body,
       source_city: req.body.source_city || "Ahmedabad",
-      hotels: toArray(req.body.hotels),
+      hotels: normalizedHotels,
       boarding_points: mergedBoardingPoints,
       pickup_points: mergedBoardingPoints,
       sightseeing: toArray(req.body.sightseeing),

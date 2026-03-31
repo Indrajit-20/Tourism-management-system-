@@ -13,7 +13,6 @@ const busBookingSchema = new mongoose.Schema(
       required: true,
     },
 
-    
     customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
@@ -28,14 +27,14 @@ const busBookingSchema = new mongoose.Schema(
     // Store price per seat as array matching seat_numbers
     seat_prices: { type: [Number], default: [] },
 
-    travellers:     { type: Number, required: true },
+    travellers: { type: Number, required: true },
     price_per_seat: { type: Number, required: true }, // average price
-    total_amount:   { type: Number, required: true },
+    total_amount: { type: Number, required: true },
 
     booking_status: {
       type: String,
-      enum: ["Pending", "Confirmed", "Cancelled"],
-      default: "Pending",
+      enum: ["Confirmed", "Cancelled"],
+      default: "Confirmed",
     },
 
     cancellation_reason: {

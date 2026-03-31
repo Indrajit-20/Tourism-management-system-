@@ -36,7 +36,7 @@
 
 .manage-bus-bookings-counts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
   gap: 12px;
 }
 
@@ -70,7 +70,7 @@
 
 .manage-bus-bookings-table {
   margin-bottom: 0;
-  min-width: 1500px;
+  min-width: 1700px;
 }
 
 .manage-bus-bookings-table thead th {
@@ -80,6 +80,11 @@
 .manage-bus-bookings-table tbody td {
   border-color: #c3cfdf !important;
   white-space: nowrap;
+}
+
+.manage-bus-bookings-id {
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.8rem;
 }
 
 @media (max-width: 768px) {

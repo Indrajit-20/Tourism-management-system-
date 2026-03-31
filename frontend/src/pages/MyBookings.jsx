@@ -73,8 +73,6 @@ const MyBookings = () => {
   const [filter, setFilter] = useState("All"); // filter by status
   const [bookingTypeFilter, setBookingTypeFilter] = useState("All");
   const [reviewDrafts, setReviewDrafts] = useState({});
-  const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
   const normalizeStatus = (value) => String(value || "").toLowerCase();
 
@@ -97,44 +95,10 @@ const MyBookings = () => {
 
       setBookings(busRes.data || []);
       setPackageBookings(packageRes.data || []);
-
-      const notificationRes = await axios.get(`${API}/api/notifications/my`, {
-        headers,
-      });
-      setNotifications(notificationRes.data?.notifications || []);
-      setUnreadCount(Number(notificationRes.data?.unread_count || 0));
     } catch (err) {
       console.error("Error fetching bookings", err);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const markNotificationRead = async (notificationId) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `${API}/api/notifications/${notificationId}/read`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      fetchMyBookings();
-    } catch (err) {
-      console.error("Error marking notification read", err);
-    }
-  };
-
-  const markAllNotificationsRead = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        `${API}/api/notifications/mark-all-read`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      fetchMyBookings();
-    } catch (err) {
-      console.error("Error marking all notifications read", err);
     }
   };
 
@@ -485,45 +449,6 @@ const MyBookings = () => {
   return (
     <div className="container mt-4">
       <h2 className="fw-bold mb-3">My Bookings</h2>
-
-      {notifications.length > 0 && (
-        <div className="card border-warning mb-3">
-          <div className="card-header d-flex justify-content-between align-items-center bg-warning-subtle">
-            <strong>
-              Notifications {unreadCount > 0 ? `(${unreadCount} unread)` : ""}
-            </strong>
-            {unreadCount > 0 && (
-              <button
-                className="btn btn-sm btn-outline-dark"
-                onClick={markAllNotificationsRead}
-              >
-                Mark all as read
-              </button>
-            )}
-          </div>
-          <div className="list-group list-group-flush">
-            {notifications.slice(0, 5).map((item) => (
-              <div
-                key={item._id}
-                className="list-group-item d-flex justify-content-between align-items-start"
-              >
-                <div>
-                  <div className="fw-semibold">{item.title}</div>
-                  <div className="small text-muted">{item.message}</div>
-                </div>
-                {!item.is_read && (
-                  <button
-                    className="btn btn-sm btn-outline-secondary"
-                    onClick={() => markNotificationRead(item._id)}
-                  >
-                    Read
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="d-flex gap-2 mb-3 flex-wrap">
         {["All", "Bus", "Package"].map((type) => (

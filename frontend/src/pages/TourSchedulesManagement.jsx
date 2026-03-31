@@ -93,6 +93,7 @@ const TourSchedulesManagement = () => {
                 <ManageTourSchedules
                   packageId={selectedPackage._id}
                   packageName={selectedPackage.package_name}
+                  packageDuration={selectedPackage.duration}
                 />
               </>
             ) : (

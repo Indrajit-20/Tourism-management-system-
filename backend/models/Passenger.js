@@ -29,6 +29,13 @@ const PassengerSchema = new mongoose.Schema(
     },
     aadhaar_number: {
       type: String,
+      validate: {
+        validator: function (value) {
+          if (!value) return true;
+          return /^\d{12}$/.test(String(value));
+        },
+        message: "Aadhaar number must be exactly 12 digits",
+      },
     },
     aadhaar_photo: {
       type: String,

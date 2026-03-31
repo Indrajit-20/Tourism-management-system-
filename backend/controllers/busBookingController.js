@@ -2,6 +2,31 @@ const BusTrip = require("../models/BusTrip");
 const BusTicketBooking = require("../models/BusTicketBooking");
 const Custmer = require("../models/Custmer");
 
+const parseTimeToMinutes = (value) => {
+  const text = String(value || "").trim().toUpperCase();
+  if (!text) return null;
+
+  const hhmm = text.match(/^(\d{1,2}):(\d{2})$/);
+  if (hhmm) {
+    const h = Number(hhmm[1]);
+    const m = Number(hhmm[2]);
+    if (h >= 0 && h <= 23 && m >= 0 && m <= 59) return h * 60 + m;
+    return null;
+  }
+
+  const ampm = text.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
+  if (!ampm) return null;
+
+  let h = Number(ampm[1]);
+  const m = Number(ampm[2]);
+  const meridiem = ampm[3];
+
+  if (h < 1 || h > 12 || m < 0 || m > 59) return null;
+  h = h % 12;
+  if (meridiem === "PM") h += 12;
+  return h * 60 + m;
+};
+
 // 1. BOOK BUS TICKET (User)
 const bookBusTicket = async (req, res) => {
   try {
@@ -18,6 +43,23 @@ const bookBusTicket = async (req, res) => {
       populate: { path: "route_id" },
     });
     if (!trip) return res.status(404).json({ message: "Trip not found" });
+
+    // Block booking when today's departure time has already passed.
+    const scheduleDeparture = trip.schedule_id?.departure_time;
+    if (scheduleDeparture) {
+      const now = new Date();
+      const tripDate = new Date(trip.trip_date);
+      const isToday = now.toDateString() === tripDate.toDateString();
+      if (isToday) {
+        const departureMinutes = parseTimeToMinutes(scheduleDeparture);
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        if (departureMinutes !== null && nowMinutes >= departureMinutes) {
+          return res.status(400).json({
+            message: "Booking is closed for this trip because departure time has passed.",
+          });
+        }
+      }
+    }
 
     // Validate seats exist
     const seatMap = new Map(trip.seats.map((s) => [s.seat_number, s]));
@@ -113,9 +155,10 @@ const getAllBookings = async (req, res) => {
           { path: "bus_id", select: "bus_number bus_type" },
           {
             path: "schedule_id",
+            select: "departure_time arrival_time route_id",
             populate: {
               path: "route_id",
-              select: "boarding_from board_point destination drop_point",
+              select: "boarding_from board_point destination drop_point price_per_seat",
             },
           },
         ],
@@ -128,11 +171,11 @@ const getAllBookings = async (req, res) => {
   }
 };
 
-// 3. APPROVE OR REJECT BOOKING (Admin)
+// 3. UPDATE BOOKING STATUS (Admin)
 
 const updateBookingStatus = async (req, res) => {
   try {
-    const { status } = req.body; // "Approved" or "Rejected"
+    const { status, reason } = req.body; // "Cancelled"
 
     const booking = await BusTicketBooking.findById(req.params.id)
       .populate("customer_id", "first_name last_name email")
@@ -146,26 +189,20 @@ const updateBookingStatus = async (req, res) => {
 
     if (!booking) return res.status(404).json({ message: "Booking not found" });
 
-    if (status === "Approved") {
-      //  Set 30 minute payment deadline
-      const deadline = new Date();
-      deadline.setHours(deadline.getHours() + 24);
+    if (status === "Cancelled") {
+      if (!String(reason || "").trim()) {
+        return res.status(400).json({
+          message: "Cancellation reason is required.",
+        });
+      }
 
-      booking.booking_status = "Approved";
-      booking.payment_deadline = deadline;
+      booking.booking_status = "Cancelled";
+      booking.payment_status =
+        booking.payment_status === "Paid" ? "Refunded" : "Failed";
+      booking.cancellation_reason = String(reason).trim();
       await booking.save();
 
-      return res.status(200).json({
-        message: "Booking pending admin approved than do payment",
-        booking,
-      });
-    }
-
-    if (status === "Rejected") {
-      booking.booking_status = "Rejected";
-      await booking.save();
-
-      // Release seats back when rejected
+      // Release seats back when cancelled
       const trip = await require("../models/BusTrip").findById(
         booking.trip_id._id
       );
@@ -178,30 +215,18 @@ const updateBookingStatus = async (req, res) => {
         await trip.save();
       }
 
-      // Send rejection email
-      if (customerEmail) {
-        await sendBookingRejectedEmail(
-          customerEmail,
-          customerName,
-          booking,
-          routeLabel
-        );
-      }
-
       return res
         .status(200)
-        .json({ message: "Booking rejected. Seats released.", booking });
+        .json({ message: "Booking cancelled. Seats released.", booking });
     }
 
-    res
-      .status(400)
-      .json({ message: "Invalid status. Use Approved or Rejected." });
+    res.status(400).json({ message: "Invalid status. Use Cancelled." });
   } catch (error) {
     res.status(500).json({ message: "Error updating status", error });
   }
 };
 
-// 4. CONFIRM PAYMENT (User pays after approval)
+// 4. CONFIRM PAYMENT (User pays after booking)
 
 const confirmPayment = async (req, res) => {
   try {
@@ -219,7 +244,7 @@ const confirmPayment = async (req, res) => {
 
     if (!booking) return res.status(404).json({ message: "Booking not found" });
 
-    // ✅ NEW: Booking should be "Confirmed" (not "Approved")
+    // Booking must be in Confirmed state before payment confirmation.
     if (booking.booking_status !== "Confirmed") {
       return res.status(400).json({
         message: "Invalid booking status. Booking must be in Confirmed state.",
@@ -271,9 +296,9 @@ const autoCancelExpiredBookings = async () => {
   try {
     const now = new Date();
 
-    // Find all approved bookings where deadline has passed
+    // Find all confirmed bookings where deadline has passed
     const expiredBookings = await BusTicketBooking.find({
-      booking_status: "Approved",
+      booking_status: "Confirmed",
       payment_status: "Pending",
       payment_deadline: { $lt: now },
     });
@@ -282,6 +307,7 @@ const autoCancelExpiredBookings = async () => {
       // Cancel booking
       booking.booking_status = "Cancelled";
       booking.payment_status = "Failed";
+      booking.cancellation_reason = "Payment deadline expired";
       await booking.save();
 
       // Release seats back
@@ -317,7 +343,8 @@ const getBookedSeats = async (req, res) => {
 
     const bookings = await BusTicketBooking.find({
       trip_id,
-      booking_status: { $nin: ["Rejected", "Cancelled"] },
+      booking_status: { $ne: "Cancelled" },
+      payment_status: "Paid",
     });
 
     const bookedSeats = bookings.flatMap((b) => b.seat_numbers);
@@ -373,20 +400,23 @@ const cancelBooking = async (req, res) => {
         .json({ message: "Unauthorized: Not your booking" });
     }
 
-    // Only Pending, Approved, or Confirmed bookings can be cancelled
+    // Only Pending or Confirmed bookings can be cancelled
     if (
       booking.booking_status !== "Pending" &&
-      booking.booking_status !== "Approved" &&
       booking.booking_status !== "Confirmed"
     ) {
       return res.status(400).json({
-        message: `Cannot cancel ${booking.booking_status} booking. Only Pending, Approved, or Confirmed bookings can be cancelled.`,
+        message: `Cannot cancel ${booking.booking_status} booking. Only Pending or Confirmed bookings can be cancelled.`,
       });
     }
 
+    const reason = String(req.body?.reason || "Cancelled by customer").trim();
+
     // Cancel the booking
     booking.booking_status = "Cancelled";
-    booking.payment_status = "Refunded"; // Mark as refunded
+    booking.payment_status =
+      booking.payment_status === "Paid" ? "Refunded" : "Failed";
+    booking.cancellation_reason = reason;
     await booking.save();
 
     // Release seats back to available

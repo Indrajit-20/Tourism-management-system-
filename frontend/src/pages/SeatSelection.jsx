@@ -110,6 +110,13 @@ const SeatSelection = () => {
     return total;
   };
 
+  const formatDateDMY = (value) => {
+    if (!value) return "-";
+    const dateObj = new Date(value);
+    if (Number.isNaN(dateObj.getTime())) return String(value);
+    return dateObj.toLocaleDateString("en-GB");
+  };
+
   // Main booking + payment handler
   const handleSubmitRequest = async () => {
     const token = localStorage.getItem("token");
@@ -280,9 +287,16 @@ const SeatSelection = () => {
       <div className="text-center mb-4">
         <h3 className="fw-bold">Select {isSleeper ? "Berths" : "Seats"}</h3>
         <p className="text-muted mb-2">
-          {route.board_point || route.boarding_from} →{" "}
-          {route.drop_point || route.destination} · {date}
+          {route.boarding_from} → {route.destination} · {formatDateDMY(date)}
         </p>
+        <small className="text-muted d-block mb-2">
+          Boarding:{" "}
+          {trip?.boarding_points?.[0] ||
+            route.board_point ||
+            route.boarding_from}{" "}
+          | Drop:{" "}
+          {trip?.drop_points?.[0] || route.drop_point || route.destination}
+        </small>
         <span
           className={`badge me-2 ${
             isSleeper
@@ -355,14 +369,26 @@ const SeatSelection = () => {
             <div className="mb-2">
               <small className="text-muted d-block">Route</small>
               <strong>
-                {route.board_point || route.boarding_from} →{" "}
-                {route.drop_point || route.destination}
+                {route.boarding_from} → {route.destination}
+              </strong>
+            </div>
+
+            <div className="mb-2">
+              <small className="text-muted d-block">Boarding / Drop</small>
+              <strong>
+                {trip?.boarding_points?.[0] ||
+                  route.board_point ||
+                  route.boarding_from}{" "}
+                →{" "}
+                {trip?.drop_points?.[0] ||
+                  route.drop_point ||
+                  route.destination}
               </strong>
             </div>
 
             <div className="mb-2">
               <small className="text-muted d-block">Travel Date</small>
-              <strong>{date}</strong>
+              <strong>{formatDateDMY(date)}</strong>
             </div>
 
             <div className="mb-3 pb-2 border-bottom">

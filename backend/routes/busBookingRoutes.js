@@ -29,7 +29,7 @@ router.get("/my-bookings", authMiddleware, getMyBookings);
 // 6. Get All Bookings (Admin Only)
 router.get("/all", authMiddleware, isadmin, getAllBookings);
 
-// 7. Approve/Reject Booking (Admin Only)
+// 7. Update Booking Status (Admin Only: Cancelled)
 router.put("/status/:id", authMiddleware, isadmin, updateBookingStatus);
 
 // 8. Get Booked Seats (Public)

@@ -93,14 +93,26 @@ const BookBus = () => {
     return `${h}h ${m > 0 ? m + "m" : ""}`;
   };
 
+  const isSameDate = (dateA, dateB) =>
+    new Date(dateA).toDateString() === new Date(dateB).toDateString();
+
+  const isDeparturePassedToday = (departureTime, selectedDate) => {
+    if (!selectedDate) return false;
+    const now = new Date();
+    const chosen = new Date(selectedDate);
+    if (!isSameDate(now, chosen)) return false;
+
+    const depMinutes = toMinutes(departureTime);
+    if (depMinutes === null) return false;
+
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    return nowMinutes >= depMinutes;
+  };
+
   // ✅ KEPT: Filter routes based on search
   const filteredRoutes = routes.filter((route) => {
-    const from = String(
-      route.board_point || route.boarding_from || "",
-    ).toLowerCase();
-    const to = String(
-      route.drop_point || route.destination || "",
-    ).toLowerCase();
+    const from = String(route.boarding_from || "").toLowerCase();
+    const to = String(route.destination || "").toLowerCase();
     const matchFrom = from.includes(searchFrom.toLowerCase());
     const matchTo = to.includes(searchTo.toLowerCase());
     return matchFrom && matchTo;
@@ -124,6 +136,13 @@ const BookBus = () => {
     const selectedDate = bookingDetails.date;
     if (selectedDate < minDate) {
       alert("Please select today or a future date.");
+      return;
+    }
+
+    if (isDeparturePassedToday(selectedRoute.departure_time, selectedDate)) {
+      alert(
+        "This route departure time has already passed for today. Please choose another date.",
+      );
       return;
     }
 
@@ -287,7 +306,7 @@ const BookBus = () => {
                           {to12HourDisplay(route.departure_time)}
                         </div>
                         <small className="text-muted">
-                          {route.board_point || route.boarding_from}
+                          {route.boarding_from}
                         </small>
                       </div>
 
@@ -313,7 +332,7 @@ const BookBus = () => {
                           {to12HourDisplay(route.arrival_time)}
                         </div>
                         <small className="text-muted">
-                          {route.drop_point || route.destination}
+                          {route.destination}
                         </small>
                       </div>
                     </div>
@@ -359,6 +378,10 @@ const BookBus = () => {
                           ? `⚠️ Only ${info.available} seats left!`
                           : `✅ ${info.available} Seats Left`}
                     </div>
+                    <small className="text-muted d-block mt-2 text-center">
+                      Boarding: {route.board_point || route.boarding_from} |
+                      Drop: {route.drop_point || route.destination}
+                    </small>
                   </div>
                 </div>
 

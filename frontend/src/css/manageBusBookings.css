@@ -1,0 +1,89 @@
+.manage-bus-bookings-page {
+  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
+  border: 1px solid #c9d8f0;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.manage-bus-bookings-title {
+  font-weight: 700;
+  color: #1d2a40;
+  margin-bottom: 14px;
+}
+
+.manage-bus-bookings-card {
+  border: 1px solid #b8c9e6 !important;
+  border-radius: 12px;
+  background-color: #ffffff;
+}
+
+.manage-bus-bookings-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2d3d;
+}
+
+.manage-bus-bookings-input {
+  min-height: 42px;
+  border: 1px solid #9eb6dc;
+  border-radius: 8px;
+}
+
+.manage-bus-bookings-input:focus {
+  border-color: #4f79be;
+  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+}
+
+.manage-bus-bookings-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.manage-bus-bookings-count-item {
+  border: 1px solid #c8d7ee;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #f6f9ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.manage-bus-bookings-count-item span {
+  color: #42556f;
+  font-size: 0.9rem;
+}
+
+.manage-bus-bookings-count-item strong {
+  color: #16263a;
+  font-size: 1.1rem;
+}
+
+.manage-bus-bookings-table-wrap {
+  border: 1px solid #a7bddf;
+  border-radius: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #fff;
+}
+
+.manage-bus-bookings-table {
+  margin-bottom: 0;
+  min-width: 1500px;
+}
+
+.manage-bus-bookings-table thead th {
+  border-color: #6f85a8 !important;
+}
+
+.manage-bus-bookings-table tbody td {
+  border-color: #c3cfdf !important;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .manage-bus-bookings-counts {
+    grid-template-columns: 1fr;
+  }
+}

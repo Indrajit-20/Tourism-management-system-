@@ -34,8 +34,14 @@ const busBookingSchema = new mongoose.Schema(
 
     booking_status: {
       type: String,
-      enum: ["Pending", "Approved", "Rejected", "Confirmed", "Cancelled"],
+      enum: ["Pending", "Confirmed", "Cancelled"],
       default: "Pending",
+    },
+
+    cancellation_reason: {
+      type: String,
+      default: null,
+      trim: true,
     },
 
     payment_status: {

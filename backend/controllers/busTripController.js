@@ -3,6 +3,31 @@ const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
 const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
+const parseTimeToMinutes = (value) => {
+  const text = String(value || "").trim().toUpperCase();
+  if (!text) return null;
+
+  const hhmm = text.match(/^(\d{1,2}):(\d{2})$/);
+  if (hhmm) {
+    const h = Number(hhmm[1]);
+    const m = Number(hhmm[2]);
+    if (h >= 0 && h <= 23 && m >= 0 && m <= 59) return h * 60 + m;
+    return null;
+  }
+
+  const ampm = text.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/);
+  if (!ampm) return null;
+
+  let h = Number(ampm[1]);
+  const m = Number(ampm[2]);
+  const meridiem = ampm[3];
+
+  if (h < 1 || h > 12 || m < 0 || m > 59) return null;
+  h = h % 12;
+  if (meridiem === "PM") h += 12;
+  return h * 60 + m;
+};
+
 // HELPER: Does this schedule run on this date?
 
 const scheduleRunsOnDate = (schedule, date) => {
@@ -63,6 +88,7 @@ const autoGenerateTrips = async (schedule, bus) => {
       driver_id: schedule.driver_id || bus.driver_id,
       trip_date: tripDate,
       boarding_points: schedule.boarding_points || [],
+      drop_points: schedule.drop_points || [],
       seats: buildSeatLayout({
         totalSeats: bus.total_seats,
         layoutType: bus.layout_type,
@@ -122,6 +148,7 @@ const createTrip = async (req, res) => {
       driver_id: driver_id || schedule.driver_id || bus.driver_id,
       trip_date,
       boarding_points: boarding_points || schedule.boarding_points || [],
+      drop_points: schedule.drop_points || [],
       seats: buildSeatLayout({
         totalSeats: bus.total_seats,
         layoutType: bus.layout_type,
@@ -181,6 +208,17 @@ const getTrips = async (req, res) => {
 
       const schedule = matching[0];
 
+      // If selected date is today and departure time is already passed, no booking should be allowed.
+      const now = new Date();
+      const isToday = tripDate.toDateString() === now.toDateString();
+      if (isToday) {
+        const departureMinutes = parseTimeToMinutes(schedule.departure_time);
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        if (departureMinutes !== null && nowMinutes >= departureMinutes) {
+          return res.status(200).json([]);
+        }
+      }
+
       // Check if trip already exists
       const existing = await BusTrip.findOne({
         schedule_id: schedule._id,
@@ -203,6 +241,7 @@ const getTrips = async (req, res) => {
         driver_id: schedule.driver_id || bus.driver_id,
         trip_date: tripDate,
         boarding_points: schedule.boarding_points || [],
+        drop_points: schedule.drop_points || [],
         seats: buildSeatLayout({
           totalSeats: bus.total_seats,
           layoutType: bus.layout_type,

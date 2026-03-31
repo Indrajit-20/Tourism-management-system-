@@ -156,9 +156,15 @@ const Hompage = () => {
           <div className="row align-items-center mb-4">
             <div className="col-md-6">
               <h2 className="display-6 fw-bold mb-0">🚍 Bus Routes</h2>
-              <p className="text-muted">
-                Top destinations
-              </p>
+              <p className="text-muted">Top destinations</p>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <Link
+                to="/book-bus"
+                className="btn btn-link text-primary fw-bold text-decoration-none p-0"
+              >
+                See All Tickets <i className="bi bi-chevron-right"></i>
+              </Link>
             </div>
           </div>
 
@@ -233,7 +239,7 @@ const Hompage = () => {
         {/* --- TOUR PACKAGES SECTION --- */}
         <div className="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
           <div>
-            <h2 className="display-6 fw-bold mb-0">🌴  Tour Packages</h2>
+            <h2 className="display-6 fw-bold mb-0">🌴 Tour Packages</h2>
             <p className="text-muted mb-0">
               Unforgettable experiences curated just for you
             </p>

@@ -38,6 +38,9 @@ const BusTripSchema = new mongoose.Schema(
 		// Optional boarding points for this trip (can override template)
 		boarding_points: [String],
 
+		// Optional drop points for this trip (can override template)
+		drop_points: [String],
+
 		// Optional seat layout/pricing for this trip
 		seats: [
 			{

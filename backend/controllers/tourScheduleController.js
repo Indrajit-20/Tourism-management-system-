@@ -443,6 +443,7 @@ const updateTourDeparture = async (req, res) => {
       departure_time,
       notes,
       departure_status,
+      allow_late_bookings,
     } = req.body;
 
     const departure = await TourSchedule.findById(id);
@@ -541,6 +542,7 @@ const updateTourDeparture = async (req, res) => {
     }
     if (isDraftOrOpen && bus_id) departure.bus_id = bus_id;
     if (typeof notes === "string") departure.notes = notes;
+    if (typeof allow_late_bookings === "boolean") departure.allow_late_bookings = allow_late_bookings;
     if (departure_status && [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)) {
       departure.departure_status = departure_status;
     }

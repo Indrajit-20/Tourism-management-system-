@@ -16,6 +16,7 @@ const stateRoutes = require("./routes/stateRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const homeImageRoutes = require("./routes/homeImageRoutes");
 const cron = require("node-cron");
 const {
   autoCancelExpiredBookings,
@@ -113,6 +114,9 @@ app.use("/api/refunds", refundRoutes);
 
 // Invoice routes
 app.use("/api/invoice", invoiceRoutes);
+
+// Home hero images
+app.use("/api/home-images", homeImageRoutes);
 
 // ✅ NEW: Ticket routes (Download tickets)
 app.use("/api/tickets", ticketRoutes);

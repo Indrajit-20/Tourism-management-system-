@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { to12HourDisplay, toMinutes } from "../utils/timeFormat";
+import SearchFilterContainer from "../components/SearchFilterContainer";
 
 const BookBus = () => {
   const [routes, setRoutes] = useState([]);
@@ -174,48 +175,39 @@ const BookBus = () => {
     <div className="container mt-5">
       <h2 className="text-center mb-4">Available Bus Routes</h2>
 
-      {/* ✅ KEPT: Search filter */}
-      <div className="card p-3 mb-4 shadow-sm">
+      <SearchFilterContainer
+        title="Search Bus Tickets"
+        subtitle="Filter routes by boarding and destination"
+        resultText={`Showing ${filteredRoutes.length} of ${routes.length} routes`}
+        onClear={() => {
+          setSearchFrom("");
+          setSearchTo("");
+        }}
+        clearDisabled={!searchFrom && !searchTo}
+      >
         <div className="row g-2 align-items-end">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label className="form-label fw-bold mb-1">From</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control sfc-input"
               placeholder="e.g. Ahmedabad"
               value={searchFrom}
               onChange={(e) => setSearchFrom(e.target.value)}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label className="form-label fw-bold mb-1">To</label>
             <input
               type="text"
-              className="form-control"
+              className="form-control sfc-input"
               placeholder="e.g. Rajkot"
               value={searchTo}
               onChange={(e) => setSearchTo(e.target.value)}
             />
           </div>
-          <div className="col-md-2">
-            <button
-              className="btn btn-outline-secondary w-100"
-              onClick={() => {
-                setSearchFrom("");
-                setSearchTo("");
-              }}
-            >
-              ✕ Clear
-            </button>
-          </div>
         </div>
-        {(searchFrom || searchTo) && (
-          <p className="text-muted mt-2 mb-0 small">
-            Showing <strong>{filteredRoutes.length}</strong> of{" "}
-            <strong>{routes.length}</strong> routes
-          </p>
-        )}
-      </div>
+      </SearchFilterContainer>
 
       {/* ✅ KEPT: Schedule note when route selected */}
       {selectedRoute && (

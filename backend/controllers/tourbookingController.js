@@ -194,9 +194,13 @@ const packageBooking = async (req, res) => {
       return res.status(400).json({ message: "Travel date must be in the future" });
     }
 
-    if (daysBeforeTravel < 3) {
-      return res.status(400).json({ message: "Booking must be made at least 3 days before departure" });
+    // Fixed booking window: users can book until 1 day before departure.
+    if (daysBeforeTravel < 1) {
+      return res.status(400).json({
+        message: "Booking must be made at least 1 day before departure",
+      });
     }
+    
     if (daysBeforeTravel > 183) {
       return res.status(400).json({ message: "Cannot book more than 6 months in advance" });
     }
@@ -260,20 +264,6 @@ const packageBooking = async (req, res) => {
     if (invalidPassengers.length) {
       return res.status(400).json({
         message: "Each passenger must have valid name, age (1-120), and gender",
-      });
-    }
-
-    const leadPassenger = passengers[0] || {};
-    const aadhaarNumber = String(leadPassenger.aadhaar_number || "").trim();
-    if (!/^\d{12}$/.test(aadhaarNumber)) {
-      return res.status(400).json({
-        message: "Lead passenger aadhaar_number must be exactly 12 digits",
-      });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({
-        message: "Lead passenger aadhaar_photo is required (JPG/PNG, max 2MB)",
       });
     }
 
@@ -364,8 +354,6 @@ const packageBooking = async (req, res) => {
         age: person.age,
         gender: person.gender,
         is_lead: isLead,
-        aadhaar_number: isLead ? String(person.aadhaar_number || "").trim() : undefined,
-        aadhaar_photo: isLead ? `aadhaar/${req.file.filename}` : undefined,
       };
     });
     await Passenger.insertMany(passengerlist);

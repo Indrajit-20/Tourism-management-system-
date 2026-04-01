@@ -44,7 +44,6 @@ const BookPackage = () => {
   );
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-  const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
 
   const [passengers, setPassengers] = useState([]);
 
@@ -99,15 +98,6 @@ const BookPackage = () => {
   const handlePassengerChange = (index, field, value) => {
     const updated = [...passengers];
 
-    if (field === "aadhaar_number") {
-      const digitsOnly = String(value || "")
-        .replace(/\D/g, "")
-        .slice(0, 12);
-      updated[index][field] = digitsOnly;
-      setPassengers(updated);
-      return;
-    }
-
     if (field === "name") {
       const trimmed = String(value || "");
       if (trimmed.length > 60) {
@@ -159,17 +149,6 @@ const BookPackage = () => {
       return alert("Boarding point is not available for this package.");
     }
 
-    const leadPassenger = passengers[0] || {};
-    if (!/^\d{12}$/.test(String(leadPassenger.aadhaar_number || "").trim())) {
-      return alert("Lead passenger Aadhaar number must be exactly 12 digits.");
-    }
-
-    if (!aadhaarPhoto) {
-      return alert(
-        "Lead passenger Aadhaar photo is required (JPG/PNG, max 2MB).",
-      );
-    }
-
     const invalidPassenger = passengers.find((person) => {
       const name = String(person?.name || "");
       const age = person?.age;
@@ -190,19 +169,18 @@ const BookPackage = () => {
     setSubmitting(true);
 
     try {
-      const payload = new FormData();
-      payload.append("package_id", id);
-      payload.append("tour_schedule_id", selectedDeparture._id);
-      payload.append("travellers", String(passengers.length));
-      payload.append("pickup_location", boardingPoint);
-      payload.append("passengers", JSON.stringify(passengers));
-      payload.append("seat_numbers", JSON.stringify(selectedSeats));
-      payload.append("aadhaar_photo", aadhaarPhoto);
+      const payload = {
+        package_id: id,
+        tour_schedule_id: selectedDeparture._id,
+        travellers: String(passengers.length),
+        pickup_location: boardingPoint,
+        passengers,
+        seat_numbers: selectedSeats,
+      };
 
       await axios.post("http://localhost:4000/api/bookings/book", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -329,12 +307,6 @@ const BookPackage = () => {
                   </span>
                 </div>
 
-                {index === 0 && (
-                  <div className="alert alert-info py-2">
-                    Lead passenger must provide Aadhaar details.
-                  </div>
-                )}
-
                 <div className="row">
                   <div className="col-md-6 mb-2">
                     <input
@@ -376,42 +348,6 @@ const BookPackage = () => {
                       <option value="Other">Other</option>
                     </select>
                   </div>
-
-                  {index === 0 && (
-                    <>
-                      <div className="col-md-6 mb-2">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Lead Aadhaar Number (12 digits)"
-                          value={person.aadhaar_number || ""}
-                          onChange={(e) =>
-                            handlePassengerChange(
-                              index,
-                              "aadhaar_number",
-                              e.target.value,
-                            )
-                          }
-                          inputMode="numeric"
-                          pattern="\d{12}"
-                          minLength={12}
-                          maxLength={12}
-                          required
-                        />
-                      </div>
-                      <div className="col-md-6 mb-2">
-                        <input
-                          type="file"
-                          className="form-control"
-                          accept="image/jpeg,image/png"
-                          onChange={(e) =>
-                            setAadhaarPhoto(e.target.files?.[0] || null)
-                          }
-                          required
-                        />
-                      </div>
-                    </>
-                  )}
                 </div>
               </div>
             ))}

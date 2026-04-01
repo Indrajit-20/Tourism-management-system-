@@ -1,0 +1,250 @@
+.hp-package-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.hp-section-subtitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.hp-section-subtitle::after {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1c66ff 0%, #0f172a 100%);
+}
+
+.hp-bus-section {
+  border-bottom: 1px solid #b9c7df;
+  padding-bottom: 26px;
+  margin-bottom: 22px;
+}
+
+.hp-section-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(15, 23, 42, 0.38);
+}
+
+.hp-section-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1c66ff 0%, #0f172a 100%);
+}
+
+.hp-section-divider {
+  height: 1px;
+  margin: 8px 0 28px;
+  background: linear-gradient(90deg, transparent 0%, #9fb3d7 14%, #0f172a 50%, #9fb3d7 86%, transparent 100%);
+}
+
+.hp-bus-track-shell {
+  position: relative;
+}
+
+.hp-bus-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 4px 44px;
+}
+
+.hp-bus-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.hp-bus-track::-webkit-scrollbar-thumb {
+  background: #d5deef;
+  border-radius: 20px;
+}
+
+.hp-bus-slide {
+  flex: 0 0 min(360px, 86vw);
+  scroll-snap-align: start;
+}
+
+.hp-hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background: rgba(17, 23, 35, 0.45);
+  color: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.hp-hero-arrow:hover {
+  background: rgba(30, 83, 180, 0.72);
+}
+
+.hp-hero-arrow-left {
+  left: 20px;
+}
+
+.hp-hero-arrow-right {
+  right: 20px;
+}
+
+.hp-hero-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.hp-hero-dot {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+}
+
+.hp-hero-dot.active {
+  background: #1c66ff;
+}
+
+.hp-package-group {
+  border: 1px solid #e7edf7;
+  border-radius: 16px;
+  padding: 14px;
+  background: linear-gradient(180deg, #fbfdff 0%, #ffffff 85%);
+}
+
+.hp-package-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.hp-package-group-header h5 {
+  font-weight: 700;
+  color: #1d2f53;
+}
+
+.hp-package-track-shell {
+  position: relative;
+}
+
+.hp-package-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 4px 44px;
+}
+
+.hp-package-track::-webkit-scrollbar {
+  height: 8px;
+}
+
+.hp-package-track::-webkit-scrollbar-thumb {
+  background: #d5deef;
+  border-radius: 20px;
+}
+
+.hp-package-slide {
+  flex: 0 0 min(360px, 86vw);
+  scroll-snap-align: start;
+}
+
+.hp-track-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #b9c7e2;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #1f3d73;
+  font-size: 18px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(25, 41, 72, 0.14);
+}
+
+.hp-track-arrow-left {
+  left: 4px;
+}
+
+.hp-track-arrow-right {
+  right: 4px;
+}
+
+.hp-track-arrow:hover {
+  background: #f4f8ff;
+}
+
+@media (max-width: 768px) {
+  .hp-hero-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .hp-hero-arrow-left {
+    left: 8px;
+  }
+
+  .hp-hero-arrow-right {
+    right: 8px;
+  }
+
+  .hp-hero-dots {
+    bottom: 14px;
+  }
+
+  .hp-section-subtitle::after {
+    width: 62px;
+  }
+
+  .hp-package-group {
+    padding: 10px;
+  }
+
+  .hp-bus-track {
+    padding: 4px 8px 10px;
+  }
+
+  .hp-package-track {
+    padding: 4px 8px 10px;
+  }
+
+  .hp-track-arrow {
+    display: none;
+  }
+}

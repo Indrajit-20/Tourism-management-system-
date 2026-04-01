@@ -13,10 +13,10 @@ const PublicLayout = () => {
   }, [pathname]);
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="visitor-theme d-flex flex-column min-vh-100">
       <Header />
       <PaymentNotification /> {/* ← ADD line 2 */}
-      <main className="flex-grow-1">
+      <main className="visitor-main flex-grow-1">
         <Outlet />
       </main>
       <Footer />
@@ -24,4 +24,4 @@ const PublicLayout = () => {
   );
 };
 
-export default PublicLayout
+export default PublicLayout;

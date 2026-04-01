@@ -79,6 +79,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         "Open",
         "BookingFull",
         "Completed",
+        "Locked",
       ]);
       const filtered = (res.data || []).filter((item) => {
         const samePackage =
@@ -108,7 +109,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
 
     if (name === "start_date") {
       setFormData((prev) => ({
@@ -121,7 +122,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -563,6 +564,12 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
                   {dep.departure_status === "Open" && (
                     <small className="text-success">Open for booking</small>
+                  )}
+
+                  {dep.departure_status === "Locked" && (
+                    <small className="text-info">
+                      🔒 Locked (bookings exist)
+                    </small>
                   )}
 
                   {dep.departure_status === "Completed" && (

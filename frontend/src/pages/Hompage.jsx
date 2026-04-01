@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Packagecard from "../components/Packagecard";
 import ReviewsDisplay from "../components/ReviewsDisplay";
+import "../css/homepage.css";
 
 const mapPackageScheduleToCard = (pkg, schedule) => ({
   cardId: schedule?._id,
   id: pkg?._id,
   scheduleId: schedule?._id,
   package_name: pkg?.package_name,
+  package_type: pkg?.package_type || "Other Tours",
   source_city: pkg?.source_city || pkg?.start || pkg?.source,
   destination: pkg?.destination || pkg?.destination_city,
   start_date: schedule?.start_date,
@@ -29,11 +31,83 @@ const mapPackageScheduleToCard = (pkg, schedule) => ({
 const Hompage = () => {
   const [pkg, setpkg] = useState([]);
   const [featuredRoutes, setFeaturedRoutes] = useState([]); // State for Bus Routes
+  const [heroImages, setHeroImages] = useState([]);
+  const [heroIndex, setHeroIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [showTripsModal, setShowTripsModal] = useState(false); // ✅ Modal state
   const [selectedRoute, setSelectedRoute] = useState(null); // ✅ Selected route
   const [trips, setTrips] = useState([]); // ✅ Available trips
   const [tripsLoading, setTripsLoading] = useState(false); // ✅ Loading state
+  const packageTrackRefs = useRef({});
+  const busTrackRef = useRef(null);
+  const currentHeroImage = heroImages[heroIndex] || "";
+
+  const groupedPackages = useMemo(() => {
+    const grouped = {};
+    for (const item of pkg) {
+      const typeKey =
+        String(item.package_type || "Other Tours").trim() || "Other Tours";
+      if (!grouped[typeKey]) grouped[typeKey] = [];
+      grouped[typeKey].push(item);
+    }
+
+    const typeGroups = Object.entries(grouped).map(([typeKey, items]) => ({
+      key: typeKey,
+      title: typeKey,
+      items,
+    }));
+
+    const pairedGroups = [];
+    for (let index = 0; index < typeGroups.length; index += 2) {
+      const first = typeGroups[index];
+      const second = typeGroups[index + 1];
+
+      if (!second) {
+        pairedGroups.push(first);
+        continue;
+      }
+
+      pairedGroups.push({
+        key: `${first.key}__${second.key}`,
+        title: `${first.title} + ${second.title}`,
+        items: [...first.items, ...second.items],
+      });
+    }
+
+    return pairedGroups;
+  }, [pkg]);
+
+  const scrollPackageGroup = (groupKey, direction) => {
+    const track = packageTrackRefs.current[groupKey];
+    if (!track) return;
+
+    const scrollAmount = Math.max(track.clientWidth * 0.85, 260);
+    track.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollBusRoutes = (direction) => {
+    const track = busTrackRef.current;
+    if (!track) return;
+
+    const scrollAmount = Math.max(track.clientWidth * 0.85, 260);
+    track.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const showPreviousHero = () => {
+    if (heroImages.length === 0) return;
+    setHeroIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
+  };
+
+  const showNextHero = () => {
+    if (heroImages.length === 0) return;
+    setHeroIndex((prev) => (prev === heroImages.length - 1 ? 0 : prev + 1));
+  };
 
   // Fetch only packages that have at least one open schedule.
   const fetchpkg = async () => {
@@ -79,9 +153,25 @@ const Hompage = () => {
   const fetchRoutes = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/bus-routes");
-      setFeaturedRoutes(res.data.slice(0, 3)); // Only show top 3
+      setFeaturedRoutes(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Error fetching bus routes", err);
+    }
+  };
+
+  const fetchHomeImages = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/home-images");
+      const images = Array.isArray(res.data) ? res.data : [];
+      const safeImageUrls = images
+        .map((item) => String(item?.image_url || ""))
+        .filter((url) => url.startsWith("/uploads/homeimage/"))
+        .map((url) => `http://localhost:4000${url}`);
+
+      setHeroImages(safeImageUrls);
+    } catch (err) {
+      console.error("Error fetching home images", err);
+      setHeroImages([]);
     }
   };
 
@@ -123,11 +213,33 @@ const Hompage = () => {
   useEffect(() => {
     // Run both fetches
     const loadData = async () => {
-      await Promise.all([fetchpkg(), fetchRoutes()]);
+      await Promise.all([fetchpkg(), fetchRoutes(), fetchHomeImages()]);
       setLoading(false);
     };
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (heroImages.length <= 1) return undefined;
+
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev === heroImages.length - 1 ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [heroImages]);
+
+  useEffect(() => {
+    // Keep slider index safe when image list changes.
+    if (heroImages.length === 0 && heroIndex !== 0) {
+      setHeroIndex(0);
+      return;
+    }
+
+    if (heroImages.length > 0 && heroIndex >= heroImages.length) {
+      setHeroIndex(0);
+    }
+  }, [heroImages, heroIndex]);
 
   if (loading) {
     return (
@@ -145,14 +257,53 @@ const Hompage = () => {
       <div
         className="position-relative overflow-hidden text-center bg-dark text-white shadow-lg"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/bg2.jpg')`,
+          backgroundColor: "#000000",
+          backgroundImage: currentHeroImage
+            ? `linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)), url('${currentHeroImage}')`
+            : "none",
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "75vh",
           display: "flex",
           alignItems: "center",
+          transition: "background-image 0.6s ease-in-out",
         }}
       >
+        {heroImages.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="hp-hero-arrow hp-hero-arrow-left"
+              onClick={showPreviousHero}
+              aria-label="Previous hero image"
+            >
+              &#10094;
+            </button>
+            <button
+              type="button"
+              className="hp-hero-arrow hp-hero-arrow-right"
+              onClick={showNextHero}
+              aria-label="Next hero image"
+            >
+              &#10095;
+            </button>
+          </>
+        )}
+
+        {heroImages.length > 1 && (
+          <div className="hp-hero-dots">
+            {heroImages.map((_, index) => (
+              <button
+                key={`hero-dot-${index}`}
+                type="button"
+                className={`hp-hero-dot ${index === heroIndex ? "active" : ""}`}
+                onClick={() => setHeroIndex(index)}
+                aria-label={`Go to hero image ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8 animate__animated animate__fadeIn">
@@ -185,16 +336,16 @@ const Hompage = () => {
 
       <main className="container my-5">
         {/* --- BUS PREVIEW SECTION --- */}
-        <section className="mb-5 pb-4">
-          <div className="row align-items-center mb-4">
+        <section className="mb-5 pb-4 hp-bus-section">
+          <div className="row align-items-center mb-4 hp-section-header">
             <div className="col-md-6">
               <h2 className="display-6 fw-bold mb-0">🚍 Bus Routes</h2>
-              <p className="text-muted">Top destinations</p>
+              <p className="text-muted hp-section-subtitle">Top destinations</p>
             </div>
             <div className="col-md-6 text-md-end">
               <Link
                 to="/book-bus"
-                className="btn btn-link text-primary fw-bold text-decoration-none p-0"
+                className="btn btn-link text-primary fw-bold text-decoration-none p-0 hp-section-link"
               >
                 See All Tickets <i className="bi bi-chevron-right"></i>
               </Link>
@@ -202,60 +353,80 @@ const Hompage = () => {
           </div>
 
           {featuredRoutes.length > 0 ? (
-            <div className="row g-4">
-              {featuredRoutes.map((route) => (
-                <div key={route._id} className="col-md-4">
-                  <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-hover">
-                    <div className="card-body p-4">
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
-                          Quick Booking
-                        </span>
-                        <h4 className="h5 text-success mb-0 fw-bold">
-                          ₹{route.price_per_seat}
-                        </h4>
+            <div className="hp-bus-track-shell">
+              <button
+                type="button"
+                className="hp-track-arrow hp-track-arrow-left"
+                onClick={() => scrollBusRoutes("left")}
+                aria-label="Scroll bus routes left"
+              >
+                &#10094;
+              </button>
+
+              <div className="hp-bus-track" ref={busTrackRef}>
+                {featuredRoutes.map((route) => (
+                  <div key={route._id} className="hp-bus-slide">
+                    <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-hover">
+                      <div className="card-body p-4">
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                          <span className="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+                            Quick Booking
+                          </span>
+                          <h4 className="h5 text-success mb-0 fw-bold">
+                            ₹{route.price_per_seat}
+                          </h4>
+                        </div>
+                        <div className="d-flex align-items-center mb-4">
+                          <div className="flex-grow-1">
+                            <p className="text-uppercase small fw-bold text-muted mb-0">
+                              Origin
+                            </p>
+                            <h5 className="mb-0">{route.boarding_from}</h5>
+                          </div>
+                          <div className="px-3 text-primary">
+                            <i className="bi bi-arrow-right fs-4"></i>
+                          </div>
+                          <div className="flex-grow-1">
+                            <p className="text-uppercase small fw-bold text-muted mb-0">
+                              Destination
+                            </p>
+                            <h5 className="mb-0">{route.destination}</h5>
+                          </div>
+                        </div>
+                        <div className="row g-0 py-2 border-top border-bottom mb-4 text-center bg-light rounded-3">
+                          <div className="col-6 border-end">
+                            <small className="text-muted">Type</small>
+                            <p className="mb-0 small fw-bold">
+                              {route.bus_id?.bus_type || "AC / Sleeper"}
+                            </p>
+                          </div>
+                          <div className="col-6">
+                            <small className="text-muted">Bus No</small>
+                            <p className="mb-0 small fw-bold">
+                              {route.bus_id?.bus_number || "REG-101"}
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          className="btn btn-primary w-100 py-2 fw-bold"
+                          onClick={() => handleShowTrips(route)}
+                        >
+                          Check Availability
+                        </button>
                       </div>
-                      <div className="d-flex align-items-center mb-4">
-                        <div className="flex-grow-1">
-                          <p className="text-uppercase small fw-bold text-muted mb-0">
-                            Origin
-                          </p>
-                          <h5 className="mb-0">{route.boarding_from}</h5>
-                        </div>
-                        <div className="px-3 text-primary">
-                          <i className="bi bi-arrow-right fs-4"></i>
-                        </div>
-                        <div className="flex-grow-1">
-                          <p className="text-uppercase small fw-bold text-muted mb-0">
-                            Destination
-                          </p>
-                          <h5 className="mb-0">{route.destination}</h5>
-                        </div>
-                      </div>
-                      <div className="row g-0 py-2 border-top border-bottom mb-4 text-center bg-light rounded-3">
-                        <div className="col-6 border-end">
-                          <small className="text-muted">Type</small>
-                          <p className="mb-0 small fw-bold">
-                            {route.bus_id?.bus_type || "AC / Sleeper"}
-                          </p>
-                        </div>
-                        <div className="col-6">
-                          <small className="text-muted">Bus No</small>
-                          <p className="mb-0 small fw-bold">
-                            {route.bus_id?.bus_number || "REG-101"}
-                          </p>
-                        </div>
-                      </div>
-                      <button
-                        className="btn btn-primary w-100 py-2 fw-bold"
-                        onClick={() => handleShowTrips(route)}
-                      >
-                        Check Availability
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="hp-track-arrow hp-track-arrow-right"
+                onClick={() => scrollBusRoutes("right")}
+                aria-label="Scroll bus routes right"
+              >
+                &#10095;
+              </button>
             </div>
           ) : (
             <div className="text-center p-5 bg-light rounded-4">
@@ -268,6 +439,8 @@ const Hompage = () => {
             </div>
           )}
         </section>
+
+        <div className="hp-section-divider" />
 
         {/* --- TOUR PACKAGES SECTION --- */}
         <div className="d-flex justify-content-between align-items-end mb-4 border-bottom pb-3">
@@ -285,38 +458,73 @@ const Hompage = () => {
           </Link>
         </div>
 
-        {loading ? (
-          <div className="text-center">Loading Packages...</div>
+        {pkg.length === 0 ? (
+          <div className="alert alert-info text-center mb-0">
+            No scheduled tour packages are available right now.
+          </div>
         ) : (
-          <div className="row">
-            {pkg.map((packageData) => {
-              return (
-                <div className="col-md-4 mb-4" key={packageData.cardId}>
-                  <Packagecard
-                    id={packageData.id}
-                    scheduleId={packageData.scheduleId}
-                    source_city={packageData.source_city}
-                    destination={packageData.destination}
-                    start_date={packageData.start_date}
-                    end_date={packageData.end_date}
-                    image_urls={packageData.image_urls}
-                    image_url={packageData.image_url}
-                    package_name={packageData.package_name}
-                    price={packageData.price}
-                    duration={packageData.duration}
-                    transport={packageData.transport}
-                    seatBadgeText={packageData.seatBadgeText}
-                  />
+          <div className="hp-package-groups">
+            {groupedPackages.map((group) => (
+              <section className="hp-package-group" key={group.key}>
+                <div className="hp-package-group-header">
+                  <h5 className="mb-0">{group.title}</h5>
+                  <span className="text-muted small">
+                    {group.items.length} package
+                    {group.items.length > 1 ? "s" : ""}
+                  </span>
                 </div>
-              );
-            })}
-            {pkg.length === 0 && (
-              <div className="col-12">
-                <div className="alert alert-info text-center mb-0">
-                  No scheduled tour packages are available right now.
+
+                <div className="hp-package-track-shell">
+                  <button
+                    type="button"
+                    className="hp-track-arrow hp-track-arrow-left"
+                    aria-label={`Scroll ${group.title} left`}
+                    onClick={() => scrollPackageGroup(group.key, "left")}
+                  >
+                    &#10094;
+                  </button>
+
+                  <div
+                    className="hp-package-track"
+                    ref={(element) => {
+                      packageTrackRefs.current[group.key] = element;
+                    }}
+                  >
+                    {group.items.map((packageData) => (
+                      <div
+                        className="hp-package-slide"
+                        key={packageData.cardId}
+                      >
+                        <Packagecard
+                          id={packageData.id}
+                          scheduleId={packageData.scheduleId}
+                          source_city={packageData.source_city}
+                          destination={packageData.destination}
+                          start_date={packageData.start_date}
+                          end_date={packageData.end_date}
+                          image_urls={packageData.image_urls}
+                          image_url={packageData.image_url}
+                          package_name={packageData.package_name}
+                          price={packageData.price}
+                          duration={packageData.duration}
+                          transport={packageData.transport}
+                          seatBadgeText={packageData.seatBadgeText}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="hp-track-arrow hp-track-arrow-right"
+                    aria-label={`Scroll ${group.title} right`}
+                    onClick={() => scrollPackageGroup(group.key, "right")}
+                  >
+                    &#10095;
+                  </button>
                 </div>
-              </div>
-            )}
+              </section>
+            ))}
           </div>
         )}
       </main>
@@ -332,7 +540,7 @@ const Hompage = () => {
             left: 0,
             width: "100%",
             height: "100%",
-            zIndex: 1050,
+            zIndex: 2200,
             overflow: "auto",
           }}
         >

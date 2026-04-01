@@ -352,7 +352,7 @@ const getMyBookings = async (req, res) => {
       .populate({
         path: "trip_id",
         populate: [
-          { path: "bus_id", select: "bus_name bus_number bus_type" },
+          { path: "bus_id", select: "bus_name bus_number bus_type layout_type" },
           {
             path: "schedule_id",
             populate: { path: "route_id" },

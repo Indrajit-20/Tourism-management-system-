@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [user, setUser] = useState({ loggedIn: false, name: "" });
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const userAreaRef = useRef(null);
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("username");
@@ -20,20 +22,45 @@ const Header = () => {
     if (name) setUser({ loggedIn: true, name });
   }, []);
 
-  const navLinksClass = menuOpen ? "nav-links open" : "nav-links";
+  // Close open menus when route changes.
+  useEffect(() => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  }, [location.pathname]);
+
+  // Close user dropdown when clicking outside or pressing Escape.
+  useEffect(() => {
+    const onWindowClick = (event) => {
+      if (!userAreaRef.current) return;
+      if (!userAreaRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setDropdownOpen(false);
+    };
+
+    window.addEventListener("click", onWindowClick);
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("click", onWindowClick);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
+  const navLinksClass = menuOpen ? "fh-nav-links open" : "fh-nav-links";
 
   return (
-    <header>
-      <nav className="navbar bg-white shadow-sm">
-        <div className="container d-flex align-items-center justify-content-between">
-          <Link
-            to="/"
-            className="d-flex align-items-center text-decoration-none"
-          >
+    <header className="main-header">
+      <nav className="fh-navbar">
+        <div className="container fh-container">
+          <Link to="/" className="fh-brand">
             <img
               src="/src/assets/logo.jpg"
               alt="logo"
-              className="me-2 site-logo"
+              className="site-logo"
               onError={(e) => (e.target.style.display = "none")}
             />
             <div>
@@ -43,25 +70,42 @@ const Header = () => {
           </Link>
 
           <button
-            className="btn btn-light d-lg-none"
+            className="fh-mobile-toggle d-lg-none"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
           >
             ☰
           </button>
 
           <div className={navLinksClass}>
-            <Link to="/" className="me-3 nav-link active">
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `fh-nav-link ${isActive ? "active" : ""}`
+              }
+            >
               Home
-            </Link>
-            <Link to="/book-bus" className="me-3 nav-link">
+            </NavLink>
+            <NavLink
+              to="/book-bus"
+              className={({ isActive }) =>
+                `fh-nav-link ${isActive ? "active" : ""}`
+              }
+            >
               Bus Tickets
-            </Link>
-            <Link to="/packages" className="me-3 nav-link">
+            </NavLink>
+            <NavLink
+              to="/packages"
+              className={({ isActive }) =>
+                `fh-nav-link ${isActive ? "active" : ""}`
+              }
+            >
               Tour Packages
-            </Link>
+            </NavLink>
 
             {!user.loggedIn ? (
-              <div className="d-flex align-items-center">
+              <div className="fh-auth-actions">
                 <Link to="/login" className="btn btn-outline-primary me-2">
                   Login
                 </Link>
@@ -70,33 +114,54 @@ const Header = () => {
                 </Link>
               </div>
             ) : (
-              <div className="user-area">
+              <div className="fh-user-area" ref={userAreaRef}>
                 <button
-                  className="btn btn-light d-flex align-items-center"
+                  className={`fh-user-trigger ${dropdownOpen ? "open" : ""}`}
                   onClick={() => setDropdownOpen(!dropdownOpen)}
+                  aria-expanded={dropdownOpen}
+                  aria-label="Open user menu"
                 >
-                  <div className="avatar me-2">
+                  <div className="fh-avatar me-2">
                     {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                   </div>
-                  <span className="me-2">{user?.name || "User"}</span>▾
+                  <span className="me-1">{user?.name || "User"}</span>
+                  <span className="fh-user-caret">▾</span>
                 </button>
 
                 {dropdownOpen && (
-                  <div className="user-dropdown shadow-sm">
-                    <Link to="/profile" className="dropdown-item">
+                  <div className="fh-user-dropdown">
+                    <Link
+                      to="/profile"
+                      className="fh-dropdown-item"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       Update Profile
                     </Link>
-                    <Link to="/my-bookings" className="dropdown-item">
+                    <Link
+                      to="/my-bookings"
+                      className="fh-dropdown-item"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       My Bookings
                     </Link>
-                    <Link to="/my-invoices" className="dropdown-item">
+                    <Link
+                      to="/my-invoices"
+                      className="fh-dropdown-item"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       My Invoices
                     </Link>
-                    <Link to="/cancellations" className="dropdown-item">
+                    <Link
+                      to="/cancellations"
+                      className="fh-dropdown-item"
+                      onClick={() => setDropdownOpen(false)}
+                    >
                       Cancellations
                     </Link>
-                    <div className="dropdown-divider" />
-                    <button className="dropdown-item" onClick={handleLogout}>
+                    <button
+                      className="fh-dropdown-item fh-dropdown-item-logout"
+                      onClick={handleLogout}
+                    >
                       Logout
                     </button>
                   </div>

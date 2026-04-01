@@ -51,6 +51,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   const [formData, setFormData] = useState({
     start_date: "",
     end_date: "",
+    departure_time: "",
     bus_id: "",
     price: "",
     notes: "",
@@ -68,10 +69,27 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
   const fetchSchedules = async () => {
     try {
-      const res = await axios.get(
-        `${API_BASE_URL}/api/tour-schedules/package/${packageId}/schedules?status=Draft,Open,BookingFull,Completed`,
-      );
-      setSchedules(res.data);
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${API_BASE_URL}/api/tour-schedules`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const allowedStatus = new Set([
+        "Draft",
+        "Open",
+        "BookingFull",
+        "Completed",
+      ]);
+      const filtered = (res.data || []).filter((item) => {
+        const samePackage =
+          String(item.package_id?._id || item.package_id) === String(packageId);
+        const validStatus = allowedStatus.has(
+          String(item.departure_status || ""),
+        );
+        return samePackage && validStatus;
+      });
+
+      setSchedules(filtered);
     } catch (err) {
       setError("Error fetching schedules");
       console.error(err);
@@ -112,7 +130,12 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     setError("");
     setSuccess("");
 
-    if (!formData.start_date || !formData.bus_id || !formData.price) {
+    if (
+      !formData.start_date ||
+      !formData.departure_time ||
+      !formData.bus_id ||
+      !formData.price
+    ) {
       setError("Please fill all required fields");
       return;
     }
@@ -160,6 +183,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
       setFormData({
         start_date: "",
         end_date: "",
+        departure_time: "",
         bus_id: "",
         price: "",
         notes: "",
@@ -199,6 +223,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     setFormData({
       start_date: schedule.start_date ? schedule.start_date.split("T")[0] : "",
       end_date: schedule.end_date ? schedule.end_date.split("T")[0] : "",
+      departure_time: schedule.departure_time || "",
       bus_id:
         typeof schedule.bus_id === "object"
           ? schedule.bus_id?._id || ""
@@ -238,6 +263,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     setFormData({
       start_date: "",
       end_date: "",
+      departure_time: "",
       bus_id: "",
       price: "",
       notes: "",
@@ -336,6 +362,20 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                   value={formData.end_date}
                   onChange={handleInputChange}
                   min={formData.start_date || undefined}
+                />
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label className="form-label">
+                  <strong>Departure Time *</strong>
+                </label>
+                <input
+                  type="time"
+                  name="departure_time"
+                  className="form-control"
+                  value={formData.departure_time}
+                  onChange={handleInputChange}
+                  required
                 />
               </div>
 
@@ -461,6 +501,11 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                       {" "}
                       ₹{dep.price ?? dep.price_per_person}/person
                     </strong>
+                  </div>
+
+                  <div className="mb-2">
+                    <small className="text-muted">🕒 Departure:</small>
+                    <strong> {dep.departure_time || "-"}</strong>
                   </div>
 
                   <div className="mb-2">

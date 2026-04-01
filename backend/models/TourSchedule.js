@@ -26,6 +26,7 @@ const tourScheduleSchema = new mongoose.Schema(
     // Specific departure date for this tour run
     start_date: { type: Date, required: true },
     end_date: { type: Date },
+    departure_time: { type: String, trim: true },
 
     // Bus assigned to this departure
     bus_id: {

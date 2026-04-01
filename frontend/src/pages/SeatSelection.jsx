@@ -208,6 +208,26 @@ const SeatSelection = () => {
               { headers: { Authorization: `Bearer ${token}` } },
             );
 
+            // Create invoice for this paid booking (safe if already exists)
+            try {
+              await axios.post(
+                `${API}/api/invoice/create`,
+                {
+                  booking_id: booking._id,
+                  booking_type: "Bus",
+                  transaction_id: response.razorpay_payment_id,
+                },
+                { headers: { Authorization: `Bearer ${token}` } },
+              );
+            } catch (invoiceErr) {
+              const message = String(
+                invoiceErr?.response?.data?.message || "",
+              ).toLowerCase();
+              if (!message.includes("already exists")) {
+                console.error("Invoice creation failed:", invoiceErr);
+              }
+            }
+
             alert("✅ Payment successful! Your ticket is confirmed.");
             navigate("/my-bookings");
           } catch (err) {

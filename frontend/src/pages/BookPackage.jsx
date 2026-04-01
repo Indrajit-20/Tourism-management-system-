@@ -460,7 +460,7 @@ const BookPackage = () => {
             className="btn btn-primary w-100 py-3 fs-5"
             disabled={submitting || selectedSeats.length !== passengers.length}
           >
-            Proceed to Payment (₹{totalToDisplay})
+            Submit Booking Request (₹{totalToDisplay})
           </button>
         </form>
       </div>

@@ -16,6 +16,8 @@ const SCHEDULE_STATUS = {
 
 const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 3;
 
+const DEPARTURE_TIME_REGEX = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
 const toDate = (value) => {
   if (!value) return null;
   const parsed = new Date(value);
@@ -36,6 +38,15 @@ const isBeforeToday = (value) => {
 const isValidPositiveAmount = (value) => {
   const amount = Number(value);
   return Number.isFinite(amount) && amount > 0;
+};
+
+const normalizeDepartureTime = (value) => {
+  const text = String(value || "").trim();
+  return text;
+};
+
+const isValidDepartureTime = (value) => {
+  return DEPARTURE_TIME_REGEX.test(String(value || "").trim());
 };
 
 const getDayDifference = (fromDate, toDate) => {
@@ -168,6 +179,7 @@ const createTourDeparture = async (req, res) => {
       bus_id,
       price,
       price_per_person,
+      departure_time,
       notes,
       departure_status,
     } = req.body;
@@ -179,6 +191,15 @@ const createTourDeparture = async (req, res) => {
       return res.status(400).json({
         message: "package_id, start_date, bus_id, and price are required",
       });
+    }
+
+    const nextDepartureTime = normalizeDepartureTime(departure_time);
+    if (!nextDepartureTime) {
+      return res.status(400).json({ message: "departure_time is required in HH:mm format" });
+    }
+
+    if (!isValidDepartureTime(nextDepartureTime)) {
+      return res.status(400).json({ message: "departure_time must be in HH:mm format" });
     }
 
     if (!isValidPositiveAmount(schedulePrice)) {
@@ -269,6 +290,7 @@ const createTourDeparture = async (req, res) => {
       bus_id,
       price: schedulePrice,
       price_per_person: schedulePrice,
+      departure_time: nextDepartureTime,
       total_seats: totalSeats,
       available_seats: totalSeats,
       seats,
@@ -336,7 +358,13 @@ const getPackageDepartures = async (req, res) => {
       }
     }
 
-    res.status(200).json(departures);
+    const sanitizedDepartures = departures.map((item) => {
+      const departure = item.toObject();
+      delete departure.departure_time;
+      return departure;
+    });
+
+    res.status(200).json(sanitizedDepartures);
   } catch (error) {
     res.status(500).json({
       message: "Error fetching departures",
@@ -385,7 +413,10 @@ const getTourDeparture = async (req, res) => {
     recalculateScheduleStatus(departure);
     await departure.save();
 
-    res.status(200).json(departure);
+    const publicDeparture = departure.toObject();
+    delete publicDeparture.departure_time;
+
+    res.status(200).json(publicDeparture);
   } catch (error) {
     res.status(500).json({
       message: "Error fetching departure",
@@ -403,7 +434,16 @@ const getTourDeparture = async (req, res) => {
 const updateTourDeparture = async (req, res) => {
   try {
     const { id } = req.params;
-    const { start_date, end_date, price, price_per_person, bus_id, notes, departure_status } = req.body;
+    const {
+      start_date,
+      end_date,
+      price,
+      price_per_person,
+      bus_id,
+      departure_time,
+      notes,
+      departure_status,
+    } = req.body;
 
     const departure = await TourSchedule.findById(id);
     if (!departure) {
@@ -431,6 +471,14 @@ const updateTourDeparture = async (req, res) => {
       return res.status(400).json({
         message: "Locked schedules cannot change date, bus, or price",
       });
+    }
+
+    if (departure_time !== undefined) {
+      const nextDepartureTime = normalizeDepartureTime(departure_time);
+      if (!nextDepartureTime || !isValidDepartureTime(nextDepartureTime)) {
+        return res.status(400).json({ message: "departure_time must be in HH:mm format" });
+      }
+      departure.departure_time = nextDepartureTime;
     }
 
     const packageData = await Package.findById(departure.package_id, "duration tour_guide");

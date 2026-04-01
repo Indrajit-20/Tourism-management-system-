@@ -32,6 +32,12 @@ const invoiceSchema = new mongoose.Schema(
     travel_date: {
       type: Date,
     },
+    tour_start_date: {
+      type: Date,
+    },
+    tour_end_date: {
+      type: Date,
+    },
     travellers: {
       type: Number,
       default: 1,
@@ -48,6 +54,28 @@ const invoiceSchema = new mongoose.Schema(
     // For Package bookings
     package_duration: {
       type: String,
+    },
+
+    // Financial Breakdown
+    base_fare: {
+      type: Number,
+      default: 0,
+    },
+    child_discount: {
+      type: Number,
+      default: 0,
+    },
+    tax: {
+      type: Number,
+      default: 0,
+    },
+    gst: {
+      type: Number,
+      default: 0,
+    },
+    service_charges: {
+      type: Number,
+      default: 0,
     },
 
     // Payment Info

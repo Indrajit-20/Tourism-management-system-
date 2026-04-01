@@ -434,7 +434,7 @@ const getAllPackageBookings = async (req, res) => {
       .populate({ path: "Custmer_id", select: "first_name last_name email" })
       .populate({
         path: "tour_schedule_id",
-        select: "start_date end_date departure_status",
+        select: "start_date end_date departure_time departure_status",
       })
       .sort({ createdAt: -1 });
     console.log("Bookings found:", bookings.length);
@@ -524,20 +524,62 @@ const getMyBookings = async (req, res) => {
     const bookings = await PackageBooking.find({ Custmer_id: customer_id })
       .populate({
         path: "Package_id",
-        select:
-          "package_name source_city destination duration",
+        select: "package_name source_city destination duration hotels",
+        populate: {
+          path: "hotels",
+          select: "name",
+        },
       })
       .populate({
         path: "tour_schedule_id",
-        select: "start_date end_date departure_status bus_id price price_per_person",
+        select: "start_date end_date departure_status departure_time bus_id price price_per_person",
         populate: {
           path: "bus_id",
-          select: "bus_number bus_name bus_type total_seats",
+          select: "bus_number bus_name bus_type layout_type total_seats",
         },
       })
       .sort({ createdAt: -1 });
 
-    res.status(200).json(bookings);
+    const bookingIds = bookings.map((item) => item._id);
+    const passengerDocs = await Passenger.find(
+      { p_booking_id: { $in: bookingIds } },
+      "p_booking_id passenger_name age gender"
+    ).lean();
+
+    const passengersByBookingId = passengerDocs.reduce((map, item) => {
+      const key = String(item.p_booking_id);
+      if (!map[key]) map[key] = [];
+      map[key].push(item);
+      return map;
+    }, {});
+
+    const safeBookings = bookings.map((bookingDoc) => {
+      const booking = bookingDoc.toObject();
+      const bookingStatus = String(booking.booking_status || "").toLowerCase();
+      const bookingKey = String(booking._id);
+
+      const savedPassengers = passengersByBookingId[bookingKey] || [];
+      booking.passengers = savedPassengers.map((passenger, index) => ({
+        name: passenger.passenger_name,
+        age: passenger.age,
+        gender: passenger.gender,
+        seat: Array.isArray(booking.seat_numbers) ? booking.seat_numbers[index] : undefined,
+      }));
+
+      const hotelNames = Array.isArray(booking.Package_id?.hotels)
+        ? booking.Package_id.hotels.map((hotel) => hotel?.name).filter(Boolean)
+        : [];
+      booking.hotel = hotelNames.join(", ");
+
+      // Share departure time only after booking is confirmed.
+      if (bookingStatus !== "confirmed" && booking.tour_schedule_id) {
+        delete booking.tour_schedule_id.departure_time;
+      }
+
+      return booking;
+    });
+
+    res.status(200).json(safeBookings);
   } catch (error) {
     res
       .status(500)

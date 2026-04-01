@@ -1,0 +1,484 @@
+/* ============================================
+   STAFF & GUIDES/DRIVERS UI STYLES
+   ============================================ */
+
+/* Global Styles */
+:root {
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* ============================================
+   PROFILE CARDS
+   ============================================ */
+
+.staff-profile-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.staff-profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+.staff-profile-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.staff-profile-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.1;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.profile-info-box {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 10px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-info-box:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info-box small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-info-box strong {
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+/* ============================================
+   STAFF TABLE STYLES
+   ============================================ */
+
+.staff-table {
+  border-collapse: collapse;
+}
+
+.staff-table thead tr {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.staff-table thead th {
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border: none;
+}
+
+.staff-table tbody tr {
+  border-bottom: 1px solid #e9ecef;
+  transition: background-color 0.3s ease;
+}
+
+.staff-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.staff-table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+}
+
+.staff-designation-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.staff-designation-badge.driver {
+  background-color: #cfe9ff;
+  color: #0055cc;
+}
+
+.staff-designation-badge.guide {
+  background-color: #ffccdd;
+  color: #cc0033;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+}
+
+.action-btn.view {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.action-btn.view:hover {
+  background-color: #1976d2;
+  color: white;
+}
+
+.action-btn.edit {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.action-btn.edit:hover {
+  background-color: #f57c00;
+  color: white;
+}
+
+.action-btn.delete {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.action-btn.delete:hover {
+  background-color: #d32f2f;
+  color: white;
+}
+
+/* ============================================
+   STATS CARDS
+   ============================================ */
+
+.stats-card {
+  border: none;
+  border-radius: 15px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.stats-card .display-4 {
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+/* ============================================
+   MODALS
+   ============================================ */
+
+.modal-content {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.modal-header {
+  background: var(--primary-gradient);
+  border: none;
+  color: white;
+  padding: 1.5rem;
+}
+
+.modal-header .modal-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 1.5rem;
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  padding: 12px 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-label {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ============================================
+   GRADIENT HEADERS
+   ============================================ */
+
+.header-gradient-driver {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.header-gradient-guide {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.header-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* ============================================
+   BADGES & PILLS
+   ============================================ */
+
+.badge-driver {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.badge-guide {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ============================================
+   ICONS STYLING
+   ============================================ */
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+.icon-box.primary {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.icon-box.danger {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.icon-box.success {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.icon-box.warning {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.icon-box.info {
+  background-color: #e0f2f1;
+  color: #00897b;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .staff-table {
+    font-size: 0.9rem;
+  }
+
+  .staff-table thead th,
+  .staff-table tbody td {
+    padding: 10px;
+  }
+
+  .profile-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .action-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .staff-table {
+    font-size: 0.8rem;
+  }
+
+  .stats-card .display-4 {
+    font-size: 2rem;
+  }
+
+  .profile-info-box {
+    margin-bottom: 10px;
+  }
+
+  .action-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+  
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.border-0 {
+  border: none !important;
+}
+
+.text-gradient-primary {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-danger {
+  background: var(--danger-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Loading Spinner */
+.spinner-border {
+  border-width: 0.4em;
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: 10px;
+  border: none;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.alert-danger {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.alert-info {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
+.alert-warning {
+  background-color: #fff3e0;
+  color: #e65100;
+}

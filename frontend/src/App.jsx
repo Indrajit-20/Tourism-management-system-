@@ -34,6 +34,8 @@ import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRou
 import PublicLayout from "./components/PublicLayout"; // Import Layout
 import ManageTripsByDate from "./pages/ManageTripsByDate"; // Import ManageTripsByDate Page
 import TourSchedulesManagement from "./pages/TourSchedulesManagement"; // Import Tour Schedules Management
+import ManageGuidesAndDrivers from "./pages/ManageGuidesAndDrivers"; // Import Guides & Drivers Management
+import StaffProfilePage from "./pages/StaffProfilePage"; // Import Staff Profile Page
 
 function App() {
   return (
@@ -99,6 +101,15 @@ function App() {
         {/* ✅ NEW: Protect Staff Routes */}
         <Route element={<ProtectedRoute allowedRoles={["driver", "guide"]} />}>
           <Route path="/staff-dashboard" element={<StaffDashboard />} />
+          <Route path="/staff-profile" element={<StaffProfilePage />} />
+        </Route>
+
+        {/* ✅ NEW: Admin Staff Management Route */}
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route
+            path="/admin/manage-guides-drivers"
+            element={<ManageGuidesAndDrivers />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

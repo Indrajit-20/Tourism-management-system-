@@ -47,25 +47,42 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [buses, setBuses] = useState([]);
+  const [staff, setStaff] = useState([]); // ✅ Added staff state
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     start_date: "",
     end_date: "",
     departure_time: "",
     bus_id: "",
+    driver_id: "", // ✅ Add driver_id
+    guide_id: "", // ✅ Add guide_id
     price: "",
     notes: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const minStartDate = toDayString(
-    addDays(new Date(), MIN_ADMIN_SCHEDULE_LEAD_DAYS),
+    addDays(new Date(), MIN_ADMIN_SCHEDULE_LEAD_DAYS)
   );
 
   useEffect(() => {
     fetchSchedules();
     fetchBuses();
+    fetchStaff(); // ✅ Fetch drivers and guides
   }, [packageId]);
+
+  const fetchStaff = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${API_BASE_URL}/api/staff`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("✅ Staff loaded:", res.data); // DEBUG
+      setStaff(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching staff:", err);
+    }
+  };
 
   const fetchSchedules = async () => {
     try {
@@ -84,7 +101,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         const samePackage =
           String(item.package_id?._id || item.package_id) === String(packageId);
         const validStatus = allowedStatus.has(
-          String(item.departure_status || ""),
+          String(item.departure_status || "")
         );
         return samePackage && validStatus;
       });
@@ -142,7 +159,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
     if (formData.start_date < minStartDate) {
       setError(
-        `Start date must be at least ${MIN_ADMIN_SCHEDULE_LEAD_DAYS} days from today`,
+        `Start date must be at least ${MIN_ADMIN_SCHEDULE_LEAD_DAYS} days from today`
       );
       return;
     }
@@ -170,7 +187,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
           payload,
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
         setSuccess(`Schedule updated for ${formatDate(formData.start_date)}`);
       } else {
@@ -185,6 +202,8 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         end_date: "",
         departure_time: "",
         bus_id: "",
+        driver_id: "", // Reset driver
+        guide_id: "", // Reset guide
         price: "",
         notes: "",
       });
@@ -204,7 +223,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         {},
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
       setSuccess("Schedule opened for bookings");
       fetchSchedules();
@@ -228,6 +247,14 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         typeof schedule.bus_id === "object"
           ? schedule.bus_id?._id || ""
           : schedule.bus_id || "",
+      driver_id:
+        typeof schedule.driver_id === "object"
+          ? schedule.driver_id?._id || ""
+          : schedule.driver_id || "",
+      guide_id:
+        typeof schedule.guide_id === "object"
+          ? schedule.guide_id?._id || ""
+          : schedule.guide_id || "",
       price: schedule.price ?? schedule.price_per_person ?? "",
       notes: schedule.notes || "",
     });
@@ -241,7 +268,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     }
 
     const confirmed = window.confirm(
-      "Delete this draft schedule? This action cannot be undone.",
+      "Delete this draft schedule? This action cannot be undone."
     );
     if (!confirmed) return;
 
@@ -402,6 +429,70 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
               <div className="col-md-6 mb-3">
                 <label className="form-label">
+                  <strong>🚗 Driver *</strong>
+                </label>
+                <select
+                  name="driver_id"
+                  className="form-control form-control-lg"
+                  value={formData.driver_id}
+                  onChange={handleInputChange}
+                  required
+                  style={{ borderWidth: "2px", borderColor: "#667eea" }}
+                >
+                  <option value="">-- Select Driver --</option>
+                  {staff.filter((s) => s.designation === "driver").length ===
+                  0 ? (
+                    <option disabled>No drivers found</option>
+                  ) : (
+                    staff
+                      .filter((s) => s.designation === "driver")
+                      .map((d) => (
+                        <option key={d._id} value={d._id}>
+                          {d.name} - {d.contact_no}
+                        </option>
+                      ))
+                  )}
+                </select>
+                <small className="text-muted d-block mt-1">
+                  {staff.filter((s) => s.designation === "driver").length}{" "}
+                  drivers available
+                </small>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label className="form-label">
+                  <strong>🎯 Tour Guide *</strong>
+                </label>
+                <select
+                  name="guide_id"
+                  className="form-control form-control-lg"
+                  value={formData.guide_id}
+                  onChange={handleInputChange}
+                  required
+                  style={{ borderWidth: "2px", borderColor: "#f5576c" }}
+                >
+                  <option value="">-- Select Guide --</option>
+                  {staff.filter((s) => s.designation === "guide").length ===
+                  0 ? (
+                    <option disabled>No guides found</option>
+                  ) : (
+                    staff
+                      .filter((s) => s.designation === "guide")
+                      .map((g) => (
+                        <option key={g._id} value={g._id}>
+                          {g.name} - {g.contact_no}
+                        </option>
+                      ))
+                  )}
+                </select>
+                <small className="text-muted d-block mt-1">
+                  {staff.filter((s) => s.designation === "guide").length} guides
+                  available
+                </small>
+              </div>
+
+              <div className="col-md-6 mb-3">
+                <label className="form-label">
                   <strong>Price (₹) *</strong>
                 </label>
                 <input
@@ -468,7 +559,9 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                     )}
                   </div>
                   <span
-                    className={`badge bg-${getStatusBadgeColor(dep.departure_status)}`}
+                    className={`badge bg-${getStatusBadgeColor(
+                      dep.departure_status
+                    )}`}
                   >
                     {dep.departure_status}
                   </span>
@@ -517,10 +610,17 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                   </div>
 
                   <div className="mb-2">
-                    <small className="text-muted">🧭 Guide:</small>
+                    <small className="text-muted">�‍✈️ Driver:</small>
+                    <strong> {dep.driver_id?.name || "Not assigned"}</strong>
+                  </div>
+
+                  <div className="mb-2">
+                    <small className="text-muted">�🧭 Guide:</small>
                     <strong>
                       {" "}
-                      {dep.package_id?.tour_guide?.name || "Not assigned"}
+                      {dep.guide_id?.name ||
+                        dep.package_id?.tour_guide?.name ||
+                        "Not assigned"}
                     </strong>
                   </div>
 

@@ -1,6 +1,8 @@
 const BusTrip = require("../models/BusTrip");
 const Staff = require("../models/Staff");
 const BusTicketBooking = require("../models/BusTicketBooking");
+const TourSchedule = require("../models/TourSchedule");
+const PackageBooking = require("../models/PackageBooking");
 
 // ✅ 1. Get Staff Dashboard (Assigned Trips)
 const getStaffDashboard = async (req, res) => {
@@ -86,6 +88,59 @@ const getStaffDashboard = async (req, res) => {
       });
     }
 
+    // ====== ADDED LOGIC FOR TOUR SCHEDULES ======
+    // Get tours assigned to this staff (driver_id OR guide_id)
+    const upcomingTours = await TourSchedule.find({
+      $or: [{ driver_id: staff_id }, { guide_id: staff_id }],
+      start_date: { $gte: today },
+      departure_status: { $in: ["Open", "BookingFull", "Locked"] },
+    })
+      .populate("bus_id", "bus_number bus_type")
+      .populate({
+        path: "package_id",
+        select:
+          "package_name source_city destination duration hotels tour_guide",
+        populate: {
+          path: "hotels",
+          select: "hotel_name location contact_number description",
+        },
+      })
+      .sort({ start_date: 1 });
+
+    const todayTours = await TourSchedule.find({
+      $or: [{ driver_id: staff_id }, { guide_id: staff_id }],
+      start_date: { $lte: today },
+      $or: [
+        { end_date: { $gte: today } },
+        { end_date: null }, // if there's no end date, maybe it's just today
+      ],
+      departure_status: { $in: ["Open", "BookingFull", "Locked"] },
+    })
+      .populate("bus_id", "bus_number bus_type")
+      .populate({
+        path: "package_id",
+        select: "package_name source_city destination duration hotels",
+        populate: {
+          path: "hotels",
+          select: "hotel_name location contact_number description",
+        },
+      })
+      .sort({ start_date: 1 });
+
+    const completedTours = await TourSchedule.find({
+      $or: [{ driver_id: staff_id }, { guide_id: staff_id }],
+      departure_status: "Completed",
+    })
+      .populate("bus_id", "bus_number")
+      .populate({
+        path: "package_id",
+        select: "package_name source_city destination",
+      })
+      .sort({ start_date: -1 })
+      .limit(5);
+
+    // ============================================
+
     res.status(200).json({
       success: true,
       staff: {
@@ -98,10 +153,13 @@ const getStaffDashboard = async (req, res) => {
       upcomingTrips,
       todayTrips,
       completedTrips,
+      upcomingTours, // ✅ Added
+      todayTours, // ✅ Added
+      completedTours, // ✅ Added
       stats: {
-        totalUpcomingTrips: upcomingTrips.length,
-        totalTodayTrips: todayTrips.length,
-        totalCompletedTrips: completedTrips.length,
+        totalUpcomingTrips: upcomingTrips.length + upcomingTours.length,
+        totalTodayTrips: todayTrips.length + todayTours.length,
+        totalCompletedTrips: completedTrips.length + completedTours.length,
       },
     });
   } catch (error) {
@@ -200,6 +258,95 @@ const getTripDetails = async (req, res) => {
     });
   }
 };
+
+// ====== NEW: Get Tour Details with Passenger List and Hotels ======
+const getTourDetails = async (req, res) => {
+  try {
+    const { tour_id } = req.params;
+    const staff_id = req.user.id;
+
+    // Get tour
+    const tour = await TourSchedule.findById(tour_id)
+      .populate("bus_id", "bus_number bus_type capacity")
+      .populate({
+        path: "package_id",
+        select:
+          "package_name source_city destination price duration itinerary hotels",
+        populate: {
+          path: "hotels",
+          select:
+            "hotel_name hotel_type contact_number email description room_types",
+        },
+      });
+
+    if (!tour) {
+      return res.status(404).json({ message: "Tour not found" });
+    }
+
+    // Verify staff is assigned (driver or guide)
+    if (
+      (!tour.driver_id || tour.driver_id.toString() !== staff_id) &&
+      (!tour.guide_id || tour.guide_id.toString() !== staff_id)
+    ) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized: Not your assigned tour" });
+    }
+
+    // Get all confirmed bookings for this tour
+    const bookings = await PackageBooking.find({
+      tour_schedule_id: tour_id,
+      booking_status: "confirmed",
+    }).populate("Custmer_id", "first_name last_name phone_no email");
+
+    let totalPassengers = 0;
+    const passengers = [];
+    bookings.forEach((booking) => {
+      totalPassengers += booking.travellers;
+      passengers.push({
+        id: booking._id,
+        name: `${booking.Custmer_id?.first_name || ""} ${
+          booking.Custmer_id?.last_name || ""
+        }`,
+        phone: booking.Custmer_id?.phone_no || "",
+        email: booking.Custmer_id?.email || "",
+        totalAmount: booking.total_amount,
+        seat_numbers: booking.seat_numbers,
+        pickup_location: booking.pickup_location || "Not specified",
+        passengerDetails: booking.other_travelers || [], // For backward compat
+      });
+    });
+
+    res.status(200).json({
+      success: true,
+      tour: {
+        id: tour._id,
+        package: tour.package_id.package_name,
+        source: tour.package_id.source_city,
+        destination: tour.package_id.destination,
+        startDate: tour.start_date,
+        endDate: tour.end_date,
+        departureTime: tour.departure_time,
+        busNumber: tour.bus_id ? tour.bus_id.bus_number : "TBD",
+        status: tour.departure_status,
+        hotels: tour.package_id.hotels || [], // Add hotels
+      },
+      passengers,
+      stats: {
+        totalPassengers,
+        totalSeats: tour.total_seats,
+        availableSeats: tour.available_seats,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error fetching tour details",
+      error: error.message,
+    });
+  }
+};
+// =================================================================
 
 // ✅ 3. Update Trip Status (Scheduled → Running → Completed)
 const updateTripStatus = async (req, res) => {
@@ -329,6 +476,7 @@ const getStaffSchedule = async (req, res) => {
 module.exports = {
   getStaffDashboard,
   getTripDetails,
+  getTourDetails, // ✅ Added export for Tours
   updateTripStatus,
   getStaffSchedule,
 };

@@ -35,6 +35,18 @@ const tourScheduleSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Driver assigned to this specific tour run
+    driver_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+    },
+
+    // Tour guide assigned to this specific tour run (optional but helpful)
+    guide_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Staff",
+    },
+
     // Price for this specific schedule
     price: { type: Number },
 

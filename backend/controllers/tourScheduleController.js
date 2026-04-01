@@ -71,17 +71,27 @@ const hasRangeOverlap = (aStart, aEnd, bStart, bEnd) => {
   return aStart <= bEnd && aEnd >= bStart;
 };
 
-const ensureBusAvailability = async ({ busId, startDate, endDate, excludeScheduleId = null }) => {
+const ensureBusAvailability = async ({
+  busId,
+  startDate,
+  endDate,
+  excludeScheduleId = null,
+}) => {
   const scheduleQuery = {
     bus_id: busId,
-    departure_status: { $nin: [SCHEDULE_STATUS.COMPLETED, SCHEDULE_STATUS.ARCHIVED] },
+    departure_status: {
+      $nin: [SCHEDULE_STATUS.COMPLETED, SCHEDULE_STATUS.ARCHIVED],
+    },
   };
 
   if (excludeScheduleId) {
     scheduleQuery._id = { $ne: excludeScheduleId };
   }
 
-  const existingSchedules = await TourSchedule.find(scheduleQuery, "start_date end_date").lean();
+  const existingSchedules = await TourSchedule.find(
+    scheduleQuery,
+    "start_date end_date"
+  ).lean();
   const conflictingSchedule = existingSchedules.find((item) => {
     const itemStart = new Date(item.start_date);
     const itemEnd = item.end_date ? new Date(item.end_date) : itemStart;
@@ -91,7 +101,8 @@ const ensureBusAvailability = async ({ busId, startDate, endDate, excludeSchedul
   if (conflictingSchedule) {
     return {
       ok: false,
-      message: "Selected bus is already assigned to another tour schedule in this date range",
+      message:
+        "Selected bus is already assigned to another tour schedule in this date range",
     };
   }
 
@@ -104,27 +115,38 @@ const ensureBusAvailability = async ({ busId, startDate, endDate, excludeSchedul
   if (conflictingTrip) {
     return {
       ok: false,
-      message: "Selected bus is already assigned to a bus trip in this date range",
+      message:
+        "Selected bus is already assigned to a bus trip in this date range",
     };
   }
 
   return { ok: true };
 };
 
-const ensureGuideAvailability = async ({ guideId, startDate, endDate, excludeScheduleId = null }) => {
+const ensureGuideAvailability = async ({
+  guideId,
+  startDate,
+  endDate,
+  excludeScheduleId = null,
+}) => {
   if (!guideId) {
     return { ok: true };
   }
 
   const scheduleQuery = {
-    departure_status: { $nin: [SCHEDULE_STATUS.COMPLETED, SCHEDULE_STATUS.ARCHIVED] },
+    departure_status: {
+      $nin: [SCHEDULE_STATUS.COMPLETED, SCHEDULE_STATUS.ARCHIVED],
+    },
   };
 
   if (excludeScheduleId) {
     scheduleQuery._id = { $ne: excludeScheduleId };
   }
 
-  const schedules = await TourSchedule.find(scheduleQuery, "start_date end_date package_id")
+  const schedules = await TourSchedule.find(
+    scheduleQuery,
+    "start_date end_date package_id"
+  )
     .populate("package_id", "package_name tour_guide")
     .lean();
 
@@ -142,7 +164,8 @@ const ensureGuideAvailability = async ({ guideId, startDate, endDate, excludeSch
   if (conflict) {
     return {
       ok: false,
-      message: "Selected guide is already assigned to another tour schedule in this date range",
+      message:
+        "Selected guide is already assigned to another tour schedule in this date range",
     };
   }
 
@@ -151,7 +174,9 @@ const ensureGuideAvailability = async ({ guideId, startDate, endDate, excludeSch
 
 const recalculateScheduleStatus = (schedule) => {
   const today = toDayStart(new Date());
-  const endDate = schedule.end_date ? new Date(schedule.end_date) : new Date(schedule.start_date);
+  const endDate = schedule.end_date
+    ? new Date(schedule.end_date)
+    : new Date(schedule.start_date);
   const scheduleEndDay = toDayStart(endDate);
 
   if (scheduleEndDay < today) {
@@ -163,12 +188,15 @@ const recalculateScheduleStatus = (schedule) => {
     schedule.departure_status = SCHEDULE_STATUS.BOOKING_FULL;
     return;
   }
+<<<<<<< Updated upstream
 
   const current = String(schedule.departure_status || "");
   if (current !== SCHEDULE_STATUS.DRAFT && current !== SCHEDULE_STATUS.ARCHIVED) {
     schedule.departure_status = SCHEDULE_STATUS.OPEN;
   }
 
+=======
+>>>>>>> Stashed changes
 };
 
 /**
@@ -181,6 +209,8 @@ const createTourDeparture = async (req, res) => {
       start_date,
       end_date,
       bus_id,
+      driver_id, // ✅ added driver_id
+      guide_id, // ✅ added guide_id
       price,
       price_per_person,
       departure_time,
@@ -191,7 +221,14 @@ const createTourDeparture = async (req, res) => {
     const rawPrice = price ?? price_per_person;
     const schedulePrice = Number(rawPrice);
 
-    if (!package_id || !start_date || !bus_id || rawPrice === undefined || rawPrice === null || rawPrice === "") {
+    if (
+      !package_id ||
+      !start_date ||
+      !bus_id ||
+      rawPrice === undefined ||
+      rawPrice === null ||
+      rawPrice === ""
+    ) {
       return res.status(400).json({
         message: "package_id, start_date, bus_id, and price are required",
       });
@@ -199,11 +236,15 @@ const createTourDeparture = async (req, res) => {
 
     const nextDepartureTime = normalizeDepartureTime(departure_time);
     if (!nextDepartureTime) {
-      return res.status(400).json({ message: "departure_time is required in HH:mm format" });
+      return res
+        .status(400)
+        .json({ message: "departure_time is required in HH:mm format" });
     }
 
     if (!isValidDepartureTime(nextDepartureTime)) {
-      return res.status(400).json({ message: "departure_time must be in HH:mm format" });
+      return res
+        .status(400)
+        .json({ message: "departure_time must be in HH:mm format" });
     }
 
     if (!isValidPositiveAmount(schedulePrice)) {
@@ -234,7 +275,11 @@ const createTourDeparture = async (req, res) => {
       });
     }
 
-    const finalEndDate = deriveEndDate(startDate, proposedEndDate, pkg.duration);
+    const finalEndDate = deriveEndDate(
+      startDate,
+      proposedEndDate,
+      pkg.duration
+    );
     if (!finalEndDate) {
       return res.status(400).json({ message: "Unable to derive end_date" });
     }
@@ -255,14 +300,14 @@ const createTourDeparture = async (req, res) => {
       startDate,
       endDate: finalEndDate,
     });
-        const guideCheck = await ensureGuideAvailability({
-          guideId: pkg.tour_guide,
-          startDate,
-          endDate: finalEndDate,
-        });
-        if (!guideCheck.ok) {
-          return res.status(400).json({ message: guideCheck.message });
-        }
+    const guideCheck = await ensureGuideAvailability({
+      guideId: pkg.tour_guide,
+      startDate,
+      endDate: finalEndDate,
+    });
+    if (!guideCheck.ok) {
+      return res.status(400).json({ message: guideCheck.message });
+    }
 
     if (!busCheck.ok) {
       return res.status(400).json({ message: busCheck.message });
@@ -270,7 +315,9 @@ const createTourDeparture = async (req, res) => {
 
     const totalSeats = bus.total_seats || 0;
     if (!totalSeats) {
-      return res.status(400).json({ message: "Bus must have total_seats configured" });
+      return res
+        .status(400)
+        .json({ message: "Bus must have total_seats configured" });
     }
 
     // Use the same seat-map generator as route buses so both flows stay consistent.
@@ -283,7 +330,8 @@ const createTourDeparture = async (req, res) => {
     });
 
     const requestedStatus =
-      departure_status && [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)
+      departure_status &&
+      [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)
         ? departure_status
         : SCHEDULE_STATUS.DRAFT;
 
@@ -292,6 +340,8 @@ const createTourDeparture = async (req, res) => {
       start_date: startDate,
       end_date: finalEndDate,
       bus_id,
+      driver_id: driver_id || null, // ✅ Save driver_id
+      guide_id: guide_id || null, // ✅ Save guide_id
       price: schedulePrice,
       price_per_person: schedulePrice,
       departure_time: nextDepartureTime,
@@ -339,14 +389,26 @@ const getPackageDepartures = async (req, res) => {
         .map((item) => item.trim())
         .filter(Boolean);
       if (statuses.length > 0) {
-        query.departure_status = statuses.length === 1 ? statuses[0] : { $in: statuses };
+        query.departure_status =
+          statuses.length === 1 ? statuses[0] : { $in: statuses };
       }
     } else {
+<<<<<<< Updated upstream
       query.departure_status = { $in: [SCHEDULE_STATUS.OPEN] };
+=======
+      query.departure_status = {
+        $in: [SCHEDULE_STATUS.OPEN, SCHEDULE_STATUS.LOCKED_LEGACY],
+      };
+>>>>>>> Stashed changes
     }
 
     const departures = await TourSchedule.find(query)
-      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats")
+      .populate(
+        "bus_id",
+        "bus_name bus_number bus_type layout_type total_seats"
+      )
+      .populate("driver_id", "name contact_no") // ✅ Get driving staff
+      .populate("guide_id", "name contact_no") // ✅ Get guide staff
       .populate({
         path: "package_id",
         select: "package_name source_city destination duration tour_guide",
@@ -380,7 +442,12 @@ const getPackageDepartures = async (req, res) => {
 const getAllDepartures = async (req, res) => {
   try {
     const departures = await TourSchedule.find({})
-      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats")
+      .populate(
+        "bus_id",
+        "bus_name bus_number bus_type layout_type total_seats"
+      )
+      .populate("driver_id", "name contact_no") // ✅ Show driver
+      .populate("guide_id", "name contact_no") // ✅ Show guide
       .populate({
         path: "package_id",
         select: "package_name source_city destination duration",
@@ -416,7 +483,10 @@ const getTourDeparture = async (req, res) => {
 
     const departure = await TourSchedule.findById(id)
       .populate("package_id")
-      .populate("bus_id", "bus_name bus_number bus_type layout_type total_seats");
+      .populate(
+        "bus_id",
+        "bus_name bus_number bus_type layout_type total_seats"
+      );
 
     if (!departure) {
       return res.status(404).json({ message: "Schedule not found" });
@@ -452,6 +522,8 @@ const updateTourDeparture = async (req, res) => {
       price,
       price_per_person,
       bus_id,
+      driver_id, // ✅ Add driver_id
+      guide_id, // ✅ Add guide_id
       departure_time,
       notes,
       departure_status,
@@ -465,7 +537,15 @@ const updateTourDeparture = async (req, res) => {
     recalculateScheduleStatus(departure);
 
     const currentStatus = String(departure.departure_status || "");
+<<<<<<< Updated upstream
     const isDraftOrOpen = [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(currentStatus);
+=======
+    const isDraftOrOpen = [
+      SCHEDULE_STATUS.DRAFT,
+      SCHEDULE_STATUS.OPEN,
+    ].includes(currentStatus);
+    const isLocked = currentStatus === SCHEDULE_STATUS.LOCKED_LEGACY;
+>>>>>>> Stashed changes
 
     if (!isDraftOrOpen) {
       return res.status(400).json({
@@ -489,12 +569,17 @@ const updateTourDeparture = async (req, res) => {
     if (departure_time !== undefined) {
       const nextDepartureTime = normalizeDepartureTime(departure_time);
       if (!nextDepartureTime || !isValidDepartureTime(nextDepartureTime)) {
-        return res.status(400).json({ message: "departure_time must be in HH:mm format" });
+        return res
+          .status(400)
+          .json({ message: "departure_time must be in HH:mm format" });
       }
       departure.departure_time = nextDepartureTime;
     }
 
-    const packageData = await Package.findById(departure.package_id, "duration tour_guide");
+    const packageData = await Package.findById(
+      departure.package_id,
+      "duration tour_guide"
+    );
     const nextStartDate = toDate(start_date) || new Date(departure.start_date);
     const nextEndDate = deriveEndDate(
       nextStartDate,
@@ -503,7 +588,9 @@ const updateTourDeparture = async (req, res) => {
     );
 
     if (isBeforeToday(nextStartDate)) {
-      return res.status(400).json({ message: "start_date cannot be in the past" });
+      return res
+        .status(400)
+        .json({ message: "start_date cannot be in the past" });
     }
 
     const leadDays = getDayDifference(new Date(), nextStartDate);
@@ -514,11 +601,16 @@ const updateTourDeparture = async (req, res) => {
     }
 
     if (!nextEndDate || nextEndDate < nextStartDate) {
-      return res.status(400).json({ message: "end_date cannot be earlier than start_date" });
+      return res
+        .status(400)
+        .json({ message: "end_date cannot be earlier than start_date" });
     }
 
     const nextBusId = bus_id || departure.bus_id;
-    if (isDraftOrOpen && (String(nextBusId) !== String(departure.bus_id) || start_date || end_date)) {
+    if (
+      isDraftOrOpen &&
+      (String(nextBusId) !== String(departure.bus_id) || start_date || end_date)
+    ) {
       const busCheck = await ensureBusAvailability({
         busId: nextBusId,
         startDate: nextStartDate,
@@ -544,17 +636,32 @@ const updateTourDeparture = async (req, res) => {
       departure.start_date = nextStartDate;
       departure.end_date = nextEndDate;
     }
+
+    // ✅ Apply Driver and Guide assignment checks
+    if (driver_id !== undefined) departure.driver_id = driver_id || null;
+    if (guide_id !== undefined) departure.guide_id = guide_id || null;
+
     const nextPrice = price ?? price_per_person;
-    if (isDraftOrOpen && nextPrice !== undefined && nextPrice !== null && nextPrice !== "") {
+    if (
+      isDraftOrOpen &&
+      nextPrice !== undefined &&
+      nextPrice !== null &&
+      nextPrice !== ""
+    ) {
       if (!isValidPositiveAmount(nextPrice)) {
-        return res.status(400).json({ message: "price must be greater than 0" });
+        return res
+          .status(400)
+          .json({ message: "price must be greater than 0" });
       }
       departure.price = Number(nextPrice);
       departure.price_per_person = Number(nextPrice);
     }
     if (isDraftOrOpen && bus_id) departure.bus_id = bus_id;
     if (typeof notes === "string") departure.notes = notes;
-    if (departure_status && [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)) {
+    if (
+      departure_status &&
+      [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)
+    ) {
       departure.departure_status = departure_status;
     }
 
@@ -588,11 +695,15 @@ const openDeparture = async (req, res) => {
 
     recalculateScheduleStatus(schedule);
     if (schedule.departure_status === SCHEDULE_STATUS.COMPLETED) {
-      return res.status(400).json({ message: "Cannot open a completed schedule" });
+      return res
+        .status(400)
+        .json({ message: "Cannot open a completed schedule" });
     }
 
     if (schedule.departure_status !== SCHEDULE_STATUS.DRAFT) {
-      return res.status(400).json({ message: "Only draft schedules can be opened" });
+      return res
+        .status(400)
+        .json({ message: "Only draft schedules can be opened" });
     }
 
     schedule.departure_status = SCHEDULE_STATUS.OPEN;

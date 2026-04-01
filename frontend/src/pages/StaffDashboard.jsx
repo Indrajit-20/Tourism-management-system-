@@ -11,6 +11,13 @@ const StaffDashboard = () => {
   const [todayTrips, setTodayTrips] = useState([]);
   const [upcomingTrips, setUpcomingTrips] = useState([]);
   const [completedTrips, setCompletedTrips] = useState([]);
+
+  // Setup tour states
+  const [todayTours, setTodayTours] = useState([]);
+  const [upcomingTours, setUpcomingTours] = useState([]);
+  const [completedTours, setCompletedTours] = useState([]);
+  const [selectedTour, setSelectedTour] = useState(null);
+
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [passengers, setPassengers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,6 +46,10 @@ const StaffDashboard = () => {
       setTodayTrips(res.data.todayTrips || []);
       setUpcomingTrips(res.data.upcomingTrips || []);
       setCompletedTrips(res.data.completedTrips || []);
+
+      setTodayTours(res.data.todayTours || []);
+      setUpcomingTours(res.data.upcomingTours || []);
+      setCompletedTours(res.data.completedTours || []);
     } catch (err) {
       console.error("Error fetching dashboard", err);
       const errorMsg =
@@ -51,7 +62,24 @@ const StaffDashboard = () => {
     }
   };
 
-  // Fetch trip details with passenger list
+  // Update trip status
+  const fetchTourDetails = async (tour_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        `${API}/api/staff-dashboard/tour/${tour_id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      setSelectedTour(res.data.tour);
+      setPassengers(res.data.passengers);
+    } catch (err) {
+      console.error("Error fetching tour details", err);
+      alert("Error loading tour details");
+    }
+  };
   const fetchTripDetails = async (trip_id) => {
     try {
       const token = localStorage.getItem("token");
@@ -59,7 +87,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/trip/${trip_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
 
       setSelectedTrip(res.data.trip);
@@ -77,7 +105,7 @@ const StaffDashboard = () => {
       await axios.put(
         `${API}/api/staff-dashboard/trip/${trip_id}/status`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(`✅ Trip status updated to ${newStatus}`);
@@ -169,15 +197,19 @@ const StaffDashboard = () => {
             <div className="col-6 mb-3">
               <div className="card bg-primary text-white border-0 shadow-sm">
                 <div className="card-body text-center p-3">
-                  <h3 className="mb-0">{todayTrips.length}</h3>
-                  <small>Today's Trips</small>
+                  <h3 className="mb-0">
+                    {todayTrips.length + todayTours.length}
+                  </h3>
+                  <small>Today's Works</small>
                 </div>
               </div>
             </div>
             <div className="col-6 mb-3">
               <div className="card bg-info text-white border-0 shadow-sm">
                 <div className="card-body text-center p-3">
-                  <h3 className="mb-0">{upcomingTrips.length}</h3>
+                  <h3 className="mb-0">
+                    {upcomingTrips.length + upcomingTours.length}
+                  </h3>
                   <small>Upcoming</small>
                 </div>
               </div>
@@ -185,7 +217,9 @@ const StaffDashboard = () => {
             <div className="col-6">
               <div className="card bg-success text-white border-0 shadow-sm">
                 <div className="card-body text-center p-3">
-                  <h3 className="mb-0">{completedTrips.length}</h3>
+                  <h3 className="mb-0">
+                    {completedTrips.length + completedTours.length}
+                  </h3>
                   <small>Completed</small>
                 </div>
               </div>
@@ -201,7 +235,7 @@ const StaffDashboard = () => {
             className={`nav-link ${activeTab === "today" ? "active" : ""}`}
             onClick={() => setActiveTab("today")}
           >
-            📅 Today's Trips ({todayTrips.length})
+            📅 Today ({todayTrips.length + todayTours.length})
           </button>
         </li>
         <li className="nav-item">
@@ -209,7 +243,7 @@ const StaffDashboard = () => {
             className={`nav-link ${activeTab === "upcoming" ? "active" : ""}`}
             onClick={() => setActiveTab("upcoming")}
           >
-            🚌 Upcoming ({upcomingTrips.length})
+            🚌 Upcoming ({upcomingTrips.length + upcomingTours.length})
           </button>
         </li>
         <li className="nav-item">
@@ -217,22 +251,23 @@ const StaffDashboard = () => {
             className={`nav-link ${activeTab === "completed" ? "active" : ""}`}
             onClick={() => setActiveTab("completed")}
           >
-            ✅ Completed ({completedTrips.length})
+            ✅ Completed ({completedTrips.length + completedTours.length})
           </button>
         </li>
       </ul>
 
       {/* Tab Content */}
       <div className="tab-content">
-        {/* TODAY'S TRIPS */}
+        {/* TODAY'S WORKS */}
         {activeTab === "today" && (
           <div>
-            {todayTrips.length === 0 ? (
+            {todayTrips.length === 0 && todayTours.length === 0 ? (
               <div className="alert alert-info">
-                No trips scheduled for today
+                No trips or tours scheduled for today
               </div>
             ) : (
               <div className="row">
+                {/* --- RENDER TRIPS --- */}
                 {todayTrips.map((trip) => (
                   <div key={trip._id} className="col-md-6 mb-4">
                     <div className="card border-0 shadow-sm h-100">
@@ -267,11 +302,11 @@ const StaffDashboard = () => {
                           <p className="mb-2">
                             <strong>Time:</strong>{" "}
                             {to12HourDisplay(
-                              trip.schedule_id.route_id.departure_time,
+                              trip.schedule_id.route_id.departure_time
                             )}{" "}
                             -{" "}
                             {to12HourDisplay(
-                              trip.schedule_id.route_id.arrival_time,
+                              trip.schedule_id.route_id.arrival_time
                             )}
                           </p>
                         </div>
@@ -310,18 +345,75 @@ const StaffDashboard = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* --- RENDER TOURS --- */}
+                {todayTours.map((tour) => (
+                  <div key={tour._id} className="col-md-6 mb-4">
+                    <div className="card border-0 shadow-sm h-100 border-start border-4 border-info">
+                      <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-start mb-3">
+                          <div>
+                            <h5 className="card-title mb-1 text-info">
+                              🏕️ Tour: {tour.package_id?.package_name}
+                            </h5>
+                            <small className="text-muted">
+                              Bus: {tour.bus_id?.bus_number || "Not assigned"}
+                            </small>
+                          </div>
+                          <span
+                            className={`badge bg-${
+                              tour.departure_status === "Open"
+                                ? "primary"
+                                : "secondary"
+                            }`}
+                          >
+                            {tour.departure_status}
+                          </span>
+                        </div>
+
+                        <div className="mb-3 pb-3 border-bottom">
+                          <p className="mb-2">
+                            <strong>Route:</strong>{" "}
+                            {tour.package_id?.source_city} →{" "}
+                            {tour.package_id?.destination}
+                          </p>
+                          <p className="mb-2">
+                            <strong>Dates:</strong>{" "}
+                            {formatDate(tour.start_date)} -{" "}
+                            {formatDate(tour.end_date)}
+                          </p>
+                        </div>
+
+                        <div className="d-flex gap-2">
+                          <button
+                            className="btn btn-info btn-sm flex-grow-1 text-white"
+                            onClick={() => {
+                              fetchTourDetails(tour._id);
+                              setSelectedTrip(null); // Clear trip modal data
+                            }}
+                            data-bs-toggle="modal"
+                            data-bs-target="#tourModal"
+                          >
+                            👥 View Tourists & Hotels
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
         )}
 
-        {/* UPCOMING TRIPS */}
+        {/* UPCOMING WORKS */}
         {activeTab === "upcoming" && (
           <div>
-            {upcomingTrips.length === 0 ? (
-              <div className="alert alert-info">No upcoming trips</div>
+            {upcomingTrips.length === 0 && upcomingTours.length === 0 ? (
+              <div className="alert alert-info">No upcoming trips or tours</div>
             ) : (
               <div className="row">
+                {/* --- RENDER TRIPS --- */}
                 {upcomingTrips.map((trip) => (
                   <div key={trip._id} className="col-md-6 mb-4">
                     <div className="card border-0 shadow-sm h-100">
@@ -332,7 +424,7 @@ const StaffDashboard = () => {
                               🚌 {trip.bus_id.bus_number}
                             </h5>
                             <small className="text-muted">
-                              {formatDate(trip.trip_date)}
+                              {trip.bus_id.bus_type}
                             </small>
                           </div>
                           <span className="badge bg-secondary">
@@ -350,7 +442,7 @@ const StaffDashboard = () => {
                           <p className="mb-2">
                             <strong>Time:</strong>{" "}
                             {to12HourDisplay(
-                              trip.schedule_id.route_id.departure_time,
+                              trip.schedule_id.route_id.departure_time
                             )}
                           </p>
                         </div>
@@ -367,28 +459,76 @@ const StaffDashboard = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* --- RENDER TOURS --- */}
+                {upcomingTours.map((tour) => (
+                  <div key={tour._id} className="col-md-6 mb-4">
+                    <div className="card border-0 shadow-sm h-100 border-start border-4 border-info">
+                      <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-start mb-3">
+                          <div>
+                            <h5 className="card-title mb-1 text-info">
+                              🏕️ Tour: {tour.package_id?.package_name}
+                            </h5>
+                            <small className="text-muted">
+                              {formatDate(tour.start_date)} -{" "}
+                              {formatDate(tour.end_date)}
+                            </small>
+                          </div>
+                          <span className="badge bg-secondary">
+                            {tour.departure_status}
+                          </span>
+                        </div>
+
+                        <div className="mb-3 pb-3 border-bottom">
+                          <p className="mb-2">
+                            <strong>Location:</strong>{" "}
+                            {tour.package_id?.destination}
+                          </p>
+                          <p className="mb-2">
+                            <strong>Duration:</strong>{" "}
+                            {tour.package_id?.duration}
+                          </p>
+                        </div>
+
+                        <button
+                          className="btn btn-info btn-sm w-100 text-white"
+                          onClick={() => {
+                            fetchTourDetails(tour._id);
+                            setSelectedTrip(null);
+                          }}
+                          data-bs-toggle="modal"
+                          data-bs-target="#tourModal"
+                        >
+                          👥 View Details & Hotels
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
         )}
 
-        {/* COMPLETED TRIPS */}
+        {/* COMPLETED WORKS */}
         {activeTab === "completed" && (
           <div>
-            {completedTrips.length === 0 ? (
-              <div className="alert alert-info">No completed trips yet</div>
+            {completedTrips.length === 0 && completedTours.length === 0 ? (
+              <div className="alert alert-info">No completed works yet</div>
             ) : (
               <div className="table-responsive">
                 <table className="table table-hover">
                   <thead className="table-light">
                     <tr>
-                      <th>Bus</th>
-                      <th>Route</th>
+                      <th>Type / Info</th>
+                      <th>Route / Location</th>
                       <th>Date</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
+                    {/* TRIPS */}
                     {completedTrips.map((trip) => (
                       <tr key={trip._id}>
                         <td>
@@ -399,6 +539,25 @@ const StaffDashboard = () => {
                           {trip.schedule_id.route_id.destination}
                         </td>
                         <td>{formatDate(trip.trip_date)}</td>
+                        <td>
+                          <span className="badge bg-success">✅ Completed</span>
+                        </td>
+                      </tr>
+                    ))}
+
+                    {/* TOURS */}
+                    {completedTours.map((tour) => (
+                      <tr key={tour._id} className="table-info">
+                        <td>
+                          <strong>Tour: {tour.package_id?.package_name}</strong>
+                          <br />
+                          <small>Bus: {tour.bus_id?.bus_number}</small>
+                        </td>
+                        <td>
+                          {tour.package_id?.source_city} →{" "}
+                          {tour.package_id?.destination}
+                        </td>
+                        <td>{formatDate(tour.end_date)}</td>
                         <td>
                           <span className="badge bg-success">✅ Completed</span>
                         </td>
@@ -543,6 +702,163 @@ const StaffDashboard = () => {
             </div>
 
             <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Tour Details Modal */}
+      <div
+        className="modal fade"
+        id="tourModal"
+        tabIndex="-1"
+        aria-labelledby="tourModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg">
+          <div className="modal-content">
+            <div className="modal-header bg-info text-white">
+              <h5 className="modal-title" id="tourModalLabel">
+                🏕️ Tour Details - {selectedTour?.package}
+              </h5>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+
+            <div className="modal-body">
+              {selectedTour && (
+                <div className="mb-4">
+                  <h6 className="mb-3 text-info">📍 Overview</h6>
+                  <div className="row">
+                    <div className="col-md-6 mb-2">
+                      <small className="text-muted">Route / Location</small>
+                      <p className="mb-0">
+                        {selectedTour.source} → {selectedTour.destination}
+                      </p>
+                    </div>
+                    <div className="col-md-6 mb-2">
+                      <small className="text-muted">Dates</small>
+                      <p className="mb-0">
+                        {formatDate(selectedTour.startDate)} to{" "}
+                        {formatDate(selectedTour.endDate)}
+                      </p>
+                    </div>
+                    <div className="col-md-6 mb-2">
+                      <small className="text-muted">Bus Assigned</small>
+                      <p className="mb-0">{selectedTour.busNumber}</p>
+                    </div>
+                    <div className="col-md-6 mb-2">
+                      <small className="text-muted">Total Passengers</small>
+                      <p className="mb-0">
+                        <span className="badge bg-primary">
+                          {selectedTour.stats?.totalPassengers ||
+                            passengers.reduce(
+                              (sum, p) =>
+                                sum + (p.passengerDetails?.length || 0),
+                              0
+                            )}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Hotels Section */}
+              {selectedTour?.hotels && selectedTour.hotels.length > 0 && (
+                <div className="mb-4">
+                  <h6 className="mb-3 text-info">🏨 Accommodation / Hotels</h6>
+                  <div className="row">
+                    {selectedTour.hotels.map((hotel, index) => (
+                      <div className="col-md-6 mb-3" key={index}>
+                        <div className="card shadow-sm border-0 bg-light">
+                          <div className="card-body">
+                            <h6 className="card-title mb-1">
+                              {hotel.hotel_name}
+                            </h6>
+                            <p className="small text-muted mb-1 border-bottom pb-2">
+                              {hotel.hotel_type} |{" "}
+                              {hotel.location || "No exact location"}
+                            </p>
+                            <p className="small mb-1">
+                              <strong>📞 Manager:</strong>{" "}
+                              {hotel.contact_number || "N/A"}
+                            </p>
+                            <p className="small mb-0">
+                              <strong>✉️ Email:</strong> {hotel.email || "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tourists List */}
+              <div className="table-responsive">
+                <h6 className="mb-3 text-info">👥 Tourist List</h6>
+                {passengers.length === 0 ? (
+                  <p className="text-muted text-center py-3">
+                    No confirmed bookings yet.
+                  </p>
+                ) : (
+                  <table className="table table-bordered table-hover mt-3">
+                    <thead className="table-light">
+                      <tr>
+                        <th>Primary Contact</th>
+                        <th>Contact No.</th>
+                        <th>Pickup Location</th>
+                        <th>Members</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {passengers.map((p) => (
+                        <tr key={p.id}>
+                          <td>{p.name}</td>
+                          <td>
+                            <a
+                              href={`tel:${p.phone}`}
+                              className="text-decoration-none"
+                            >
+                              📞 {p.phone}
+                            </a>
+                          </td>
+                          <td>
+                            <span className="badge bg-secondary">
+                              {p.pickup_location || "Not specified"}
+                            </span>
+                          </td>
+                          <td>
+                            {p.passengerDetails?.map((pd, index) => (
+                              <div
+                                key={index}
+                                className="badge bg-secondary me-1 mb-1"
+                              >
+                                {pd.name} ({pd.age}, {pd.gender?.charAt(0)})
+                              </div>
+                            ))}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+
+            <div className="modal-footer border-0">
               <button
                 type="button"
                 className="btn btn-secondary"

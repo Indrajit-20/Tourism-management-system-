@@ -95,7 +95,7 @@ const releasePackageSeats = async (booking) => {
 
   schedule.available_seats = (schedule.seats || []).filter((seat) => !seat.is_booked).length;
   if (schedule.available_seats > 0 && schedule.departure_status === "BookingFull") {
-    schedule.departure_status = "Locked";
+    schedule.departure_status = "Open";
   }
 
   await schedule.save();

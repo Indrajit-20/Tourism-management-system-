@@ -8,7 +8,7 @@ const API_BASE_URL = "http://localhost:4000";
  * User selects one to proceed with booking
  */
 const isScheduleBookable = (schedule) => {
-  const validStatus = ["Open", "Locked"].includes(schedule?.departure_status);
+  const validStatus = ["Open"].includes(schedule?.departure_status);
   const hasSeats = Number(schedule?.available_seats || 0) > 0;
   return validStatus && hasSeats;
 };

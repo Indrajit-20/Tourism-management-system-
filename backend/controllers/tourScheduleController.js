@@ -8,7 +8,6 @@ const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 const SCHEDULE_STATUS = {
   DRAFT: "Draft",
   OPEN: "Open",
-  LOCKED_LEGACY: "Locked",
   BOOKING_FULL: "BookingFull",
   COMPLETED: "Completed",
   ARCHIVED: "Archived",
@@ -163,6 +162,11 @@ const recalculateScheduleStatus = (schedule) => {
   if (schedule.available_seats <= 0) {
     schedule.departure_status = SCHEDULE_STATUS.BOOKING_FULL;
     return;
+  }
+
+  const current = String(schedule.departure_status || "");
+  if (current !== SCHEDULE_STATUS.DRAFT && current !== SCHEDULE_STATUS.ARCHIVED) {
+    schedule.departure_status = SCHEDULE_STATUS.OPEN;
   }
 
 };
@@ -338,7 +342,7 @@ const getPackageDepartures = async (req, res) => {
         query.departure_status = statuses.length === 1 ? statuses[0] : { $in: statuses };
       }
     } else {
-      query.departure_status = { $in: [SCHEDULE_STATUS.OPEN, SCHEDULE_STATUS.LOCKED_LEGACY] };
+      query.departure_status = { $in: [SCHEDULE_STATUS.OPEN] };
     }
 
     const departures = await TourSchedule.find(query)
@@ -382,6 +386,14 @@ const getAllDepartures = async (req, res) => {
         select: "package_name source_city destination duration",
       })
       .sort({ start_date: 1 });
+
+    for (const schedule of departures) {
+      const previousStatus = schedule.departure_status;
+      recalculateScheduleStatus(schedule);
+      if (previousStatus !== schedule.departure_status) {
+        await schedule.save();
+      }
+    }
 
     res.status(200).json(departures);
   } catch (error) {
@@ -428,8 +440,8 @@ const getTourDeparture = async (req, res) => {
 /**
  * Update tour schedule (admin only)
  * Edit schedule rules:
- * - Draft/Open: date, bus, and price can be edited
- * - Locked: date, bus, and price cannot be edited (notes can be updated)
+ * - Draft/Open schedules are editable
+ * - If has_bookings is true, date, bus, and price cannot be edited
  */
 const updateTourDeparture = async (req, res) => {
   try {
@@ -443,7 +455,6 @@ const updateTourDeparture = async (req, res) => {
       departure_time,
       notes,
       departure_status,
-      allow_late_bookings,
     } = req.body;
 
     const departure = await TourSchedule.findById(id);
@@ -451,11 +462,12 @@ const updateTourDeparture = async (req, res) => {
       return res.status(404).json({ message: "Schedule not found" });
     }
 
+    recalculateScheduleStatus(departure);
+
     const currentStatus = String(departure.departure_status || "");
     const isDraftOrOpen = [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(currentStatus);
-    const isLocked = currentStatus === SCHEDULE_STATUS.LOCKED_LEGACY;
 
-    if (!isDraftOrOpen && !isLocked) {
+    if (!isDraftOrOpen) {
       return res.status(400).json({
         message: "This schedule cannot be edited in current status",
       });
@@ -468,9 +480,9 @@ const updateTourDeparture = async (req, res) => {
       price !== undefined ||
       price_per_person !== undefined;
 
-    if (isLocked && hasCoreChange) {
+    if (departure.has_bookings === true && hasCoreChange) {
       return res.status(400).json({
-        message: "Locked schedules cannot change date, bus, or price",
+        message: "Schedules with bookings cannot change date, bus, or price",
       });
     }
 
@@ -542,7 +554,6 @@ const updateTourDeparture = async (req, res) => {
     }
     if (isDraftOrOpen && bus_id) departure.bus_id = bus_id;
     if (typeof notes === "string") departure.notes = notes;
-    if (typeof allow_late_bookings === "boolean") departure.allow_late_bookings = allow_late_bookings;
     if (departure_status && [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(departure_status)) {
       departure.departure_status = departure_status;
     }
@@ -594,39 +605,6 @@ const openDeparture = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Error opening schedule",
-      error: error.message,
-    });
-  }
-};
-
-/**
- * Lock departure (called automatically when first booking is made)
- * Admin can no longer edit date/price/bus after this
- */
-const lockDeparture = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const departure = await TourSchedule.findById(id);
-    if (!departure) {
-      return res.status(404).json({ message: "Schedule not found" });
-    }
-
-    if (departure.departure_status === SCHEDULE_STATUS.LOCKED_LEGACY) {
-      return res.status(400).json({ message: "Schedule already locked" });
-    }
-
-    departure.departure_status = SCHEDULE_STATUS.LOCKED_LEGACY;
-    departure.has_bookings = true;
-    await departure.save();
-
-    res.status(200).json({
-      message: "Schedule locked",
-      schedule: departure,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error updating schedule status",
       error: error.message,
     });
   }
@@ -699,7 +677,6 @@ module.exports = {
   getTourDeparture,
   updateTourDeparture,
   openDeparture,
-  lockDeparture,
   deleteTourSchedule,
   getDepartureSeats,
 };

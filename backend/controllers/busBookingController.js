@@ -322,6 +322,64 @@ const autoCancelExpiredBookings = async () => {
   }
 };
 
+const autoCompletePastBusTrips = async () => {
+  try {
+    const now = new Date();
+    const todayStart = new Date(now);
+    todayStart.setHours(0, 0, 0, 0);
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+    const candidateTrips = await BusTrip.find({
+      status: { $in: ["Scheduled", "Running"] },
+    }).populate("schedule_id", "departure_time");
+
+    const tripIdsToComplete = [];
+
+    for (const trip of candidateTrips) {
+      const tripDate = new Date(trip.trip_date);
+      const tripDayStart = new Date(tripDate);
+      tripDayStart.setHours(0, 0, 0, 0);
+
+      let shouldComplete = tripDayStart < todayStart;
+
+      if (!shouldComplete && tripDayStart.getTime() === todayStart.getTime()) {
+        const departureMinutes = parseTimeToMinutes(trip.schedule_id?.departure_time);
+        if (departureMinutes !== null && nowMinutes >= departureMinutes) {
+          shouldComplete = true;
+        }
+      }
+
+      if (!shouldComplete) continue;
+
+      trip.status = "Completed";
+      await trip.save();
+      tripIdsToComplete.push(trip._id);
+    }
+
+    if (tripIdsToComplete.length === 0) {
+      return;
+    }
+
+    await BusTicketBooking.updateMany(
+      {
+        trip_id: { $in: tripIdsToComplete },
+        booking_status: "Confirmed",
+        payment_status: "Paid",
+      },
+      {
+        $set: {
+          booking_status: "Completed",
+          status: "Completed",
+        },
+      }
+    );
+
+    console.log(`✅ Auto-completed ${tripIdsToComplete.length} past bus trips`);
+  } catch (err) {
+    console.error("Auto-complete bus trips error:", err.message);
+  }
+};
+
 // 6. GET BOOKED SEATS for a trip
 
 const getBookedSeats = async (req, res) => {
@@ -435,5 +493,6 @@ module.exports = {
   getBookedSeats,
   getMyBookings,
   autoCancelExpiredBookings,
+  autoCompletePastBusTrips,
   cancelBooking, // ✅ NEW
 };

@@ -17,9 +17,11 @@ const cityRoutes = require("./routes/cityRoutes");
 const refundRoutes = require("./routes/refundRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const homeImageRoutes = require("./routes/homeImageRoutes");
+const TourSchedule = require("./models/TourSchedule");
 const cron = require("node-cron");
 const {
   autoCancelExpiredBookings,
+  autoCompletePastBusTrips,
 } = require("./controllers/busBookingController");
 const { runAllAutoTasks } = require("./utils/autoCompleteHelper");
 
@@ -40,17 +42,6 @@ const port = 4000;
 const app = express();
 // parse incoming JSON bodies
 app.use(express.json());
-
-ConnectMongoDB();
-
-cron.schedule("*/5 * * * *", async () => {
-  await autoCancelExpiredBookings();
-});
-
-// ✅ NEW: Run tour auto-complete and booking maintenance every hour
-cron.schedule("0 * * * *", async () => {
-  await runAllAutoTasks();
-});
 //cors
 
 app.use(cors());
@@ -121,6 +112,56 @@ app.use("/api/home-images", homeImageRoutes);
 // ✅ NEW: Ticket routes (Download tickets)
 app.use("/api/tickets", ticketRoutes);
 
-app.listen(port, () =>
-  console.log(`server started at http://localhost:${port}`)
-);
+const migrateLegacyLockedTourSchedules = async () => {
+  try {
+    const lockedResult = await TourSchedule.updateMany(
+      { departure_status: "Locked" },
+      {
+        $set: {
+          departure_status: "Open",
+          has_bookings: true,
+        },
+      }
+    );
+
+    const lateBookingFieldCleanup = await TourSchedule.updateMany(
+      { allow_late_bookings: { $exists: true } },
+      { $unset: { allow_late_bookings: "" } }
+    );
+
+    if (Number(lockedResult.modifiedCount || 0) > 0) {
+      console.log(
+        `[Startup Migration] Converted ${lockedResult.modifiedCount} Locked tour schedules to Open`
+      );
+    }
+
+    if (Number(lateBookingFieldCleanup.modifiedCount || 0) > 0) {
+      console.log(
+        `[Startup Migration] Removed allow_late_bookings from ${lateBookingFieldCleanup.modifiedCount} tour schedules`
+      );
+    }
+  } catch (error) {
+    console.error("[Startup Migration] Failed to migrate legacy Locked schedules:", error.message);
+  }
+};
+
+const startServer = async () => {
+  await ConnectMongoDB();
+  await migrateLegacyLockedTourSchedules();
+
+  cron.schedule("*/5 * * * *", async () => {
+    await autoCancelExpiredBookings();
+    await autoCompletePastBusTrips();
+  });
+
+  // ✅ NEW: Run tour auto-complete and booking maintenance every hour
+  cron.schedule("0 * * * *", async () => {
+    await runAllAutoTasks();
+  });
+
+  app.listen(port, () =>
+    console.log(`server started at http://localhost:${port}`)
+  );
+};
+
+startServer();

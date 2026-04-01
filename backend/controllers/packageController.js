@@ -45,7 +45,7 @@ const attachAvailableSeats = async (packages) => {
     {
       $match: {
         package_id: { $in: packageIds },
-        departure_status: { $in: ["Open", "BookingFull", "Locked"] },
+        departure_status: { $in: ["Open", "BookingFull"] },
       },
     },
     {

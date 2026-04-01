@@ -79,7 +79,6 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         "Open",
         "BookingFull",
         "Completed",
-        "Locked",
       ]);
       const filtered = (res.data || []).filter((item) => {
         const samePackage =
@@ -564,12 +563,6 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
                   {dep.departure_status === "Open" && (
                     <small className="text-success">Open for booking</small>
-                  )}
-
-                  {dep.departure_status === "Locked" && (
-                    <small className="text-info">
-                      🔒 Locked (bookings exist)
-                    </small>
                   )}
 
                   {dep.departure_status === "Completed" && (

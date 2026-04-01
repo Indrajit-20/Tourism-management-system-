@@ -36,7 +36,7 @@ const checkKashmirSchedules = async () => {
     } else {
       console.log("\n✅ Schedules Found. Status Analysis:");
       kashmirSchedules.forEach((sch, idx) => {
-        const userCanBook = ["Open", "Locked"].includes(sch.departure_status);
+        const userCanBook = ["Open"].includes(sch.departure_status);
         const status = sch.departure_status;
         console.log(`  ${idx + 1}. Status: ${status} | Seats: ${sch.available_seats}/${sch.total_seats} | User Can Book: ${userCanBook ? "✅" : "❌"}`);
       });

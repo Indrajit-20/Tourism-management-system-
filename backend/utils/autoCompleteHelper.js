@@ -11,7 +11,7 @@ const autoCompleteTours = async () => {
     const now = new Date();
 
     const activeSchedules = await TourSchedule.find({
-      departure_status: { $in: ["Open", "BookingFull", "Locked"] },
+      departure_status: { $in: ["Open", "BookingFull"] },
     });
 
     const toursToComplete = activeSchedules.filter((schedule) => {
@@ -93,7 +93,7 @@ const autoRejectExpiredBookings = async () => {
             (s) => !s.is_booked
           ).length;
           if (tourSchedule.departure_status === "BookingFull") {
-            tourSchedule.departure_status = "Locked";
+            tourSchedule.departure_status = "Open";
           }
           await tourSchedule.save();
         }
@@ -150,7 +150,7 @@ const autoCancelUnpaidBookings = async () => {
             (s) => !s.is_booked
           ).length;
           if (tourSchedule.departure_status === "BookingFull") {
-            tourSchedule.departure_status = "Locked";
+            tourSchedule.departure_status = "Open";
           }
           await tourSchedule.save();
         }

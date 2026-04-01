@@ -33,7 +33,7 @@ const busBookingSchema = new mongoose.Schema(
 
     booking_status: {
       type: String,
-      enum: ["Confirmed", "Cancelled"],
+      enum: ["Confirmed", "Completed", "Cancelled"],
       default: "Confirmed",
     },
 

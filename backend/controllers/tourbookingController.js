@@ -13,7 +13,7 @@ const BOOKING_STATUS = {
   CANCELLED: "cancelled",
 };
 
-const SCHEDULE_BOOKABLE_STATUSES = new Set(["Open", "Locked"]);
+const SCHEDULE_BOOKABLE_STATUSES = new Set(["Open"]);
 
 const INACTIVE_BOOKING_STATUSES = [
   BOOKING_STATUS.CANCELLED,
@@ -336,9 +336,6 @@ const packageBooking = async (req, res) => {
       );
     }
 
-    if (tourSchedule.has_bookings !== true && tourSchedule.departure_status === "Open") {
-      tourSchedule.departure_status = "Locked";
-    }
     if (tourSchedule.available_seats <= 0) {
       tourSchedule.departure_status = "BookingFull";
     }
@@ -490,7 +487,7 @@ const updatePackageBookingStatus = async (req, res) => {
         });
         schedule.available_seats = (schedule.seats || []).filter((seat) => !seat.is_booked).length;
         if (schedule.available_seats > 0 && schedule.departure_status === "BookingFull") {
-          schedule.departure_status = "Locked";
+          schedule.departure_status = "Open";
         }
         await schedule.save();
       }

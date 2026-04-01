@@ -52,20 +52,14 @@ const tourScheduleSchema = new mongoose.Schema(
     // BookingFull -> no seats left
     // Completed -> schedule end date passed
     // Archived -> hidden from users/admin lists
-    // Locked kept only for backward compatibility with existing data
     departure_status: {
       type: String,
-      enum: ["Draft", "Open", "BookingFull", "Locked", "Completed", "Archived"],
+      enum: ["Draft", "Open", "BookingFull", "Completed", "Archived"],
       default: "Draft",
     },
 
     // Track if any booking has been made
     has_bookings: { type: Boolean, default: false },
-
-    // Allow bookings up to 24 hours before departure (even if < 3 days rule)
-    // When false: strict 3-day booking window
-    // When true: allow bookings if departure > 24 hours away
-    allow_late_bookings: { type: Boolean, default: false },
 
     // Optional: admin notes for this specific departure
     notes: { type: String },

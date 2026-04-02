@@ -32,7 +32,7 @@ const ManageBus = () => {
     try {
       const res = await axios.get("http://localhost:4000/api/bus");
       const sorted = [...res.data].sort((a, b) =>
-        String(a.bus_number || "").localeCompare(String(b.bus_number || "")),
+        String(a.bus_number || "").localeCompare(String(b.bus_number || ""))
       );
       setBuses(sorted);
     } catch (error) {
@@ -73,13 +73,13 @@ const ManageBus = () => {
       .flatMap((bus) => {
         if (Array.isArray(bus.driver_ids) && bus.driver_ids.length) {
           return bus.driver_ids.map((driver) =>
-            typeof driver === "object" ? String(driver._id) : String(driver),
+            typeof driver === "object" ? String(driver._id) : String(driver)
           );
         }
         return bus.driver_id
           ? [String(bus.driver_id._id || bus.driver_id)]
           : [];
-      }),
+      })
   );
 
   const isDriverUnavailable = (driverId) => {
@@ -124,15 +124,15 @@ const ManageBus = () => {
       "Sleeper",
       "Double Decker",
       ...buses.map((bus) => bus.bus_type).filter(Boolean),
-    ]),
+    ])
   );
 
   const totalBuses = buses.length;
   const totalRouteBuses = buses.filter(
-    (bus) => String(bus.bus_category || "route") === "route",
+    (bus) => String(bus.bus_category || "route") === "route"
   ).length;
   const totalTourBuses = buses.filter(
-    (bus) => String(bus.bus_category || "route") === "tour",
+    (bus) => String(bus.bus_category || "route") === "tour"
   ).length;
 
   const handleChange = (e) => {
@@ -164,7 +164,7 @@ const ManageBus = () => {
     setForm((prev) => ({
       ...prev,
       driver_ids: prev.driver_ids.map((driverId, i) =>
-        i === index ? value : driverId,
+        i === index ? value : driverId
       ),
     }));
   };
@@ -197,7 +197,11 @@ const ManageBus = () => {
         return;
       }
 
-      if (!["seater", "sleeper", "double_decker"].includes(form.layout_type)) {
+      if (
+        !["seater", "seater_2x2", "sleeper", "double_decker"].includes(
+          form.layout_type
+        )
+      ) {
         alert("Please select valid layout type.");
         return;
       }
@@ -217,7 +221,7 @@ const ManageBus = () => {
           payload,
           {
             headers,
-          },
+          }
         );
         alert("Bus updated successfully!");
       } else {
@@ -239,17 +243,17 @@ const ManageBus = () => {
     const driverIds =
       Array.isArray(bus.driver_ids) && bus.driver_ids.length
         ? bus.driver_ids.map((driver) =>
-            String(typeof driver === "object" ? driver._id : driver),
+            String(typeof driver === "object" ? driver._id : driver)
           )
         : bus.driver_id
-          ? [
-              String(
-                typeof bus.driver_id === "object"
-                  ? bus.driver_id._id
-                  : bus.driver_id,
-              ),
-            ]
-          : [""];
+        ? [
+            String(
+              typeof bus.driver_id === "object"
+                ? bus.driver_id._id
+                : bus.driver_id
+            ),
+          ]
+        : [""];
 
     setForm({
       bus_number: bus.bus_number || "",
@@ -349,9 +353,10 @@ const ManageBus = () => {
                 value={form.layout_type}
                 onChange={handleChange}
               >
-                <option value="seater">seater</option>
-                <option value="sleeper">sleeper</option>
-                <option value="double_decker">double_decker</option>
+                <option value="seater">Seater (2x3)</option>
+                <option value="seater_2x2">Seater (2x2)</option>
+                <option value="sleeper">Sleeper</option>
+                <option value="double_decker">Double Decker</option>
               </select>
             </div>
             <div className="col-md-3 mb-2">
@@ -386,7 +391,7 @@ const ManageBus = () => {
                       .filter((staff) =>
                         (staff.designation || "")
                           .toLowerCase()
-                          .includes("driver"),
+                          .includes("driver")
                       )
                       .map((driver) => (
                         <option
@@ -564,7 +569,7 @@ const ManageBus = () => {
                         .map((driver) =>
                           typeof driver === "object"
                             ? driver.name || "Unknown"
-                            : "Assigned",
+                            : "Assigned"
                         )
                         .join(", ")
                     : bus.driver_id?.name || "-"}

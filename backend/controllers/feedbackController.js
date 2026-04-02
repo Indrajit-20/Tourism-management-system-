@@ -2,6 +2,7 @@
 const Feedback = require("../models/Feedback");
 const Package = require("../models/Package");
 const PackageBooking = require("../models/PackageBooking");
+const BusTicketBooking = require("../models/BusTicketBooking");
 const TourSchedule = require("../models/TourSchedule");
 
 // 1. Submit Feedback (Customer after booking)
@@ -13,7 +14,7 @@ const submitFeedback = async (req, res) => {
       package_booking_id,
       bus_booking_id,
       package_id,
-      route_id,
+      route_id: routeIdFromReq,
     } = req.body;
     const custmer_id = req.user.id; // From token
 
@@ -26,8 +27,12 @@ const submitFeedback = async (req, res) => {
       return res.status(400).json({ message: "Review text is required" });
     }
 
-    // Step 1: Identify which package is being reviewed.
+    // Step 1: Identify package/route being reviewed.
     let targetPackageId = package_id || null;
+    let route_id = routeIdFromReq || null;
+    let effectivePackageBookingId = package_booking_id || null;
+    let effectiveDepartureId = null;
+    let isRouteFeedback = false;
 
     if (package_booking_id) {
       const booking = await PackageBooking.findById(package_booking_id);
@@ -40,40 +45,49 @@ const submitFeedback = async (req, res) => {
           .json({ message: "You can review only your own booking" });
       }
       targetPackageId = booking.Package_id;
+      effectivePackageBookingId = booking._id;
+      effectiveDepartureId = booking.tour_schedule_id || null;
     }
 
-    let effectivePackageBookingId = package_booking_id || null;
-    let effectiveDepartureId = null;
+    if (!targetPackageId) {
+      if (!route_id && bus_booking_id) {
+        const busBooking = await BusTicketBooking.findById(
+          bus_booking_id
+        ).populate({
+          path: "trip_id",
+          populate: { path: "schedule_id", populate: { path: "route_id" } },
+        });
+        if (!busBooking) {
+          return res.status(404).json({ message: "Bus booking not found" });
+        }
+        route_id = busBooking.trip_id?.schedule_id?.route_id?._id || null;
+      }
+
+      if (!route_id) {
+        return res.status(400).json({
+          message:
+            "Either package booking or bus route information should be provided",
+        });
+      }
+      isRouteFeedback = true;
+    }
 
     // Step 2: For package reviews, ensure booked user + completed tour schedule.
     if (targetPackageId) {
-      let bookingDoc = null;
-
-      if (package_booking_id) {
-        bookingDoc = await PackageBooking.findById(package_booking_id);
-      }
-
-      if (!bookingDoc) {
-        bookingDoc = await PackageBooking.findOne({
-          Package_id: targetPackageId,
-          Custmer_id: custmer_id,
-          booking_status: { $in: ["confirmed", "completed"] },
-        }).sort({ createdAt: -1 });
-      }
-
+      const bookingDoc = await PackageBooking.findById(
+        effectivePackageBookingId
+      );
       if (!bookingDoc) {
         return res
-          .status(403)
-          .json({ message: "You can review only packages you have booked" });
-      }
-
-      const pkg = await Package.findById(targetPackageId, "_id");
-      if (!pkg) {
-        return res.status(404).json({ message: "Package not found" });
+          .status(404)
+          .json({ message: "Package booking not found for rating" });
       }
 
       const schedule = bookingDoc.tour_schedule_id
-        ? await TourSchedule.findById(bookingDoc.tour_schedule_id, "departure_status end_date")
+        ? await TourSchedule.findById(
+            bookingDoc.tour_schedule_id,
+            "departure_status end_date"
+          )
         : null;
 
       const isCompletedSchedule =
@@ -83,7 +97,8 @@ const submitFeedback = async (req, res) => {
 
       if (!isCompletedSchedule) {
         return res.status(400).json({
-          message: "You can submit or update review only after tour is completed",
+          message:
+            "You can submit or update review only after tour is completed",
         });
       }
 
@@ -97,10 +112,6 @@ const submitFeedback = async (req, res) => {
           });
         }
       }
-
-      targetPackageId = bookingDoc.Package_id;
-      effectivePackageBookingId = bookingDoc._id;
-      effectiveDepartureId = bookingDoc.tour_schedule_id || null;
     }
 
     // Step 3: Upsert review so customer can update later.
@@ -135,7 +146,7 @@ const submitFeedback = async (req, res) => {
       });
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Feedback saved successfully",
       feedback,
     });

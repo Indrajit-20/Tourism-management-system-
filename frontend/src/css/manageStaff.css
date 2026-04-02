@@ -1,48 +1,56 @@
 .manage-staff-page {
-  background: linear-gradient(180deg, #f6f9ff 0%, #eef4ff 100%);
-  border: 1px solid #c9d8f0;
-  border-radius: 14px;
-  padding: 18px;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.08);
 }
 
 .manage-staff-title {
-  font-weight: 700;
-  color: #1d2a40;
-  margin-bottom: 14px;
+  font-weight: 800;
+  color: var(--color-primary-blue);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
 }
 
 .manage-staff-card {
-  border: 1px solid #b8c9e6 !important;
+  border: 2px solid var(--color-border) !important;
   border-radius: 12px;
-  background-color: #ffffff;
+  background-color: var(--color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px;
 }
 
 .manage-staff-field label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #1f2d3d;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-black-text);
+  font-size: 0.95rem;
 }
 
 .manage-staff-field .form-control {
-  border: 1px solid #9eb6dc;
-  border-radius: 8px;
-  padding: 9px 10px;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
 }
 
 .manage-staff-field .form-control:focus {
-  border-color: #4f79be;
-  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
 }
 
 .manage-staff-control {
   min-height: 42px;
-  border: 1px solid #9eb6dc;
-  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
 }
 
 .manage-staff-control:focus {
-  border-color: #4f79be;
-  box-shadow: 0 0 0 0.18rem rgba(79, 121, 190, 0.2);
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
 }
 
 .manage-staff-table-wrap {

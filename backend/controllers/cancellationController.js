@@ -4,7 +4,11 @@ const BusTicketBooking = require("../models/BusTicketBooking");
 const PackageBooking = require("../models/PackageBooking");
 const TourSchedule = require("../models/TourSchedule");
 
-const PACKAGE_CANCEL_ALLOWED_STATUSES = new Set(["pending", "approved", "confirmed"]);
+const PACKAGE_CANCEL_ALLOWED_STATUSES = new Set([
+  "pending",
+  "approved",
+  "confirmed",
+]);
 
 const toDayStart = (value) => {
   const date = new Date(value);
@@ -93,8 +97,13 @@ const releasePackageSeats = async (booking) => {
     };
   });
 
-  schedule.available_seats = (schedule.seats || []).filter((seat) => !seat.is_booked).length;
-  if (schedule.available_seats > 0 && schedule.departure_status === "BookingFull") {
+  schedule.available_seats = (schedule.seats || []).filter(
+    (seat) => !seat.is_booked
+  ).length;
+  if (
+    schedule.available_seats > 0 &&
+    schedule.departure_status === "BookingFull"
+  ) {
     schedule.departure_status = "Open";
   }
 
@@ -110,14 +119,19 @@ const getPackageCancellationPreview = async (req, res) => {
       return res.status(400).json({ message: "booking_id is required" });
     }
 
-    const booking = await PackageBooking.findOne({ _id: booking_id, Custmer_id: custmer_id });
+    const booking = await PackageBooking.findOne({
+      _id: booking_id,
+      Custmer_id: custmer_id,
+    });
     if (!booking) {
       return res.status(404).json({ message: "Package booking not found" });
     }
 
     const status = String(booking.booking_status || "").toLowerCase();
     if (status === "completed") {
-      return res.status(400).json({ message: "Completed booking cannot be cancelled" });
+      return res
+        .status(400)
+        .json({ message: "Completed booking cannot be cancelled" });
     }
     if (status === "cancelled") {
       return res.status(400).json({ message: "Booking is already cancelled" });
@@ -141,7 +155,10 @@ const getPackageCancellationPreview = async (req, res) => {
       reason: refundInfo.reason,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Error preparing cancellation preview", error: error.message });
+    return res.status(500).json({
+      message: "Error preparing cancellation preview",
+      error: error.message,
+    });
   }
 };
 
@@ -158,23 +175,35 @@ const cancelBooking = async (req, res) => {
         booking_status: "Cancelled",
       });
     } else if (booking_type === "Package") {
-      const pkgBooking = await PackageBooking.findOne({ _id: booking_id, Custmer_id: custmer_id });
+      const pkgBooking = await PackageBooking.findOne({
+        _id: booking_id,
+        Custmer_id: custmer_id,
+      });
       if (!pkgBooking) {
         return res.status(404).json({ message: "Package booking not found" });
       }
 
-      const normalizedStatus = String(pkgBooking.booking_status || "").toLowerCase();
+      const normalizedStatus = String(
+        pkgBooking.booking_status || ""
+      ).toLowerCase();
       if (normalizedStatus === "completed") {
-        return res.status(400).json({ message: "Completed booking cannot be cancelled" });
+        return res
+          .status(400)
+          .json({ message: "Completed booking cannot be cancelled" });
       }
       if (normalizedStatus === "cancelled") {
-        return res.status(400).json({ message: "Booking is already cancelled" });
+        return res
+          .status(400)
+          .json({ message: "Booking is already cancelled" });
       }
 
       const schedule = pkgBooking.tour_schedule_id
         ? await TourSchedule.findById(pkgBooking.tour_schedule_id, "start_date")
         : null;
-      const refundInfo = calculatePackageRefund({ booking: pkgBooking, schedule });
+      const refundInfo = calculatePackageRefund({
+        booking: pkgBooking,
+        schedule,
+      });
       if (!refundInfo.allowed) {
         return res.status(400).json({ message: refundInfo.message });
       }
@@ -202,7 +231,7 @@ const cancelBooking = async (req, res) => {
       custmer_id,
       booking_id,
       booking_type,
-      refund_amount, 
+      refund_amount,
       cancellation_reason: reason,
       status: "Cancelled",
     });
@@ -232,6 +261,45 @@ const getAllCancellations = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error fetching cancellations", error: error.message });
+  }
+};
+const processRefund = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { refund_amount, admin_notes } = req.body;
+
+    if (refund_amount === undefined || refund_amount === null) {
+      return res.status(400).json({ message: "refund_amount is required" });
+    }
+
+    if (Number(refund_amount) < 0) {
+      return res
+        .status(400)
+        .json({ message: "refund_amount cannot be negative" });
+    }
+
+    const cancellation = await Cancellation.findByIdAndUpdate(
+      id,
+      {
+        refund_amount: Number(refund_amount),
+        status: "Refund Done",
+        admin_notes: admin_notes || "",
+      },
+      { new: true }
+    );
+
+    if (!cancellation) {
+      return res.status(404).json({ message: "Cancellation not found" });
+    }
+
+    res.status(200).json({
+      message: `Refund of ₹${refund_amount} processed successfully`,
+      cancellation,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error processing refund", error: error.message });
   }
 };
 
@@ -282,6 +350,7 @@ module.exports = {
   getPackageCancellationPreview,
   cancelBooking,
   getAllCancellations,
+  processRefund,
   markRefundDone,
   getMyCancellations,
 };

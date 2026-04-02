@@ -1,0 +1,232 @@
+/* Basic Advanced Reports Styles */
+
+.advanced-reports-container {
+  background: #f9fafb;
+  min-height: 100vh;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.report-header {
+  padding: 1.5rem !important;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.report-header h2 {
+  font-size: 1.5rem !important;
+  color: #111827;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.filter-section {
+  padding: 1rem !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb;
+}
+
+.filter-section label {
+  color: #374151;
+  font-size: 0.85rem !important;
+  margin-bottom: 0.3rem !important;
+  font-weight: 500;
+}
+
+.filter-section .form-control,
+.filter-section .form-control-lg {
+  font-size: 0.9rem !important;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem !important;
+}
+
+.filter-section .btn-warning {
+  padding: 0.4rem 1rem !important;
+  font-size: 0.9rem !important;
+}
+
+/* Summary Cards */
+.summary-card {
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+}
+
+.summary-card .card-body {
+  padding: 1rem !important;
+}
+
+.summary-card .card-title {
+  font-size: 0.75rem !important;
+  color: #4b5563 !important;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem !important;
+  font-weight: 600;
+}
+
+.summary-card .display-6 {
+  font-size: 1.5rem !important;
+  margin: 0.25rem 0 !important;
+  font-weight: 700;
+  color: #111827 !important;
+}
+
+.summary-card p {
+  font-size: 0.8rem !important;
+}
+
+/* Tab Navigation */
+.nav-pills {
+  background: #ffffff !important;
+  padding: 0.25rem !important;
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb;
+}
+
+.nav-pills .nav-link {
+  font-size: 0.9rem !important;
+  border-radius: 6px !important;
+  color: #4b5563 !important;
+  font-weight: 500;
+  margin: 0.15rem !important;
+  padding: 0.4rem 1rem !important;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+}
+
+.nav-pills .nav-link.active {
+  background-color: #e5e7eb !important;
+  color: #111827 !important;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-title {
+  color: #111827;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem !important;
+}
+
+/* Remove all gradients originally defined */
+.bg-gradient-primary,
+.bg-gradient-success,
+.bg-gradient-info,
+.bg-gradient-warning {
+  background: #ffffff !important;
+}
+
+/* Charts */
+.chart-container {
+  position: relative;
+  height: 400px;
+  margin-bottom: 2rem;
+}
+
+canvas {
+  border-radius: 10px;
+}
+
+/* Tables */
+.table {
+  margin-bottom: 0;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.table thead th {
+  border: none;
+  color: #374151;
+  font-weight: 600;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.table tbody td {
+  border: none;
+  padding: 1rem;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .summary-card .display-6 {
+    font-size: 1.8rem;
+  }
+}
+
+@media print {
+  .nav-pills,
+  .filter-section,
+  .btn-danger {
+    display: none !important;
+  }
+
+  .advanced-reports-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    background: white !important;
+  }
+
+  .tab-pane {
+    display: block !important;
+    opacity: 1 !important;
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+
+  canvas {
+    max-height: 300px !important;
+    width: 100% !important;
+  }
+
+  .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .col-lg-8,
+  .col-lg-6,
+  .col-lg-4,
+  .col-lg-7,
+  .col-lg-5 {
+    width: 50% !important;
+    flex: 0 0 50% !important;
+  }
+}

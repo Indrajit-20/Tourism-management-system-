@@ -4,10 +4,10 @@
 
 /* Global Styles */
 :root {
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --success-gradient: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-  --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --primary-gradient: var(--color-primary-blue);
+  --danger-gradient: var(--color-primary-blue);
+  --success-gradient: var(--color-primary-blue);
+  --warning-gradient: var(--color-primary-blue);
 }
 
 /* ============================================
@@ -56,7 +56,8 @@
 }
 
 .profile-info-box {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -64,7 +65,7 @@
 
 .profile-info-box:hover {
   transform: translateX(5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px rgba(0, 102, 204, 0.1);
 }
 
 .profile-info-box small {
@@ -72,11 +73,13 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: var(--color-gray-medium);
 }
 
 .profile-info-box strong {
   font-size: 1rem;
   word-break: break-word;
+  color: var(--color-black);
 }
 
 /* ============================================
@@ -88,8 +91,8 @@
 }
 
 .staff-table thead tr {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--primary-gradient);
+  color: var(--color-white);
 }
 
 .staff-table thead th {
@@ -102,12 +105,12 @@
 }
 
 .staff-table tbody tr {
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
   transition: background-color 0.3s ease;
 }
 
 .staff-table tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-lighter);
 }
 
 .staff-table tbody td {
@@ -126,13 +129,13 @@
 }
 
 .staff-designation-badge.driver {
-  background-color: #cfe9ff;
-  color: #0055cc;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .staff-designation-badge.guide {
-  background-color: #ffccdd;
-  color: #cc0033;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 /* ============================================
@@ -154,32 +157,32 @@
 }
 
 .action-btn.view {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .action-btn.view:hover {
-  background-color: #1976d2;
+  background-color: var(--color-primary-blue);
   color: white;
 }
 
 .action-btn.edit {
-  background-color: #fff3e0;
-  color: #f57c00;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .action-btn.edit:hover {
-  background-color: #f57c00;
+  background-color: var(--color-primary-blue);
   color: white;
 }
 
 .action-btn.delete {
-  background-color: #ffebee;
-  color: #d32f2f;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .action-btn.delete:hover {
-  background-color: #d32f2f;
+  background-color: var(--color-primary-blue);
   color: white;
 }
 
@@ -234,7 +237,7 @@
 }
 
 .modal-footer {
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid var(--color-border);
   padding: 1.5rem;
 }
 
@@ -245,7 +248,7 @@
 .form-control,
 .form-select {
   border-radius: 8px;
-  border: 2px solid #e9ecef;
+  border: 2px solid var(--color-border);
   padding: 12px 15px;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -253,14 +256,14 @@
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
 }
 
 .form-label {
   margin-bottom: 0.75rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-black-text);
 }
 
 /* ============================================
@@ -268,15 +271,15 @@
    ============================================ */
 
 .header-gradient-driver {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-blue);
 }
 
 .header-gradient-guide {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-primary-blue);
 }
 
 .header-gradient-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-blue);
 }
 
 /* ============================================
@@ -284,7 +287,7 @@
    ============================================ */
 
 .badge-driver {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary-blue);
   color: white;
   padding: 8px 12px;
   border-radius: 20px;
@@ -293,7 +296,7 @@
 }
 
 .badge-guide {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: var(--color-primary-blue);
   color: white;
   padding: 8px 12px;
   border-radius: 20px;
@@ -316,28 +319,28 @@
 }
 
 .icon-box.primary {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .icon-box.danger {
-  background-color: #ffebee;
-  color: #d32f2f;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .icon-box.success {
-  background-color: #e8f5e9;
-  color: #388e3c;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .icon-box.warning {
-  background-color: #fff3e0;
-  color: #f57c00;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .icon-box.info {
-  background-color: #e0f2f1;
-  color: #00897b;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 /* ============================================
@@ -424,7 +427,6 @@
   }
 }
 
-  
 .min-vh-100 {
   min-height: 100vh;
 }
@@ -464,21 +466,21 @@
 }
 
 .alert-success {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .alert-danger {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .alert-info {
-  background-color: #e0f2f1;
-  color: #00695c;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .alert-warning {
-  background-color: #fff3e0;
-  color: #e65100;
+  background-color: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }

@@ -1,7 +1,7 @@
 .sfc-wrap {
-  border: 1px solid #dfe7f4;
+  border: 1px solid var(--color-border);
   border-radius: 14px;
-  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 70%);
+  background: var(--color-white);
 }
 
 .sfc-header {
@@ -14,11 +14,11 @@
 
 .sfc-title {
   font-weight: 700;
-  color: #1c2b4a;
+  color: var(--color-secondary-blue);
 }
 
 .sfc-subtitle {
-  color: #5f6b85;
+  color: var(--color-gray-medium);
 }
 
 .sfc-body {
@@ -28,19 +28,19 @@
 .sfc-result {
   padding: 0 16px 14px;
   font-size: 0.9rem;
-  color: #49566f;
+  color: var(--color-gray-medium);
 }
 
 .sfc-input,
 .sfc-select {
   border-radius: 10px;
-  border: 1px solid #cfd9ec;
+  border: 1px solid var(--color-border);
 }
 
 .sfc-input:focus,
 .sfc-select:focus {
-  border-color: #4e83ff;
-  box-shadow: 0 0 0 0.15rem rgba(78, 131, 255, 0.18);
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 0.15rem rgba(0, 102, 204, 0.18);
 }
 
 @media (max-width: 768px) {

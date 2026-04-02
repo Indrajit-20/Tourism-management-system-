@@ -28,6 +28,7 @@ import MyBookings from "./pages/MyBookings"; // Import My Bookings Page
 import MyInvoices from "./pages/MyInvoices"; // Import My Invoices Page
 import RefundReport from "./pages/RefundReport"; // Import Refund Report Page
 import Reports from "./pages/Reports"; // Import Reports Page
+import AdvancedReports from "./pages/AdvancedReports"; // Import Advanced Reports Page
 
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute
@@ -93,6 +94,7 @@ function App() {
             <Route path="cancellations" element={<ManageCancellations />} />
             <Route path="refunds" element={<RefundReport />} />
             <Route path="reports" element={<Reports />} />
+            <Route path="advanced-reports" element={<AdvancedReports />} />
             <Route path="manage-trips" element={<ManageTripsByDate />} />
             {/* Add Bus Route */}
           </Route>

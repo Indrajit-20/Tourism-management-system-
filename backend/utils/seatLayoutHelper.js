@@ -3,8 +3,12 @@ const isDoubleDeckerBus = (busType) =>
   /double\s*-?\s*decker/i.test(String(busType || ""));
 
 const resolveLayoutType = ({ layoutType, busType }) => {
-  const normalized = String(layoutType || "").trim().toLowerCase();
-  if (["seater", "sleeper", "double_decker"].includes(normalized)) {
+  const normalized = String(layoutType || "")
+    .trim()
+    .toLowerCase();
+  if (
+    ["seater", "seater_2x2", "sleeper", "double_decker"].includes(normalized)
+  ) {
     return normalized;
   }
 
@@ -95,13 +99,16 @@ const buildSeatLayout = ({
     return seats;
   }
 
+  // Choose 5 seats per row (2x3) normally, but 4 seats per row for 2x2.
+  const seatsPerRow = resolvedLayoutType === "seater_2x2" ? 4 : 5;
+
   for (let i = 1; i <= count; i += 1) {
-    const col = ((i - 1) % 4) + 1;
+    const col = ((i - 1) % seatsPerRow) + 1;
     const seat = {
       seat_number: `S${i}`,
-      row: Math.ceil(i / 4),
+      row: Math.ceil(i / seatsPerRow),
       column: col,
-      type: col === 1 || col === 4 ? "window" : "aisle",
+      type: col === 1 || col === seatsPerRow ? "window" : "aisle",
       price,
     };
     if (includeAvailability) seat.is_available = true;
@@ -117,7 +124,7 @@ const buildSeatLayout = ({
 
 const buildSeatNumbers = (totalSeats, layoutType, busType) =>
   buildSeatLayout({ totalSeats, layoutType, busType }).map(
-    (seat) => seat.seat_number,
+    (seat) => seat.seat_number
   );
 
 module.exports = {

@@ -3,6 +3,7 @@ import axios from "axios";
 import BookingCard from "./BookingCard";
 import BookingModal from "./BookingModal";
 import BookingFilters from "./BookingFilters";
+import FeedbackModal from "../../components/FeedbackModal";
 import "../../css/booking.css";
 import { normalize, STATUSES } from "./bookingConfig";
 import { toUiBooking } from "./bookingMapper";
@@ -39,6 +40,7 @@ const MyBookings = () => {
   const [statusTab, setStatusTab] = useState("All");
   const [search, setSearch] = useState("");
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const [selectedFeedbackBooking, setSelectedFeedbackBooking] = useState(null);
 
   const canPrintBooking = (booking) => {
     const isTour = normalize(booking?.type) === "tour";
@@ -61,7 +63,7 @@ const MyBookings = () => {
           booking_type: type,
           transaction_id: transactionId,
         },
-        { headers },
+        { headers }
       );
     } catch (err) {
       const message = String(err?.response?.data?.message || "").toLowerCase();
@@ -188,7 +190,7 @@ const MyBookings = () => {
         const previewRes = await axios.post(
           `${API}/api/cancellation/preview`,
           { booking_id: booking._id },
-          { headers },
+          { headers }
         );
 
         const preview = previewRes.data || {};
@@ -208,7 +210,7 @@ const MyBookings = () => {
             booking_type: "Package",
             reason: "Cancelled by user from My Bookings",
           },
-          { headers },
+          { headers }
         );
       } else {
         if (!window.confirm("Do you want to cancel this bus booking?")) return;
@@ -216,7 +218,7 @@ const MyBookings = () => {
         await axios.post(
           `${API}/api/bus-bookings/cancel/${booking._id}`,
           { reason: "Cancelled by user from My Bookings" },
-          { headers },
+          { headers }
         );
       }
 
@@ -244,7 +246,7 @@ const MyBookings = () => {
 
     const amount = Number(
       booking?.totalPaid ||
-        Number(booking?.pricePerPerson || 0) * Number(booking?.travellers || 0),
+        Number(booking?.pricePerPerson || 0) * Number(booking?.travellers || 0)
     );
 
     if (!Number.isFinite(amount) || amount <= 0) {
@@ -259,7 +261,7 @@ const MyBookings = () => {
       const orderRes = await axios.post(
         `${API}/api/payment/create-order`,
         { amount },
-        { headers },
+        { headers }
       );
 
       const order = orderRes.data || {};
@@ -287,12 +289,12 @@ const MyBookings = () => {
                 booking_id: booking._id,
                 payment_id: response.razorpay_payment_id,
               },
-              { headers },
+              { headers }
             );
 
             await createInvoiceForBooking(
               booking,
-              response.razorpay_payment_id,
+              response.razorpay_payment_id
             );
 
             alert("Payment successful. Your tour booking is now confirmed.");
@@ -301,7 +303,7 @@ const MyBookings = () => {
           } catch (err) {
             alert(
               err.response?.data?.message ||
-                "Payment was captured, but confirmation failed. Please contact support.",
+                "Payment was captured, but confirmation failed. Please contact support."
             );
           }
         },
@@ -334,7 +336,7 @@ const MyBookings = () => {
 
     if (!canPrintBooking(booking)) {
       alert(
-        "Print/Download is available only after successful payment confirmation.",
+        "Print/Download is available only after successful payment confirmation."
       );
       return;
     }
@@ -355,7 +357,7 @@ const MyBookings = () => {
               <td>${escapeHtml(p?.age || "-")}</td>
               <td>${escapeHtml(p?.gender || "-")}</td>
               <td>${escapeHtml(p?.seat || "-")}</td>
-            </tr>`,
+            </tr>`
             )
             .join("")
         : "<tr><td colspan='5'>No passenger details available.</td></tr>";
@@ -398,52 +400,96 @@ const MyBookings = () => {
         <div class="head">
           <div>
             <h1>${escapeHtml(booking.name || "Booking")}</h1>
-            <div class="muted">Booking ID: ${escapeHtml(booking._id || "-")}</div>
-            <div class="muted">Booked On: ${escapeHtml(toDateLabel(booking.bookedOn))}</div>
+            <div class="muted">Booking ID: ${escapeHtml(
+              booking._id || "-"
+            )}</div>
+            <div class="muted">Booked On: ${escapeHtml(
+              toDateLabel(booking.bookedOn)
+            )}</div>
           </div>
           <div>
             <span class="badge">${escapeHtml(booking.type || "-")}</span>
             <span class="badge">${escapeHtml(booking.status || "-")}</span>
-            <span class="badge">Payment: ${escapeHtml(booking.paymentStatus || "-")}</span>
+            <span class="badge">Payment: ${escapeHtml(
+              booking.paymentStatus || "-"
+            )}</span>
           </div>
         </div>
 
         <div class="section">
           <h3>Journey Details</h3>
           <div class="grid">
-            <div><div class="label">From</div><div class="value">${escapeHtml(booking.from || "-")}</div></div>
-            <div><div class="label">To</div><div class="value">${escapeHtml(booking.to || "-")}</div></div>
-            <div><div class="label">${isTour ? "Start Date" : "Travel Date"}</div><div class="value">${escapeHtml(toDateLabel(booking.startDate))}</div></div>
+            <div><div class="label">From</div><div class="value">${escapeHtml(
+              booking.from || "-"
+            )}</div></div>
+            <div><div class="label">To</div><div class="value">${escapeHtml(
+              booking.to || "-"
+            )}</div></div>
+            <div><div class="label">${
+              isTour ? "Start Date" : "Travel Date"
+            }</div><div class="value">${escapeHtml(
+      toDateLabel(booking.startDate)
+    )}</div></div>
             ${
               isTour
-                ? `<div><div class="label">End Date</div><div class="value">${escapeHtml(toDateLabel(booking.endDate))}</div></div>`
-                : `<div><div class="label">Duration</div><div class="value">${escapeHtml(booking.duration || "-")}</div></div>`
+                ? `<div><div class="label">End Date</div><div class="value">${escapeHtml(
+                    toDateLabel(booking.endDate)
+                  )}</div></div>`
+                : `<div><div class="label">Duration</div><div class="value">${escapeHtml(
+                    booking.duration || "-"
+                  )}</div></div>`
             }
-            <div><div class="label">Departure</div><div class="value">${escapeHtml(booking.departure || "-")}</div></div>
+            <div><div class="label">Departure</div><div class="value">${escapeHtml(
+              booking.departure || "-"
+            )}</div></div>
             ${
               isTour
-                ? `<div><div class="label">Duration</div><div class="value">${escapeHtml(booking.duration || "-")}</div></div>`
-                : `<div><div class="label">Arrival</div><div class="value">${escapeHtml(booking.arrival || "-")}</div></div>`
+                ? `<div><div class="label">Duration</div><div class="value">${escapeHtml(
+                    booking.duration || "-"
+                  )}</div></div>`
+                : `<div><div class="label">Arrival</div><div class="value">${escapeHtml(
+                    booking.arrival || "-"
+                  )}</div></div>`
             }
-            <div><div class="label">Transport</div><div class="value">${escapeHtml(booking.transport || "-")}</div></div>
-            <div><div class="label">Bus Type</div><div class="value">${escapeHtml(booking.busType || "-")}</div></div>
-            <div><div class="label">Bus</div><div class="value">${escapeHtml(`${booking.busName || "-"} ${booking.busNo ? `(${booking.busNo})` : ""}`)}</div></div>
-            <div><div class="label">${isTour ? "Pickup" : "Boarding Point"}</div><div class="value">${escapeHtml(booking.pickup || "-")}</div></div>
+            <div><div class="label">Transport</div><div class="value">${escapeHtml(
+              booking.transport || "-"
+            )}</div></div>
+            <div><div class="label">Bus Type</div><div class="value">${escapeHtml(
+              booking.busType || "-"
+            )}</div></div>
+            <div><div class="label">Bus</div><div class="value">${escapeHtml(
+              `${booking.busName || "-"} ${
+                booking.busNo ? `(${booking.busNo})` : ""
+              }`
+            )}</div></div>
+            <div><div class="label">${
+              isTour ? "Pickup" : "Boarding Point"
+            }</div><div class="value">${escapeHtml(
+      booking.pickup || "-"
+    )}</div></div>
             ${
               isTour
-                ? `<div><div class="label">Hotel</div><div class="value">${escapeHtml(booking.hotel || "-")}</div></div>`
-                : `<div><div class="label">Drop Point</div><div class="value">${escapeHtml(booking.drop || "-")}</div></div>`
+                ? `<div><div class="label">Hotel</div><div class="value">${escapeHtml(
+                    booking.hotel || "-"
+                  )}</div></div>`
+                : `<div><div class="label">Drop Point</div><div class="value">${escapeHtml(
+                    booking.drop || "-"
+                  )}</div></div>`
             }
           </div>
 
           <div class="price-row">
             <div>
               <div class="label">Per Person</div>
-              <div class="small-price">${escapeHtml(toMoney(booking.pricePerPerson))}</div>
+              <div class="small-price">${escapeHtml(
+                toMoney(booking.pricePerPerson)
+              )}</div>
             </div>
             <div style="text-align:right;">
               <div class="label">Total Paid</div>
-              <div class="big-total">${escapeHtml(toMoney(booking.totalPaid))}</div>
+              <div class="big-total">${escapeHtml(
+                toMoney(booking.totalPaid)
+              )}</div>
             </div>
           </div>
         </div>
@@ -488,10 +534,10 @@ const MyBookings = () => {
   };
 
   const busResults = filteredBookings.filter(
-    (item) => normalize(item.type) === "bus",
+    (item) => normalize(item.type) === "bus"
   );
   const tourResults = filteredBookings.filter(
-    (item) => normalize(item.type) === "tour",
+    (item) => normalize(item.type) === "tour"
   );
 
   if (loading) {

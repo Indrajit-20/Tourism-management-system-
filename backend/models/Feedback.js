@@ -13,7 +13,18 @@ const feedbackSchema = new mongoose.Schema(
     package_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Package",
-      required: true,
+      required: function () {
+        return !this.route_id;
+      },
+    },
+
+    // Optional: for bus route feedback
+    route_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BusRoute",
+      required: function () {
+        return !this.package_id;
+      },
     },
 
     // Optional: which departure they travelled on (for reference/data)

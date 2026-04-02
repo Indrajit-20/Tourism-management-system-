@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 .fv-bookings-page,
 .fv-bookings-page * {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .fv-bookings-page {
-  background: #f0f4f9;
+  background: var(--color-gray-lighter);
   min-height: 100vh;
   padding: 22px 0 60px;
 }
@@ -18,7 +18,7 @@
 .fv-main-tabs {
   display: flex;
   gap: 8px;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 14px;
   padding: 6px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
@@ -29,15 +29,15 @@
   border: none;
   border-radius: 10px;
   background: transparent;
-  color: #5f6f86;
+  color: var(--color-gray-medium);
   font-weight: 700;
   padding: 12px 10px;
 }
 
 .fv-main-tab.active {
-  background: #0d6efd;
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.28);
+  background: var(--color-primary-blue);
+  color: var(--color-white);
+  box-shadow: 0 4px 14px rgba(0, 102, 204, 0.28);
 }
 
 .fv-tab-count {
@@ -60,18 +60,18 @@
 }
 
 .fv-status-pill {
-  border: 1.5px solid #d9e2ef;
+  border: 1.5px solid var(--color-border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--color-white);
   padding: 7px 12px;
   font-weight: 700;
-  color: #607188;
+  color: var(--color-gray-medium);
 }
 
 .fv-status-pill.active {
-  background: #16294a;
-  color: #fff;
-  border-color: #16294a;
+  background: var(--color-secondary-blue);
+  color: var(--color-white);
+  border-color: var(--color-secondary-blue);
 }
 
 .fv-search-wrap {
@@ -84,11 +84,11 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #9aabc1;
+  color: var(--color-gray-light);
 }
 
 .fv-search-input {
-  border: 1.5px solid #d9e2ef;
+  border: 1.5px solid var(--color-border);
   border-radius: 12px;
   min-height: 48px;
   padding-left: 40px;
@@ -101,12 +101,12 @@
   transform: translateY(-50%);
   border: none;
   background: transparent;
-  color: #93a4bc;
+  color: var(--color-gray-light);
   font-size: 18px;
 }
 
 .fv-result-text {
-  color: #7a8ca5;
+  color: var(--color-gray-medium);
   font-weight: 700;
   margin: 14px 2px 10px;
 }
@@ -127,17 +127,17 @@
 
 .fv-stripe-bus {
   height: 4px;
-  background: linear-gradient(90deg, #0d6efd, #5ea6ff);
+  background: var(--color-primary-blue);
 }
 
 .fv-stripe-tour {
   height: 4px;
-  background: linear-gradient(90deg, #16a34a, #4ade80);
+  background: var(--color-primary-blue);
 }
 
 .fv-head {
   padding: 10px 14px 8px;
-  border-bottom: 1px solid #edf1f7;
+  border-bottom: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -152,23 +152,23 @@
 }
 
 .fv-type-bus {
-  background: #e2ecff;
-  color: #0d6efd;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-type-tour {
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-name {
   font-size: 24px;
   font-weight: 700;
-  color: #132b4f;
+  color: var(--color-secondary-blue);
 }
 
 .fv-booking-id {
-  color: #a2b1c6;
+  color: var(--color-gray-medium);
   font-weight: 700;
 }
 
@@ -183,28 +183,28 @@
 }
 
 .fv-badge-approved {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-badge-confirmed {
-  background: #d1fae5;
-  color: #065f46;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-badge-pending {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-badge-completed {
-  background: #e5e7eb;
-  color: #374151;
+  background: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .fv-badge-cancelled {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .fv-pay {
@@ -215,23 +215,23 @@
 }
 
 .fv-pay-paid {
-  background: #d1fae5;
-  color: #065f46;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-pay-pending {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-pay-failed {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
 }
 
 .fv-pay-refunded {
-  background: #e0f2fe;
-  color: #0369a1;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-body {
@@ -248,12 +248,12 @@
 .fv-city {
   font-size: 20px;
   font-weight: 800;
-  color: #132b4f;
+  color: var(--color-secondary-blue);
   line-height: 1;
 }
 
 .fv-city-sub {
-  color: #95a5bc;
+  color: var(--color-gray-medium);
   font-weight: 600;
 }
 
@@ -262,30 +262,30 @@
 }
 
 .fv-route-line {
-  border-top: 1.8px dashed #d8e1ee;
+  border-top: 1.8px dashed var(--color-border);
   margin: 6px 0;
 }
 
 .fv-route-meta {
-  color: #95a5bc;
+  color: var(--color-gray-medium);
   font-weight: 600;
 }
 
 .fv-time {
   margin-top: 10px;
-  background: #edf2fa;
+  background: var(--color-gray-lighter);
   border-radius: 8px;
   padding: 7px 10px;
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #95a5bc;
+  color: var(--color-gray-medium);
   font-weight: 700;
   font-size: 12px;
 }
 
 .fv-time strong {
-  color: #132b4f;
+  color: var(--color-secondary-blue);
   font-size: 18px;
   line-height: 1;
 }
@@ -306,27 +306,27 @@
 }
 
 .fv-chip {
-  background: #eef3fa;
+  background: var(--color-gray-lighter);
   border-radius: 10px;
   padding: 6px 9px;
-  color: #536984;
+  color: var(--color-secondary-blue);
   font-weight: 600;
   font-size: 13px;
 }
 
 .fv-chip-ac {
-  background: #e0f2fe;
-  color: #0369a1;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-chip-nonac {
-  background: #fff7ed;
-  color: #c2410c;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-footer {
   margin-top: 10px;
-  border-top: 1px solid #edf1f7;
+  border-top: 1px solid var(--color-border);
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
@@ -344,19 +344,19 @@
 }
 
 .fv-note-info {
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1px solid #bfdbfe;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
+  border: 1px solid var(--color-border);
 }
 
 .fv-note-warn {
-  background: #fff7ed;
-  color: #9a3412;
-  border: 1px solid #fed7aa;
+  background: var(--color-gray-lighter);
+  color: var(--color-secondary-blue);
+  border: 1px solid var(--color-border);
 }
 
 .fv-price-label {
-  color: #93a4bc;
+  color: var(--color-gray-medium);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
@@ -370,7 +370,7 @@
 }
 
 .fv-price-main {
-  color: #15803d;
+  color: var(--color-primary-blue);
   font-weight: 800;
   font-size: 22px;
   line-height: 1;
@@ -380,12 +380,12 @@
   margin-top: 4px;
   font-size: 12px;
   font-weight: 600;
-  color: #b45309;
+  color: var(--color-secondary-blue);
 }
 
 .fv-group-wrap {
-  background: #f7faff;
-  border: 1px solid #d9e3f1;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
   padding: 12px;
   margin-bottom: 14px;
@@ -394,7 +394,7 @@
 .fv-group-title {
   font-size: 16px;
   font-weight: 800;
-  color: #213a60;
+  color: var(--color-secondary-blue);
   margin: 0 0 8px;
 }
 
@@ -442,11 +442,15 @@
 }
 
 .fv-modal-head.bus {
-  background: linear-gradient(135deg, #0d6efd, #0a4ec4);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-blue),
+    var(--color-primary-blue-dark)
+  );
 }
 
 .fv-modal-head.tour {
-  background: linear-gradient(135deg, #16a34a, #14532d);
+  background: var(--color-primary-blue);
 }
 
 .fv-close {
@@ -465,7 +469,7 @@
 
 .fv-section-title {
   font-weight: 800;
-  color: #132b4f;
+  color: var(--color-secondary-blue);
   margin-bottom: 8px;
 }
 
@@ -473,24 +477,24 @@
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid var(--color-border);
   padding: 8px 0;
 }
 
 .fv-row-label {
-  color: #94a6be;
+  color: var(--color-gray-medium);
   font-weight: 600;
 }
 
 .fv-row-value {
-  color: #132b4f;
+  color: var(--color-secondary-blue);
   font-weight: 700;
   text-align: right;
 }
 
 .fv-pax {
   margin-top: 8px;
-  background: #f7faff;
+  background: var(--color-gray-lighter);
   border-radius: 10px;
   padding: 9px 11px;
   display: flex;
@@ -512,24 +516,24 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
 }
 
 .fv-seat-chip {
-  border: 1px solid #b6cbff;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 3px 9px;
-  color: #1d4ed8;
-  background: #eef3ff;
+  color: var(--color-primary-blue);
+  background: var(--color-gray-lighter);
   font-weight: 700;
 }
 
 .fv-inc-chip {
   border-radius: 999px;
   padding: 4px 10px;
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
   font-weight: 700;
 }
 
@@ -537,7 +541,7 @@
   margin-top: 12px;
   border-radius: 12px;
   padding: 13px 15px;
-  background: linear-gradient(135deg, #eef3ff, #dbeafe);
+  background: var(--color-gray-lighter);
   display: flex;
   justify-content: space-between;
 }

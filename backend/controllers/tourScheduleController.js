@@ -188,15 +188,14 @@ const recalculateScheduleStatus = (schedule) => {
     schedule.departure_status = SCHEDULE_STATUS.BOOKING_FULL;
     return;
   }
-<<<<<<< Updated upstream
 
   const current = String(schedule.departure_status || "");
-  if (current !== SCHEDULE_STATUS.DRAFT && current !== SCHEDULE_STATUS.ARCHIVED) {
+  if (
+    current !== SCHEDULE_STATUS.DRAFT &&
+    current !== SCHEDULE_STATUS.ARCHIVED
+  ) {
     schedule.departure_status = SCHEDULE_STATUS.OPEN;
   }
-
-=======
->>>>>>> Stashed changes
 };
 
 /**
@@ -393,13 +392,11 @@ const getPackageDepartures = async (req, res) => {
           statuses.length === 1 ? statuses[0] : { $in: statuses };
       }
     } else {
-<<<<<<< Updated upstream
       query.departure_status = { $in: [SCHEDULE_STATUS.OPEN] };
-=======
+
       query.departure_status = {
         $in: [SCHEDULE_STATUS.OPEN, SCHEDULE_STATUS.LOCKED_LEGACY],
       };
->>>>>>> Stashed changes
     }
 
     const departures = await TourSchedule.find(query)
@@ -537,15 +534,12 @@ const updateTourDeparture = async (req, res) => {
     recalculateScheduleStatus(departure);
 
     const currentStatus = String(departure.departure_status || "");
-<<<<<<< Updated upstream
-    const isDraftOrOpen = [SCHEDULE_STATUS.DRAFT, SCHEDULE_STATUS.OPEN].includes(currentStatus);
-=======
+
     const isDraftOrOpen = [
       SCHEDULE_STATUS.DRAFT,
       SCHEDULE_STATUS.OPEN,
     ].includes(currentStatus);
     const isLocked = currentStatus === SCHEDULE_STATUS.LOCKED_LEGACY;
->>>>>>> Stashed changes
 
     if (!isDraftOrOpen) {
       return res.status(400).json({

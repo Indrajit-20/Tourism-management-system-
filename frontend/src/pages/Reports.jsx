@@ -64,7 +64,7 @@ const Reports = () => {
     return Object.values(salesMap);
   };
 
-  const filteredBookings = filterByDate(bookings);
+  const filteredBookings = filterByDate(bookings).filter((b) => b.package_id);
   const filteredBusBookings = filterByDate(busBookings);
   const packageSales = getPackageSales();
 

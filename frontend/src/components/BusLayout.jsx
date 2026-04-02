@@ -32,12 +32,15 @@ const BusLayout = ({
   // ─────────────────────────────────────────────
   const rows = [...new Set(seatLayout.map((s) => s.row))].sort((a, b) => a - b);
   const cols = [...new Set(seatLayout.map((s) => s.column))].sort(
-    (a, b) => a - b,
+    (a, b) => a - b
   );
   const seatMap = new Map(seatLayout.map((s) => [`${s.row}-${s.column}`, s]));
-  const half = Math.ceil(cols.length / 2);
-  const leftCols = cols.slice(0, half);
-  const rightCols = cols.slice(half);
+
+  // Splitting bus layout into 2 on left, rest (e.g. 3) on right
+  const is3x2Layout = cols.length > 4;
+  const splitIndex = is3x2Layout ? 2 : Math.ceil(cols.length / 2);
+  const leftCols = cols.slice(0, splitIndex);
+  const rightCols = cols.slice(splitIndex);
 
   // Render one normal seat
   const renderNormalSeat = (row, col) => {
@@ -97,10 +100,10 @@ const BusLayout = ({
   // Lower deck seats have seat numbers starting with "L" — e.g. L1, L2
   // If no U/L prefix — split by row (first half = upper, second half = lower)
   const upperSeats = seatLayout.filter(
-    (s) => s.seat_number?.startsWith("U") || s.type === "upper",
+    (s) => s.seat_number?.startsWith("U") || s.type === "upper"
   );
   const lowerSeats = seatLayout.filter(
-    (s) => s.seat_number?.startsWith("L") || s.type === "lower",
+    (s) => s.seat_number?.startsWith("L") || s.type === "lower"
   );
 
   // If no U/L prefix — split rows in half
@@ -186,7 +189,7 @@ const BusLayout = ({
                 {deckRows.map((row) => (
                   <div key={`${deckLabel}-left-${row}`} className="d-flex">
                     {deckLeftCols.map((col) =>
-                      renderSleeperSeat(row, col, deckSeatMap),
+                      renderSleeperSeat(row, col, deckSeatMap)
                     )}
                   </div>
                 ))}
@@ -208,7 +211,7 @@ const BusLayout = ({
                 {deckRows.map((row) => (
                   <div key={`${deckLabel}-right-${row}`} className="d-flex">
                     {deckRightCols.map((col) =>
-                      renderSleeperSeat(row, col, deckSeatMap),
+                      renderSleeperSeat(row, col, deckSeatMap)
                     )}
                   </div>
                 ))}
@@ -221,9 +224,11 @@ const BusLayout = ({
   };
 
   const renderSeaterDeck = (deckLabel, deckRows, deckSeatMap, deckCols) => {
-    const deckHalf = Math.ceil(deckCols.length / 2);
-    const deckLeftCols = deckCols.slice(0, deckHalf);
-    const deckRightCols = deckCols.slice(deckHalf);
+    // Similarly update splitting for multiple decks, using 2 seats on the left side.
+    const is3x2LayoutDeck = deckCols.length > 4;
+    const splitIndex = is3x2LayoutDeck ? 2 : Math.ceil(deckCols.length / 2);
+    const deckLeftCols = deckCols.slice(0, splitIndex);
+    const deckRightCols = deckCols.slice(splitIndex);
 
     return (
       <div className="mb-3">
@@ -256,8 +261,8 @@ const BusLayout = ({
                         row,
                         col,
                         deckSeatMap,
-                        `${deckLabel}-left-`,
-                      ),
+                        `${deckLabel}-left-`
+                      )
                     )}
                   </div>
                 ))}
@@ -281,8 +286,8 @@ const BusLayout = ({
                         row,
                         col,
                         deckSeatMap,
-                        `${deckLabel}-right-`,
-                      ),
+                        `${deckLabel}-right-`
+                      )
                     )}
                   </div>
                 ))}
@@ -307,15 +312,15 @@ const BusLayout = ({
             isSleeper
               ? "bg-primary"
               : isDoubleDecker
-                ? "bg-warning text-dark"
-                : "bg-secondary"
+              ? "bg-warning text-dark"
+              : "bg-secondary"
           }`}
         >
           {isSleeper
             ? "🛏 Sleeper Bus"
             : isDoubleDecker
-              ? "🚌 Double Decker"
-              : "🪑 Seater Bus"}
+            ? "🚌 Double Decker"
+            : "🪑 Seater Bus"}
         </span>
       </div>
 
@@ -330,7 +335,7 @@ const BusLayout = ({
                   "Upper",
                   getDeckRows(upperSeats),
                   new Map(upperSeats.map((s) => [`${s.row}-${s.column}`, s])),
-                  getDeckCols(upperSeats),
+                  getDeckCols(upperSeats)
                 )}
               <div className="border-top my-3" />
               {lowerSeats.length > 0 &&
@@ -338,7 +343,7 @@ const BusLayout = ({
                   "Lower",
                   getDeckRows(lowerSeats),
                   new Map(lowerSeats.map((s) => [`${s.row}-${s.column}`, s])),
-                  getDeckCols(lowerSeats),
+                  getDeckCols(lowerSeats)
                 )}
             </>
           ) : (
@@ -359,7 +364,7 @@ const BusLayout = ({
                   "Upper",
                   getDeckRows(upperSeats),
                   new Map(upperSeats.map((s) => [`${s.row}-${s.column}`, s])),
-                  getDeckCols(upperSeats),
+                  getDeckCols(upperSeats)
                 )}
               <div className="border-top my-3" />
               {lowerSeats.length > 0 &&
@@ -367,7 +372,7 @@ const BusLayout = ({
                   "Lower",
                   getDeckRows(lowerSeats),
                   new Map(lowerSeats.map((s) => [`${s.row}-${s.column}`, s])),
-                  getDeckCols(lowerSeats),
+                  getDeckCols(lowerSeats)
                 )}
             </>
           ) : (

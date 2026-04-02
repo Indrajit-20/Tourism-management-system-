@@ -34,16 +34,17 @@ const BookingCard = ({
   onPrint,
   onPay,
   onGenerateInvoice,
+  onFeedback,
 }) => {
   const isTour = normalize(booking.type) === "tour";
   const travellerCount = Number(
-    booking.travellers || booking.passengers?.length || 0,
+    booking.travellers || booking.passengers?.length || 0
   );
   const baseFareTotal = Number(booking.pricePerPerson || 0) * travellerCount;
   const totalPaid = Number(booking.totalPaid || 0);
   const childDiscountAmount = Math.max(
     0,
-    Math.round(baseFareTotal - totalPaid),
+    Math.round(baseFareTotal - totalPaid)
   );
   const showChildDiscount = isTour && childDiscountAmount > 0;
   const isTourPending = isTour && normalize(booking.status) === "pending";
@@ -56,8 +57,10 @@ const BookingCard = ({
   const canPrint = !isTour || normalizedPaymentStatus === "paid";
   const canGenerateInvoice = normalizedPaymentStatus === "paid";
   const canCancel = ["confirmed", "approved", "pending"].includes(
-    normalize(booking.status),
+    normalize(booking.status)
   );
+  const canLeaveFeedback =
+    normalizedPaymentStatus === "paid" && isTour && onFeedback;
 
   return (
     <div className="card fv-card">
@@ -214,6 +217,16 @@ const BookingCard = ({
                 onClick={() => onGenerateInvoice?.(booking)}
               >
                 Generate Invoice
+              </button>
+            )}
+            {canLeaveFeedback && (
+              <button
+                className="btn btn-outline-info fv-btn"
+                onClick={() => onFeedback?.(booking)}
+                data-bs-toggle="modal"
+                data-bs-target="#feedbackModal"
+              >
+                Leave Feedback
               </button>
             )}
             {canCancel && (

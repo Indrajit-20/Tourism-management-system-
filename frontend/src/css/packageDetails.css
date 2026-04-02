@@ -1,6 +1,6 @@
 .pd-page {
   min-height: 100vh;
-  background: #f2f5fb;
+  background: var(--color-white);
 }
 
 .pd-breadcrumb {
@@ -9,17 +9,17 @@
   gap: 8px;
   font-size: 13px;
   margin-bottom: 14px;
-  color: #64748b;
+  color: var(--color-gray-medium);
 }
 
 .pd-breadcrumb a {
-  color: #1d4ed8;
+  color: var(--color-primary-blue);
   text-decoration: none;
 }
 
 .pd-card {
-  background: #fff;
-  border: 1px solid #dfe7fa;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   box-shadow: 0 10px 26px rgba(28, 65, 141, 0.08);
 }
@@ -31,7 +31,7 @@
 .pd-image-stage {
   position: relative;
   height: 420px;
-  background: #dbe5ff;
+  background: var(--color-gray-lighter);
 }
 
 .pd-main-image {
@@ -92,7 +92,7 @@
 }
 
 .pd-thumb.active {
-  border-color: #2563eb;
+  border-color: var(--color-primary-blue);
   opacity: 1;
 }
 
@@ -112,15 +112,15 @@
 .pd-title-row h1 {
   margin: 0;
   font-size: clamp(22px, 2vw, 30px);
-  color: #0f172a;
+  color: var(--color-secondary-blue);
   font-weight: 700;
 }
 
 .pd-type-badge {
   display: inline-block;
   border-radius: 999px;
-  background: #e8efff;
-  color: #1d4ed8;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
   font-size: 12px;
   font-weight: 600;
   padding: 5px 12px;
@@ -128,7 +128,7 @@
 
 .pd-route {
   margin: 0 0 10px;
-  color: #334155;
+  color: var(--color-gray-medium);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -137,13 +137,13 @@
 
 .pd-description {
   margin: 0 0 14px;
-  color: #5b6577;
+  color: var(--color-gray-medium);
   line-height: 1.7;
 }
 
 .pd-info-box {
-  background: #eef3ff;
-  border: 1px solid #dce5ff;
+  background: var(--color-gray-lighter);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 10px;
   text-align: center;
@@ -153,19 +153,19 @@
   display: block;
   font-size: 11px;
   text-transform: uppercase;
-  color: #64748b;
+  color: var(--color-gray-medium);
   margin-bottom: 3px;
 }
 
 .pd-info-box strong {
   font-size: 14px;
-  color: #1e293b;
+  color: var(--color-secondary-blue);
 }
 
 .pd-tab-row {
   display: flex;
   overflow-x: auto;
-  border-bottom: 1px solid #e7edfb;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .pd-tab-btn {
@@ -173,14 +173,14 @@
   background: transparent;
   padding: 11px 14px;
   font-size: 13px;
-  color: #64748b;
+  color: var(--color-gray-medium);
   border-bottom: 2px solid transparent;
   white-space: nowrap;
 }
 
 .pd-tab-btn.active {
-  color: #1d4ed8;
-  border-bottom-color: #1d4ed8;
+  color: var(--color-primary-blue);
+  border-bottom-color: var(--color-primary-blue);
 }
 
 .pd-tab-content {
@@ -194,9 +194,9 @@
 }
 
 .pd-list-item {
-  border: 1px solid #e5ebfa;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #f8faff;
+  background: var(--color-gray-lighter);
   padding: 10px 12px;
 }
 
@@ -204,8 +204,8 @@
   display: inline-block;
   font-size: 11px;
   text-transform: uppercase;
-  background: #dbe7ff;
-  color: #1d4ed8;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
   border-radius: 999px;
   padding: 2px 8px;
   margin-bottom: 6px;
@@ -213,7 +213,7 @@
 
 .pd-list-item p {
   margin: 0;
-  color: #475569;
+  color: var(--color-gray-medium);
   line-height: 1.65;
 }
 
@@ -224,9 +224,9 @@
 }
 
 .pd-chip {
-  background: #eef3ff;
-  color: #1e3a8a;
-  border: 1px solid #dbe6ff;
+  background: var(--color-gray-lighter);
+  color: var(--color-primary-blue);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 6px 10px;
   font-size: 13px;
@@ -239,15 +239,15 @@
 }
 
 .pd-panel {
-  border: 1px solid #e5ebfa;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 10px 12px;
-  background: #fbfdff;
+  background: var(--color-white);
 }
 
 .pd-panel h6 {
   margin: 0 0 8px;
-  color: #0f172a;
+  color: var(--color-secondary-blue);
   font-size: 14px;
 }
 

@@ -1,6 +1,6 @@
 const Bus = require("../models/Bus");
 const BusRoute = require("../models/BusRoute");
-const BusTicketBooking = require("../models/BusTicketBooking");
+
 const Staff = require("../models/Staff");
 
 // Converts incoming form values into an array of ids.

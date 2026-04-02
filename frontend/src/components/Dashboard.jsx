@@ -12,20 +12,34 @@ const Dashboard = () => {
     recentTransactions: [],
   });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
+        console.log("Fetching dashboard stats...");
         const res = await axios.get(
           "http://localhost:4000/api/admin-stats/dashboard-stats",
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
-        if (res.data) setStats(res.data);
+        console.log("Dashboard stats received:", res.data);
+        if (res.data) {
+          setStats({
+            totalCustomers: res.data.totalCustomers || 0,
+            totalPackageBookings: res.data.totalPackageBookings || 0,
+            totalBusBookings: res.data.totalBusBookings || 0,
+            totalRevenue: res.data.totalRevenue || 0,
+            pendingBookings: res.data.pendingBookings || 0,
+            totalPackages: res.data.totalPackages || 0,
+            recentTransactions: res.data.recentTransactions || [],
+          });
+        }
       } catch (err) {
         console.error("Error fetching stats:", err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -35,7 +49,19 @@ const Dashboard = () => {
 
   if (loading)
     return (
-      <div className="text-center mt-5 p-5">Loading Dashboard Data...</div>
+      <div className="text-center mt-5 p-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="mt-3">Loading Dashboard Data...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="alert alert-danger m-4">
+        <strong>Error Loading Dashboard:</strong> {error}
+      </div>
     );
 
   return (
@@ -44,90 +70,74 @@ const Dashboard = () => {
 
       <div className="row g-4 mb-5">
         {/* Total Customers */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-primary position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase text-muted">
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-primary">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
               Total Customers
             </h6>
-            <h2 className="mb-0 fw-bold display-6">{stats.totalCustomers}</h2>
-            <i
-              className="bi bi-people-fill position-absolute text-primary opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
+            <h2 className="mb-0 fw-bold text-primary">
+              {stats.totalCustomers}
+            </h2>
           </div>
         </div>
 
         {/* Total Package Bookings */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-info position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase text-muted">
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-info">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
               Package Bookings
             </h6>
-            <h2 className="mb-0 fw-bold display-6">
+            <h2 className="mb-0 fw-bold text-info">
               {stats.totalPackageBookings}
             </h2>
-            <i
-              className="bi bi-geo-alt-fill position-absolute text-info opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
           </div>
         </div>
 
         {/* Total Bus Bookings */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-success position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase text-muted">
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-success">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
               Bus Bookings
             </h6>
-            <h2 className="mb-0 fw-bold display-6">{stats.totalBusBookings}</h2>
-            <i
-              className="bi bi-bus-front-fill position-absolute text-success opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
+            <h2 className="mb-0 fw-bold text-success">
+              {stats.totalBusBookings}
+            </h2>
           </div>
         </div>
 
         {/* Total Revenue */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-dark text-white position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase">
-              Total Revenue (INR)
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-danger">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
+              Total Revenue
             </h6>
-            <h2 className="mb-0 fw-bold display-6">
-              ₹{stats.totalRevenue.toLocaleString()}
+            <h2 className="mb-0 fw-bold text-danger">
+              ₹{(stats.totalRevenue || 0).toLocaleString()}
             </h2>
-            <i
-              className="bi bi-wallet-fill position-absolute text-white opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
           </div>
         </div>
 
         {/* Pending Bookings */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-warning position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase text-muted">
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-warning">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
               Pending Bookings
             </h6>
-            <h2 className="mb-0 fw-bold display-6">{stats.pendingBookings}</h2>
-            <i
-              className="bi bi-hourglass-split position-absolute text-warning opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
+            <h2 className="mb-0 fw-bold text-warning">
+              {stats.pendingBookings}
+            </h2>
           </div>
         </div>
 
         {/* Total Packages */}
-        <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-4 border-secondary position-relative overflow-hidden">
-            <h6 className="opacity-75 mb-1 small fw-bold text-uppercase text-muted">
+        <div className="col-md-4 col-sm-6">
+          <div className="card border-0 shadow-sm rounded-3 p-4 bg-white border-start border-4 border-secondary">
+            <h6 className="opacity-75 mb-2 small fw-bold text-uppercase text-muted">
               Active Packages
             </h6>
-            <h2 className="mb-0 fw-bold display-6">{stats.totalPackages}</h2>
-            <i
-              className="bi bi-box-seam-fill position-absolute text-secondary opacity-25"
-              style={{ fontSize: "5rem", right: "-10px", bottom: "-15px" }}
-            ></i>
+            <h2 className="mb-0 fw-bold text-secondary">
+              {stats.totalPackages}
+            </h2>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ const {
   getPackageCancellationPreview,
   cancelBooking,
   getAllCancellations,
+  processRefund,
   markRefundDone,
   getMyCancellations,
 } = require("../controllers/cancellationController");
@@ -20,7 +21,10 @@ router.get("/my-cancellations", authMiddleware, getMyCancellations);
 // Admin: Get all cancellations
 router.get("/admin/all", authMiddleware, isadmin, getAllCancellations);
 
-// Admin: Mark refund done
+// ✅ Admin: Process refund (manually enter amount and mark done)
+router.put("/admin/process-refund/:id", authMiddleware, isadmin, processRefund);
+
+// Admin: Mark refund as done (deprecated)
 router.put("/admin/mark-done/:id", authMiddleware, isadmin, markRefundDone);
 
 module.exports = router;

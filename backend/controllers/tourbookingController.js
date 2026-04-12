@@ -43,7 +43,7 @@ const getBaseFareByAge = (age, packagePrice) => {
 
 const getBookedSeatsForPackage = async (packageId, tourScheduleId) => {
   const query = {
-    Package_id: packageId,
+    package_id: packageId,
     booking_status: { $nin: INACTIVE_BOOKING_STATUSES },
   };
 
@@ -268,7 +268,7 @@ const packageBooking = async (req, res) => {
     }
 
     const existingActiveBooking = await PackageBooking.findOne({
-      Custmer_id: customer_id,
+      customer_id: customer_id,
       tour_schedule_id,
       booking_status: { $in: [BOOKING_STATUS.PENDING, BOOKING_STATUS.APPROVED, BOOKING_STATUS.CONFIRMED] },
     }).lean();
@@ -300,9 +300,9 @@ const packageBooking = async (req, res) => {
 
     //booking
     const booking = new PackageBooking({
-      Package_id: package_id,
+      package_id: package_id,
       tour_schedule_id,
-      Custmer_id: customer_id,
+      customer_id: customer_id,
       travellers: travellerCount,
       seat_numbers: normalizedSeats,
       pickup_location: String(pickup_location).trim(),
@@ -380,7 +380,7 @@ const confirmPackagePayment = async (req, res) => {
 
     const booking = await PackageBooking.findOne({
       _id: booking_id,
-      Custmer_id: customer_id,
+      customer_id: customer_id,
     });
 
     if (!booking) {
@@ -415,8 +415,8 @@ const confirmPackagePayment = async (req, res) => {
 const getAllPackageBookings = async (req, res) => {
   try {
     const bookings = await PackageBooking.find()
-      .populate({ path: "Package_id", select: "package_name price" })
-      .populate({ path: "Custmer_id", select: "first_name last_name email" })
+      .populate({ path: "package_id", select: "package_name price" })
+      .populate({ path: "customer_id", select: "first_name last_name email" })
       .populate({
         path: "tour_schedule_id",
         select: "start_date end_date departure_time departure_status",
@@ -424,7 +424,7 @@ const getAllPackageBookings = async (req, res) => {
       .sort({ createdAt: -1 });
     console.log("Bookings found:", bookings.length);
     if (bookings.length > 0) {
-      console.log("First booking Package_id:", bookings[0].Package_id);
+      console.log("First booking package_id:", bookings[0].package_id);
     }
     res.status(200).json(bookings);
   } catch (error) {
@@ -506,9 +506,9 @@ const getMyBookings = async (req, res) => {
   try {
     const customer_id = req.user.id;
 
-    const bookings = await PackageBooking.find({ Custmer_id: customer_id })
+    const bookings = await PackageBooking.find({ customer_id: customer_id })
       .populate({
-        path: "Package_id",
+        path: "package_id",
         select: "package_name source_city destination duration hotels",
         populate: {
           path: "hotels",
@@ -551,8 +551,8 @@ const getMyBookings = async (req, res) => {
         seat: Array.isArray(booking.seat_numbers) ? booking.seat_numbers[index] : undefined,
       }));
 
-      const hotelNames = Array.isArray(booking.Package_id?.hotels)
-        ? booking.Package_id.hotels.map((hotel) => hotel?.name).filter(Boolean)
+      const hotelNames = Array.isArray(booking.package_id?.hotels)
+        ? booking.package_id.hotels.map((hotel) => hotel?.name).filter(Boolean)
         : [];
       booking.hotel = hotelNames.join(", ");
 

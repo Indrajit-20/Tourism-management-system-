@@ -91,10 +91,10 @@ const ManagePackageBookings = () => {
     }
 
     const fullName =
-      `${booking.Custmer_id?.first_name || ""} ${booking.Custmer_id?.last_name || ""}`
+      `${booking.customer_id?.first_name || ""} ${booking.customer_id?.last_name || ""}`
         .trim()
         .toLowerCase();
-    const packageName = lower(booking.Package_id?.package_name);
+    const packageName = lower(booking.package_id?.package_name);
     const bookingId = lower(booking._id);
 
     if (
@@ -225,10 +225,10 @@ const ManagePackageBookings = () => {
                     </span>
                   </td>
                   <td>
-                    {b.Custmer_id?.first_name} {b.Custmer_id?.last_name}
+                    {b.customer_id?.first_name} {b.customer_id?.last_name}
                   </td>
-                  <td>{b.Custmer_id?.email || "-"}</td>
-                  <td>{b.Package_id?.package_name || "Unknown Package"}</td>
+                  <td>{b.customer_id?.email || "-"}</td>
+                  <td>{b.package_id?.package_name || "Unknown Package"}</td>
                   <td>{formatDate(b.tour_schedule_id?.start_date)}</td>
                   <td>
                     {Array.isArray(b.seat_numbers) && b.seat_numbers.length ? (

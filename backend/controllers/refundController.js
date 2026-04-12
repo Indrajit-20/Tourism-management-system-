@@ -5,7 +5,7 @@ const Cancellation = require("../models/Cancellation");
 const getAllRefunds = async (req, res) => {
   try {
     const refunds = await Refund.find()
-      .populate("custmer_id", "first_name last_name email")
+      .populate("customer_id", "first_name last_name email")
       .sort({ refund_date: -1 });
 
     res.status(200).json(refunds);
@@ -19,8 +19,8 @@ const getAllRefunds = async (req, res) => {
 // Get My Refunds (Customer)
 const getMyRefunds = async (req, res) => {
   try {
-    const custmer_id = req.user.id;
-    const refunds = await Refund.find({ custmer_id }).sort({ refund_date: -1 });
+    const customer_id = req.user.id;
+    const refunds = await Refund.find({ customer_id }).sort({ refund_date: -1 });
     res.status(200).json(refunds);
   } catch (error) {
     res
@@ -42,7 +42,7 @@ const createRefund = async (req, res) => {
     const refund = new Refund({
       refund_id: "REF-" + Date.now(),
       cancellation_id,
-      custmer_id: cancellation.custmer_id,
+      customer_id: cancellation.customer_id,
       booking_id: cancellation.booking_id,
       booking_type: cancellation.booking_type,
       refund_amount: cancellation.refund_amount,

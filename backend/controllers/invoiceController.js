@@ -63,7 +63,7 @@ const enrichInvoiceWithBookingData = async (invoiceDoc) => {
 const createInvoice = async (req, res) => {
   try {
     const { booking_id, booking_type, transaction_id } = req.body;
-    const custmer_id = req.user.id;
+    const customer_id = req.user.id;
 
     const exists = await Invoice.findOne({ booking_id });
     if (exists)
@@ -155,7 +155,7 @@ const createInvoice = async (req, res) => {
 
     const invoice = new Invoice({
       invoice_number: "INV-" + Date.now(),
-      custmer_id,
+      customer_id,
       booking_id,
       booking_type,
       description,
@@ -187,7 +187,7 @@ const createInvoice = async (req, res) => {
 
 const getMyInvoices = async (req, res) => {
   try {
-    const invoices = await Invoice.find({ custmer_id: req.user.id }).sort({
+    const invoices = await Invoice.find({ customer_id: req.user.id }).sort({
       createdAt: -1,
     });
 
@@ -218,7 +218,7 @@ const getInvoiceById = async (req, res) => {
 const getAllInvoices = async (req, res) => {
   try {
     const invoices = await Invoice.find().populate(
-      "custmer_id",
+      "customer_id",
       "first_name last_name email"
     );
     res.json(invoices);
@@ -231,7 +231,7 @@ const downloadInvoice = async (req, res) => {
   try {
     const invoice = await Invoice.findOne({
       _id: req.params.id,
-      custmer_id: req.user.id,
+      customer_id: req.user.id,
     });
 
     if (!invoice) {

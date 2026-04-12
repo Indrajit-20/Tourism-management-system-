@@ -4,6 +4,7 @@ import BookingCard from "./BookingCard";
 import BookingModal from "./BookingModal";
 import BookingFilters from "./BookingFilters";
 import FeedbackModal from "../../components/FeedbackModal";
+import Storage from "../../utils/storage";
 import "../../css/booking.css";
 import { normalize, STATUSES } from "./bookingConfig";
 import { toUiBooking } from "./bookingMapper";
@@ -52,7 +53,7 @@ const MyBookings = () => {
     if (!booking?._id) return;
 
     const type = normalize(booking.type) === "tour" ? "Package" : "Bus";
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
     const headers = { Authorization: `Bearer ${token}` };
 
     try {
@@ -114,7 +115,7 @@ const MyBookings = () => {
         setLoading(true);
         setError("");
 
-        const token = localStorage.getItem("token");
+        const token = Storage.getToken();
         const headers = { Authorization: `Bearer ${token}` };
         const uiBookings = await loadMyBookings(headers);
 
@@ -182,7 +183,7 @@ const MyBookings = () => {
     }
 
     const isTour = normalize(booking.type) === "tour";
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
     const headers = { Authorization: `Bearer ${token}` };
 
     try {
@@ -254,7 +255,7 @@ const MyBookings = () => {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
     const headers = { Authorization: `Bearer ${token}` };
 
     try {
@@ -278,7 +279,7 @@ const MyBookings = () => {
         name: "FlyVedya Tourism",
         description: `Tour Booking ${booking?._id || ""}`,
         prefill: {
-          name: localStorage.getItem("username") || "Customer",
+          name: Storage.getUsername() || "Customer",
         },
         theme: { color: "#0d6efd" },
         handler: async (response) => {

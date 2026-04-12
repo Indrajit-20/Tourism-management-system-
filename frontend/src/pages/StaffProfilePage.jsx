@@ -35,8 +35,8 @@ const StaffProfile = () => {
   const fetchStaffInfo = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
-      const user = JSON.parse(localStorage.getItem("user"));
+      const token = sessionStorage.getItem("token");
+      const user = JSON.parse(sessionStorage.getItem("user"));
 
       // Fetch all staff and find the current user
       const res = await axios.get(`${API}/api/staff`, {
@@ -66,7 +66,7 @@ const StaffProfile = () => {
     e.preventDefault();
     try {
       setSuccess(null);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.put(`${API}/api/staff/update/${staff._id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -89,7 +89,7 @@ const StaffProfile = () => {
 
     try {
       setError(null);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.put(
         `${API}/api/staff/change-password/${staff._id}`,
         {

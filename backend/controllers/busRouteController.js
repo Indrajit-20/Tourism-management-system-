@@ -39,45 +39,31 @@ const formatAs12Hour = (parts) => {
   const { hour24, minute } = parts;
   const meridiem = hour24 >= 12 ? "PM" : "AM";
   const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
-  return `${String(hour12).padStart(2, "0")}:${String(minute).padStart(2, "0")} ${meridiem}`;
+  return `${String(hour12).padStart(2, "0")}:${String(minute).padStart(
+    2,
+    "0"
+  )} ${meridiem}`;
 };
 
 const normalizeRoutePayload = (body) => {
-  const departure = parseTimeTo24(body.departure_time);
-  const arrival = parseTimeTo24(body.arrival_time);
   const fromCity = String(body.boarding_from || "").trim();
   const toCity = String(body.destination || "").trim();
-  const boardPoint = String(body.board_point || fromCity || "").trim();
-  const dropPoint = String(body.drop_point || toCity || "").trim();
 
   return {
     route_name: String(body.route_name || "").trim(),
-    bus_id: body.bus_id,
+    boarding_state_id: body.boarding_state_id,
+    boarding_city_id: body.boarding_city_id,
     boarding_from: fromCity,
-    board_point: boardPoint,
+    destination_state_id: body.destination_state_id,
+    destination_city_id: body.destination_city_id,
     destination: toCity,
-    drop_point: dropPoint,
-    departure_time: formatAs12Hour(departure),
-    arrival_time: formatAs12Hour(arrival),
-    price_per_seat: Number(body.price_per_seat),
     status: body.status || "Active",
   };
 };
 
 const validateRoutePayload = (payload) => {
-  if (
-    !payload.route_name ||
-    !payload.bus_id ||
-    !payload.boarding_from ||
-    !payload.destination
-  ) {
-    return "route_name, bus_id, boarding_from and destination are required";
-  }
-  if (!payload.departure_time || !payload.arrival_time) {
-    return "departure_time and arrival_time must be valid times";
-  }
-  if (!Number.isFinite(payload.price_per_seat) || payload.price_per_seat <= 0) {
-    return "price_per_seat must be greater than 0";
+  if (!payload.route_name || !payload.boarding_from || !payload.destination) {
+    return "route_name, boarding_from and destination are required";
   }
   return null;
 };
@@ -85,17 +71,18 @@ const validateRoutePayload = (payload) => {
 // 1. Get All Routes
 const getBusRoutes = async (req, res) => {
   try {
-    const routes = await BusRoute.find().populate(
-      "bus_id",
-      "bus_name bus_number bus_type layout_type total_seats"
-    );
+    const routes = await BusRoute.find()
+      .populate("boarding_state_id", "state_name")
+      .populate("boarding_city_id", "city_name")
+      .populate("destination_state_id", "state_name")
+      .populate("destination_city_id", "city_name");
     res.status(200).json(routes);
   } catch (error) {
     res.status(500).json({ message: "Error fetching routes", error });
   }
 };
 
-// 2. Add a Bus Route 
+// 2. Add a Bus Route
 const addBusRoute = async (req, res) => {
   try {
     const payload = normalizeRoutePayload(req.body);
@@ -104,25 +91,13 @@ const addBusRoute = async (req, res) => {
       return res.status(400).json({ message: validationError });
     }
 
-    const bus = await Bus.findById(payload.bus_id).select("bus_category");
-    if (!bus) {
-      return res.status(404).json({ message: "Bus not found" });
-    }
-    if (String(bus.bus_category || "route") !== "route") {
-      return res.status(400).json({
-        message: "Only route category buses can be assigned to bus routes",
-      });
-    }
-
     const route = new BusRoute(payload);
     await route.save();
     res.status(201).json({ message: "Route added successfully", route });
   } catch (error) {
     res.status(500).json({ message: "Error adding route", error });
   }
-};
-
-// 3. Update a Bus Route 
+}; // 3. Update a Bus Route
 const updateBusRoute = async (req, res) => {
   try {
     const { id } = req.params;
@@ -140,18 +115,6 @@ const updateBusRoute = async (req, res) => {
       return res.status(400).json({ message: validationError });
     }
 
-    if (payload.bus_id) {
-      const bus = await Bus.findById(payload.bus_id).select("bus_category");
-      if (!bus) {
-        return res.status(404).json({ message: "Bus not found" });
-      }
-      if (String(bus.bus_category || "route") !== "route") {
-        return res.status(400).json({
-          message: "Only route category buses can be assigned to bus routes",
-        });
-      }
-    }
-
     const route = await BusRoute.findByIdAndUpdate(id, payload, { new: true });
     res.status(200).json({ message: "Route updated successfully", route });
   } catch (error) {
@@ -164,7 +127,9 @@ const deleteBusRoute = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const linkedSchedules = await BusSchedule.find({ route_id: id }).select("_id");
+    const linkedSchedules = await BusSchedule.find({ route_id: id }).select(
+      "_id"
+    );
     if (linkedSchedules.length > 0) {
       const scheduleIds = linkedSchedules.map((s) => s._id);
       const linkedTrips = await BusTrip.countDocuments({

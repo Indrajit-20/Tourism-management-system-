@@ -71,7 +71,7 @@ const ManageSchedules = () => {
   const fetchAllData = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const [schedulesRes, routesRes, busesRes] = await Promise.all([
         axios.get("http://localhost:4000/api/bus-schedules"),
@@ -173,7 +173,7 @@ const ManageSchedules = () => {
   // ── Save schedule (create or update) ──
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       alert("You must be logged in as admin.");
       return;
@@ -246,7 +246,7 @@ const ManageSchedules = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this schedule?"))
       return;
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       await axios.delete(`http://localhost:4000/api/bus-schedules/${id}`, {
         headers: { Authorization: `Bearer ${token}` },

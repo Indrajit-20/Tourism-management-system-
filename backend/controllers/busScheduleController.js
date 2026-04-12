@@ -1,6 +1,6 @@
 const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
-const BusRoute    = require("../models/BusRoute");
+const BusRoute = require("../models/BusRoute");
 const Staff = require("../models/Staff");
 const { autoGenerateTrips } = require("./busTripController");
 
@@ -17,7 +17,12 @@ const validateOverrideDriver = async (driverId, routeBusId) => {
   if (!driverId) return null;
 
   const staff = await Staff.findById(driverId).select("designation name");
-  if (!staff || !String(staff.designation || "").toLowerCase().includes("driver")) {
+  if (
+    !staff ||
+    !String(staff.designation || "")
+      .toLowerCase()
+      .includes("driver")
+  ) {
     return "Selected staff is not a valid driver";
   }
 
@@ -66,13 +71,14 @@ const createSchedule = async (req, res) => {
     });
     await schedule.save();
 
-   // Auto generate trips for next 30 days
+    // Auto generate trips for next 30 days
     // We need the bus — get it from route
     let tripsCreated = 0;
     try {
       // Populate route to get bus_id
-      const populatedSchedule = await BusSchedule.findById(schedule._id)
-        .populate({ path: "route_id", populate: { path: "bus_id" } });
+      const populatedSchedule = await BusSchedule.findById(
+        schedule._id
+      ).populate({ path: "route_id", populate: { path: "bus_id" } });
 
       const bus = populatedSchedule.route_id?.bus_id;
 
@@ -86,13 +92,14 @@ const createSchedule = async (req, res) => {
     }
 
     res.status(201).json({
-      message:      `Schedule created. ${tripsCreated} trips auto-generated for next 30 days.`,
+      message: `Schedule created. ${tripsCreated} trips auto-generated for next 30 days.`,
       schedule,
       trips_created: tripsCreated,
     });
-
   } catch (error) {
-    res.status(500).json({ message: "Error creating schedule", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error creating schedule", error: error.message });
   }
 };
 
@@ -102,32 +109,37 @@ const getSchedules = async (req, res) => {
   try {
     const schedules = await BusSchedule.find()
       .populate("route_id")
+      .populate("bus_id")
       // ✅ FIX: Staff model uses 'name' not 'first_name last_name'
       .populate("driver_id", "name contact_no");
 
     res.status(200).json(schedules);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching schedules", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching schedules", error: error.message });
   }
 };
-
 
 // 3. GET SCHEDULE BY ID
 
 const getScheduleById = async (req, res) => {
   try {
-    // ✅ FIX: populate route and driver
+    // ✅ FIX: populate route, bus, and driver
     const schedule = await BusSchedule.findById(req.params.id)
       .populate("route_id")
+      .populate("bus_id")
       .populate("driver_id", "name");
 
-    if (!schedule) return res.status(404).json({ message: "Schedule not found" });
+    if (!schedule)
+      return res.status(404).json({ message: "Schedule not found" });
     res.status(200).json(schedule);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching schedule", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching schedule", error: error.message });
   }
 };
-
 
 // 4. UPDATE SCHEDULE
 
@@ -136,7 +148,8 @@ const updateSchedule = async (req, res) => {
     const { driver_id, ...rest } = req.body;
 
     const existing = await BusSchedule.findById(req.params.id);
-    if (!existing) return res.status(404).json({ message: "Schedule not found" });
+    if (!existing)
+      return res.status(404).json({ message: "Schedule not found" });
 
     const routeId = rest.route_id || existing.route_id;
     const route = await BusRoute.findById(routeId).select(
@@ -170,20 +183,24 @@ const updateSchedule = async (req, res) => {
     );
     res.status(200).json({ message: "Schedule updated", schedule });
   } catch (error) {
-    res.status(500).json({ message: "Error updating schedule", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating schedule", error: error.message });
   }
 };
-
 
 // 5. DELETE SCHEDULE
 
 const deleteSchedule = async (req, res) => {
   try {
     const schedule = await BusSchedule.findByIdAndDelete(req.params.id);
-    if (!schedule) return res.status(404).json({ message: "Schedule not found" });
+    if (!schedule)
+      return res.status(404).json({ message: "Schedule not found" });
     res.status(200).json({ message: "Schedule deleted" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting schedule", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting schedule", error: error.message });
   }
 };
 

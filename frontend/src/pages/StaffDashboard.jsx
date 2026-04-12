@@ -35,7 +35,7 @@ const StaffDashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       console.log("Token:", token);
       const res = await axios.get(`${API}/api/staff-dashboard/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -65,7 +65,7 @@ const StaffDashboard = () => {
   // Update trip status
   const fetchTourDetails = async (tour_id) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(
         `${API}/api/staff-dashboard/tour/${tour_id}`,
         {
@@ -82,7 +82,7 @@ const StaffDashboard = () => {
   };
   const fetchTripDetails = async (trip_id) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(
         `${API}/api/staff-dashboard/trip/${trip_id}`,
         {
@@ -101,7 +101,7 @@ const StaffDashboard = () => {
   // Update trip status
   const updateTripStatus = async (trip_id, newStatus) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.put(
         `${API}/api/staff-dashboard/trip/${trip_id}/status`,
         { status: newStatus },

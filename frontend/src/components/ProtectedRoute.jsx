@@ -3,8 +3,8 @@
 
   const ProtectedRoute = ({ allowedRoles }) => {
     
-    const token = localStorage.getItem("token");
-    const userRole = localStorage.getItem("role");
+    const token = sessionStorage.getItem("token");
+    const userRole = sessionStorage.getItem("role");
 
     // 2. Check if user is logged in
     if (!token) {

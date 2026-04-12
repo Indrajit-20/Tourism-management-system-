@@ -17,7 +17,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         console.log("Fetching dashboard stats...");
         const res = await axios.get(
           "http://localhost:4000/api/admin-stats/dashboard-stats",

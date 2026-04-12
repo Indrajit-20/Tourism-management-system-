@@ -10,12 +10,8 @@ const ManageRoutes = () => {
   const [searchText, setSearchText] = useState("");
   const [formData, setFormData] = useState({
     route_name: "",
-    bus_id: "",
     boarding_from: "",
     destination: "",
-    departure_time: "",
-    arrival_time: "",
-    price_per_seat: "",
   });
 
   useEffect(() => {
@@ -35,7 +31,7 @@ const ManageRoutes = () => {
   const fetchBuses = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/bus?category=route",
+        "http://localhost:4000/api/bus?category=route"
       );
       setBuses(res.data);
     } catch (err) {
@@ -49,7 +45,7 @@ const ManageRoutes = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       if (editingId) {
         // Update
@@ -58,7 +54,7 @@ const ManageRoutes = () => {
           formData,
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
         alert("Route Updated!");
         setEditingId(null);
@@ -73,12 +69,8 @@ const ManageRoutes = () => {
       // Reset form
       setFormData({
         route_name: "",
-        bus_id: "",
         boarding_from: "",
         destination: "",
-        departure_time: "",
-        arrival_time: "",
-        price_per_seat: "",
       });
     } catch (err) {
       alert("Failed to save route");
@@ -89,18 +81,14 @@ const ManageRoutes = () => {
     setEditingId(route._id);
     setFormData({
       route_name: route.route_name,
-      bus_id: route.bus_id._id,
       boarding_from: route.boarding_from || "",
       destination: route.destination || "",
-      departure_time: to24HourInput(route.departure_time),
-      arrival_time: to24HourInput(route.arrival_time),
-      price_per_seat: route.price_per_seat,
     });
   };
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this route?")) {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       try {
         await axios.delete(`http://localhost:4000/api/bus-routes/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -117,12 +105,8 @@ const ManageRoutes = () => {
     setEditingId(null);
     setFormData({
       route_name: "",
-      bus_id: "",
       boarding_from: "",
       destination: "",
-      departure_time: "",
-      arrival_time: "",
-      price_per_seat: "",
     });
   };
 

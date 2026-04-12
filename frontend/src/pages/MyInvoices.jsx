@@ -54,7 +54,7 @@ const MyInvoices = () => {
 
   const fetchInvoices = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API_BASE}/api/invoice/my-invoices`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -68,7 +68,7 @@ const MyInvoices = () => {
 
   const downloadInvoice = async (invoiceId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         `${API_BASE}/api/invoice/${invoiceId}/download`,
         {

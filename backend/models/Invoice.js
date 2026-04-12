@@ -5,6 +5,7 @@ const invoiceSchema = new mongoose.Schema(
     invoice_number: {
       type: String,
       unique: true,
+      required: true,
     },
     custmer_id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,11 +14,12 @@ const invoiceSchema = new mongoose.Schema(
     },
     booking_id: {
       type: mongoose.Schema.Types.ObjectId,
+      refPath: "booking_type",
       required: true,
     },
     booking_type: {
       type: String,
-      enum: ["Package", "Bus"],
+      enum: ["PackageBooking", "BusTicketBooking"],
       required: true,
     },
 
@@ -32,12 +34,6 @@ const invoiceSchema = new mongoose.Schema(
     travel_date: {
       type: Date,
     },
-    tour_start_date: {
-      type: Date,
-    },
-    tour_end_date: {
-      type: Date,
-    },
     travellers: {
       type: Number,
       default: 1,
@@ -46,14 +42,6 @@ const invoiceSchema = new mongoose.Schema(
     // For Bus bookings
     seat_numbers: {
       type: [String],
-    },
-    bus_details: {
-      type: String,
-    },
-
-    // For Package bookings
-    package_duration: {
-      type: String,
     },
 
     // Financial Breakdown
@@ -65,24 +53,12 @@ const invoiceSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    tax: {
-      type: Number,
-      default: 0,
-    },
-    gst: {
-      type: Number,
-      default: 0,
-    },
-    service_charges: {
-      type: Number,
-      default: 0,
-    },
-
-    // Payment Info
     amount: {
       type: Number,
       required: true,
     },
+
+    // Payment Info
     payment_method: {
       type: String,
       default: "Online (Razorpay)",

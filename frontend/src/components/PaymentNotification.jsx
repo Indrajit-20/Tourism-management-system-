@@ -9,8 +9,8 @@ const PaymentNotification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
+    const token = sessionStorage.getItem("token");
+    const role = sessionStorage.getItem("role");
 
     // Only run for logged in users — not admin
     if (!token || role === "admin") return;
@@ -28,7 +28,7 @@ const PaymentNotification = () => {
   // Fetch bookings that are Confirmed but not paid yet
   const checkUnpaidBookings = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API}/api/bus-bookings/my-bookings`, {
         headers: { Authorization: `Bearer ${token}` },
       });

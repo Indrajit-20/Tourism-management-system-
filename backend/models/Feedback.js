@@ -34,18 +34,10 @@ const feedbackSchema = new mongoose.Schema(
     },
 
     // Booking reference
-    package_booking_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "PackageBooking",
-      required: true,
-    },
     booking_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "PackageBooking",
-    },
-    departure_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "TourSchedule",
+      required: true,
     },
     bus_booking_id: {
       type: mongoose.Schema.Types.ObjectId,

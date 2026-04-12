@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Storage from "../utils/storage";
 import "../css/manageBusBookings.css";
 
 const ManageBusBookings = () => {
@@ -15,12 +16,12 @@ const ManageBusBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       const res = await axios.get(
         "http://localhost:4000/api/bus-bookings/all",
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
       setBookings(res.data);
     } catch (err) {
@@ -39,12 +40,12 @@ const ManageBusBookings = () => {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
     try {
       await axios.put(
         `http://localhost:4000/api/bus-bookings/status/${id}`,
         { status: "Cancelled", reason: reason.trim() },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Booking cancelled successfully.");
       fetchBookings();
@@ -88,8 +89,12 @@ const ManageBusBookings = () => {
     const dateMatch = !filterDate || toDateKey(b.travel_date) === filterDate;
 
     const route = b.trip_id?.schedule_id?.route_id;
-    const routeCity = `${route?.boarding_from || ""} ${route?.destination || ""}`;
-    const user = `${b.customer_id?.first_name || ""} ${b.customer_id?.last_name || ""}`;
+    const routeCity = `${route?.boarding_from || ""} ${
+      route?.destination || ""
+    }`;
+    const user = `${b.customer_id?.first_name || ""} ${
+      b.customer_id?.last_name || ""
+    }`;
     const busNo = String(b.trip_id?.bus_id?.bus_number || "");
     const busType = String(b.trip_id?.bus_id?.bus_type || "");
     const layoutType = String(b.trip_id?.bus_id?.layout_type || "");
@@ -110,10 +115,10 @@ const ManageBusBookings = () => {
 
   const totalBookings = bookings.length;
   const confirmedCount = bookings.filter(
-    (b) => b.booking_status === "Confirmed",
+    (b) => b.booking_status === "Confirmed"
   ).length;
   const cancelledCount = bookings.filter(
-    (b) => b.booking_status === "Cancelled",
+    (b) => b.booking_status === "Cancelled"
   ).length;
 
   if (loading) return <div>Loading bookings...</div>;
@@ -210,10 +215,14 @@ const ManageBusBookings = () => {
               {filteredBookings.map((b, index) => {
                 const route = b.trip_id?.schedule_id?.route_id;
                 const schedule = b.trip_id?.schedule_id;
-                const routeCity = `${route?.boarding_from || "-"} → ${route?.destination || "-"}`;
-                const stops = `${route?.board_point || route?.boarding_from || "-"} → ${route?.drop_point || route?.destination || "-"}`;
+                const routeCity = `${route?.boarding_from || "-"} → ${
+                  route?.destination || "-"
+                }`;
+                const stops = `${
+                  route?.board_point || route?.boarding_from || "-"
+                } → ${route?.drop_point || route?.destination || "-"}`;
                 const canCancel = !["Cancelled"].includes(
-                  String(b.booking_status || ""),
+                  String(b.booking_status || "")
                 );
 
                 return (
@@ -247,14 +256,18 @@ const ManageBusBookings = () => {
                     <td>₹{b.total_amount}</td>
                     <td>
                       <span
-                        className={`badge ${bookingStatusClass(b.booking_status)}`}
+                        className={`badge ${bookingStatusClass(
+                          b.booking_status
+                        )}`}
                       >
                         {b.booking_status}
                       </span>
                     </td>
                     <td>
                       <span
-                        className={`badge ${paymentStatusClass(b.payment_status)}`}
+                        className={`badge ${paymentStatusClass(
+                          b.payment_status
+                        )}`}
                       >
                         {b.payment_status}
                       </span>

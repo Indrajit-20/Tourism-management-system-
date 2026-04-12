@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Storage from "../utils/storage";
 import ReviewsDisplay from "../components/ReviewsDisplay";
 import "../css/bookPackage.css";
 
@@ -40,7 +41,7 @@ const BookPackage = () => {
     queryParams.get("schedule") || queryParams.get("departure");
   const [packageData, setPackageData] = useState(null);
   const [selectedDeparture, setSelectedDeparture] = useState(
-    location.state?.selectedDeparture || null,
+    location.state?.selectedDeparture || null
   );
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -65,8 +66,8 @@ const BookPackage = () => {
     // Keep passenger forms exactly same count as selected seats.
     setPassengers((prev) =>
       selectedSeats.map(
-        (_, index) => prev[index] || { name: "", age: "", gender: "Male" },
-      ),
+        (_, index) => prev[index] || { name: "", age: "", gender: "Male" }
+      )
     );
   }, [selectedSeats]);
 
@@ -128,7 +129,7 @@ const BookPackage = () => {
   // Submit to Backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
 
     if (!token) return alert("Please login first!");
 
@@ -162,7 +163,7 @@ const BookPackage = () => {
 
     if (invalidPassenger) {
       return alert(
-        "Please fill valid passenger details: Name (not numeric, max 60 chars), Age (1-120), and Gender.",
+        "Please fill valid passenger details: Name (not numeric, max 60 chars), Age (1-120), and Gender."
       );
     }
 
@@ -207,10 +208,12 @@ const BookPackage = () => {
           className="btn btn-primary"
           onClick={() =>
             navigate(
-              `/packages/${id}/select-seats?schedule=${selectedDeparture?._id || scheduleIdFromQuery}`,
+              `/packages/${id}/select-seats?schedule=${
+                selectedDeparture?._id || scheduleIdFromQuery
+              }`,
               {
                 state: { selectedDeparture },
-              },
+              }
             )
           }
         >
@@ -222,7 +225,7 @@ const BookPackage = () => {
 
   const seatWiseRows = selectedSeats.map((seatNumber, index) => {
     const departurePrice = Number(
-      selectedDeparture?.price ?? selectedDeparture?.price_per_person ?? 0,
+      selectedDeparture?.price ?? selectedDeparture?.price_per_person ?? 0
     );
     const age = passengers[index]?.age;
     const fare = getFareAfterChildDiscount(age, departurePrice);
@@ -242,7 +245,7 @@ const BookPackage = () => {
   const totalToDisplay = seatWiseRows.reduce((sum, row) => sum + row.fare, 0);
   const totalDiscount = seatWiseRows.reduce(
     (sum, row) => sum + row.discount,
-    0,
+    0
   );
   const childCount = seatWiseRows.filter((row) => row.isChild).length;
   const boardingPoint = getBoardingPoint(packageData);
@@ -254,10 +257,12 @@ const BookPackage = () => {
           className="btn btn-outline-secondary me-3"
           onClick={() =>
             navigate(
-              `/packages/${id}/select-seats?schedule=${selectedDeparture?._id || scheduleIdFromQuery}`,
+              `/packages/${id}/select-seats?schedule=${
+                selectedDeparture?._id || scheduleIdFromQuery
+              }`,
               {
                 state: { selectedSeats, selectedDeparture },
-              },
+              }
             )
           }
         >

@@ -14,7 +14,7 @@ const MyCancellations = () => {
     try {
       setLoading(true);
       setError("");
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         "http://localhost:4000/api/cancellation/my-cancellations",
         {

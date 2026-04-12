@@ -24,7 +24,7 @@ const CancelBookingModal = ({
     setError("");
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:4000/api/cancellation/cancel",
         {

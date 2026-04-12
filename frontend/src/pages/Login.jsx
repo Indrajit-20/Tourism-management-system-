@@ -19,9 +19,21 @@ const Login = () => {
         formdata
       );
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
-      localStorage.setItem("username", data.name || formdata.email);
+      // Save to sessionStorage for tab isolation
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("role", data.role);
+      sessionStorage.setItem("username", data.name || formdata.email);
+
+      // Trigger custom event so Header component updates
+      window.dispatchEvent(
+        new CustomEvent("userLogin", {
+          detail: {
+            username: data.name || formdata.email,
+            role: data.role,
+            token: data.token,
+          },
+        })
+      );
 
       alert("Login successful");
 

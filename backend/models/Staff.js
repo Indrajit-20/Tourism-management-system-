@@ -8,12 +8,12 @@ const staffSchema = new mongoose.Schema(
     designation: {
       type: String,
       required: true,
-      enum: ["driver", "guide"]
+      enum: ["driver", "guide"],
     },
 
     contact_no: { type: String, required: true },
 
-    email_id: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
 
     password: { type: String, required: true },
 
@@ -26,7 +26,19 @@ const staffSchema = new mongoose.Schema(
       },
     },
 
-    address: { type: String, required: true }
+    address: { type: String, required: true },
+
+    driver_license: {
+      type: String,
+      description: "Required if designation is driver",
+    },
+
+    date_of_joining: {
+      type: String,
+      description: "Joining date in DD-MM-YYYY format",
+    },
+
+    experience: { type: String, description: "Experience in years or months" },
   },
   { timestamps: true }
 );

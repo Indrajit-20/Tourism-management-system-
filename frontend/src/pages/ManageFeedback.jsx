@@ -13,7 +13,7 @@ const ManageFeedback = () => {
 
   const fetchFeedback = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(
         "http://localhost:4000/api/feedback/admin/all",
         {

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { to12HourDisplay, toMinutes } from "../utils/timeFormat";
+import Storage from "../utils/storage";
 import SearchFilterContainer from "../components/SearchFilterContainer";
 
 const BookBus = () => {
   const [routes, setRoutes] = useState([]);
   const [schedules, setSchedules] = useState([]);
-  const [tripInfo, setTripInfo] = useState({}); // ✅ NEW: seat info per route
-  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [tripInfo, setTripInfo] = useState({}); // ✅ seat info per schedule
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({ date: "", seats: 1 });
   const [searchFrom, setSearchFrom] = useState("");
   const [searchTo, setSearchTo] = useState("");
@@ -22,10 +23,10 @@ const BookBus = () => {
     fetchSchedules();
   }, []);
 
-  // ✅ NEW: When date changes — reload seat availability
+  // ✅ When date changes — reload seat availability for all schedules
   useEffect(() => {
-    if (routes.length > 0 && bookingDetails.date) {
-      fetchSeatAvailability(routes, bookingDetails.date);
+    if (schedules.length > 0 && bookingDetails.date) {
+      fetchSeatAvailability(schedules, bookingDetails.date);
     }
   }, [bookingDetails.date]);
 
@@ -33,8 +34,6 @@ const BookBus = () => {
     try {
       const res = await axios.get("http://localhost:4000/api/bus-routes/");
       setRoutes(res.data);
-      // Fetch seat availability for today by default
-      fetchSeatAvailability(res.data, todayIso);
     } catch (err) {
       console.error("Error fetching routes", err);
     }
@@ -44,43 +43,47 @@ const BookBus = () => {
     try {
       const res = await axios.get("http://localhost:4000/api/bus-schedules");
       setSchedules(res.data);
+      // Fetch seat availability for today by default
+      fetchSeatAvailability(res.data, todayIso);
     } catch (err) {
       console.error("Error fetching schedules", err);
     }
   };
 
-  // ✅ NEW: Fetch seat availability for each route
-  const fetchSeatAvailability = async (routesList, selectedDate) => {
+  // ✅ Fetch seat availability for each schedule
+  const fetchSeatAvailability = async (schedulesList, selectedDate) => {
     const info = {};
     await Promise.all(
-      routesList.map(async (route) => {
+      schedulesList.map(async (schedule) => {
         try {
+          // Get trip for this schedule on the selected date
           const res = await axios.get(
-            `http://localhost:4000/api/bus-trips?route_id=${route._id}&date=${selectedDate}`,
+            `http://localhost:4000/api/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
           );
           const trip = (res.data || [])[0];
           if (trip) {
             const total = trip.seats?.length || 0;
             const booked =
               trip.seats?.filter((s) => !s.is_available).length || 0;
-            info[route._id] = { total, booked, available: total - booked };
+            info[schedule._id] = { total, booked, available: total - booked };
           } else {
-            // No trip yet — show bus total seats as available
-            info[route._id] = {
-              total: route.bus_id?.total_seats || 0,
+            // No trip yet — show total seats as available
+            const bus = schedule.bus_id || {};
+            info[schedule._id] = {
+              total: bus.total_seats || 0,
               booked: 0,
-              available: route.bus_id?.total_seats || 0,
+              available: bus.total_seats || 0,
             };
           }
         } catch (err) {
-          info[route._id] = { total: 0, booked: 0, available: 0 };
+          info[schedule._id] = { total: 0, booked: 0, available: 0 };
         }
-      }),
+      })
     );
     setTripInfo(info);
   };
 
-  // ✅ NEW: Calculate duration between departure and arrival
+  // ✅ Calculate duration between departure and arrival
   const getDuration = (departure, arrival) => {
     if (!departure || !arrival) return "";
     const departureMinutes = toMinutes(departure);
@@ -110,8 +113,9 @@ const BookBus = () => {
     return nowMinutes >= depMinutes;
   };
 
-  // ✅ KEPT: Filter routes based on search
-  const filteredRoutes = routes.filter((route) => {
+  // ✅ Filter schedules based on route search (match route's boarding_from & destination)
+  const filteredSchedules = schedules.filter((schedule) => {
+    const route = schedule.route_id || {};
     const from = String(route.boarding_from || "").toLowerCase();
     const to = String(route.destination || "").toLowerCase();
     const matchFrom = from.includes(searchFrom.toLowerCase());
@@ -127,7 +131,7 @@ const BookBus = () => {
   // ✅ KEPT: Submit booking
   const handleBook = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    const token = Storage.getToken();
     if (!token) {
       alert("Please login to book a ticket");
       navigate("/login");
@@ -140,30 +144,30 @@ const BookBus = () => {
       return;
     }
 
-    if (isDeparturePassedToday(selectedRoute.departure_time, selectedDate)) {
+    if (isDeparturePassedToday(selectedSchedule.departure_time, selectedDate)) {
       alert(
-        "This route departure time has already passed for today. Please choose another date.",
+        "This schedule departure time has already passed for today. Please choose another date."
       );
       return;
     }
 
     try {
       const res = await axios.get(
-        `http://localhost:4000/api/bus-trips?route_id=${selectedRoute._id}&date=${selectedDate}`,
+        `http://localhost:4000/api/bus-trips?schedule_id=${selectedSchedule._id}&date=${selectedDate}`
       );
       const trips = res.data || [];
       const trip = trips[0];
 
       if (!trip) {
         alert(
-          "No trip is available for this route on the selected date. " +
-            "This is usually because the schedule does not run that day. Please try another date.",
+          "No trip is available for this schedule on the selected date. " +
+            "This is usually because the schedule does not run that day. Please try another date."
         );
         return;
       }
 
       navigate("/book-seats", {
-        state: { trip, route: selectedRoute, date: bookingDetails.date },
+        state: { trip, schedule: selectedSchedule, date: bookingDetails.date },
       });
     } catch (err) {
       console.error("Error finding trip", err);
@@ -178,7 +182,7 @@ const BookBus = () => {
       <SearchFilterContainer
         title="Search Bus Tickets"
         subtitle="Filter routes by boarding and destination"
-        resultText={`Showing ${filteredRoutes.length} of ${routes.length} routes`}
+        resultText={`Showing ${filteredSchedules.length} of ${schedules.length} schedules`}
         onClear={() => {
           setSearchFrom("");
           setSearchTo("");
@@ -209,53 +213,34 @@ const BookBus = () => {
         </div>
       </SearchFilterContainer>
 
-      {/* ✅ KEPT: Schedule note when route selected */}
-      {selectedRoute && (
+      {/* ✅ Schedule note when schedule selected */}
+      {selectedSchedule && (
         <div className="alert alert-info">
-          <strong>Schedule note:</strong> This route is configured to run on:
-          <ul className="mb-0">
-            {(() => {
-              const matched = schedules.filter((s) => {
-                const routeId = s.route_id?._id || s.route_id;
-                return routeId === selectedRoute._id;
-              });
-              if (!matched.length)
-                return <li>No schedule found (admin needs to add one).</li>;
-              return matched.map((s) => (
-                <li key={s._id}>
-                  <strong>{s.title}</strong>: {s.frequency}
-                  {s.frequency === "Custom" && s.days_of_week?.length
-                    ? ` (days: ${s.days_of_week.join(", ")})`
-                    : ""}
-                </li>
-              ));
-            })()}
-          </ul>
-          <small>
-            If you choose a date not covered by the schedule, booking will not
-            be possible.
-          </small>
+          <strong>Schedule:</strong> {selectedSchedule.title} (
+          {selectedSchedule.frequency})
         </div>
       )}
 
-      {/* ✅ UPDATED: Route Cards — now with seat info and duration */}
+      {/* ✅ Schedule cards — now with seat info and duration */}
       <div className="d-flex flex-column gap-3">
-        {filteredRoutes.map((route) => {
-          // Get seat info for this route
-          const info = tripInfo[route._id] || {
+        {filteredSchedules.map((schedule) => {
+          // Get seat info for this schedule
+          const info = tripInfo[schedule._id] || {
             total: 0,
             booked: 0,
             available: 0,
           };
+          const route = schedule.route_id || {};
+          const bus = schedule.bus_id || {};
           const duration = getDuration(
-            route.departure_time,
-            route.arrival_time,
+            schedule.departure_time,
+            schedule.arrival_time
           );
           const isLow = info.available > 0 && info.available <= 5;
 
           return (
             <div
-              key={route._id}
+              key={schedule._id}
               className="card shadow-sm border"
               style={{ borderRadius: 12 }}
             >
@@ -265,28 +250,20 @@ const BookBus = () => {
                   {/* Left — Bus info */}
                   <div className="col-md-3">
                     <h6 className="fw-bold mb-0 text-primary">
-                      {route.bus_id?.bus_name || route.route_name}
+                      {bus?.bus_name || schedule.title}
                     </h6>
                     <small className="text-muted">
-                      {route.bus_id?.bus_type || "Standard"} ·{" "}
-                      {route.bus_id?.bus_number}
+                      {bus?.bus_type || "Standard"} · {bus?.bus_number}
                     </small>
-                    {/* ✅ NEW: Schedule frequency badge */}
-                    {(() => {
-                      const matched = schedules.filter(
-                        (s) => (s.route_id?._id || s.route_id) === route._id,
-                      );
-                      return matched.length > 0 ? (
-                        <div className="mt-1">
-                          <span
-                            className="badge bg-light text-dark border"
-                            style={{ fontSize: "0.7rem" }}
-                          >
-                            🔄 {matched[0].frequency}
-                          </span>
-                        </div>
-                      ) : null;
-                    })()}
+                    {/* Schedule frequency badge */}
+                    <div className="mt-1">
+                      <span
+                        className="badge bg-light text-dark border"
+                        style={{ fontSize: "0.7rem" }}
+                      >
+                        🔄 {schedule.frequency}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Middle — Time + Duration */}
@@ -295,7 +272,7 @@ const BookBus = () => {
                       {/* Departure */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {to12HourDisplay(route.departure_time)}
+                          {to12HourDisplay(schedule.departure_time)}
                         </div>
                         <small className="text-muted">
                           {route.boarding_from}
@@ -314,14 +291,14 @@ const BookBus = () => {
                           }}
                         />
                         <div style={{ fontSize: "0.65rem", color: "#aaa" }}>
-                          {route.bus_id?.bus_type}
+                          {bus?.bus_type}
                         </div>
                       </div>
 
                       {/* Arrival */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {to12HourDisplay(route.arrival_time)}
+                          {to12HourDisplay(schedule.arrival_time)}
                         </div>
                         <small className="text-muted">
                           {route.destination}
@@ -338,47 +315,47 @@ const BookBus = () => {
                         className="fw-bold text-success"
                         style={{ fontSize: "1.3rem" }}
                       >
-                        ₹{route.price_per_seat}
+                        ₹{schedule.base_price}
                       </span>
                     </div>
 
-                    {/* ✅ KEPT: Book Ticket button or booking form */}
-                    {selectedRoute?._id !== route._id && (
+                    {/* Book Ticket button or booking form */}
+                    {selectedSchedule?._id !== schedule._id && (
                       <button
                         className="btn btn-danger fw-bold w-100 mb-1"
                         style={{ borderRadius: 8 }}
-                        onClick={() => setSelectedRoute(route)}
+                        onClick={() => setSelectedSchedule(schedule)}
                         disabled={info.available === 0}
                       >
                         {info.available === 0 ? "Sold Out" : "Select Seats"}
                       </button>
                     )}
 
-                    {/* ✅ NEW: Seats left badge */}
+                    {/* Seats left badge */}
                     <div
                       className={`text-center small fw-bold ${
                         info.available === 0
                           ? "text-danger"
                           : isLow
-                            ? "text-warning"
-                            : "text-success"
+                          ? "text-warning"
+                          : "text-success"
                       }`}
                     >
                       {info.available === 0
                         ? "❌ Sold Out"
                         : isLow
-                          ? `⚠️ Only ${info.available} seats left!`
-                          : `✅ ${info.available} Seats Left`}
+                        ? `⚠️ Only ${info.available} seats left!`
+                        : `✅ ${info.available} Seats Left`}
                     </div>
                     <small className="text-muted d-block mt-2 text-center">
-                      Boarding: {route.board_point || route.boarding_from} |
-                      Drop: {route.drop_point || route.destination}
+                      Boarding: {route.boarding_from} | Drop:{" "}
+                      {route.destination}
                     </small>
                   </div>
                 </div>
 
-                {/* ✅ KEPT: Booking form when route selected */}
-                {selectedRoute?._id === route._id && (
+                {/* Booking form when schedule selected */}
+                {selectedSchedule?._id === schedule._id && (
                   <form
                     onSubmit={handleBook}
                     className="mt-3 p-3 bg-light rounded"
@@ -402,7 +379,7 @@ const BookBus = () => {
                         <button
                           type="button"
                           className="btn btn-sm btn-secondary me-2"
-                          onClick={() => setSelectedRoute(null)}
+                          onClick={() => setSelectedSchedule(null)}
                         >
                           Cancel
                         </button>
@@ -417,7 +394,7 @@ const BookBus = () => {
                   </form>
                 )}
 
-                {/* ✅ NEW: Bottom stats row */}
+                {/* Bottom stats row */}
                 <div className="border-top mt-3 pt-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
                   <div className="d-flex gap-2 flex-wrap">
                     <span
@@ -439,20 +416,22 @@ const BookBus = () => {
                       🟢 {info.available} Available
                     </span>
                   </div>
-                  <small className="text-muted">{route.route_name}</small>
+                  <small className="text-muted">{schedule.title}</small>
                 </div>
               </div>
             </div>
           );
         })}
 
-        {/* ✅ KEPT: Empty state */}
-        {filteredRoutes.length === 0 && (
+        {/* Empty state */}
+        {filteredSchedules.length === 0 && (
           <div className="text-center text-muted py-5">
-            {routes.length === 0 ? (
-              <p>No bus routes available at the moment.</p>
+            {schedules.length === 0 ? (
+              <p>No bus schedules available at the moment.</p>
             ) : (
-              <p>No routes found for your search. Try different city names.</p>
+              <p>
+                No schedules found for your search. Try different city names.
+              </p>
             )}
           </div>
         )}

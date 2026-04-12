@@ -19,7 +19,7 @@ const ManageTripsByDate = () => {
   // ── Fetch drivers for dropdown ──
   const fetchDrivers = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API}/api/staff`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -35,7 +35,7 @@ const ManageTripsByDate = () => {
   const fetchTrips = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       // ✅ FIX: correct endpoint — fetch all then filter by date
       const res = await axios.get(`${API}/api/bus-trips`, {
@@ -60,7 +60,7 @@ const ManageTripsByDate = () => {
   // ── Change driver for a trip ──
   const updateDriver = async (tripId, driverId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       // ✅ FIX: Send driver_id (MongoDB ObjectId)
       await axios.put(
@@ -81,7 +81,7 @@ const ManageTripsByDate = () => {
   const cancelTrip = async (tripId) => {
     if (!window.confirm("Cancel this trip?")) return;
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       // ✅ FIX: actually calls backend to cancel
       await axios.put(

@@ -9,12 +9,13 @@ const cancellationSchema = new mongoose.Schema(
       required: true,
     },
     booking_id: {
-      type: String, // Can be package or bus booking ID
+      type: mongoose.Schema.Types.ObjectId,
+      refPath: "booking_type", // Use refPath for polymorphic references
       required: true,
     },
     booking_type: {
       type: String,
-      enum: ["Package", "Bus"],
+      enum: ["PackageBooking", "BusTicketBooking"],
       required: true,
     },
     refund_amount: {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Storage from "../utils/storage";
 
 const ManageCancellations = () => {
   const [cancellations, setCancellations] = useState([]);
@@ -16,7 +17,7 @@ const ManageCancellations = () => {
     try {
       setLoading(true);
       setError("");
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       const response = await axios.get(
         "http://localhost:4000/api/cancellation/admin/all",
         {
@@ -35,7 +36,7 @@ const ManageCancellations = () => {
 
   const handleMarkDone = async (cancellationId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
 
       // First create refund record
       await axios.post(

@@ -73,7 +73,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
   const fetchStaff = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API_BASE_URL}/api/staff`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -86,7 +86,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
   const fetchSchedules = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API_BASE_URL}/api/tour-schedules`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -175,7 +175,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const payload = {
         package_id: packageId,
         ...formData,
@@ -217,7 +217,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
 
   const handleOpenSchedule = async (scheduleId) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.post(
         `${API_BASE_URL}/api/tour-schedules/${scheduleId}/open`,
         {},
@@ -273,7 +273,7 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
     if (!confirmed) return;
 
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.delete(`${API_BASE_URL}/api/tour-schedules/${schedule._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });

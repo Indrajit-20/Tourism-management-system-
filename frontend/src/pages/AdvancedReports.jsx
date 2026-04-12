@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
+import Storage from "../utils/storage";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -36,7 +37,7 @@ const AdvancedReports = () => {
   const [toDate, setToDate] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
+  const token = Storage.getToken();
   const headers = { Authorization: `Bearer ${token}` };
 
   useEffect(() => {

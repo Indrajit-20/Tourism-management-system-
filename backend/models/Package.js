@@ -7,19 +7,24 @@ const packageSchema = new mongoose.Schema(
     source_city: { type: String, default: "Ahmedabad" },
     destination: { type: String, required: true },
 
-    // Update to support multiple hotels
-    hotels: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Hotel",
-    }],
+    // References to State and City
+    state_id: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
+    city_id: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
+    places_visited: [{ type: mongoose.Schema.Types.ObjectId, ref: "City" }],
 
-    // Deprecated package-level price. Pricing is managed on TourSchedule.
-    price: { type: Number },
+    // Update to support multiple hotels
+    hotels: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Hotel",
+      },
+    ],
+
     duration: { type: String, required: true },
-    
+
     // Support multiple images
     image_urls: [{ type: String }],
-    
+
     description: { type: String },
 
     // Tour Guide (optional)
@@ -31,9 +36,7 @@ const packageSchema = new mongoose.Schema(
 
     // Admin manually adds boarding points properly
     boarding_points: [{ type: String }],
-    // Keep for backward compatibility. Use boarding_points as the single source.
-    pickup_points: [{ type: String }],
-    
+
     // Sightseeing list and itinerary
     sightseeing: [{ type: String }],
     itinerary: { type: String },

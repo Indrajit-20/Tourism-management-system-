@@ -33,7 +33,7 @@ const PackageManagment = () => {
   const [boardingPoint, setBoardingPoint] = useState("");
   const [imageInputs, setImageInputs] = useState([null]);
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const fetchData = async () => {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};

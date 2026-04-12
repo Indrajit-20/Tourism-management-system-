@@ -9,17 +9,45 @@ const Header = () => {
   const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    // Clear from sessionStorage (per-tab storage)
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+
+    // Also clear sessionStorage for backward compatibility
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+
     setUser({ loggedIn: false, name: "" });
     setDropdownOpen(false);
     window.location.href = "/login";
   };
 
+  // Check for existing session on component mount
   useEffect(() => {
-    const name = localStorage.getItem("username");
-    if (name) setUser({ loggedIn: true, name });
+    const checkLogin = () => {
+      const name = sessionStorage.getItem("username");
+      if (name) {
+        setUser({ loggedIn: true, name });
+      }
+    };
+
+    checkLogin();
+
+    // Listen for login events from other components
+    const handleLoginEvent = (event) => {
+      setUser({
+        loggedIn: true,
+        name: event.detail.username,
+      });
+    };
+
+    window.addEventListener("userLogin", handleLoginEvent);
+
+    return () => {
+      window.removeEventListener("userLogin", handleLoginEvent);
+    };
   }, []);
 
   // Close open menus when route changes.

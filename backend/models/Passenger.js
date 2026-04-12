@@ -8,7 +8,7 @@ const PassengerSchema = new mongoose.Schema(
     },
     b_booking_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "BusBooking",
+      ref: "BusTicketBooking",
     },
     passenger_name: {
       type: String,

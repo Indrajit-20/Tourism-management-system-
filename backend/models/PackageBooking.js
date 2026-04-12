@@ -5,7 +5,7 @@ const Package = require("./Package");
 const packageBookingSchema = new mongoose.Schema(
   {
     // Link to Package Master (template)
-    Package_id: {
+    package_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Package",
       required: true,
@@ -18,7 +18,7 @@ const packageBookingSchema = new mongoose.Schema(
     },
 
     // Customer
-    Custmer_id: {
+    customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
       required: true,
@@ -122,10 +122,6 @@ const packageBookingSchema = new mongoose.Schema(
 
     // Feedback (review)
     review_submitted: { type: Boolean, default: false },
-    feedback_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Feedback",
-    },
     review_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Feedback",

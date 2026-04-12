@@ -47,7 +47,7 @@ const ManagePackageBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get("http://localhost:4000/api/bookings/all", {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -60,7 +60,7 @@ const ManagePackageBookings = () => {
   };
 
   const handleStatus = async (id, newStatus) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     try {
       await axios.put(
         `http://localhost:4000/api/bookings/update-status/${id}`,

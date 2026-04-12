@@ -8,7 +8,6 @@ const citySchema = new mongoose.Schema(
       ref: "State",
       required: false,
     },
-    state: { type: String, required: true },
     description: { type: String },
   },
   { timestamps: true }

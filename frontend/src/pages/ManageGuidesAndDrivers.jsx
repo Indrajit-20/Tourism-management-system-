@@ -63,7 +63,7 @@ const ManageGuidesAndDrivers = () => {
   const fetchStaff = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const res = await axios.get(`${API}/api/staff`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -80,7 +80,7 @@ const ManageGuidesAndDrivers = () => {
   const handleAddStaff = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       await axios.post(`${API}/api/staff/add`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -96,7 +96,7 @@ const ManageGuidesAndDrivers = () => {
   const handleDeleteStaff = async (id) => {
     if (window.confirm("Are you sure you want to delete this staff member?")) {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         await axios.delete(`${API}/api/staff/delete/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });

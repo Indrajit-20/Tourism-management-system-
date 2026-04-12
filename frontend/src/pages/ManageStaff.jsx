@@ -23,7 +23,7 @@ const ManageStaff = () => {
 
   const fetchStaff = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const res = await axios.get("http://localhost:4000/api/staff", {
         headers,
@@ -81,7 +81,7 @@ const ManageStaff = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       if (editingStaffId) {
@@ -130,7 +130,7 @@ const ManageStaff = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this staff member?")) {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         await axios.delete(`http://localhost:4000/api/staff/delete/${id}`, {
           headers,

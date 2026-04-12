@@ -14,6 +14,7 @@ const BusTripSchema = new mongoose.Schema(
 		bus_id: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Bus",
+			required: true,
 		},
 
 		// Assigned driver (staff)

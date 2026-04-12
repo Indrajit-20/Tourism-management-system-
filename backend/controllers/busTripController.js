@@ -4,7 +4,9 @@ const Bus = require("../models/Bus");
 const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
 const parseTimeToMinutes = (value) => {
-  const text = String(value || "").trim().toUpperCase();
+  const text = String(value || "")
+    .trim()
+    .toUpperCase();
   if (!text) return null;
 
   const hhmm = text.match(/^(\d{1,2}):(\d{2})$/);
@@ -171,9 +173,88 @@ const createTrip = async (req, res) => {
 
 const getTrips = async (req, res) => {
   try {
-    const { route_id, date } = req.query;
+    const { schedule_id, route_id, date } = req.query;
 
-    // If route + date given → find or create trip for user booking
+    // If schedule_id + date given → find or create trip for this schedule
+    if (schedule_id && date) {
+      const tripDate = new Date(date);
+      tripDate.setHours(0, 0, 0, 0);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (tripDate < today) return res.status(200).json([]);
+
+      const schedule = await BusSchedule.findById(schedule_id)
+        .populate({ path: "route_id" })
+        .populate({ path: "bus_id" });
+
+      if (!schedule) {
+        return res.status(404).json({ message: "Schedule not found" });
+      }
+
+      const bus = schedule.bus_id;
+      if (!bus) return res.status(404).json({ message: "Bus not found" });
+
+      // Check if trip already exists for this schedule + date
+      const existing = await BusTrip.findOne({
+        schedule_id,
+        trip_date: {
+          $gte: tripDate,
+          $lt: new Date(tripDate.getTime() + 86400000),
+        },
+      })
+        .populate("schedule_id")
+        .populate("bus_id")
+        .populate("driver_id", "name");
+
+      if (existing) return res.status(200).json([existing]);
+
+      // Check if schedule runs on this day
+      if (!scheduleRunsOnDate(schedule, tripDate)) {
+        console.log(`⚠️ Schedule doesn't run on ${tripDate}`);
+        return res.status(200).json([]);
+      }
+
+      // Check if departure time has passed today
+      const now = new Date();
+      const isToday = tripDate.toDateString() === now.toDateString();
+      if (isToday) {
+        const departureMinutes = parseTimeToMinutes(schedule.departure_time);
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        if (departureMinutes !== null && nowMinutes >= departureMinutes) {
+          return res.status(200).json([]);
+        }
+      }
+
+      // Auto create trip if not exists
+      const basePrice = schedule.base_price || 500;
+      const newTrip = new BusTrip({
+        schedule_id,
+        bus_id: bus._id,
+        driver_id: schedule.driver_id,
+        trip_date: tripDate,
+        boarding_points: schedule.boarding_points || [],
+        drop_points: schedule.drop_points || [],
+        seats: buildSeatLayout({
+          totalSeats: bus.total_seats,
+          layoutType: bus.layout_type,
+          busType: bus.bus_type,
+          basePrice,
+          includeAvailability: true,
+        }),
+      });
+      await newTrip.save();
+
+      const saved = await BusTrip.findById(newTrip._id)
+        .populate("schedule_id")
+        .populate("bus_id")
+        .populate("driver_id", "name");
+
+      console.log(`✅ Trip auto-created for ${tripDate}`);
+      return res.status(200).json([saved]);
+    }
+
+    // If route_id + date given → find or create trip for user booking (legacy)
     if (route_id && date) {
       const tripDate = new Date(date);
       tripDate.setHours(0, 0, 0, 0);
@@ -183,17 +264,16 @@ const getTrips = async (req, res) => {
       if (tripDate < today) return res.status(200).json([]);
 
       const BusRoute = require("../models/BusRoute");
-      const route = await BusRoute.findById(route_id).populate("bus_id");
+      const route = await BusRoute.findById(route_id);
       if (!route) return res.status(404).json({ message: "Route not found" });
-
-      const bus = route.bus_id;
-      if (!bus) return res.status(404).json({ message: "Bus not found" });
 
       // Find matching schedule for this route + date
       const schedules = await BusSchedule.find({
         route_id,
-        status: "Active", // ✅ Only fetch active schedules
-      }).populate("route_id");
+        status: "Active",
+      })
+        .populate("route_id")
+        .populate("bus_id");
 
       if (schedules.length === 0) {
         console.log(`⚠️ No active schedules found for route ${route_id}`);
@@ -234,11 +314,14 @@ const getTrips = async (req, res) => {
       if (existing) return res.status(200).json([existing]);
 
       // Auto create if not exists
-      const basePrice = schedule.base_price || route.price_per_seat || 500;
+      const bus = schedule.bus_id;
+      if (!bus) return res.status(404).json({ message: "Bus not found" });
+
+      const basePrice = schedule.base_price || 500;
       const newTrip = new BusTrip({
         schedule_id: schedule._id,
         bus_id: bus._id,
-        driver_id: schedule.driver_id || bus.driver_id,
+        driver_id: schedule.driver_id,
         trip_date: tripDate,
         boarding_points: schedule.boarding_points || [],
         drop_points: schedule.drop_points || [],

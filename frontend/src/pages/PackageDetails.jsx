@@ -46,7 +46,7 @@ const PackageDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const scheduleIdFromQuery = new URLSearchParams(location.search).get(
-    "schedule",
+    "schedule"
   );
   const [packageData, setPackageData] = useState(null);
   const [activeTab, setActiveTab] = useState("itinerary");
@@ -92,17 +92,17 @@ const PackageDetails = () => {
 
   const sightseeingItems = useMemo(
     () => parseMultiValue(packageData?.sightseeing),
-    [packageData],
+    [packageData]
   );
 
   const inclusionItems = useMemo(
     () => parseMultiValue(packageData?.inclusive),
-    [packageData],
+    [packageData]
   );
 
   const exclusionItems = useMemo(
     () => parseMultiValue(packageData?.exclusive),
-    [packageData],
+    [packageData]
   );
 
   const transportText = useMemo(() => {
@@ -211,12 +211,31 @@ const PackageDetails = () => {
         return <p className="pd-empty">No hotels attached to this package.</p>;
       }
 
+      const getHotelStars = (type) => {
+        if (!type) return null;
+        const match = type.match(/(\d)-Star/i) || type.match(/(\d)\s*Star/i);
+        if (match && match[1]) {
+          const stars = parseInt(match[1]);
+          return (
+            <span className="hotel-stars ms-2 text-warning">
+              {"★".repeat(stars)}
+              <span className="text-muted">{"★".repeat(5 - stars)}</span>
+            </span>
+          );
+        }
+        return null;
+      };
+
       return (
         <div className="pd-list">
           {hotels.map((hotel) => (
             <div key={hotel._id || hotel.name} className="pd-hotel-card">
               <div>
-                <h6>{hotel.name || "Hotel"}</h6>
+                <h6 className="d-flex align-items-center">
+                  {hotel.name || "Hotel"}
+                  {hotel.hotel_type?.includes("Star") &&
+                    getHotelStars(hotel.hotel_type)}
+                </h6>
                 <p>{hotel.location || "Location not available"}</p>
               </div>
               <span className="pd-hotel-type">
@@ -259,7 +278,7 @@ const PackageDetails = () => {
                       className="pd-image-nav pd-image-nav-left"
                       onClick={() =>
                         setSelectedImageIndex((prev) =>
-                          prev === 0 ? imageList.length - 1 : prev - 1,
+                          prev === 0 ? imageList.length - 1 : prev - 1
                         )
                       }
                     >
@@ -270,7 +289,7 @@ const PackageDetails = () => {
                       className="pd-image-nav pd-image-nav-right"
                       onClick={() =>
                         setSelectedImageIndex((prev) =>
-                          prev === imageList.length - 1 ? 0 : prev + 1,
+                          prev === imageList.length - 1 ? 0 : prev + 1
                         )
                       }
                     >
@@ -290,7 +309,9 @@ const PackageDetails = () => {
                     key={`img-${index}`}
                     src={img}
                     alt={`${packageData.package_name}-${index + 1}`}
-                    className={`pd-thumb ${selectedImageIndex === index ? "active" : ""}`}
+                    className={`pd-thumb ${
+                      selectedImageIndex === index ? "active" : ""
+                    }`}
                     onClick={() => setSelectedImageIndex(index)}
                   />
                 ))}
@@ -354,7 +375,9 @@ const PackageDetails = () => {
                   <button
                     key={tab.key}
                     type="button"
-                    className={`pd-tab-btn ${activeTab === tab.key ? "active" : ""}`}
+                    className={`pd-tab-btn ${
+                      activeTab === tab.key ? "active" : ""
+                    }`}
                     onClick={() => setActiveTab(tab.key)}
                   >
                     {tab.label}
@@ -432,7 +455,7 @@ const PackageDetails = () => {
                           `/packages/${id}/select-seats?schedule=${selectedDeparture._id}`,
                           {
                             state: { selectedDeparture },
-                          },
+                          }
                         );
                       } else {
                         alert("Please select a schedule first");

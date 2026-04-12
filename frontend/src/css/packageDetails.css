@@ -289,6 +289,22 @@
   font-size: 13px;
 }
 
+.pd-hotel-card h6 {
+  margin: 0 0 4px;
+  font-weight: 700;
+  display: flex !important;
+  align-items: center;
+}
+
+.hotel-stars {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+.hotel-stars .text-muted {
+  opacity: 0.3;
+}
+
 .pd-hotel-type {
   border-radius: 999px;
   background: #e8efff;

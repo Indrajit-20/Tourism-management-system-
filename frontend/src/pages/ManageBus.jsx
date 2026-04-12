@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Storage from "../utils/storage";
 import "../css/manageBus.css";
 
 const ManageBus = () => {
@@ -42,7 +43,7 @@ const ManageBus = () => {
 
   const fetchStaff = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const res = await axios.get("http://localhost:4000/api/staff", {
         headers,
@@ -206,7 +207,7 @@ const ManageBus = () => {
         return;
       }
 
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       const payload = {
         ...form,
@@ -272,7 +273,7 @@ const ManageBus = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this bus?")) {
       try {
-        const token = localStorage.getItem("token");
+        const token = Storage.getToken();
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
         await axios.delete(`http://localhost:4000/api/bus/delete/${id}`, {
           headers,

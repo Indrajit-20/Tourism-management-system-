@@ -17,12 +17,13 @@ const refundSchema = new mongoose.Schema(
       required: true,
     },
     booking_id: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      refPath: "booking_type", // Use refPath for polymorphic references
       required: true,
     },
     booking_type: {
       type: String,
-      enum: ["Bus", "Package"],
+      enum: ["PackageBooking", "BusTicketBooking"],
       required: true,
     },
     refund_amount: {

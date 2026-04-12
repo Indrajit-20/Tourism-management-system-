@@ -7,9 +7,9 @@ const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("username");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("username");
     window.location.href = "/login";
   };
 
@@ -145,7 +145,7 @@ const AdminDashboard = () => {
             <li className="nav-section-title">Reports & Analytics</li>
             <li className="sidebar-nav-item">
               <Link className="sidebar-nav-link report-link" to="reports">
-                <span className="nav-icon">📊</span>
+                <span className="nav-icon"></span>
                 <span className="nav-text">Sales & Revenue</span>
               </Link>
             </li>
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
                 className="sidebar-nav-link advanced-report-link"
                 to="advanced-reports"
               >
-                <span className="nav-icon">📈</span>
+                <span className="nav-icon"></span>
                 <span className="nav-text">Booking Insights</span>
               </Link>
             </li>

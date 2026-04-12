@@ -119,7 +119,7 @@ const SeatSelection = () => {
 
   // Main booking + payment handler
   const handleSubmitRequest = async () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if (!token) {
       navigate("/login");
@@ -240,7 +240,7 @@ const SeatSelection = () => {
         },
 
         prefill: {
-          name: localStorage.getItem("username") || "Customer",
+          name: sessionStorage.getItem("username") || "Customer",
           email: "customer@example.com",
         },
 

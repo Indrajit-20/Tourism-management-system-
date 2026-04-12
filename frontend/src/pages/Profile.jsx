@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Storage from "../utils/storage";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Profile = () => {
 
   const loadProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       if (!token) {
         navigate("/login");
         return;
@@ -62,7 +63,7 @@ const Profile = () => {
         "http://localhost:4000/api/cust/profile/me",
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
 
       const userProfile = response.data.user;
@@ -87,7 +88,7 @@ const Profile = () => {
 
   const updateProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Storage.getToken();
       const response = await axios.put(
         "http://localhost:4000/api/cust/profile/update",
         {
@@ -97,7 +98,7 @@ const Profile = () => {
           gender: gender,
           address: address,
         },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setProfile(response.data.user);

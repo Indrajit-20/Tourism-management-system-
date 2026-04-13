@@ -20,7 +20,9 @@ const getAllRefunds = async (req, res) => {
 const getMyRefunds = async (req, res) => {
   try {
     const customer_id = req.user.id;
-    const refunds = await Refund.find({ customer_id }).sort({ refund_date: -1 });
+    const refunds = await Refund.find({ customer_id }).sort({
+      refund_date: -1,
+    });
     res.status(200).json(refunds);
   } catch (error) {
     res

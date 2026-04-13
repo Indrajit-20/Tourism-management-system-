@@ -16,7 +16,9 @@ const toDateLabel = (value) => {
 const toMoney = (value) => `Rs. ${Number(value || 0).toLocaleString("en-IN")}`;
 
 const enrichInvoiceWithBookingData = async (invoiceDoc) => {
-  const invoice = invoiceDoc.toObject ? invoiceDoc.toObject() : { ...invoiceDoc };
+  const invoice = invoiceDoc.toObject
+    ? invoiceDoc.toObject()
+    : { ...invoiceDoc };
   const isPackage = invoice.booking_type === "Package";
 
   if (isPackage) {
@@ -94,7 +96,8 @@ const createInvoice = async (req, res) => {
         description = b.Package_id?.package_name || "Tour Package";
         amount = b.total_amount || 100;
         booking_date = b.createdAt || new Date();
-        tour_start_date = b.tour_schedule_id?.start_date || b.travel_date || null;
+        tour_start_date =
+          b.tour_schedule_id?.start_date || b.travel_date || null;
         tour_end_date = b.tour_schedule_id?.end_date || null;
         travel_date = tour_start_date;
         travellers = b.travellers || b.number_of_traveller || 1;
@@ -102,13 +105,22 @@ const createInvoice = async (req, res) => {
 
         // Calculate Package child discount based on final paid amount.
         if (b.seat_price_details && Array.isArray(b.seat_price_details)) {
-          base_fare = b.seat_price_details.reduce((sum, seat) => sum + (seat.base_fare || 0), 0);
+          base_fare = b.seat_price_details.reduce(
+            (sum, seat) => sum + (seat.base_fare || 0),
+            0
+          );
           child_discount = Math.max(0, base_fare - Number(amount || 0));
         } else {
           const perPerson = Number(b.price_per_person || 0);
           const travellerCount = Number(travellers || 0);
-          base_fare = perPerson > 0 && travellerCount > 0 ? perPerson * travellerCount : amount;
-          child_discount = Math.max(0, Number(base_fare || 0) - Number(amount || 0));
+          base_fare =
+            perPerson > 0 && travellerCount > 0
+              ? perPerson * travellerCount
+              : amount;
+          child_discount = Math.max(
+            0,
+            Number(base_fare || 0) - Number(amount || 0)
+          );
         }
       }
     } else {
@@ -126,9 +138,7 @@ const createInvoice = async (req, res) => {
         const route = b.trip_id?.schedule_id?.route_id;
         const bus = b.trip_id?.bus_id;
         description =
-          (route?.boarding_from || "") +
-          " to " +
-          (route?.destination || "");
+          (route?.boarding_from || "") + " to " + (route?.destination || "");
         amount = b.total_amount || 100;
         booking_date = b.createdAt || new Date();
         travel_date = b.travel_date;
@@ -253,16 +263,21 @@ const downloadInvoice = async (req, res) => {
     const storedBaseFare = Number(enrichedInvoice.base_fare || 0);
     const storedChildDiscount = Number(enrichedInvoice.child_discount || 0);
     const baseFareValue = isPkg
-      ? (storedBaseFare > 0 ? storedBaseFare : amountValue + storedChildDiscount)
-      : (storedBaseFare > 0 ? storedBaseFare : amountValue);
+      ? storedBaseFare > 0
+        ? storedBaseFare
+        : amountValue + storedChildDiscount
+      : storedBaseFare > 0
+      ? storedBaseFare
+      : amountValue;
     const childDiscountValue = isPkg
-      ? Math.max(0, storedChildDiscount || (baseFareValue - amountValue))
+      ? Math.max(0, storedChildDiscount || baseFareValue - amountValue)
       : 0;
     const netFareValue = Math.max(0, baseFareValue - childDiscountValue);
     const taxValue = isPkg ? Number(enrichedInvoice.gst || 0) : 0;
-    const perTravellerValue = Number(enrichedInvoice.travellers || 1) > 0
-      ? netFareValue / Number(enrichedInvoice.travellers || 1)
-      : netFareValue;
+    const perTravellerValue =
+      Number(enrichedInvoice.travellers || 1) > 0
+        ? netFareValue / Number(enrichedInvoice.travellers || 1)
+        : netFareValue;
 
     const html = `
       <!DOCTYPE html>
@@ -276,8 +291,8 @@ const downloadInvoice = async (req, res) => {
           <div class="header">
             <h1>TRAVEL INVOICE</h1>
             <p>${enrichedInvoice.invoice_number}</p>
-            <div class="invoice-type ${isPkg ? 'tour-badge' : 'bus-badge'}">
-              ${isPkg ? 'TOUR PACKAGE' : 'BUS TICKET'}
+            <div class="invoice-type ${isPkg ? "tour-badge" : "bus-badge"}">
+              ${isPkg ? "TOUR PACKAGE" : "BUS TICKET"}
             </div>
           </div>
 
@@ -288,8 +303,12 @@ const downloadInvoice = async (req, res) => {
                 <div class="col-value">${invoiceDate}</div>
               </div>
               <div class="col">
-                <div class="col-label">${isPkg ? 'Start Date' : 'Travel Date'}</div>
-                <div class="col-value">${isPkg ? tourStartDate : travelDate}</div>
+                <div class="col-label">${
+                  isPkg ? "Start Date" : "Travel Date"
+                }</div>
+                <div class="col-value">${
+                  isPkg ? tourStartDate : travelDate
+                }</div>
               </div>
               <div class="col">
                 <div class="col-label">Travellers</div>
@@ -311,7 +330,7 @@ const downloadInvoice = async (req, res) => {
                     </div>
                   </div>
                 `
-                : ''
+                : ""
             }
 
             <div class="divider"></div>
@@ -319,8 +338,10 @@ const downloadInvoice = async (req, res) => {
             <div class="section-title">Journey Details</div>
             <div class="row">
               <div class="col">
-                <div class="col-label">${isPkg ? 'Tour Package' : 'Route'}</div>
-                <div class="col-value">${enrichedInvoice.description || '-'}</div>
+                <div class="col-label">${isPkg ? "Tour Package" : "Route"}</div>
+                <div class="col-value">${
+                  enrichedInvoice.description || "-"
+                }</div>
               </div>
             </div>
 
@@ -330,11 +351,13 @@ const downloadInvoice = async (req, res) => {
                   <div class="row">
                     <div class="col">
                       <div class="col-label">Seats</div>
-                      <div class="col-value">${enrichedInvoice.seat_numbers.join(', ')}</div>
+                      <div class="col-value">${enrichedInvoice.seat_numbers.join(
+                        ", "
+                      )}</div>
                     </div>
                   </div>
                 `
-                : ''
+                : ""
             }
 
             ${
@@ -347,7 +370,7 @@ const downloadInvoice = async (req, res) => {
                     </div>
                   </div>
                 `
-                : ''
+                : ""
             }
 
             ${
@@ -360,7 +383,7 @@ const downloadInvoice = async (req, res) => {
                     </div>
                   </div>
                 `
-                : ''
+                : ""
             }
 
             <div class="divider"></div>
@@ -370,27 +393,33 @@ const downloadInvoice = async (req, res) => {
               baseFareValue > 0
                 ? `<div class="details-row">
                      <span class="details-label">Base Fare</span>
-                     <span class="details-value">${toMoney(baseFareValue)}</span>
+                     <span class="details-value">${toMoney(
+                       baseFareValue
+                     )}</span>
                    </div>`
-                : ''
+                : ""
             }
 
             ${
               isPkg && childDiscountValue > 0
                 ? `<div class="details-row">
                      <span class="details-label">Child Discount</span>
-                     <span class="details-value discount">-${toMoney(childDiscountValue)}</span>
+                     <span class="details-value discount">-${toMoney(
+                       childDiscountValue
+                     )}</span>
                    </div>`
-                : ''
+                : ""
             }
 
             ${
               !isPkg && enrichedInvoice.service_charges > 0
                 ? `<div class="details-row">
                      <span class="details-label">Service Charges</span>
-                     <span class="details-value">${toMoney(enrichedInvoice.service_charges)}</span>
+                     <span class="details-value">${toMoney(
+                       enrichedInvoice.service_charges
+                     )}</span>
                    </div>`
-                : ''
+                : ""
             }
 
             ${
@@ -399,12 +428,14 @@ const downloadInvoice = async (req, res) => {
                      <span class="details-label">Tax (5% Included)</span>
                      <span class="details-value tax">${toMoney(taxValue)}</span>
                    </div>`
-                : ''
+                : ""
             }
 
             <div class="details-row total">
               <span>Total Amount Paid</span>
-              <span class="details-value">${toMoney(enrichedInvoice.amount)}</span>
+              <span class="details-value">${toMoney(
+                enrichedInvoice.amount
+              )}</span>
             </div>
 
             <div class="divider"></div>
@@ -413,11 +444,15 @@ const downloadInvoice = async (req, res) => {
             <div class="row">
               <div class="col">
                 <div class="col-label">Payment Method</div>
-                <div class="col-value">${enrichedInvoice.payment_method || 'Online'}</div>
+                <div class="col-value">${
+                  enrichedInvoice.payment_method || "Online"
+                }</div>
               </div>
               <div class="col">
                 <div class="col-label">Transaction ID</div>
-                <div class="col-value">${enrichedInvoice.transaction_id || '-'}</div>
+                <div class="col-value">${
+                  enrichedInvoice.transaction_id || "-"
+                }</div>
               </div>
             </div>
 
@@ -433,7 +468,7 @@ const downloadInvoice = async (req, res) => {
 
           <div class="footer">
             <div>Thank you for your booking.</div>
-            <span class="footer-badge ${isPkg ? 'tour-badge' : 'bus-badge'}">
+            <span class="footer-badge ${isPkg ? "tour-badge" : "bus-badge"}">
               ${enrichedInvoice.status}
             </span>
           </div>

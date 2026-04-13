@@ -40,8 +40,8 @@ exports.getDashboardStats = async (req, res) => {
     const recentPackageBookings = await PackageBooking.find()
       .sort({ createdAt: -1 })
       .limit(5)
-      .populate("Custmer_id", "first_name last_name email")
-      .populate("Package_id", "title package_name");
+      .populate("customer_id", "first_name last_name email")
+      .populate("package_id", "title package_name");
 
     // 8. Recent Transactions (Bus Bookings)
     const recentBusBookings = await BusTicketBooking.find()
@@ -54,8 +54,8 @@ exports.getDashboardStats = async (req, res) => {
       ...recentPackageBookings.map((p) => ({
         id: p._id,
         type: "Tour Package",
-        customerName: p.Custmer_id
-          ? `${p.Custmer_id.first_name} ${p.Custmer_id.last_name}`
+        customerName: p.customer_id
+          ? `${p.customer_id.first_name} ${p.customer_id.last_name}`
           : "Guest",
         amount: p.total_amount || 0,
         date: p.createdAt,

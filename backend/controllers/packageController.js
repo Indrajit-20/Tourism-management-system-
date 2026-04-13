@@ -26,7 +26,11 @@ const deletePackageImages = async (imageRefs = []) => {
         await fs.unlink(filePath);
       } catch (error) {
         if (error.code !== "ENOENT") {
-          console.warn("Failed to delete package image:", filePath, error.message);
+          console.warn(
+            "Failed to delete package image:",
+            filePath,
+            error.message
+          );
         }
       }
     });
@@ -263,7 +267,9 @@ const updatePackage = async (req, res) => {
     if (payload.image_urls) {
       const nextImages = new Set((payload.image_urls || []).map(String));
       const previousImages = (existingPackage.image_urls || []).map(String);
-      const removedImages = previousImages.filter((imageRef) => !nextImages.has(imageRef));
+      const removedImages = previousImages.filter(
+        (imageRef) => !nextImages.has(imageRef)
+      );
       await deletePackageImages(removedImages);
     }
 
@@ -283,6 +289,32 @@ const deletepackage = async (req, res) => {
     const pkg = await Packages.findById(req.params.id);
     if (!pkg) {
       return res.status(404).json({ message: "Package not found" });
+    }
+
+    // Check if there are active bookings for this package
+    const activeBookings = await PackageBooking.findOne({
+      package_id: req.params.id,
+      booking_status: { $in: ["Confirmed", "Completed"] },
+    });
+
+    if (activeBookings) {
+      return res.status(400).json({
+        message:
+          "Cannot delete package. There are active bookings associated with it.",
+      });
+    }
+
+    // Check if there are active schedules for this package
+    const activeSchedules = await TourSchedule.findOne({
+      package_id: req.params.id,
+      departure_status: "Open",
+    });
+
+    if (activeSchedules) {
+      return res.status(400).json({
+        message:
+          "Cannot delete package. There are active tour schedules open for booking.",
+      });
     }
 
     await deletePackageImages(pkg.image_urls || []);

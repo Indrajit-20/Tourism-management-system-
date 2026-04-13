@@ -11,7 +11,7 @@ const refundSchema = new mongoose.Schema(
       ref: "Cancellation",
       required: true,
     },
-    custmer_id: {
+    customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
       required: true,

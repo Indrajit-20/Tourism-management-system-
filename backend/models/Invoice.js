@@ -7,7 +7,7 @@ const invoiceSchema = new mongoose.Schema(
       unique: true,
       required: true,
     },
-    custmer_id: {
+    customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
       required: true,

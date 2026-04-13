@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const cancellationSchema = new mongoose.Schema(
   {
-    custmer_id: {
+    customer_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Custmer",
       required: true,

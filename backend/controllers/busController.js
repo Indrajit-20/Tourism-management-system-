@@ -145,7 +145,29 @@ const updateBus = async (req, res) => {
 // 4. Delete Bus
 const deleteBus = async (req, res) => {
   try {
-    await Bus.findByIdAndDelete(req.params.id);
+    const busId = req.params.id;
+
+    // Check if any bus schedule uses this bus
+    const BusSchedule = require("../models/BusSchedule");
+    const activeSchedule = await BusSchedule.findOne({ bus_id: busId });
+    if (activeSchedule) {
+      return res.status(400).json({
+        message:
+          "Cannot delete bus. It is assigned to a bus schedule. Remove from schedules first.",
+      });
+    }
+
+    // Check if any tour schedule uses this bus
+    const TourSchedule = require("../models/TourSchedule");
+    const activeTourSchedule = await TourSchedule.findOne({ bus_id: busId });
+    if (activeTourSchedule) {
+      return res.status(400).json({
+        message:
+          "Cannot delete bus. It is assigned to a tour schedule. Remove from schedules first.",
+      });
+    }
+
+    await Bus.findByIdAndDelete(busId);
     res.status(200).json({ message: "Bus deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting bus", error });

@@ -113,7 +113,7 @@ const releasePackageSeats = async (booking) => {
 const getPackageCancellationPreview = async (req, res) => {
   try {
     const { booking_id } = req.body;
-    const custmer_id = req.user.id;
+    const customer_id = req.user.id;
 
     if (!booking_id) {
       return res.status(400).json({ message: "booking_id is required" });
@@ -121,7 +121,7 @@ const getPackageCancellationPreview = async (req, res) => {
 
     const booking = await PackageBooking.findOne({
       _id: booking_id,
-      Custmer_id: custmer_id,
+      customer_id: customer_id,
     });
     if (!booking) {
       return res.status(404).json({ message: "Package booking not found" });
@@ -166,7 +166,7 @@ const getPackageCancellationPreview = async (req, res) => {
 const cancelBooking = async (req, res) => {
   try {
     const { booking_id, booking_type, reason } = req.body;
-    const custmer_id = req.user.id;
+    const customer_id = req.user.id;
     let refund_amount = 0;
 
     // 1. Update the original booking status
@@ -177,7 +177,7 @@ const cancelBooking = async (req, res) => {
     } else if (booking_type === "Package") {
       const pkgBooking = await PackageBooking.findOne({
         _id: booking_id,
-        Custmer_id: custmer_id,
+        customer_id: customer_id,
       });
       if (!pkgBooking) {
         return res.status(404).json({ message: "Package booking not found" });
@@ -228,7 +228,7 @@ const cancelBooking = async (req, res) => {
 
     // 2. Create cancellation record
     const cancellation = new Cancellation({
-      custmer_id,
+      customer_id,
       booking_id,
       booking_type,
       refund_amount,
@@ -253,7 +253,7 @@ const cancelBooking = async (req, res) => {
 const getAllCancellations = async (req, res) => {
   try {
     const cancellations = await Cancellation.find()
-      .populate("custmer_id", "first_name last_name email")
+      .populate("customer_id", "first_name last_name email")
       .sort({ cancelled_at: -1 });
 
     res.status(200).json(cancellations);
@@ -332,9 +332,9 @@ const markRefundDone = async (req, res) => {
 // User: Get their own cancellations
 const getMyCancellations = async (req, res) => {
   try {
-    const custmer_id = req.user.id;
+    const customer_id = req.user.id;
 
-    const cancellations = await Cancellation.find({ custmer_id }).sort({
+    const cancellations = await Cancellation.find({ customer_id }).sort({
       createdAt: -1,
     });
 

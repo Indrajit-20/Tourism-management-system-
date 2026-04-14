@@ -55,7 +55,7 @@ const ManageSchedules = () => {
   const [daysOfWeek, setDaysOfWeek] = useState([]);
   const [boardingPoint, setBoardingPoint] = useState("");
   const [dropPoint, setDropPoint] = useState("");
-  const [driverId, setDriverId] = useState("");
+  const [driverIds, setDriverIds] = useState(["", ""]); // ✅ Array for min 2 drivers
   const [status, setStatus] = useState("Active");
 
   const [loading, setLoading] = useState(true);
@@ -93,7 +93,7 @@ const ManageSchedules = () => {
           const onlyDrivers = (staffRes.data || []).filter((s) =>
             String(s.designation || "")
               .toLowerCase()
-              .includes("driver"),
+              .includes("driver")
           );
           setDrivers(onlyDrivers);
           if (onlyDrivers.length === 0) {
@@ -102,12 +102,12 @@ const ManageSchedules = () => {
         } catch (staffErr) {
           console.warn(
             "Unable to load drivers",
-            staffErr?.response?.data || staffErr.message,
+            staffErr?.response?.data || staffErr.message
           );
           setDrivers([]);
           if (staffErr?.response?.status === 401) {
             setDriverLoadMessage(
-              "Session expired. Please login again to load drivers.",
+              "Session expired. Please login again to load drivers."
             );
           } else if (staffErr?.response?.status === 403) {
             setDriverLoadMessage("Admin access is required to load drivers.");
@@ -140,7 +140,7 @@ const ManageSchedules = () => {
     setDaysOfWeek([]);
     setBoardingPoint("");
     setDropPoint("");
-    setDriverId("");
+    setDriverIds(["", ""]); // ✅ Reset to min 2 drivers
     setStatus("Active");
   };
 
@@ -179,13 +179,19 @@ const ManageSchedules = () => {
       return;
     }
 
+    // Validate Driver 1 is selected (mandatory)
+    if (!driverIds[0] || !driverIds[0].trim()) {
+      alert("Please select at least Driver 1 (mandatory)");
+      return;
+    }
+
     setSaving(true);
     try {
       // Build the data to send to backend
       const payload = {
         title: title,
         route_id: routeId,
-        driver_id: driverId || undefined,
+        driver_ids: driverIds.filter((id) => id && id.trim()), // ✅ Send only selected drivers
         frequency: frequency,
         // Only send days_of_week if frequency is Custom
         days_of_week: frequency === "Custom" ? daysOfWeek : [],
@@ -202,7 +208,7 @@ const ManageSchedules = () => {
         await axios.put(
           `http://localhost:4000/api/bus-schedules/${editingId}`,
           payload,
-          { headers },
+          { headers }
         );
         alert("Schedule updated!");
       } else {
@@ -233,8 +239,26 @@ const ManageSchedules = () => {
     setDaysOfWeek(schedule.days_of_week || []);
     setBoardingPoint((schedule.boarding_points || [])[0] || "");
     setDropPoint((schedule.drop_points || [])[0] || "");
-    // ✅ FIX: driver_id from backend is a populated object, so use ._id
-    setDriverId(schedule.driver_id?._id || schedule.driver_id || "");
+
+    // ✅ FIX: Load driver_ids as array
+    let driverIds = ["", ""];
+    if (schedule.driver_ids && Array.isArray(schedule.driver_ids)) {
+      // driver_ids is already an array
+      driverIds = schedule.driver_ids.map((d) =>
+        typeof d === "object" ? d?._id || "" : d || ""
+      );
+      // Ensure at least 2 slots
+      while (driverIds.length < 2) {
+        driverIds.push("");
+      }
+    } else if (schedule.driver_id) {
+      // Old format - single driver_id
+      driverIds[0] =
+        typeof schedule.driver_id === "object"
+          ? schedule.driver_id?._id || ""
+          : schedule.driver_id || "";
+    }
+    setDriverIds(driverIds);
 
     setStatus(schedule.status || "Active");
 
@@ -265,7 +289,9 @@ const ManageSchedules = () => {
     if (!routeObj) return "-";
     // Route label must stay city-level: From city -> To city
     if (routeObj.boarding_from || routeObj.destination) {
-      return `${routeObj.boarding_from || "-"} → ${routeObj.destination || "-"}`;
+      return `${routeObj.boarding_from || "-"} → ${
+        routeObj.destination || "-"
+      }`;
     }
     // Fallback: find in routes list by id
     const found = routes.find((r) => r._id === routeObj);
@@ -291,7 +317,7 @@ const ManageSchedules = () => {
 
   const selectedRoute = routes.find((r) => String(r._id) === String(routeId));
   const selectedBusId = String(
-    selectedRoute?.bus_id?._id || selectedRoute?.bus_id || "",
+    selectedRoute?.bus_id?._id || selectedRoute?.bus_id || ""
   );
 
   const assignedDriverIds = new Set(
@@ -300,19 +326,20 @@ const ManageSchedules = () => {
       .flatMap((bus) => {
         if (Array.isArray(bus.driver_ids) && bus.driver_ids.length) {
           return bus.driver_ids.map((driver) =>
-            typeof driver === "object" ? String(driver._id) : String(driver),
+            typeof driver === "object" ? String(driver._id) : String(driver)
           );
         }
         return bus.driver_id
           ? [String(bus.driver_id._id || bus.driver_id)]
           : [];
-      }),
+      })
   );
 
   const availableOverrideDrivers = drivers.filter((driver) => {
     const id = String(driver._id || "");
     if (!id) return false;
-    return !assignedDriverIds.has(id) || id === String(driverId || "");
+    // Show all drivers - no filtering needed for new multi-driver system
+    return true;
   });
 
   const totalSchedules = schedules.length;
@@ -417,7 +444,11 @@ const ManageSchedules = () => {
                     <button
                       key={day.value}
                       type="button"
-                      className={`btn btn-sm ${daysOfWeek.includes(day.value) ? "btn-primary" : "btn-outline-secondary"}`}
+                      className={`btn btn-sm ${
+                        daysOfWeek.includes(day.value)
+                          ? "btn-primary"
+                          : "btn-outline-secondary"
+                      }`}
                       onClick={() => toggleDay(day.value)}
                     >
                       {day.label}
@@ -454,25 +485,54 @@ const ManageSchedules = () => {
               />
             </div>
 
-            {/* Driver Dropdown */}
+            {/* Driver Dropdowns - Driver 1 mandatory, Driver 2 optional */}
             <div className="col-12">
               <label className="form-label manage-schedules-label">
-                Driver (optional override)
+                🚗 Drivers *
               </label>
+              <small className="text-muted d-block mb-2">
+                Driver 1: Required | Driver 2: Optional (for long bus trips)
+              </small>
+
+              {/* Driver 1 - MANDATORY */}
               <select
-                className="form-select manage-schedules-input"
-                value={driverId}
-                onChange={(e) => setDriverId(e.target.value)}
+                className="form-select manage-schedules-input mb-2"
+                value={driverIds[0] || ""}
+                onChange={(e) => {
+                  const newIds = [...driverIds];
+                  newIds[0] = e.target.value;
+                  setDriverIds(newIds);
+                }}
+                required
               >
-                <option value="">Use bus default driver</option>
-                {availableOverrideDrivers.map((d) => (
+                <option value="">-- Select Driver 1 (Required) --</option>
+                {drivers.map((d) => (
                   <option key={d._id} value={d._id}>
-                    {d.name}
+                    {d.name} - {d.contact_no}
                   </option>
                 ))}
               </select>
+
+              {/* Driver 2 - OPTIONAL */}
+              <select
+                className="form-select manage-schedules-input"
+                value={driverIds[1] || ""}
+                onChange={(e) => {
+                  const newIds = [...driverIds];
+                  newIds[1] = e.target.value;
+                  setDriverIds(newIds);
+                }}
+              >
+                <option value="">-- Select Driver 2 (Optional) --</option>
+                {drivers.map((d) => (
+                  <option key={d._id} value={d._id}>
+                    {d.name} - {d.contact_no}
+                  </option>
+                ))}
+              </select>
+
               <small className="text-muted d-block mt-1">
-                Only drivers not assigned to other buses are shown.
+                {drivers.length} drivers available
               </small>
               {driverLoadMessage ? (
                 <small className="text-muted d-block mt-1">
@@ -489,8 +549,8 @@ const ManageSchedules = () => {
               {saving
                 ? "Saving..."
                 : editingId
-                  ? "Update Schedule"
-                  : "Create Schedule"}
+                ? "Update Schedule"
+                : "Create Schedule"}
             </button>
             {editingId && (
               <button
@@ -583,7 +643,11 @@ const ManageSchedules = () => {
 
                   <td>
                     <span
-                      className={`badge ${schedule.status === "Active" ? "bg-success" : "bg-danger"}`}
+                      className={`badge ${
+                        schedule.status === "Active"
+                          ? "bg-success"
+                          : "bg-danger"
+                      }`}
                     >
                       {schedule.status}
                     </span>

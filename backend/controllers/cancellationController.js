@@ -165,16 +165,23 @@ const getPackageCancellationPreview = async (req, res) => {
 // User cancels a booking
 const cancelBooking = async (req, res) => {
   try {
-    const { booking_id, booking_type, reason } = req.body;
+    let { booking_id, booking_type, reason } = req.body;
     const customer_id = req.user.id;
     let refund_amount = 0;
 
+    // Normalize incoming type to valid Mongoose RefPath enums
+    if (booking_type === "Package" || booking_type === "tour") {
+      booking_type = "PackageBooking";
+    } else if (booking_type === "Bus" || booking_type === "bus") {
+      booking_type = "BusTicketBooking";
+    }
+
     // 1. Update the original booking status
-    if (booking_type === "Bus") {
+    if (booking_type === "BusTicketBooking") {
       await BusTicketBooking.findByIdAndUpdate(booking_id, {
         booking_status: "Cancelled",
       });
-    } else if (booking_type === "Package") {
+    } else if (booking_type === "PackageBooking") {
       const pkgBooking = await PackageBooking.findOne({
         _id: booking_id,
         customer_id: customer_id,

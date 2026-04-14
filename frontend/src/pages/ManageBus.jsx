@@ -20,7 +20,6 @@ const ManageBus = () => {
     bus_type: "AC",
     layout_type: "seater",
     total_seats: 40,
-    driver_ids: [""],
     status: "Active",
   });
 
@@ -62,32 +61,15 @@ const ManageBus = () => {
       bus_type: "AC",
       layout_type: "seater",
       total_seats: 40,
-      driver_ids: [""],
       status: "Active",
     });
     setEditingBusId(null);
   };
 
-  const assignedDriverIds = new Set(
-    buses
-      .filter((bus) => String(bus._id) !== String(editingBusId || ""))
-      .flatMap((bus) => {
-        if (Array.isArray(bus.driver_ids) && bus.driver_ids.length) {
-          return bus.driver_ids.map((driver) =>
-            typeof driver === "object" ? String(driver._id) : String(driver)
-          );
-        }
-        return bus.driver_id
-          ? [String(bus.driver_id._id || bus.driver_id)]
-          : [];
-      })
-  );
+  const assignedDriverIds = new Set();
 
   const isDriverUnavailable = (driverId) => {
-    const normalized = String(driverId || "");
-    if (!normalized) return false;
-    if (form.driver_ids.includes(normalized)) return false;
-    return assignedDriverIds.has(normalized);
+    return false;
   };
 
   const filteredBuses = buses.filter((bus) => {
@@ -143,49 +125,20 @@ const ManageBus = () => {
   };
 
   const addDriverInput = () => {
-    if (form.driver_ids.length >= 2) {
-      alert("Maximum 2 drivers allowed.");
-      return;
-    }
-
-    setForm((prev) => ({ ...prev, driver_ids: [...prev.driver_ids, ""] }));
+    return;
   };
 
   const removeDriverInput = (index) => {
-    setForm((prev) => {
-      if (prev.driver_ids.length === 1) return prev;
-      return {
-        ...prev,
-        driver_ids: prev.driver_ids.filter((_, i) => i !== index),
-      };
-    });
+    return;
   };
 
   const updateDriverInput = (index, value) => {
-    setForm((prev) => ({
-      ...prev,
-      driver_ids: prev.driver_ids.map((driverId, i) =>
-        i === index ? value : driverId
-      ),
-    }));
+    return;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const cleanDriverIds = form.driver_ids
-        .map((driverId) => driverId.trim())
-        .filter(Boolean);
-
-      if (cleanDriverIds.length < 1 || cleanDriverIds.length > 2) {
-        alert("Please select at least 1 and at most 2 drivers.");
-        return;
-      }
-      if (new Set(cleanDriverIds).size !== cleanDriverIds.length) {
-        alert("Please select different drivers.");
-        return;
-      }
-
       const seats = Number(form.total_seats);
       if (!Number.isInteger(seats) || seats < 1 || seats > 150) {
         alert("Total seats must be between 1 and 150.");
@@ -213,7 +166,6 @@ const ManageBus = () => {
         ...form,
         bus_type: busType,
         total_seats: seats,
-        driver_ids: cleanDriverIds,
       };
 
       if (editingBusId) {
@@ -241,21 +193,6 @@ const ManageBus = () => {
   };
 
   const handleEdit = (bus) => {
-    const driverIds =
-      Array.isArray(bus.driver_ids) && bus.driver_ids.length
-        ? bus.driver_ids.map((driver) =>
-            String(typeof driver === "object" ? driver._id : driver)
-          )
-        : bus.driver_id
-        ? [
-            String(
-              typeof bus.driver_id === "object"
-                ? bus.driver_id._id
-                : bus.driver_id
-            ),
-          ]
-        : [""];
-
     setForm({
       bus_number: bus.bus_number || "",
       bus_name: bus.bus_name || "",
@@ -263,7 +200,6 @@ const ManageBus = () => {
       bus_type: bus.bus_type || "AC",
       layout_type: bus.layout_type || "seater",
       total_seats: Number(bus.total_seats || 40),
-      driver_ids: driverIds.length ? driverIds : [""],
       status: bus.status || "Active",
     });
     setEditingBusId(bus._id);
@@ -373,57 +309,6 @@ const ManageBus = () => {
                 onChange={handleChange}
                 required
               />
-            </div>
-            {/* Staff Dropdowns (Multiple Drivers) */}
-            <div className="col-md-6 mb-2">
-              <label className="form-label manage-bus-label">
-                Drivers (min 1, max 2)
-              </label>
-              {form.driver_ids.map((driverId, index) => (
-                <div className="d-flex gap-2 mb-2" key={`driver-${index}`}>
-                  <select
-                    className="form-control manage-bus-input"
-                    value={driverId}
-                    onChange={(e) => updateDriverInput(index, e.target.value)}
-                    required
-                  >
-                    <option value="">Select Driver</option>
-                    {staffList
-                      .filter((staff) =>
-                        (staff.designation || "")
-                          .toLowerCase()
-                          .includes("driver")
-                      )
-                      .map((driver) => (
-                        <option
-                          key={driver._id}
-                          value={driver._id}
-                          disabled={isDriverUnavailable(driver._id)}
-                        >
-                          {driver.name} ({driver.designation})
-                          {isDriverUnavailable(driver._id)
-                            ? " - Already assigned"
-                            : ""}
-                        </option>
-                      ))}
-                  </select>
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    onClick={addDriverInput}
-                    disabled={form.driver_ids.length >= 2}
-                  >
-                    +
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger"
-                    onClick={() => removeDriverInput(index)}
-                  >
-                    -
-                  </button>
-                </div>
-              ))}
             </div>
             <div className="col-md-6 mb-2">
               <label className="form-label manage-bus-label">Status</label>
@@ -549,7 +434,6 @@ const ManageBus = () => {
               <th>Type</th>
               <th>Layout</th>
               <th>Seats</th>
-              <th>Drivers</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -564,17 +448,6 @@ const ManageBus = () => {
                 <td>{bus.bus_type}</td>
                 <td>{bus.layout_type || "seater"}</td>
                 <td>{bus.total_seats}</td>
-                <td>
-                  {Array.isArray(bus.driver_ids) && bus.driver_ids.length
-                    ? bus.driver_ids
-                        .map((driver) =>
-                          typeof driver === "object"
-                            ? driver.name || "Unknown"
-                            : "Assigned"
-                        )
-                        .join(", ")
-                    : bus.driver_id?.name || "-"}
-                </td>
                 <td>{bus.status}</td>
                 <td>
                   <button

@@ -233,8 +233,26 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   };
 
   const handleEditSchedule = (schedule) => {
-    if (schedule.departure_status !== "Draft") {
-      setError("Only draft schedules can be edited");
+    // Check if tour has already started
+    const now = new Date();
+    const tourStart = new Date(schedule.start_date);
+
+    // Extract departure time and apply to start date
+    if (schedule.departure_time) {
+      const timeParts = schedule.departure_time.split(":");
+      if (timeParts.length >= 2) {
+        tourStart.setHours(
+          parseInt(timeParts[0], 10),
+          parseInt(timeParts[1], 10),
+          0,
+          0
+        );
+      }
+    }
+
+    // If current time is past tour start time, cannot edit
+    if (now > tourStart) {
+      setError("Cannot edit schedule - tour has already started!");
       return;
     }
 
@@ -305,6 +323,26 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
       month: "short",
       year: "numeric",
     });
+  };
+
+  const isTourStarted = (schedule) => {
+    const now = new Date();
+    const tourStart = new Date(schedule.start_date);
+
+    // Extract departure time and apply to start date
+    if (schedule.departure_time) {
+      const timeParts = schedule.departure_time.split(":");
+      if (timeParts.length >= 2) {
+        tourStart.setHours(
+          parseInt(timeParts[0], 10),
+          parseInt(timeParts[1], 10),
+          0,
+          0
+        );
+      }
+    }
+
+    return now > tourStart;
   };
 
   const getStatusBadgeColor = (status) => {
@@ -548,23 +586,40 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
         ) : (
           schedules.map((dep) => (
             <div key={dep._id} className="col-lg-6">
-              <div className="card p-3 border-2">
-                <div className="d-flex justify-content-between align-items-start mb-2">
-                  <div>
-                    <h6 className="mb-1">📅 {formatDate(dep.start_date)}</h6>
-                    {dep.end_date && (
-                      <small className="text-muted">
-                        to {formatDate(dep.end_date)}
-                      </small>
-                    )}
+              <div className="card shadow-sm h-100 border-0">
+                <div
+                  className="card-header bg-gradient border-0 p-3"
+                  style={{
+                    background: `linear-gradient(135deg, ${
+                      dep.departure_status === "Draft"
+                        ? "#e7d4f5"
+                        : dep.departure_status === "Open"
+                        ? "#d1e7dd"
+                        : dep.departure_status === "BookingFull"
+                        ? "#fff3cd"
+                        : "#f0f0f0"
+                    }, #f8f9fa)`,
+                  }}
+                >
+                  <div className="d-flex justify-content-between align-items-start mb-0">
+                    <div>
+                      <h6 className="mb-1 fw-bold">
+                        📅 {formatDate(dep.start_date)}
+                      </h6>
+                      {dep.end_date && (
+                        <small className="text-muted">
+                          to {formatDate(dep.end_date)}
+                        </small>
+                      )}
+                    </div>
+                    <span
+                      className={`badge bg-${getStatusBadgeColor(
+                        dep.departure_status
+                      )}`}
+                    >
+                      {dep.departure_status}
+                    </span>
                   </div>
-                  <span
-                    className={`badge bg-${getStatusBadgeColor(
-                      dep.departure_status
-                    )}`}
-                  >
-                    {dep.departure_status}
-                  </span>
                 </div>
 
                 <div className="mt-2">
@@ -631,44 +686,87 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                   )}
                 </div>
 
-                <div className="mt-3 d-flex gap-2 flex-wrap">
+                <div className="card-footer bg-light border-top p-3">
                   {dep.departure_status === "Draft" && (
-                    <>
-                      <button
-                        className="btn btn-sm btn-success"
-                        onClick={() => handleOpenSchedule(dep._id)}
-                      >
-                        Open Booking
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-primary"
-                        onClick={() => handleEditSchedule(dep)}
-                      >
-                        Edit Draft
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDeleteSchedule(dep)}
-                      >
-                        Delete Draft
-                      </button>
-                    </>
-                  )}
-
-                  {dep.departure_status === "BookingFull" && (
-                    <small className="text-warning">
-                      Booking full. No seats left.
-                    </small>
+                    <div className="row g-2">
+                      <div className="col-12">
+                        <button
+                          className="btn btn-success w-100 btn-sm"
+                          onClick={() => handleOpenSchedule(dep._id)}
+                        >
+                          ✓ Open Booking
+                        </button>
+                      </div>
+                      <div className="col-6">
+                        <button
+                          className="btn btn-outline-primary w-100 btn-sm"
+                          onClick={() => handleEditSchedule(dep)}
+                        >
+                          ✏️ Edit
+                        </button>
+                      </div>
+                      <div className="col-6">
+                        <button
+                          className="btn btn-outline-danger w-100 btn-sm"
+                          onClick={() => handleDeleteSchedule(dep)}
+                        >
+                          🗑️ Delete
+                        </button>
+                      </div>
+                    </div>
                   )}
 
                   {dep.departure_status === "Open" && (
-                    <small className="text-success">Open for booking</small>
+                    <div className="row g-2">
+                      <div className="col-12">
+                        {!isTourStarted(dep) ? (
+                          <button
+                            className="btn btn-outline-primary w-100 btn-sm"
+                            onClick={() => handleEditSchedule(dep)}
+                          >
+                            ✏️ Edit Schedule
+                          </button>
+                        ) : (
+                          <div className="alert alert-danger mb-0 py-2">
+                            <small>🚫 Tour started - cannot edit</small>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {dep.departure_status === "BookingFull" && (
+                    <div className="row g-2">
+                      <div className="col-12">
+                        {!isTourStarted(dep) ? (
+                          <button
+                            className="btn btn-outline-primary w-100 btn-sm"
+                            onClick={() => handleEditSchedule(dep)}
+                          >
+                            ✏️ Edit Schedule
+                          </button>
+                        ) : (
+                          <div className="alert alert-danger mb-0 py-2">
+                            <small>🚫 Tour started - cannot edit</small>
+                          </div>
+                        )}
+                      </div>
+                      <div className="alert alert-warning mb-0 py-2 col-12">
+                        <small>⚠️ Booking full. No seats left.</small>
+                      </div>
+                    </div>
+                  )}
+
+                  {dep.departure_status === "Open" && (
+                    <div className="alert alert-success mb-0 py-2">
+                      <small>✓ Open for booking</small>
+                    </div>
                   )}
 
                   {dep.departure_status === "Completed" && (
-                    <small className="text-muted">
-                      Completed automatically
-                    </small>
+                    <div className="alert alert-secondary mb-0 py-2">
+                      <small>✓ Completed automatically</small>
+                    </div>
                   )}
                 </div>
               </div>

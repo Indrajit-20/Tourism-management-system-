@@ -194,39 +194,6 @@ const ManageRoutes = () => {
                 required
               />
             </div>
-            <div className="col-md-4">
-              <label className="manage-routes-label">Departure Time</label>
-              <input
-                type="time"
-                name="departure_time"
-                className="form-control manage-routes-input"
-                value={formData.departure_time}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="col-md-4">
-              <label className="manage-routes-label">Arrival Time</label>
-              <input
-                type="time"
-                name="arrival_time"
-                className="form-control manage-routes-input"
-                value={formData.arrival_time}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="col-md-4">
-              <label className="manage-routes-label">Price (₹)</label>
-              <input
-                type="number"
-                name="price_per_seat"
-                className="form-control manage-routes-input"
-                value={formData.price_per_seat}
-                onChange={handleChange}
-                required
-              />
-            </div>
           </div>
           <div className="mt-3">
             <button

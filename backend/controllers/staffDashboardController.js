@@ -297,7 +297,7 @@ const getTourDetails = async (req, res) => {
     const bookings = await PackageBooking.find({
       tour_schedule_id: tour_id,
       booking_status: "confirmed",
-    }).populate("Custmer_id", "first_name last_name phone_no email");
+    }).populate("customer_id", "first_name last_name phone_no email");
 
     let totalPassengers = 0;
     const passengers = [];
@@ -305,11 +305,11 @@ const getTourDetails = async (req, res) => {
       totalPassengers += booking.travellers;
       passengers.push({
         id: booking._id,
-        name: `${booking.Custmer_id?.first_name || ""} ${
-          booking.Custmer_id?.last_name || ""
+        name: `${booking.customer_id?.first_name || ""} ${
+          booking.customer_id?.last_name || ""
         }`,
-        phone: booking.Custmer_id?.phone_no || "",
-        email: booking.Custmer_id?.email || "",
+        phone: booking.customer_id?.phone_no || "",
+        email: booking.customer_id?.email || "",
         totalAmount: booking.total_amount,
         seat_numbers: booking.seat_numbers,
         pickup_location: booking.pickup_location || "Not specified",

@@ -19,7 +19,9 @@ const enrichInvoiceWithBookingData = async (invoiceDoc) => {
   const invoice = invoiceDoc.toObject
     ? invoiceDoc.toObject()
     : { ...invoiceDoc };
-  const isPackage = invoice.booking_type === "Package";
+  const isPackage =
+    invoice.booking_type === "Package" ||
+    invoice.booking_type === "PackageBooking";
 
   if (isPackage) {
     const booking = await PackageBooking.findById(invoice.booking_id).populate(
@@ -64,8 +66,15 @@ const enrichInvoiceWithBookingData = async (invoiceDoc) => {
 
 const createInvoice = async (req, res) => {
   try {
-    const { booking_id, booking_type, transaction_id } = req.body;
+    let { booking_id, booking_type, transaction_id } = req.body;
     const customer_id = req.user.id;
+
+    // Normalize incoming type to valid Mongoose RefPath enums
+    if (booking_type === "Package" || booking_type === "tour") {
+      booking_type = "PackageBooking";
+    } else if (booking_type === "Bus" || booking_type === "bus") {
+      booking_type = "BusTicketBooking";
+    }
 
     const exists = await Invoice.findOne({ booking_id });
     if (exists)
@@ -87,13 +96,13 @@ const createInvoice = async (req, res) => {
     let gst = 0;
     let service_charges = 0;
 
-    if (booking_type === "Package") {
+    if (booking_type === "Package" || booking_type === "PackageBooking") {
       const b = await PackageBooking.findById(booking_id).populate([
-        { path: "Package_id" },
+        { path: "package_id" },
         { path: "tour_schedule_id", select: "start_date end_date" },
       ]);
       if (b) {
-        description = b.Package_id?.package_name || "Tour Package";
+        description = b.package_id?.package_name || "Tour Package";
         amount = b.total_amount || 100;
         booking_date = b.createdAt || new Date();
         tour_start_date =
@@ -101,7 +110,7 @@ const createInvoice = async (req, res) => {
         tour_end_date = b.tour_schedule_id?.end_date || null;
         travel_date = tour_start_date;
         travellers = b.travellers || b.number_of_traveller || 1;
-        package_duration = b.Package_id?.duration || "";
+        package_duration = b.package_id?.duration || "";
 
         // Calculate Package child discount based on final paid amount.
         if (b.seat_price_details && Array.isArray(b.seat_price_details)) {
@@ -155,7 +164,7 @@ const createInvoice = async (req, res) => {
     }
 
     // Keep bus invoices tax-free to match payment flow amounts.
-    if (booking_type === "Package") {
+    if (booking_type === "Package" || booking_type === "PackageBooking") {
       tax = Math.round(((Number(amount || 0) * 5) / 105) * 100) / 100;
       gst = tax;
     } else {
@@ -250,7 +259,9 @@ const downloadInvoice = async (req, res) => {
 
     const enrichedInvoice = await enrichInvoiceWithBookingData(invoice);
 
-    const isPkg = enrichedInvoice.booking_type === "Package";
+    const isPkg =
+      enrichedInvoice.booking_type === "Package" ||
+      enrichedInvoice.booking_type === "PackageBooking";
     const invoiceDate = toDateLabel(enrichedInvoice.createdAt);
     const travelDate = toDateLabel(enrichedInvoice.travel_date);
     const tourStartDate = toDateLabel(

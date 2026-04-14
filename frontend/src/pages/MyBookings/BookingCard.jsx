@@ -56,11 +56,69 @@ const BookingCard = ({
   const normalizedPaymentStatus = normalize(booking.paymentStatus);
   const canPrint = !isTour || normalizedPaymentStatus === "paid";
   const canGenerateInvoice = normalizedPaymentStatus === "paid";
-  const canCancel = ["confirmed", "approved", "pending"].includes(
-    normalize(booking.status)
-  );
+
+  const now = new Date();
+  let isCompleted = false;
+  let isOngoing = false;
+
+  if (booking.startDate && normalize(booking.status) !== "cancelled") {
+    const start = new Date(booking.startDate);
+    if (!Number.isNaN(start.getTime())) {
+      if (booking.departure) {
+        const matchH = booking.departure.match(/(\d{1,2}):/);
+        const matchM = booking.departure.match(/:(\d{2})/);
+        if (matchH && matchM) {
+          start.setHours(
+            parseInt(matchH[1], 10),
+            parseInt(matchM[1], 10),
+            0,
+            0
+          );
+        }
+      }
+
+      let tripEnd = new Date(booking.endDate || start.getTime());
+      if (booking.endDate) {
+        tripEnd.setHours(23, 59, 59, 999);
+      } else {
+        if (booking.arrival) {
+          const matchH = booking.arrival.match(/(\d{1,2}):/);
+          const matchM = booking.arrival.match(/:(\d{2})/);
+          if (matchH && matchM) {
+            tripEnd.setHours(
+              parseInt(matchH[1], 10),
+              parseInt(matchM[1], 10),
+              0,
+              0
+            );
+            if (tripEnd < start) tripEnd.setDate(tripEnd.getDate() + 1);
+          } else {
+            tripEnd.setHours(23, 59, 59, 999);
+          }
+        } else {
+          tripEnd.setHours(23, 59, 59, 999);
+        }
+      }
+
+      if (now > tripEnd) {
+        isCompleted = true;
+      } else if (now >= start && now <= tripEnd) {
+        isOngoing = true;
+      }
+    }
+  }
+
+  const canCancel =
+    !isCompleted &&
+    !isOngoing &&
+    ["confirmed", "approved", "pending"].includes(normalize(booking.status));
   const canLeaveFeedback =
     normalizedPaymentStatus === "paid" && isTour && onFeedback;
+
+  let displayPaymentStatus = booking.paymentStatus;
+  if (isCompleted && normalizedPaymentStatus === "pending") {
+    displayPaymentStatus = "Unpaid";
+  }
 
   return (
     <div className="card fv-card">
@@ -78,6 +136,36 @@ const BookingCard = ({
         </div>
 
         <div className="d-flex align-items-center gap-2 flex-wrap">
+          {isCompleted && (
+            <span
+              className="fv-badge"
+              style={{ background: "#dcfce7", color: "#166534" }}
+            >
+              Completed
+            </span>
+          )}
+          {isOngoing && (
+            <span
+              className="fv-badge"
+              style={{
+                background: "#dbeafe",
+                color: "#1e40af",
+                fontWeight: "bold",
+              }}
+            >
+              🚐 Ongoing
+            </span>
+          )}
+          {!isCompleted &&
+            !isOngoing &&
+            normalize(booking.status) !== "cancelled" && (
+              <span
+                className="fv-badge"
+                style={{ background: "#f3f4f6", color: "#475569" }}
+              >
+                Upcoming
+              </span>
+            )}
           <span className="fv-booking-id">#{booking._id?.slice(-10)}</span>
           <span
             className={STATUS_BADGE[booking.status] || STATUS_BADGE.Pending}
@@ -85,9 +173,13 @@ const BookingCard = ({
             {booking.status}
           </span>
           <span
-            className={PAY_BADGE[booking.paymentStatus] || PAY_BADGE.Pending}
+            className={
+              PAY_BADGE[displayPaymentStatus] ||
+              PAY_BADGE.Pending ||
+              "fv-pay fv-pay-failed"
+            }
           >
-            {PAY_ICON[booking.paymentStatus] || "ℹ️"} {booking.paymentStatus}
+            {PAY_ICON[displayPaymentStatus] || "⚠"} {displayPaymentStatus}
           </span>
         </div>
       </div>

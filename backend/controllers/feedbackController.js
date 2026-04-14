@@ -39,12 +39,12 @@ const submitFeedback = async (req, res) => {
       if (!booking) {
         return res.status(404).json({ message: "Package booking not found" });
       }
-      if (String(booking.Custmer_id) !== String(custmer_id)) {
+      if (String(booking.customer_id) !== String(custmer_id)) {
         return res
           .status(403)
           .json({ message: "You can review only your own booking" });
       }
-      targetPackageId = booking.Package_id;
+      targetPackageId = booking.package_id;
       effectivePackageBookingId = booking._id;
       effectiveDepartureId = booking.tour_schedule_id || null;
     }

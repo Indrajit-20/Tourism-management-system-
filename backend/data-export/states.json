@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b569",
+    "state_name": "Gujarat",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.684Z",
+    "updatedAt": "2026-04-15T18:14:54.684Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b56a",
+    "state_name": "Rajasthan",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.686Z",
+    "updatedAt": "2026-04-15T18:14:54.686Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b56b",
+    "state_name": "Maharashtra",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.686Z",
+    "updatedAt": "2026-04-15T18:14:54.686Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b56c",
+    "state_name": "Madhya Pradesh",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.686Z",
+    "updatedAt": "2026-04-15T18:14:54.686Z"
+  }
+]

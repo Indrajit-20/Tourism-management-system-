@@ -148,7 +148,7 @@ const getAllBookings = async (req, res) => {
           { path: "bus_id", select: "bus_number bus_type layout_type" },
           {
             path: "schedule_id",
-            select: "departure_time arrival_time route_id",
+            select: "departure_time arrival_time route_id boarding_points drop_points",
             populate: {
               path: "route_id",
               select: "boarding_from board_point destination drop_point price_per_seat",
@@ -174,6 +174,7 @@ const updateBookingStatus = async (req, res) => {
         path: "trip_id",
         populate: {
           path: "schedule_id",
+          select: "departure_time arrival_time route_id boarding_points drop_points",
           populate: { path: "route_id" },
         },
       });
@@ -432,7 +433,12 @@ const cancelBooking = async (req, res) => {
     const { id: booking_id } = req.params;
     const customer_id = req.user.id;
 
-    const booking = await BusTicketBooking.findById(booking_id);
+    const booking = await BusTicketBooking.findById(booking_id).populate({
+      path: "trip_id",
+      populate: {
+        path: "schedule_id",
+      },
+    });
 
     if (!booking) {
       return res.status(404).json({ message: "Booking not found" });
@@ -450,6 +456,34 @@ const cancelBooking = async (req, res) => {
       return res.status(400).json({
         message: `Cannot cancel ${booking.booking_status} booking. Only Confirmed bookings can be cancelled.`,
       });
+    }
+
+    const travelDate = new Date(booking.travel_date);
+    travelDate.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (travelDate < today) {
+      return res.status(400).json({
+        message: "Cannot cancel after the travel date has passed.",
+      });
+    }
+
+    if (travelDate.getTime() === today.getTime()) {
+      const departureTime = String(booking.trip_id?.schedule_id?.departure_time || "").trim();
+      if (departureTime) {
+        const departureMatch = departureTime.match(/^(\d{1,2}):(\d{2})$/);
+        if (departureMatch) {
+          const departureMinutes = Number(departureMatch[1]) * 60 + Number(departureMatch[2]);
+          const now = new Date();
+          const nowMinutes = now.getHours() * 60 + now.getMinutes();
+          if (nowMinutes >= departureMinutes) {
+            return res.status(400).json({
+              message: "Cannot cancel after departure time has passed.",
+            });
+          }
+        }
+      }
     }
 
     const reason = String(req.body?.reason || "Cancelled by customer").trim();

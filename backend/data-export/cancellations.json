@@ -1,0 +1,54 @@
+[
+  {
+    "_id": "69dfd59f5765144ac939b9ec",
+    "customer_id": "69dfd59e5765144ac939b849",
+    "booking_id": "69dfd59f5765144ac939b989",
+    "booking_type": "PackageBooking",
+    "refund_amount": 47800,
+    "cancellation_reason": "Plan changed",
+    "status": "Refund Done",
+    "cancelled_at": "2026-04-15T18:14:55.096Z",
+    "createdAt": "2026-04-15T18:14:55.241Z",
+    "updatedAt": "2026-04-15T18:14:55.241Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9ee",
+    "customer_id": "69dfd59e5765144ac939b849",
+    "booking_id": "69dfd59f5765144ac939b9ae",
+    "booking_type": "BusTicketBooking",
+    "refund_amount": 2100,
+    "cancellation_reason": "Plan changed",
+    "status": "Refund Done",
+    "cancelled_at": "2026-04-15T18:14:55.243Z",
+    "createdAt": "2026-04-15T18:14:55.244Z",
+    "updatedAt": "2026-04-15T18:14:55.244Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9f0",
+    "customer_id": "69dfd59e5765144ac939b84b",
+    "booking_id": "69dfd59f5765144ac939b9be",
+    "booking_type": "BusTicketBooking",
+    "refund_amount": 1180,
+    "cancellation_reason": "Emergency at home",
+    "status": "Refund Done",
+    "cancelled_at": "2026-04-15T18:14:55.246Z",
+    "createdAt": "2026-04-15T18:14:55.246Z",
+    "updatedAt": "2026-04-15T18:14:55.246Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9f2",
+    "customer_id": "69dfd59e5765144ac939b850",
+    "booking_id": "69dfd59f5765144ac939b9e3",
+    "booking_type": "BusTicketBooking",
+    "refund_amount": 2340,
+    "cancellation_reason": "Plan changed",
+    "status": "Refund Done",
+    "cancelled_at": "2026-04-15T18:14:55.248Z",
+    "createdAt": "2026-04-15T18:14:55.248Z",
+    "updatedAt": "2026-04-15T18:14:55.248Z",
+    "__v": 0
+  }
+]

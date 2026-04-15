@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const busRouteSchema = new mongoose.Schema({
   route_name: { type: String, required: true },
 
+  bus_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Bus",
+  },
+
   boarding_state_id: { type: mongoose.Schema.Types.ObjectId, ref: "State" },
   boarding_city_id: { type: mongoose.Schema.Types.ObjectId, ref: "City" },
   boarding_from: { type: String, required: true },

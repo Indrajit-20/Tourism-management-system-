@@ -1,0 +1,286 @@
+[
+  {
+    "_id": "69dfd59f5765144ac939b998",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b5b8",
+    "customer_id": "69dfd59e5765144ac939b847",
+    "travel_date": "2026-04-11T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03",
+      "B04"
+    ],
+    "seat_prices": [
+      740,
+      680,
+      680,
+      740
+    ],
+    "travellers": 4,
+    "price_per_seat": 710,
+    "total_amount": 2840,
+    "booking_status": "Completed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:14:55.131Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.133Z",
+    "updatedAt": "2026-04-15T18:14:55.133Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9a3",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b5d9",
+    "customer_id": "69dfd59e5765144ac939b848",
+    "travel_date": "2026-04-11T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03",
+      "B04"
+    ],
+    "seat_prices": [
+      760,
+      700,
+      700,
+      760
+    ],
+    "travellers": 4,
+    "price_per_seat": 730,
+    "total_amount": 2920,
+    "booking_status": "Completed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:14:55.148Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.148Z",
+    "updatedAt": "2026-04-15T18:14:55.148Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9ae",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b5fa",
+    "customer_id": "69dfd59e5765144ac939b849",
+    "travel_date": "2026-04-12T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03"
+    ],
+    "seat_prices": [
+      740,
+      680,
+      680
+    ],
+    "travellers": 3,
+    "price_per_seat": 700,
+    "total_amount": 2100,
+    "booking_status": "Cancelled",
+    "cancellation_reason": "Plan changed",
+    "payment_status": "Refunded",
+    "payment_deadline": "2026-04-16T18:14:55.162Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.163Z",
+    "updatedAt": "2026-04-15T18:14:55.163Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9b7",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b61b",
+    "customer_id": "69dfd59e5765144ac939b84a",
+    "travel_date": "2026-04-12T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02"
+    ],
+    "seat_prices": [
+      760,
+      700
+    ],
+    "travellers": 2,
+    "price_per_seat": 730,
+    "total_amount": 1460,
+    "booking_status": "Completed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:14:55.172Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.173Z",
+    "updatedAt": "2026-04-15T18:14:55.173Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9be",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b786",
+    "customer_id": "69dfd59e5765144ac939b84b",
+    "travel_date": "2026-04-12T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02"
+    ],
+    "seat_prices": [
+      620,
+      560
+    ],
+    "travellers": 2,
+    "price_per_seat": 590,
+    "total_amount": 1180,
+    "booking_status": "Cancelled",
+    "cancellation_reason": "Emergency at home",
+    "payment_status": "Refunded",
+    "payment_deadline": "2026-04-16T18:14:55.182Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.182Z",
+    "updatedAt": "2026-04-15T18:14:55.182Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9c5",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b7a5",
+    "customer_id": "69dfd59e5765144ac939b84c",
+    "travel_date": "2026-04-15T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03"
+    ],
+    "seat_prices": [
+      640,
+      580,
+      580
+    ],
+    "travellers": 3,
+    "price_per_seat": 600,
+    "total_amount": 1800,
+    "booking_status": "Confirmed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:14:55.190Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.191Z",
+    "updatedAt": "2026-04-15T18:14:55.191Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9ce",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b7c4",
+    "customer_id": "69dfd59e5765144ac939b84d",
+    "travel_date": "2026-04-16T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03"
+    ],
+    "seat_prices": [
+      1040,
+      980,
+      980
+    ],
+    "travellers": 3,
+    "price_per_seat": 1000,
+    "total_amount": 3000,
+    "booking_status": "Confirmed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:14:55.201Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.202Z",
+    "updatedAt": "2026-04-15T18:14:55.202Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9d7",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b7e1",
+    "customer_id": "69dfd59e5765144ac939b84e",
+    "travel_date": "2026-04-17T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02"
+    ],
+    "seat_prices": [
+      1020,
+      960
+    ],
+    "travellers": 2,
+    "price_per_seat": 990,
+    "total_amount": 1980,
+    "booking_status": "Confirmed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-16T18:30:00.000Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.213Z",
+    "updatedAt": "2026-04-15T18:14:55.213Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9de",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b7fe",
+    "customer_id": "69dfd59e5765144ac939b84f",
+    "travel_date": "2026-04-18T18:30:00.000Z",
+    "seat_numbers": [
+      "B01"
+    ],
+    "seat_prices": [
+      800
+    ],
+    "travellers": 1,
+    "price_per_seat": 800,
+    "total_amount": 800,
+    "booking_status": "Confirmed",
+    "cancellation_reason": null,
+    "payment_status": "Paid",
+    "payment_deadline": "2026-04-17T18:30:00.000Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.222Z",
+    "updatedAt": "2026-04-15T18:14:55.222Z",
+    "__v": 0
+  },
+  {
+    "_id": "69dfd59f5765144ac939b9e3",
+    "route_id": null,
+    "trip_id": "69dfd59e5765144ac939b81d",
+    "customer_id": "69dfd59e5765144ac939b850",
+    "travel_date": "2026-04-19T18:30:00.000Z",
+    "seat_numbers": [
+      "B01",
+      "B02",
+      "B03"
+    ],
+    "seat_prices": [
+      820,
+      760,
+      760
+    ],
+    "travellers": 3,
+    "price_per_seat": 780,
+    "total_amount": 2340,
+    "booking_status": "Cancelled",
+    "cancellation_reason": "Plan changed",
+    "payment_status": "Refunded",
+    "payment_deadline": "2026-04-18T18:30:00.000Z",
+    "payment_id": null,
+    "status": "Active",
+    "createdAt": "2026-04-15T18:14:55.231Z",
+    "updatedAt": "2026-04-15T18:14:55.231Z",
+    "__v": 0
+  }
+]

@@ -59,7 +59,8 @@ const RefundReport = () => {
                   <td>{i + 1}</td>
                   <td>{r.refund_id}</td>
                   <td>
-                    {r.custmer_id?.first_name} {r.custmer_id?.last_name}
+                    {r.customer_id?.first_name || "N/A"}{" "}
+                    {r.customer_id?.last_name || ""}
                   </td>
                   <td>{r.booking_type}</td>
                   <td>₹{r.refund_amount}</td>

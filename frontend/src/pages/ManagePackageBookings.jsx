@@ -65,7 +65,7 @@ const ManagePackageBookings = () => {
       await axios.put(
         `http://localhost:4000/api/bookings/update-status/${id}`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(`Booking ${newStatus}!`);
       fetchBookings();
@@ -256,7 +256,7 @@ const ManagePackageBookings = () => {
                   <td>{b.travellers}</td>
                   <td>{formatCurrency(b.price_per_person)}</td>
                   <td>{formatCurrency(b.total_amount)}</td>
-                  <td>{formatDate(b.createdAt || b.booking_date)}</td>
+                  <td>{formatDate(b.booking_date || b.createdAt)}</td>
                   <td>
                     <span className={getStatusClass(b.booking_status)}>
                       {formatStatus(b.booking_status)}
@@ -290,7 +290,7 @@ const ManagePackageBookings = () => {
                         onClick={() => {
                           if (
                             window.confirm(
-                              "Are you sure you want to cancel this booking? This will change status to 'cancelled'."
+                              "Are you sure you want to cancel this booking? This will change status to 'cancelled'.",
                             )
                           ) {
                             handleStatus(b._id, "cancelled");

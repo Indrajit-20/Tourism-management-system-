@@ -19,13 +19,13 @@ const Reports = () => {
     try {
       const bookingRes = await axios.get(
         "http://localhost:4000/api/bookings/all",
-        { headers }
+        { headers },
       );
       setBookings(bookingRes.data);
 
       const busRes = await axios.get(
         "http://localhost:4000/api/bus-bookings/all",
-        { headers }
+        { headers },
       );
       setBusBookings(busRes.data);
     } catch (error) {
@@ -38,11 +38,34 @@ const Reports = () => {
     return new Date(dateStr).toLocaleDateString("en-IN");
   };
 
+  const getCustomerName = (booking) =>
+    `${booking.customer_id?.first_name || ""} ${booking.customer_id?.last_name || ""}`.trim() ||
+    "Guest";
+
+  const getTourBookingDate = (booking) =>
+    booking.tour_schedule_id?.start_date ||
+    booking.booking_date ||
+    booking.createdAt;
+
+  const getTourAmount = (booking) =>
+    booking.total_amount || booking.total_price || 0;
+
+  const getBusRouteLabel = (booking) => {
+    const route = booking.trip_id?.schedule_id?.route_id;
+    if (!route) return "-";
+    return `${route.boarding_from || "-"} → ${route.destination || "-"}`;
+  };
+
   // Filter by date
   const filterByDate = (data) => {
     if (!fromDate && !toDate) return data;
     return data.filter((item) => {
-      const itemDate = new Date(item.createdAt || item.travel_date);
+      const itemDate = new Date(
+        item.tour_schedule_id?.start_date ||
+          item.booking_date ||
+          item.travel_date ||
+          item.createdAt,
+      );
       const from = fromDate ? new Date(fromDate) : new Date("1900-01-01");
       const to = toDate ? new Date(toDate) : new Date("2100-01-01");
       return itemDate >= from && itemDate <= to;
@@ -52,16 +75,18 @@ const Reports = () => {
   // Calculate package sales
   const getPackageSales = () => {
     const salesMap = {};
-    bookings.forEach((b) => {
-      const pkgName = b.package_id?.package_name || "Unknown";
-      const pkgId = b.package_id?._id || "N/A";
-      if (!salesMap[pkgId]) {
-        salesMap[pkgId] = { name: pkgName, count: 0, revenue: 0 };
-      }
-      salesMap[pkgId].count += 1;
-      salesMap[pkgId].revenue += b.total_price || 0;
-    });
-    return Object.values(salesMap);
+    filterByDate(bookings)
+      .filter((b) => b.package_id)
+      .forEach((b) => {
+        const pkgName = b.package_id?.package_name || "Unknown";
+        const pkgId = b.package_id?._id || "N/A";
+        if (!salesMap[pkgId]) {
+          salesMap[pkgId] = { name: pkgName, count: 0, revenue: 0 };
+        }
+        salesMap[pkgId].count += 1;
+        salesMap[pkgId].revenue += b.total_amount || b.total_price || 0;
+      });
+    return Object.values(salesMap).sort((a, b) => b.revenue - a.revenue);
   };
 
   const filteredBookings = filterByDate(bookings).filter((b) => b.package_id);
@@ -71,6 +96,63 @@ const Reports = () => {
   // Simple PDF Download using browser print
   const downloadPDF = () => {
     window.print();
+  };
+
+  const downloadCSV = (type) => {
+    let rows = [];
+
+    if (type === "tour") {
+      rows = filteredBookings.map((b) => [
+        getCustomerName(b),
+        b.package_id?.package_name || "-",
+        formatDate(getTourBookingDate(b)),
+        b.travellers || 0,
+        getTourAmount(b),
+        b.payment_status || b.booking_status || "-",
+      ]);
+    } else if (type === "bus") {
+      rows = filteredBusBookings.map((b) => [
+        getCustomerName(b),
+        getBusRouteLabel(b),
+        formatDate(b.travel_date),
+        (b.seat_numbers || []).join(" | "),
+        b.total_amount || 0,
+        b.booking_status || "-",
+      ]);
+    } else if (type === "sales") {
+      rows = packageSales.map((p) => [p.name, p.count, p.revenue]);
+    }
+
+    const headersMap = {
+      tour: [
+        "Customer",
+        "Package",
+        "Travel Date",
+        "Persons",
+        "Amount",
+        "Status",
+      ],
+      bus: ["Customer", "Route", "Travel Date", "Seats", "Amount", "Status"],
+      sales: ["Package Name", "Total Bookings", "Total Revenue"],
+    };
+
+    const csv = [headersMap[type] || [], ...rows]
+      .map((row) =>
+        row
+          .map((value) => `"${String(value ?? "").replace(/"/g, '""')}"`)
+          .join(","),
+      )
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${type || "report"}-report.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -171,12 +253,12 @@ const Reports = () => {
               {filteredBookings.map((b, i) => (
                 <tr key={b._id}>
                   <td>{i + 1}</td>
-                  <td>{b.custmer_id?.first_name || "Guest"}</td>
+                  <td>{getCustomerName(b)}</td>
                   <td>{b.package_id?.package_name || "-"}</td>
-                  <td>{formatDate(b.travel_date)}</td>
+                  <td>{formatDate(getTourBookingDate(b))}</td>
                   <td>{b.travellers}</td>
-                  <td>₹{b.total_price}</td>
-                  <td>{b.payment_status}</td>
+                  <td>₹{getTourAmount(b).toLocaleString()}</td>
+                  <td>{b.payment_status || b.booking_status || "-"}</td>
                 </tr>
               ))}
             </tbody>
@@ -186,13 +268,13 @@ const Reports = () => {
                 <th>
                   {filteredBookings.reduce(
                     (sum, b) => sum + (b.travellers || 0),
-                    0
+                    0,
                   )}
                 </th>
                 <th>
                   ₹
                   {filteredBookings
-                    .reduce((sum, b) => sum + (b.total_price || 0), 0)
+                    .reduce((sum, b) => sum + getTourAmount(b), 0)
                     .toLocaleString()}
                 </th>
                 <th></th>
@@ -225,16 +307,12 @@ const Reports = () => {
               {filteredBusBookings.map((b, i) => (
                 <tr key={b._id}>
                   <td>{i + 1}</td>
-                  <td>
-                    {b.custmer_id?.first_name || b.custmer_id?.name || "Guest"}
-                  </td>
-                  <td>
-                    {b.route_id?.boarding_from} → {b.route_id?.destination}
-                  </td>
+                  <td>{getCustomerName(b)}</td>
+                  <td>{getBusRouteLabel(b)}</td>
                   <td>{formatDate(b.travel_date)}</td>
                   <td>{b.seat_numbers?.join(", ")}</td>
                   <td>₹{b.total_amount}</td>
-                  <td>{b.booking_status}</td>
+                  <td>{b.booking_status || "-"}</td>
                 </tr>
               ))}
             </tbody>

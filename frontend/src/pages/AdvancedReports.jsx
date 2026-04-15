@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import Storage from "../utils/storage";
@@ -25,7 +25,7 @@ ChartJS.register(
   ArcElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 const AdvancedReports = () => {
@@ -36,6 +36,7 @@ const AdvancedReports = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [loading, setLoading] = useState(true);
+  const printContainerRef = useRef(null);
 
   const token = Storage.getToken();
   const headers = { Authorization: `Bearer ${token}` };
@@ -50,19 +51,19 @@ const AdvancedReports = () => {
       // Fetch all data
       const bookingRes = await axios.get(
         "http://localhost:4000/api/bookings/all",
-        { headers }
+        { headers },
       );
       setBookings(bookingRes.data || []);
 
       const busRes = await axios.get(
         "http://localhost:4000/api/bus-bookings/all",
-        { headers }
+        { headers },
       );
       setBusBookings(busRes.data || []);
 
       const statsRes = await axios.get(
         "http://localhost:4000/api/admin-stats/dashboard-stats",
-        { headers }
+        { headers },
       );
       setStats(statsRes.data || {});
     } catch (error) {
@@ -91,6 +92,37 @@ const AdvancedReports = () => {
   const filteredBookings = filterByDate(bookings);
   const filteredBusBookings = filterByDate(busBookings);
 
+  const getCustomerName = (booking) => {
+    const customer = booking?.customer_id || booking?.Custmer_id;
+    if (!customer) return "N/A";
+    const first = String(customer.first_name || "").trim();
+    const last = String(customer.last_name || "").trim();
+    const fullName = `${first} ${last}`.trim();
+    return fullName || customer.email || "N/A";
+  };
+
+  const getPackageName = (booking) => {
+    const pkg = booking?.package_id || booking?.Package_id;
+    return pkg?.package_name || pkg?.title || "N/A";
+  };
+
+  const getBookingAmount = (booking) =>
+    Number(booking?.total_amount || booking?.total_price || 0);
+
+  const getStatusBadgeClass = (status) => {
+    const normalized = String(status || "").toLowerCase();
+    if (normalized === "confirmed" || normalized === "completed") {
+      return "bg-success";
+    }
+    if (normalized === "cancelled" || normalized === "rejected") {
+      return "bg-danger";
+    }
+    if (normalized === "approved") {
+      return "bg-info";
+    }
+    return "bg-warning";
+  };
+
   const getTopCustomers = () => {
     const customerMap = {};
     const allBookings = [
@@ -100,20 +132,10 @@ const AdvancedReports = () => {
 
     allBookings.forEach((b) => {
       if (!b) return;
-
-      let name = "Guest";
-      if (b.Custmer_id && b.Custmer_id.first_name) {
-        name = `${b.Custmer_id.first_name} ${
-          b.Custmer_id.last_name || ""
-        }`.trim();
-      } else if (b.customer_id && b.customer_id.first_name) {
-        name = `${b.customer_id.first_name} ${
-          b.customer_id.last_name || ""
-        }`.trim();
-      }
+      const name = getCustomerName(b);
 
       if (!customerMap[name]) customerMap[name] = { name, spent: 0, count: 0 };
-      customerMap[name].spent += Number(b.total_amount || 0);
+      customerMap[name].spent += getBookingAmount(b);
       customerMap[name].count += 1;
     });
 
@@ -155,7 +177,7 @@ const AdvancedReports = () => {
         new Date(d).toLocaleDateString("en-IN", {
           month: "short",
           day: "numeric",
-        })
+        }),
       ),
       data: Object.values(last30Days),
     };
@@ -165,11 +187,11 @@ const AdvancedReports = () => {
   const getPackageSales = () => {
     const salesMap = {};
     filteredBookings.forEach((b) => {
-      const pkgName = b.Package_id?.package_name || "Unknown";
+      const pkgName = getPackageName(b);
       if (!salesMap[pkgName]) {
         salesMap[pkgName] = 0;
       }
-      salesMap[pkgName] += b.total_amount || 0;
+      salesMap[pkgName] += getBookingAmount(b);
     });
     return {
       labels: Object.keys(salesMap),
@@ -242,7 +264,7 @@ const AdvancedReports = () => {
 
     const labels = Object.keys(statusMap);
     const backgroundColors = labels.map(
-      (label) => definedColors[label] || "#adb5bd"
+      (label) => definedColors[label] || "#adb5bd",
     );
 
     return {
@@ -255,12 +277,12 @@ const AdvancedReports = () => {
   // Calculate totals
   const calculateTotals = () => {
     const totalTourRevenue = filteredBookings.reduce(
-      (sum, b) => sum + (b.total_price || 0),
-      0
+      (sum, b) => sum + getBookingAmount(b),
+      0,
     );
     const totalBusRevenue = filteredBusBookings.reduce(
       (sum, b) => sum + (b.total_amount || 0),
-      0
+      0,
     );
     const totalBookings = filteredBookings.length + filteredBusBookings.length;
     const avgBookingValue =
@@ -289,7 +311,7 @@ const AdvancedReports = () => {
   const getFilteredTourRevenue = () => {
     return filteredBookings.reduce(
       (sum, b) => sum + Number(b.total_amount || 0),
-      0
+      0,
     );
   };
 
@@ -434,6 +456,101 @@ const AdvancedReports = () => {
     },
   };
 
+  const getActiveTabTitle = () => {
+    if (activeTab === "overview") return "Overview";
+    if (activeTab === "revenue") return "Revenue Analysis";
+    if (activeTab === "packages") return "Package Analysis";
+    return "Bookings Details";
+  };
+
+  const downloadPDF = () => {
+    const container = printContainerRef.current;
+    if (!container) return;
+
+    const sectionMap = {
+      overview: "advanced-report-overview",
+      revenue: "advanced-report-revenue",
+      packages: "advanced-report-packages",
+      bookings: "advanced-report-bookings",
+    };
+
+    const activeSection = container.querySelector(`#${sectionMap[activeTab]}`);
+    if (!activeSection) return;
+
+    const clonedSection = activeSection.cloneNode(true);
+
+    // Canvas drawings are not preserved by cloneNode in many browsers.
+    // Convert rendered chart canvases to static images for reliable PDF output.
+    const originalCanvases = activeSection.querySelectorAll("canvas");
+    const clonedCanvases = clonedSection.querySelectorAll("canvas");
+    clonedCanvases.forEach((canvas, index) => {
+      const sourceCanvas = originalCanvases[index];
+      if (!sourceCanvas) return;
+      try {
+        const image = document.createElement("img");
+        image.src = sourceCanvas.toDataURL("image/png");
+        image.alt = "Chart snapshot";
+        image.style.width = "100%";
+        image.style.height = "auto";
+        image.style.maxWidth = "100%";
+        canvas.replaceWith(image);
+      } catch (error) {
+        console.error("Chart snapshot conversion failed:", error);
+      }
+    });
+    const title = getActiveTabTitle();
+    const filterText = `${fromDate || "Start"} to ${toDate || "Today"}`;
+
+    const printWindow = window.open("", "_blank", "width=1200,height=900");
+    if (!printWindow) return;
+
+    printWindow.document.write(`
+      <!doctype html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <title>Advanced Report - ${title}</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 24px; color: #1f2937; }
+            .pdf-header { border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 16px; }
+            .pdf-header h2 { margin: 0 0 6px; font-size: 22px; }
+            .pdf-meta { font-size: 13px; color: #4b5563; margin: 2px 0; }
+            .report-section { display: block !important; }
+            .card { border: 1px solid #e5e7eb; border-radius: 10px; margin-bottom: 14px; }
+            .card-body { padding: 14px; }
+            .card-title { margin: 0 0 10px; font-size: 18px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #d1d5db; padding: 8px; font-size: 13px; }
+            thead { background: #f3f4f6; }
+            .badge { border: 1px solid #d1d5db; border-radius: 999px; padding: 2px 8px; font-size: 11px; }
+            button, .nav, .alert { display: none !important; }
+            canvas { max-width: 100% !important; height: auto !important; }
+            @page { size: A4 landscape; margin: 14mm; }
+          </style>
+        </head>
+        <body>
+          <div class="pdf-header">
+            <h2>Advanced Reports & Analytics</h2>
+            <div class="pdf-meta"><strong>Section:</strong> ${title}</div>
+            <div class="pdf-meta"><strong>Date Filter:</strong> ${filterText}</div>
+            <div class="pdf-meta"><strong>Generated:</strong> ${new Date().toLocaleString("en-IN")}</div>
+          </div>
+          <div id="pdf-content"></div>
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    const mountPoint = printWindow.document.getElementById("pdf-content");
+    if (mountPoint) {
+      mountPoint.appendChild(clonedSection);
+    }
+
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  };
+
   if (loading) {
     return (
       <div className="text-center p-5">
@@ -446,7 +563,7 @@ const AdvancedReports = () => {
   }
 
   return (
-    <div className="advanced-reports-container p-4">
+    <div className="advanced-reports-container p-4" ref={printContainerRef}>
       {/* Header */}
       <div className="report-header mb-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
@@ -456,10 +573,7 @@ const AdvancedReports = () => {
               Comprehensive business intelligence dashboard
             </p>
           </div>
-          <button
-            className="btn btn-danger btn-lg"
-            onClick={() => window.print()}
-          >
+          <button className="btn btn-danger btn-lg" onClick={downloadPDF}>
             📄 Download as PDF
           </button>
         </div>
@@ -620,6 +734,7 @@ const AdvancedReports = () => {
       <div className="tab-content">
         {/* Overview Tab */}
         <div
+          id="advanced-report-overview"
           className={`report-section ${
             activeTab === "overview" ? "d-block" : "d-none d-print-block"
           }`}
@@ -704,6 +819,7 @@ const AdvancedReports = () => {
 
         {/* Revenue Analysis Tab */}
         <div
+          id="advanced-report-revenue"
           className={`report-section ${
             activeTab === "revenue" ? "d-block" : "d-none d-print-block"
           }`}
@@ -790,6 +906,7 @@ const AdvancedReports = () => {
 
         {/* Packages Tab */}
         <div
+          id="advanced-report-packages"
           className={`report-section ${
             activeTab === "packages" ? "d-block" : "d-none d-print-block"
           }`}
@@ -843,6 +960,7 @@ const AdvancedReports = () => {
 
         {/* Bookings Details Tab */}
         <div
+          id="advanced-report-bookings"
           className={`report-section ${
             activeTab === "bookings" ? "d-block" : "d-none d-print-block"
           }`}
@@ -870,22 +988,18 @@ const AdvancedReports = () => {
                             <tr key={b._id}>
                               <td>{i + 1}</td>
                               <td>
-                                <strong>
-                                  {b.Custmer_id?.first_name || "N/A"}
-                                </strong>
+                                <strong>{getCustomerName(b)}</strong>
                               </td>
-                              <td>{b.Package_id?.package_name || "N/A"}</td>
+                              <td>{getPackageName(b)}</td>
                               <td>{formatDate(b.createdAt)}</td>
                               <td className="fw-bold">
-                                ₹{(b.total_amount || 0).toLocaleString()}
+                                ₹{getBookingAmount(b).toLocaleString()}
                               </td>
                               <td>
                                 <span
-                                  className={`badge rounded-pill ${
-                                    b.booking_status === "Confirmed"
-                                      ? "bg-success"
-                                      : "bg-warning"
-                                  }`}
+                                  className={`badge rounded-pill ${getStatusBadgeClass(
+                                    b.booking_status,
+                                  )}`}
                                 >
                                   {b.booking_status}
                                 </span>
@@ -954,11 +1068,9 @@ const AdvancedReports = () => {
                               </td>
                               <td>
                                 <span
-                                  className={`badge rounded-pill ${
-                                    b.booking_status === "Confirmed"
-                                      ? "bg-success"
-                                      : "bg-warning"
-                                  }`}
+                                  className={`badge rounded-pill ${getStatusBadgeClass(
+                                    b.booking_status,
+                                  )}`}
                                 >
                                   {b.booking_status}
                                 </span>

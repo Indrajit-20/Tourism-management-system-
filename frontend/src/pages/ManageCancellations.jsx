@@ -24,7 +24,7 @@ const ManageCancellations = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       setCancellations(response.data || []);
     } catch (err) {
@@ -49,7 +49,7 @@ const ManageCancellations = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setSuccessMessage("Refund marked as done");
@@ -151,8 +151,8 @@ const ManageCancellations = () => {
               {filteredCancellations.map((cancellation) => (
                 <tr key={cancellation._id}>
                   <td>
-                    {cancellation.custmer_id?.first_name || "N/A"}{" "}
-                    {cancellation.custmer_id?.last_name || ""}
+                    {cancellation.customer_id?.first_name || "N/A"}{" "}
+                    {cancellation.customer_id?.last_name || ""}
                   </td>
                   <td>
                     <span className="badge bg-info">

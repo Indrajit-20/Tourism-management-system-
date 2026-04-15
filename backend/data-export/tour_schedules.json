@@ -1,0 +1,1954 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b854",
+    "package_id": "69dfd59e5765144ac939b83d",
+    "start_date": "2026-04-02T18:30:00.000Z",
+    "end_date": "2026-04-07T18:30:00.000Z",
+    "departure_time": "08:30",
+    "bus_id": "69dfd59e5765144ac939b599",
+    "driver_id": "69dfd59e5765144ac939b58f",
+    "guide_id": "69dfd59e5765144ac939b590",
+    "price": 28900,
+    "price_per_person": 28900,
+    "total_seats": 30,
+    "available_seats": 18,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b855"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b856"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b857"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b858"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b859"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85a"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85b"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85c"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85d"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85e"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b85f"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59e5765144ac939b911",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b860"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b861"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b862"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b863"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b864"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b865"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b866"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b867"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b868"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b869"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86a"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86b"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86c"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86d"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86e"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b86f"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b870"
+      },
+      {
+        "seat_number": "T29",
+        "row": 8,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b871"
+      },
+      {
+        "seat_number": "T30",
+        "row": 8,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b872"
+      }
+    ],
+    "departure_status": "Completed",
+    "has_bookings": true,
+    "notes": "Kashmir Valley Signature Escape departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.974Z",
+    "updatedAt": "2026-04-15T18:14:55.107Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b873",
+    "package_id": "69dfd59e5765144ac939b83e",
+    "start_date": "2026-04-06T18:30:00.000Z",
+    "end_date": "2026-04-10T18:30:00.000Z",
+    "departure_time": "07:00",
+    "bus_id": "69dfd59e5765144ac939b59a",
+    "driver_id": "69dfd59e5765144ac939b58e",
+    "guide_id": "69dfd59e5765144ac939b591",
+    "price": 21900,
+    "price_per_person": 21900,
+    "total_seats": 32,
+    "available_seats": 21,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b874"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b875"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b876"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b877"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b878"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b879"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87a"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87b"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87c"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87d"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b938",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87e"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b87f"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b880"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b881"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b882"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b883"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b884"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b885"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b886"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b887"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b888"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b889"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88a"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88b"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88c"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88d"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88e"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b88f"
+      },
+      {
+        "seat_number": "T29",
+        "row": 8,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b890"
+      },
+      {
+        "seat_number": "T30",
+        "row": 8,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b891"
+      },
+      {
+        "seat_number": "T31",
+        "row": 8,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b892"
+      },
+      {
+        "seat_number": "T32",
+        "row": 8,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b893"
+      }
+    ],
+    "departure_status": "Completed",
+    "has_bookings": true,
+    "notes": "Goa Coastal Leisure Break departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.974Z",
+    "updatedAt": "2026-04-15T18:14:55.113Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b894",
+    "package_id": "69dfd59e5765144ac939b83f",
+    "start_date": "2026-04-15T18:30:00.000Z",
+    "end_date": "2026-04-19T18:30:00.000Z",
+    "departure_time": "07:00",
+    "bus_id": "69dfd59e5765144ac939b59b",
+    "driver_id": "69dfd59e5765144ac939b58d",
+    "guide_id": "69dfd59e5765144ac939b592",
+    "price": 18900,
+    "price_per_person": 18900,
+    "total_seats": 30,
+    "available_seats": 26,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b95c",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b895"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b95c",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b896"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b95c",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b897"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b95c",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b898"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b899"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89a"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89b"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89c"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89d"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89e"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b89f"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a0"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a1"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a2"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a3"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a4"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a5"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a6"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a7"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a8"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8a9"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8aa"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ab"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ac"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ad"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ae"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8af"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b0"
+      },
+      {
+        "seat_number": "T29",
+        "row": 8,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b1"
+      },
+      {
+        "seat_number": "T30",
+        "row": 8,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b2"
+      }
+    ],
+    "departure_status": "Open",
+    "has_bookings": true,
+    "notes": "Rajasthan Royal Heritage Circuit departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.974Z",
+    "updatedAt": "2026-04-15T18:14:55.118Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b8b3",
+    "package_id": "69dfd59e5765144ac939b840",
+    "start_date": "2026-04-17T18:30:00.000Z",
+    "end_date": "2026-04-22T18:30:00.000Z",
+    "departure_time": "08:30",
+    "bus_id": "69dfd59e5765144ac939b59c",
+    "driver_id": "69dfd59e5765144ac939b58c",
+    "guide_id": "69dfd59e5765144ac939b593",
+    "price": 16900,
+    "price_per_person": 16900,
+    "total_seats": 28,
+    "available_seats": 25,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b96b",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b4"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b96b",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b5"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b96b",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b6"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b7"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b8"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8b9"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ba"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8bb"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8bc"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8bd"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8be"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8bf"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c0"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c1"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c2"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c3"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c4"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c5"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c6"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c7"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c8"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8c9"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ca"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8cb"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8cc"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8cd"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ce"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8cf"
+      }
+    ],
+    "departure_status": "Open",
+    "has_bookings": true,
+    "notes": "Himachal Snow and Valley Retreat departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.974Z",
+    "updatedAt": "2026-04-15T18:14:55.122Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b8d0",
+    "package_id": "69dfd59e5765144ac939b841",
+    "start_date": "2026-04-18T18:30:00.000Z",
+    "end_date": "2026-04-21T18:30:00.000Z",
+    "departure_time": "06:00",
+    "bus_id": "69dfd59e5765144ac939b599",
+    "driver_id": "69dfd59e5765144ac939b58b",
+    "guide_id": "69dfd59e5765144ac939b590",
+    "price": 14900,
+    "price_per_person": 14900,
+    "total_seats": 30,
+    "available_seats": 25,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b977",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d1"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b977",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d2"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b977",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d3"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b977",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d4"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": true,
+        "booked_by": "69dfd59f5765144ac939b977",
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d5"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d6"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d7"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d8"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8d9"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8da"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8db"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8dc"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8dd"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8de"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8df"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e0"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e1"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e2"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e3"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e4"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e5"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e6"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e7"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e8"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8e9"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ea"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8eb"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ec"
+      },
+      {
+        "seat_number": "T29",
+        "row": 8,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ed"
+      },
+      {
+        "seat_number": "T30",
+        "row": 8,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ee"
+      }
+    ],
+    "departure_status": "Open",
+    "has_bookings": true,
+    "notes": "Uttarakhand Spiritual Serenity Tour departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.975Z",
+    "updatedAt": "2026-04-15T18:14:55.125Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b8ef",
+    "package_id": "69dfd59e5765144ac939b842",
+    "start_date": "2026-04-20T18:30:00.000Z",
+    "end_date": "2026-04-26T18:30:00.000Z",
+    "departure_time": "07:00",
+    "bus_id": "69dfd59e5765144ac939b59a",
+    "driver_id": "69dfd59e5765144ac939b58a",
+    "guide_id": "69dfd59e5765144ac939b592",
+    "price": 23900,
+    "price_per_person": 23900,
+    "total_seats": 32,
+    "available_seats": 32,
+    "seats": [
+      {
+        "seat_number": "T01",
+        "row": 1,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f0"
+      },
+      {
+        "seat_number": "T02",
+        "row": 1,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f1"
+      },
+      {
+        "seat_number": "T03",
+        "row": 1,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f2"
+      },
+      {
+        "seat_number": "T04",
+        "row": 1,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f3"
+      },
+      {
+        "seat_number": "T05",
+        "row": 2,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f4"
+      },
+      {
+        "seat_number": "T06",
+        "row": 2,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f5"
+      },
+      {
+        "seat_number": "T07",
+        "row": 2,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f6"
+      },
+      {
+        "seat_number": "T08",
+        "row": 2,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f7"
+      },
+      {
+        "seat_number": "T09",
+        "row": 3,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f8"
+      },
+      {
+        "seat_number": "T10",
+        "row": 3,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8f9"
+      },
+      {
+        "seat_number": "T11",
+        "row": 3,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8fa"
+      },
+      {
+        "seat_number": "T12",
+        "row": 3,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8fb"
+      },
+      {
+        "seat_number": "T13",
+        "row": 4,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8fc"
+      },
+      {
+        "seat_number": "T14",
+        "row": 4,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8fd"
+      },
+      {
+        "seat_number": "T15",
+        "row": 4,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8fe"
+      },
+      {
+        "seat_number": "T16",
+        "row": 4,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b8ff"
+      },
+      {
+        "seat_number": "T17",
+        "row": 5,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b900"
+      },
+      {
+        "seat_number": "T18",
+        "row": 5,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b901"
+      },
+      {
+        "seat_number": "T19",
+        "row": 5,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b902"
+      },
+      {
+        "seat_number": "T20",
+        "row": 5,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b903"
+      },
+      {
+        "seat_number": "T21",
+        "row": 6,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b904"
+      },
+      {
+        "seat_number": "T22",
+        "row": 6,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b905"
+      },
+      {
+        "seat_number": "T23",
+        "row": 6,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b906"
+      },
+      {
+        "seat_number": "T24",
+        "row": 6,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b907"
+      },
+      {
+        "seat_number": "T25",
+        "row": 7,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b908"
+      },
+      {
+        "seat_number": "T26",
+        "row": 7,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b909"
+      },
+      {
+        "seat_number": "T27",
+        "row": 7,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90a"
+      },
+      {
+        "seat_number": "T28",
+        "row": 7,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90b"
+      },
+      {
+        "seat_number": "T29",
+        "row": 8,
+        "column": 1,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90c"
+      },
+      {
+        "seat_number": "T30",
+        "row": 8,
+        "column": 2,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90d"
+      },
+      {
+        "seat_number": "T31",
+        "row": 8,
+        "column": 3,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90e"
+      },
+      {
+        "seat_number": "T32",
+        "row": 8,
+        "column": 4,
+        "type": "seat",
+        "is_booked": false,
+        "booked_by": null,
+        "price": 0,
+        "_id": "69dfd59e5765144ac939b90f"
+      }
+    ],
+    "departure_status": "Open",
+    "has_bookings": false,
+    "notes": "South India Heritage and Coastline Trail departure",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.975Z",
+    "updatedAt": "2026-04-15T18:14:54.975Z"
+  }
+]

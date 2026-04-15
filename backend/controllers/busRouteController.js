@@ -51,6 +51,7 @@ const normalizeRoutePayload = (body) => {
 
   return {
     route_name: String(body.route_name || "").trim(),
+    bus_id: body.bus_id || null,
     boarding_state_id: body.boarding_state_id,
     boarding_city_id: body.boarding_city_id,
     boarding_from: fromCity,
@@ -72,11 +73,39 @@ const validateRoutePayload = (payload) => {
 const getBusRoutes = async (req, res) => {
   try {
     const routes = await BusRoute.find()
+      .populate("bus_id", "bus_number bus_type bus_name")
       .populate("boarding_state_id", "state_name")
       .populate("boarding_city_id", "city_name")
       .populate("destination_state_id", "state_name")
-      .populate("destination_city_id", "city_name");
-    res.status(200).json(routes);
+      .populate("destination_city_id", "city_name")
+      .lean();
+
+    const routeIds = routes.map((route) => route._id);
+    const schedules = await BusSchedule.find({
+      route_id: { $in: routeIds },
+      status: "Active",
+    })
+      .select("route_id base_price createdAt")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const schedulePriceByRouteId = new Map();
+    for (const schedule of schedules) {
+      const routeId = String(schedule.route_id);
+      if (!schedulePriceByRouteId.has(routeId)) {
+        schedulePriceByRouteId.set(routeId, Number(schedule.base_price || 0));
+      }
+    }
+
+    const routesWithPrice = routes.map((route) => {
+      const fallbackPrice = schedulePriceByRouteId.get(String(route._id)) || 0;
+      return {
+        ...route,
+        price_per_seat: Number(route.price_per_seat || fallbackPrice),
+      };
+    });
+
+    res.status(200).json(routesWithPrice);
   } catch (error) {
     res.status(500).json({ message: "Error fetching routes", error });
   }

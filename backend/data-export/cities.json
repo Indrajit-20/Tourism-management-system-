@@ -1,0 +1,128 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b56e",
+    "city_name": "Ahmedabad",
+    "state_id": "69dfd59e5765144ac939b569",
+    "description": "Ahmedabad city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.696Z",
+    "updatedAt": "2026-04-15T18:14:54.696Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b56f",
+    "city_name": "Surat",
+    "state_id": "69dfd59e5765144ac939b569",
+    "description": "Surat city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.696Z",
+    "updatedAt": "2026-04-15T18:14:54.696Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b570",
+    "city_name": "Vadodara",
+    "state_id": "69dfd59e5765144ac939b569",
+    "description": "Vadodara city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.696Z",
+    "updatedAt": "2026-04-15T18:14:54.696Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b571",
+    "city_name": "Rajkot",
+    "state_id": "69dfd59e5765144ac939b569",
+    "description": "Rajkot city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.696Z",
+    "updatedAt": "2026-04-15T18:14:54.696Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b572",
+    "city_name": "Dwarka",
+    "state_id": "69dfd59e5765144ac939b569",
+    "description": "Dwarka city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.696Z",
+    "updatedAt": "2026-04-15T18:14:54.696Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b573",
+    "city_name": "Udaipur",
+    "state_id": "69dfd59e5765144ac939b56a",
+    "description": "Udaipur city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b574",
+    "city_name": "Jaipur",
+    "state_id": "69dfd59e5765144ac939b56a",
+    "description": "Jaipur city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b575",
+    "city_name": "Jodhpur",
+    "state_id": "69dfd59e5765144ac939b56a",
+    "description": "Jodhpur city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b576",
+    "city_name": "Mumbai",
+    "state_id": "69dfd59e5765144ac939b56b",
+    "description": "Mumbai city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b577",
+    "city_name": "Pune",
+    "state_id": "69dfd59e5765144ac939b56b",
+    "description": "Pune city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b578",
+    "city_name": "Nashik",
+    "state_id": "69dfd59e5765144ac939b56b",
+    "description": "Nashik city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b579",
+    "city_name": "Indore",
+    "state_id": "69dfd59e5765144ac939b56c",
+    "description": "Indore city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b57a",
+    "city_name": "Bhopal",
+    "state_id": "69dfd59e5765144ac939b56c",
+    "description": "Bhopal city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b57b",
+    "city_name": "Omkareshwar",
+    "state_id": "69dfd59e5765144ac939b56c",
+    "description": "Omkareshwar city operations hub",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.697Z",
+    "updatedAt": "2026-04-15T18:14:54.697Z"
+  }
+]

@@ -16,7 +16,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "normalize:package-status": "node scripts/normalizePackageBookingStatus.js"
+    "normalize:package-status": "node scripts/normalizePackageBookingStatus.js",
+    "seed:submission": "node seed_submission_data.js",
+    "migrate:emails": "node migrate_simple_gmail_emails.js",
+    "migrate:mobiles": "node migrate_random_mobile_numbers.js"
   },
   "keywords": [],
   "author": "",

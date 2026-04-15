@@ -1,0 +1,6018 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b5b8",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-11T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5b9"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5ba"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5bb"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5bc"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5bd"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5be"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5bf"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c0"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c1"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c2"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c3"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c4"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c5"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c6"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c7"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c8"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5c9"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ca"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5cb"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5cc"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5cd"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ce"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5cf"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d0"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d1"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d2"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d3"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d4"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d5"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d6"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d7"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5d8"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.877Z",
+    "updatedAt": "2026-04-15T18:14:55.136Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5d9",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-11T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5da"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5db"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5dc"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b5dd"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5de"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5df"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e0"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e1"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e2"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e3"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e4"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e5"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e6"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e7"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e8"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5e9"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ea"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5eb"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ec"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ed"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ee"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ef"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f0"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f1"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f2"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f3"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f4"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f5"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f6"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f7"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f8"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5f9"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.878Z",
+    "updatedAt": "2026-04-15T18:14:55.151Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5fa",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-12T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5fb"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5fc"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5fd"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5fe"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b5ff"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b600"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b601"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b602"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b603"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b604"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b605"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b606"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b607"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b608"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b609"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60a"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60b"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60c"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60d"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60e"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b60f"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b610"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b611"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b612"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b613"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b614"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b615"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b616"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b617"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b618"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b619"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b61a"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.879Z",
+    "updatedAt": "2026-04-15T18:14:54.879Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b61b",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-12T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b61c"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b61d"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b61e"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b61f"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b620"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b621"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b622"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b623"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b624"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b625"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b626"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b627"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b628"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b629"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62a"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62b"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62c"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62d"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62e"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b62f"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b630"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b631"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b632"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b633"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b634"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b635"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b636"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b637"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b638"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b639"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b63a"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b63b"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.880Z",
+    "updatedAt": "2026-04-15T18:14:55.175Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b63c",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-13T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b63d"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b63e"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b63f"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b640"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b641"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b642"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b643"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b644"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b645"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b646"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b647"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b648"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b649"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64a"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64b"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64c"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64d"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64e"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b64f"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b650"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b651"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b652"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b653"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b654"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b655"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b656"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b657"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b658"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b659"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b65a"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b65b"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b65c"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.880Z",
+    "updatedAt": "2026-04-15T18:14:54.880Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b65d",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-13T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b65e"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b65f"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b660"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b661"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b662"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b663"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b664"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b665"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b666"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b667"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b668"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b669"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66a"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66b"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66c"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66d"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66e"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b66f"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b670"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b671"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b672"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b673"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b674"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b675"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b676"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b677"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b678"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b679"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b67a"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b67b"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b67c"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b67d"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.880Z",
+    "updatedAt": "2026-04-15T18:14:54.880Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b67e",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-14T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b67f"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b680"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b681"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b682"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b683"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b684"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b685"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b686"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b687"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b688"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b689"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68a"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68b"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68c"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68d"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68e"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b68f"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b690"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b691"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b692"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b693"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b694"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b695"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b696"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b697"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b698"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b699"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b69a"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b69b"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b69c"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b69d"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b69e"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.880Z",
+    "updatedAt": "2026-04-15T18:14:54.880Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b69f",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-14T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a0"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a1"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a2"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a3"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a4"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a5"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a6"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a7"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a8"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6a9"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6aa"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ab"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ac"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ad"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ae"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6af"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b0"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b1"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b2"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b3"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b4"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b5"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b6"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b7"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b8"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6b9"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ba"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6bb"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6bc"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6bd"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6be"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6bf"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.880Z",
+    "updatedAt": "2026-04-15T18:14:54.880Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b6c0",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-15T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c1"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c2"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c3"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c4"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c5"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c6"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c7"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c8"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6c9"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ca"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6cb"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6cc"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6cd"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ce"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6cf"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d0"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d1"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d2"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d3"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d4"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d5"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d6"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d7"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d8"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6d9"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6da"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6db"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6dc"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6dd"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6de"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6df"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e0"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.881Z",
+    "updatedAt": "2026-04-15T18:14:54.881Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b6e1",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-15T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e2"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e3"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e4"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e5"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e6"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e7"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e8"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6e9"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ea"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6eb"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ec"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ed"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ee"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ef"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f0"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f1"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f2"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f3"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f4"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f5"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f6"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f7"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f8"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6f9"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6fa"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6fb"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6fc"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6fd"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6fe"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b6ff"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b700"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b701"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.881Z",
+    "updatedAt": "2026-04-15T18:14:54.881Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b702",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-16T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b703"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b704"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b705"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b706"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b707"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b708"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b709"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70a"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70b"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70c"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70d"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70e"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b70f"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b710"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b711"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b712"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b713"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b714"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b715"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b716"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b717"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b718"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b719"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71a"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71b"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71c"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71d"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71e"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b71f"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b720"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b721"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b722"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.881Z",
+    "updatedAt": "2026-04-15T18:14:54.881Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b723",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-16T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b724"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b725"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b726"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b727"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b728"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b729"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72a"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72b"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72c"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72d"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72e"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b72f"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b730"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b731"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b732"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b733"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b734"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b735"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b736"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b737"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b738"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b739"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73a"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73b"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73c"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73d"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73e"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b73f"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b740"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b741"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b742"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b743"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.881Z",
+    "updatedAt": "2026-04-15T18:14:54.881Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b744",
+    "schedule_id": "69dfd59e5765144ac939b5a7",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-17T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b745"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b746"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b747"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b748"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b749"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74a"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74b"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74c"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74d"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74e"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b74f"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b750"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b751"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b752"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b753"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b754"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b755"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b756"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b757"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b758"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b759"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75a"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75b"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75c"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75d"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75e"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b75f"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b760"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b761"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b762"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b763"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b764"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.882Z",
+    "updatedAt": "2026-04-15T18:14:54.882Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b765",
+    "schedule_id": "69dfd59e5765144ac939b5a8",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "trip_date": "2026-04-17T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b766"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b767"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b768"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b769"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76a"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76b"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76c"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76d"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76e"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b76f"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b770"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b771"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b772"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b773"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b774"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b775"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b776"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b777"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b778"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b779"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77a"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77b"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77c"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77d"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77e"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b77f"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b780"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b781"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b782"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b783"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b784"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b785"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.882Z",
+    "updatedAt": "2026-04-15T18:14:54.882Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b786",
+    "schedule_id": "69dfd59e5765144ac939b5a9",
+    "bus_id": "69dfd59e5765144ac939b596",
+    "driver_id": "69dfd59e5765144ac939b589",
+    "trip_date": "2026-04-12T18:30:00.000Z",
+    "status": "Completed",
+    "boarding_points": [
+      "Geeta Mandir"
+    ],
+    "drop_points": [
+      "Kuvadva"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b787"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b788"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b789"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78a"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78b"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78c"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78d"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78e"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b78f"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b790"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b791"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b792"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b793"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b794"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b795"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b796"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b797"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b798"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b799"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79a"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79b"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79c"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79d"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79e"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b79f"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a0"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a1"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a2"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 620,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a3"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 560,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a4"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.882Z",
+    "updatedAt": "2026-04-15T18:14:54.882Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b7a5",
+    "schedule_id": "69dfd59e5765144ac939b5aa",
+    "bus_id": "69dfd59e5765144ac939b596",
+    "driver_id": "69dfd59e5765144ac939b58a",
+    "trip_date": "2026-04-15T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Raiya Circle"
+    ],
+    "drop_points": [
+      "SG Highway"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7a6"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7a7"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7a8"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7a9"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7aa"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ab"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ac"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ad"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ae"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7af"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b0"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b1"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b2"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b3"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b4"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b5"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b6"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b7"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b8"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7b9"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ba"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7bb"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7bc"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7bd"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7be"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7bf"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c0"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c1"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 640,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c2"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 580,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c3"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.883Z",
+    "updatedAt": "2026-04-15T18:14:55.193Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b7c4",
+    "schedule_id": "69dfd59e5765144ac939b5ab",
+    "bus_id": "69dfd59e5765144ac939b597",
+    "driver_id": "69dfd59e5765144ac939b58b",
+    "trip_date": "2026-04-16T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Alkapuri"
+    ],
+    "drop_points": [
+      "Borivali"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7c5"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7c6"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7c7"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c8"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7c9"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ca"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7cb"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7cc"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7cd"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ce"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7cf"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d0"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d1"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d2"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d3"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d4"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d5"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d6"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d7"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d8"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7d9"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7da"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7db"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7dc"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7dd"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7de"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 980,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7df"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 1040,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e0"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.883Z",
+    "updatedAt": "2026-04-15T18:14:55.204Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b7e1",
+    "schedule_id": "69dfd59e5765144ac939b5ac",
+    "bus_id": "69dfd59e5765144ac939b597",
+    "driver_id": "69dfd59e5765144ac939b58c",
+    "trip_date": "2026-04-17T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Andheri"
+    ],
+    "drop_points": [
+      "Makarpura"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7e2"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7e3"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e4"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e5"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e6"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e7"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e8"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7e9"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ea"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7eb"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ec"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ed"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ee"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7ef"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f0"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f1"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f2"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f3"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f4"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f5"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f6"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f7"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f8"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7f9"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7fa"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7fb"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 960,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7fc"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 1020,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b7fd"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.883Z",
+    "updatedAt": "2026-04-15T18:14:55.216Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b7fe",
+    "schedule_id": "69dfd59e5765144ac939b5ad",
+    "bus_id": "69dfd59e5765144ac939b598",
+    "driver_id": "69dfd59e5765144ac939b58d",
+    "trip_date": "2026-04-18T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "RTO"
+    ],
+    "drop_points": [
+      "Sukher"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": false,
+        "_id": "69dfd59e5765144ac939b7ff"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b800"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b801"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b802"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b803"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b804"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b805"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b806"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b807"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b808"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b809"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80a"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80b"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80c"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80d"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80e"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b80f"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b810"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b811"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b812"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b813"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b814"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b815"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b816"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b817"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b818"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b819"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b81a"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 800,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b81b"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b81c"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.884Z",
+    "updatedAt": "2026-04-15T18:14:55.224Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b81d",
+    "schedule_id": "69dfd59e5765144ac939b5ae",
+    "bus_id": "69dfd59e5765144ac939b598",
+    "driver_id": "69dfd59e5765144ac939b58e",
+    "trip_date": "2026-04-19T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Udaipole"
+    ],
+    "drop_points": [
+      "Sabarmati"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b81e"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b81f"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b820"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b821"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b822"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b823"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b824"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b825"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b826"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b827"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b828"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b829"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82a"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82b"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82c"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82d"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82e"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b82f"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b830"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b831"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b832"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b833"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b834"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b835"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b836"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b837"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b838"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b839"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 820,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b83a"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfd59e5765144ac939b83b"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.884Z",
+    "updatedAt": "2026-04-15T18:14:54.884Z"
+  }
+]

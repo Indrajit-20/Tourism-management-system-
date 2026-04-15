@@ -1,0 +1,260 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b83d",
+    "package_name": "Kashmir Valley Signature Escape",
+    "package_type": "Premium Nature",
+    "source_city": "Ahmedabad",
+    "destination": "Srinagar - Gulmarg - Pahalgam",
+    "state_id": "69dfd59e5765144ac939b569",
+    "city_id": "69dfd59e5765144ac939b56e",
+    "places_visited": [
+      "69dfd59e5765144ac939b56e"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b580",
+      "69dfd59e5765144ac939b583"
+    ],
+    "duration": "6 Days / 5 Nights",
+    "image_urls": [
+      "packages/1775039185273-p1-i1.jpg",
+      "packages/1775039185282-p1-i2.jpg",
+      "packages/1775039185286-p1-i3.jpg",
+      "packages/1775039185289-p1-i4.jpg"
+    ],
+    "description": "Kashmir Valley Signature Escape curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b590",
+    "inclusive": "3-star/4-star stays, breakfast and dinner, airport transfers, local sightseeing, tour guide support",
+    "exclusive": "Airfare, lunch, personal shopping, pony rides, optional adventure activities",
+    "boarding_points": [
+      "Iskcon Cross Road, SG Highway, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Dal Lake",
+      "Nishat Bagh",
+      "Gulmarg Gondola",
+      "Betaab Valley",
+      "Aru Valley"
+    ],
+    "itinerary": "Day 1 Srinagar check-in and houseboat sunset. Day 2 Mughal gardens and old city walk. Day 3 Gulmarg excursion with gondola. Day 4 Pahalgam valley exploration. Day 5 shopping and cultural evening. Day 6 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.932Z",
+    "updatedAt": "2026-04-15T18:14:54.932Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b83e",
+    "package_name": "Goa Coastal Leisure Break",
+    "package_type": "Beach Leisure",
+    "source_city": "Ahmedabad",
+    "destination": "North Goa - South Goa",
+    "state_id": "69dfd59e5765144ac939b569",
+    "city_id": "69dfd59e5765144ac939b56f",
+    "places_visited": [
+      "69dfd59e5765144ac939b56f"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b581",
+      "69dfd59e5765144ac939b582"
+    ],
+    "duration": "5 Days / 4 Nights",
+    "image_urls": [
+      "packages/1775039606755-p2-i1.jpg",
+      "packages/1775039606766-p2-i2.jpg",
+      "packages/1775039606771-p2-i3.jpg",
+      "packages/1775039606775-p2-i4.jpg",
+      "packages/1775039606788-p2-i5.jpg"
+    ],
+    "description": "Goa Coastal Leisure Break curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b591",
+    "inclusive": "Hotel stay, breakfast, private transfers, guided city and beach sightseeing",
+    "exclusive": "Airfare, watersports, entry fees for optional shows, personal expenses",
+    "boarding_points": [
+      "Shivranjani Cross Road, Satellite, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Miramar Beach",
+      "Baga Beach",
+      "Fort Aguada",
+      "Dona Paula",
+      "Colva Beach"
+    ],
+    "itinerary": "Day 1 arrival and beachside check-in. Day 2 North Goa beaches and fort circuit. Day 3 old churches and local market trail. Day 4 South Goa leisure and sunset cruise. Day 5 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.933Z",
+    "updatedAt": "2026-04-15T18:14:54.933Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b83f",
+    "package_name": "Rajasthan Royal Heritage Circuit",
+    "package_type": "Culture and Heritage",
+    "source_city": "Ahmedabad",
+    "destination": "Jaipur - Udaipur",
+    "state_id": "69dfd59e5765144ac939b56a",
+    "city_id": "69dfd59e5765144ac939b574",
+    "places_visited": [
+      "69dfd59e5765144ac939b574"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b57e",
+      "69dfd59e5765144ac939b57f"
+    ],
+    "duration": "5 Days / 4 Nights",
+    "image_urls": [
+      "packages/1775039836054-p3-i1.webp",
+      "packages/1775039836060-p3-i2.jpg",
+      "packages/1775039836076-p3-i3.jpg",
+      "packages/1775039836077-p3-i4.jpg",
+      "packages/1775039836078-p3-i5.jpg"
+    ],
+    "description": "Rajasthan Royal Heritage Circuit curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b592",
+    "inclusive": "Comfort hotels, breakfast, sightseeing vehicle, local guide support",
+    "exclusive": "Lunch and dinner, monument camera fees, shopping, personal activities",
+    "boarding_points": [
+      "Nehrunagar Circle, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Amber Fort",
+      "City Palace Jaipur",
+      "Hawa Mahal",
+      "Lake Pichola",
+      "City Palace Udaipur"
+    ],
+    "itinerary": "Day 1 Jaipur arrival and evening market visit. Day 2 Amber Fort and palace circuit. Day 3 transfer to Udaipur with enroute stops. Day 4 lake city tour and cultural show. Day 5 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.933Z",
+    "updatedAt": "2026-04-15T18:14:54.933Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b840",
+    "package_name": "Himachal Snow and Valley Retreat",
+    "package_type": "Mountain Retreat",
+    "source_city": "Ahmedabad",
+    "destination": "Shimla - Manali",
+    "state_id": "69dfd59e5765144ac939b569",
+    "city_id": "69dfd59e5765144ac939b56e",
+    "places_visited": [
+      "69dfd59e5765144ac939b56e"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b57f",
+      "69dfd59e5765144ac939b584"
+    ],
+    "duration": "6 Days / 5 Nights",
+    "image_urls": [
+      "packages/1775040112871-p4-i1.jpg",
+      "packages/1775040112872-p4-i2.jpg",
+      "packages/1775040112875-p4-i3.jpg",
+      "packages/1775040112876-p4-i4.jpg",
+      "packages/1775040112880-p4-i5.jpg"
+    ],
+    "description": "Himachal Snow and Valley Retreat curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b593",
+    "inclusive": "Hotel stay, breakfast and dinner, private transfers, sightseeing assistance",
+    "exclusive": "Airfare, adventure rides, heater charges, personal spends",
+    "boarding_points": [
+      "Paldi Cross Road, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Mall Road Shimla",
+      "Kufri",
+      "Solang Valley",
+      "Hadimba Temple",
+      "Old Manali"
+    ],
+    "itinerary": "Day 1 Shimla arrival and local orientation. Day 2 Kufri and town highlights. Day 3 transfer to Manali. Day 4 Solang Valley and adventure window. Day 5 local heritage spots. Day 6 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.933Z",
+    "updatedAt": "2026-04-15T18:14:54.933Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b841",
+    "package_name": "Uttarakhand Spiritual Serenity Tour",
+    "package_type": "Spiritual and Wellness",
+    "source_city": "Ahmedabad",
+    "destination": "Haridwar - Rishikesh",
+    "state_id": "69dfd59e5765144ac939b56c",
+    "city_id": "69dfd59e5765144ac939b56e",
+    "places_visited": [
+      "69dfd59e5765144ac939b56e"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b585",
+      "69dfd59e5765144ac939b586"
+    ],
+    "duration": "4 Days / 3 Nights",
+    "image_urls": [
+      "packages/1775040432430-p5-i1.jpg",
+      "packages/1775040432437-p5-i2.jpg",
+      "packages/1775040432446-p5-i3.jpg",
+      "packages/1775040432454-p5-i4.jpg",
+      "packages/1775040432457-p5-i5.jpg"
+    ],
+    "description": "Uttarakhand Spiritual Serenity Tour curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b591",
+    "inclusive": "Hotel stay, breakfast, private transfers, guide for temple circuits",
+    "exclusive": "Airfare, ropeway tickets, donations, wellness add-ons",
+    "boarding_points": [
+      "CTM Expressway Pickup Point, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Har Ki Pauri",
+      "Mansa Devi Temple",
+      "Laxman Jhula",
+      "Ram Jhula",
+      "Ganga Aarti Rishikesh"
+    ],
+    "itinerary": "Day 1 Haridwar check-in and evening aarti. Day 2 temple circuit and transfer to Rishikesh. Day 3 yoga session and riverfront exploration. Day 4 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.933Z",
+    "updatedAt": "2026-04-15T18:14:54.933Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b842",
+    "package_name": "South India Heritage and Coastline Trail",
+    "package_type": "Explorer Special",
+    "source_city": "Ahmedabad",
+    "destination": "Bengaluru - Mysuru - Kochi - Chennai",
+    "state_id": "69dfd59e5765144ac939b56b",
+    "city_id": "69dfd59e5765144ac939b576",
+    "places_visited": [
+      "69dfd59e5765144ac939b576"
+    ],
+    "hotels": [
+      "69dfd59e5765144ac939b580",
+      "69dfd59e5765144ac939b581",
+      "69dfd59e5765144ac939b582"
+    ],
+    "duration": "7 Days / 6 Nights",
+    "image_urls": [
+      "packages/1775041213690-p6-i1.jpg",
+      "packages/1775041213691-p6-i2.jpg",
+      "packages/1775041213694-p6-i2.png",
+      "packages/1775041213704-p6-i4.jpeg",
+      "packages/1775041213708-p6-i5.jpg"
+    ],
+    "description": "South India Heritage and Coastline Trail curated itinerary for smooth family-friendly travel",
+    "tour_guide": "69dfd59e5765144ac939b592",
+    "inclusive": "Hotel stays, breakfast, intercity transport, sightseeing support",
+    "exclusive": "Airfare, monument tickets, lunch and dinner, personal activities",
+    "boarding_points": [
+      "Sabarmati Railway Station Pickup Zone, Ahmedabad"
+    ],
+    "sightseeing": [
+      "Bangalore Palace",
+      "Mysore Palace",
+      "Kochi Marine Drive",
+      "Fort Kochi",
+      "Marina Beach"
+    ],
+    "itinerary": "Day 1 Bengaluru arrival and city highlights. Day 2 transfer to Mysuru and palace visit. Day 3 Kochi transfer and waterfront evening. Day 4 Fort Kochi heritage circuit. Day 5 Chennai transfer. Day 6 Marina and cultural zones. Day 7 departure.",
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.933Z",
+    "updatedAt": "2026-04-15T18:14:54.933Z"
+  }
+]

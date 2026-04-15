@@ -21,7 +21,7 @@ const ManageBusBookings = () => {
         "http://localhost:4000/api/bus-bookings/all",
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
       setBookings(res.data);
     } catch (err) {
@@ -45,7 +45,7 @@ const ManageBusBookings = () => {
       await axios.put(
         `http://localhost:4000/api/bus-bookings/status/${id}`,
         { status: "Cancelled", reason: reason.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
       alert("Booking cancelled successfully.");
       fetchBookings();
@@ -89,9 +89,17 @@ const ManageBusBookings = () => {
     const dateMatch = !filterDate || toDateKey(b.travel_date) === filterDate;
 
     const route = b.trip_id?.schedule_id?.route_id;
+    const schedule = b.trip_id?.schedule_id;
     const routeCity = `${route?.boarding_from || ""} ${
       route?.destination || ""
     }`;
+    const primaryBoardingPoint = Array.isArray(schedule?.boarding_points)
+      ? schedule.boarding_points.find(Boolean) || ""
+      : "";
+    const primaryDropPoint = Array.isArray(schedule?.drop_points)
+      ? schedule.drop_points.find(Boolean) || ""
+      : "";
+    const boardDropText = `${primaryBoardingPoint} ${primaryDropPoint}`.trim();
     const user = `${b.customer_id?.first_name || ""} ${
       b.customer_id?.last_name || ""
     }`;
@@ -103,6 +111,7 @@ const ManageBusBookings = () => {
       !search ||
       user.toLowerCase().includes(search) ||
       routeCity.toLowerCase().includes(search) ||
+      boardDropText.toLowerCase().includes(search) ||
       busType.toLowerCase().includes(search) ||
       layoutType.toLowerCase().includes(search) ||
       busNo.toLowerCase().includes(search) ||
@@ -115,10 +124,10 @@ const ManageBusBookings = () => {
 
   const totalBookings = bookings.length;
   const confirmedCount = bookings.filter(
-    (b) => b.booking_status === "Confirmed"
+    (b) => b.booking_status === "Confirmed",
   ).length;
   const cancelledCount = bookings.filter(
-    (b) => b.booking_status === "Cancelled"
+    (b) => b.booking_status === "Cancelled",
   ).length;
 
   if (loading) return <div>Loading bookings...</div>;
@@ -218,9 +227,13 @@ const ManageBusBookings = () => {
                 const routeCity = `${route?.boarding_from || "-"} → ${
                   route?.destination || "-"
                 }`;
-                const stops = `${
-                  route?.board_point || route?.boarding_from || "-"
-                } → ${route?.drop_point || route?.destination || "-"}`;
+                const boardingPoints = Array.isArray(schedule?.boarding_points)
+                  ? schedule.boarding_points.find(Boolean) || "-"
+                  : "-";
+                const dropPoints = Array.isArray(schedule?.drop_points)
+                  ? schedule.drop_points.find(Boolean) || "-"
+                  : "-";
+                const stops = `${boardingPoints} → ${dropPoints}`;
 
                 const isCompleted =
                   String(b.booking_status || "").toLowerCase() === "completed";
@@ -260,7 +273,7 @@ const ManageBusBookings = () => {
                     <td>
                       <span
                         className={`badge ${bookingStatusClass(
-                          b.booking_status
+                          b.booking_status,
                         )}`}
                       >
                         {b.booking_status}
@@ -269,7 +282,7 @@ const ManageBusBookings = () => {
                     <td>
                       <span
                         className={`badge ${paymentStatusClass(
-                          b.payment_status
+                          b.payment_status,
                         )}`}
                       >
                         {b.payment_status}

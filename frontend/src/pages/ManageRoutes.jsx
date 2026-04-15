@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { to24HourInput, to12HourDisplay } from "../utils/timeFormat";
 import "../css/manageRoutes.css";
 
 const ManageRoutes = () => {
@@ -10,6 +9,7 @@ const ManageRoutes = () => {
   const [searchText, setSearchText] = useState("");
   const [formData, setFormData] = useState({
     route_name: "",
+    bus_id: "",
     boarding_from: "",
     destination: "",
   });
@@ -31,7 +31,7 @@ const ManageRoutes = () => {
   const fetchBuses = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/bus?category=route"
+        "http://localhost:4000/api/bus?category=route",
       );
       setBuses(res.data);
     } catch (err) {
@@ -54,7 +54,7 @@ const ManageRoutes = () => {
           formData,
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
         alert("Route Updated!");
         setEditingId(null);
@@ -69,6 +69,7 @@ const ManageRoutes = () => {
       // Reset form
       setFormData({
         route_name: "",
+        bus_id: "",
         boarding_from: "",
         destination: "",
       });
@@ -81,6 +82,7 @@ const ManageRoutes = () => {
     setEditingId(route._id);
     setFormData({
       route_name: route.route_name,
+      bus_id: route.bus_id?._id || "",
       boarding_from: route.boarding_from || "",
       destination: route.destination || "",
     });
@@ -105,6 +107,7 @@ const ManageRoutes = () => {
     setEditingId(null);
     setFormData({
       route_name: "",
+      bus_id: "",
       boarding_from: "",
       destination: "",
     });
@@ -243,11 +246,10 @@ const ManageRoutes = () => {
             <tr>
               <th>Sr No</th>
               <th>Route</th>
-              <th>Bus</th>
+              <th>Bus Number</th>
               <th>Bus Type</th>
+              <th>Bus Name</th>
               <th>From - To (City)</th>
-              <th>Time</th>
-              <th>Price</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -256,16 +258,12 @@ const ManageRoutes = () => {
               <tr key={r._id}>
                 <td>{index + 1}</td>
                 <td>{r.route_name}</td>
-                <td>{r.bus_id?.bus_number}</td>
+                <td>{r.bus_id?.bus_number || "-"}</td>
                 <td>{r.bus_id?.bus_type || "-"}</td>
+                <td>{r.bus_id?.bus_name || "-"}</td>
                 <td>
                   {r.boarding_from} → {r.destination}
                 </td>
-                <td>
-                  {to12HourDisplay(r.departure_time)} -{" "}
-                  {to12HourDisplay(r.arrival_time)}
-                </td>
-                <td>₹{r.price_per_seat}</td>
                 <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                     <button

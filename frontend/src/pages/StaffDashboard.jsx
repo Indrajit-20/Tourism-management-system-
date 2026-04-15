@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { to12HourDisplay } from "../utils/timeFormat";
+import staffLogo from "../assets/staff-logo.svg";
 
 const API = "http://localhost:4000";
 
@@ -74,7 +75,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/tour/${tour_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       setSelectedTour(res.data.tour);
@@ -91,7 +92,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/trip/${trip_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       setSelectedTrip(res.data.trip);
@@ -109,7 +110,7 @@ const StaffDashboard = () => {
       await axios.put(
         `${API}/api/staff-dashboard/trip/${trip_id}/status`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       alert(`✅ Trip status updated to ${newStatus}`);
@@ -172,9 +173,27 @@ const StaffDashboard = () => {
         style={{ backgroundColor: "#0066cc" }}
       >
         <div className="container-fluid">
-          <div className="navbar-brand fw-bold">
+          <div className="navbar-brand fw-bold d-flex align-items-center gap-2">
+            <span
+              style={{
+                width: "34px",
+                height: "34px",
+                borderRadius: "10px",
+                background: "rgba(255,255,255,0.18)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={staffLogo}
+                alt="Staff"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </span>
             <span style={{ fontSize: "24px", color: "white" }}>
-              🚌 Staff Dashboard
+              Staff Dashboard
             </span>
           </div>
           <button
@@ -211,15 +230,23 @@ const StaffDashboard = () => {
                     style={{
                       width: "60px",
                       height: "60px",
-                      borderRadius: "50%",
+                      borderRadius: "14px",
                       background: "rgba(255,255,255,0.2)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "30px",
+                      overflow: "hidden",
                     }}
                   >
-                    {staff?.designation === "driver" ? "�‍✈️" : "🧭"}
+                    <img
+                      src={staffLogo}
+                      alt="Staff profile"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
                   </div>
                   <div>
                     <h5 className="mb-0">{staff?.name}</h5>
@@ -544,8 +571,8 @@ const StaffDashboard = () => {
                                   trip.status === "Running"
                                     ? "#ff9800"
                                     : trip.status === "Completed"
-                                    ? "#4caf50"
-                                    : "#2196f3",
+                                      ? "#4caf50"
+                                      : "#2196f3",
                                 padding: "8px 12px",
                                 fontSize: "12px",
                                 fontWeight: "bold",
@@ -583,7 +610,7 @@ const StaffDashboard = () => {
                               <strong>⏰ Time:</strong>
                               <br />
                               {to12HourDisplay(
-                                trip.schedule_id?.departure_time
+                                trip.schedule_id?.departure_time,
                               )}{" "}
                               -{" "}
                               {to12HourDisplay(trip.schedule_id?.arrival_time)}
@@ -685,8 +712,8 @@ const StaffDashboard = () => {
                                 tour.departure_status === "Open"
                                   ? "success"
                                   : tour.departure_status === "Draft"
-                                  ? "warning"
-                                  : "secondary"
+                                    ? "warning"
+                                    : "secondary"
                               }`}
                               style={{
                                 padding: "8px 12px",
@@ -791,7 +818,7 @@ const StaffDashboard = () => {
                             <p className="mb-2">
                               <strong>Time:</strong>{" "}
                               {to12HourDisplay(
-                                trip.schedule_id?.departure_time
+                                trip.schedule_id?.departure_time,
                               )}
                             </p>
                           </div>
@@ -1159,7 +1186,7 @@ const StaffDashboard = () => {
                               passengers.reduce(
                                 (sum, p) =>
                                   sum + (p.passengerDetails?.length || 0),
-                                0
+                                0,
                               )}
                           </span>
                         </p>

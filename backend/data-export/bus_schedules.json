@@ -1,0 +1,206 @@
+[
+  {
+    "_id": "69dfd59e5765144ac939b5a7",
+    "title": "Ahmedabad -> Surat Morning",
+    "route_id": "69dfd59e5765144ac939b59e",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "driver_ids": [
+      "69dfd59e5765144ac939b588"
+    ],
+    "departure_time": "06:00",
+    "arrival_time": "11:00",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "base_price": 680,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.726Z",
+    "updatedAt": "2026-04-15T18:14:54.733Z",
+    "return_schedule_id": "69dfd59e5765144ac939b5a8"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5a8",
+    "title": "Surat -> Ahmedabad Return",
+    "route_id": "69dfd59e5765144ac939b59f",
+    "bus_id": "69dfd59e5765144ac939b595",
+    "driver_id": "69dfd59e5765144ac939b588",
+    "driver_ids": [
+      "69dfd59e5765144ac939b588"
+    ],
+    "departure_time": "14:00",
+    "arrival_time": "19:00",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "base_price": 700,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.726Z",
+    "updatedAt": "2026-04-15T18:14:54.733Z",
+    "return_schedule_id": "69dfd59e5765144ac939b5a7"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5a9",
+    "title": "Ahmedabad -> Rajkot Morning",
+    "route_id": "69dfd59e5765144ac939b5a0",
+    "bus_id": "69dfd59e5765144ac939b596",
+    "driver_id": "69dfd59e5765144ac939b589",
+    "driver_ids": [
+      "69dfd59e5765144ac939b589"
+    ],
+    "departure_time": "07:30",
+    "arrival_time": "12:30",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Geeta Mandir"
+    ],
+    "drop_points": [
+      "Kuvadva"
+    ],
+    "base_price": 560,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.733Z",
+    "return_schedule_id": "69dfd59e5765144ac939b5aa"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5aa",
+    "title": "Rajkot -> Ahmedabad Evening",
+    "route_id": "69dfd59e5765144ac939b5a1",
+    "bus_id": "69dfd59e5765144ac939b596",
+    "driver_id": "69dfd59e5765144ac939b58a",
+    "driver_ids": [
+      "69dfd59e5765144ac939b58a"
+    ],
+    "departure_time": "15:30",
+    "arrival_time": "20:30",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Raiya Circle"
+    ],
+    "drop_points": [
+      "SG Highway"
+    ],
+    "base_price": 580,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.733Z",
+    "return_schedule_id": "69dfd59e5765144ac939b5a9"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5ab",
+    "title": "Vadodara -> Mumbai Express",
+    "route_id": "69dfd59e5765144ac939b5a2",
+    "bus_id": "69dfd59e5765144ac939b597",
+    "driver_id": "69dfd59e5765144ac939b58b",
+    "driver_ids": [
+      "69dfd59e5765144ac939b58b"
+    ],
+    "departure_time": "22:00",
+    "arrival_time": "05:30",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Alkapuri"
+    ],
+    "drop_points": [
+      "Borivali"
+    ],
+    "base_price": 980,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.727Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5ac",
+    "title": "Mumbai -> Vadodara Day Return",
+    "route_id": "69dfd59e5765144ac939b5a3",
+    "bus_id": "69dfd59e5765144ac939b597",
+    "driver_id": "69dfd59e5765144ac939b58c",
+    "driver_ids": [
+      "69dfd59e5765144ac939b58c"
+    ],
+    "departure_time": "10:00",
+    "arrival_time": "17:30",
+    "frequency": "Daily",
+    "days_of_week": [],
+    "boarding_points": [
+      "Andheri"
+    ],
+    "drop_points": [
+      "Makarpura"
+    ],
+    "base_price": 960,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.727Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5ad",
+    "title": "Ahmedabad -> Udaipur Morning",
+    "route_id": "69dfd59e5765144ac939b5a4",
+    "bus_id": "69dfd59e5765144ac939b598",
+    "driver_id": "69dfd59e5765144ac939b58d",
+    "driver_ids": [
+      "69dfd59e5765144ac939b58d"
+    ],
+    "departure_time": "05:45",
+    "arrival_time": "11:15",
+    "frequency": "Weekdays",
+    "days_of_week": [],
+    "boarding_points": [
+      "RTO"
+    ],
+    "drop_points": [
+      "Sukher"
+    ],
+    "base_price": 740,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.727Z"
+  },
+  {
+    "_id": "69dfd59e5765144ac939b5ae",
+    "title": "Udaipur -> Ahmedabad Noon",
+    "route_id": "69dfd59e5765144ac939b5a5",
+    "bus_id": "69dfd59e5765144ac939b598",
+    "driver_id": "69dfd59e5765144ac939b58e",
+    "driver_ids": [
+      "69dfd59e5765144ac939b58e"
+    ],
+    "departure_time": "13:30",
+    "arrival_time": "19:00",
+    "frequency": "Weekdays",
+    "days_of_week": [],
+    "boarding_points": [
+      "Udaipole"
+    ],
+    "drop_points": [
+      "Sabarmati"
+    ],
+    "base_price": 760,
+    "status": "Active",
+    "__v": 0,
+    "createdAt": "2026-04-15T18:14:54.727Z",
+    "updatedAt": "2026-04-15T18:14:54.727Z"
+  }
+]

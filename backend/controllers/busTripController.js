@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const BusTrip = require("../models/BusTrip");
 const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
+const TourSchedule = require("../models/TourSchedule");
 const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
 const parseTimeToMinutes = (value) => {
@@ -70,6 +71,31 @@ const checkDriverAvailability = async (
     return {
       available: false,
       message: `Driver is already running trip. Cannot assign until current trip is completed.`,
+    };
+  }
+
+  // Driver should not be assigned to a tour on the same day.
+  const activeTours = await TourSchedule.find({
+    $or: [{ driver_id }, { guide_id: driver_id }],
+    departure_status: { $nin: ["Completed", "Archived"] },
+  })
+    .populate("package_id", "package_name")
+    .lean();
+
+  const conflictingTour = activeTours.find((tour) => {
+    const tourStart = new Date(tour.start_date);
+    const tourEnd = tour.end_date ? new Date(tour.end_date) : tourStart;
+    const tripDay = new Date(tripDate);
+    tripDay.setHours(0, 0, 0, 0);
+    return tripDay >= new Date(tourStart.setHours(0, 0, 0, 0)) && tripDay <= new Date(tourEnd.setHours(0, 0, 0, 0));
+  });
+
+  if (conflictingTour) {
+    return {
+      available: false,
+      message: `Driver is already assigned to tour '${
+        conflictingTour.package_id?.package_name || conflictingTour._id
+      }' for this date range.`,
     };
   }
 
@@ -567,39 +593,36 @@ const updateTrip = async (req, res) => {
 
     const updates = { ...req.body };
 
-    // ✅ NEW: If updating driver, validate 2-hour rest requirement
-    if (updates.driver_id && updates.driver_id.trim()) {
-      const currentDriverId = trip.driver_id ? trip.driver_id.toString() : null;
-      const newDriverId = updates.driver_id.toString();
+    // Validate driver availability when driver or trip date changes.
+    const currentDriverId = trip.driver_id ? trip.driver_id.toString() : null;
+    const nextDriverId = updates.driver_id
+      ? updates.driver_id.toString()
+      : currentDriverId;
+    const nextTripDate = updates.trip_date || trip.trip_date;
 
-      console.log(
-        `🔧 Driver validation: Current=${currentDriverId}, New=${newDriverId}`
-      );
+    const shouldValidateDriver =
+      !!nextDriverId &&
+      ((updates.driver_id && nextDriverId !== currentDriverId) ||
+        updates.trip_date);
 
-      // Only check availability if driver is actually changing to a different one
-      if (currentDriverId && currentDriverId !== newDriverId) {
-        try {
-          console.log("🔧 Running availability check...");
+    if (shouldValidateDriver) {
+      try {
+        const driverCheck = await checkDriverAvailability(
+          nextDriverId,
+          nextTripDate,
+          trip.schedule_id?.route_id?.departure_time,
+          trip.schedule_id?.route_id?.arrival_time,
+          req.params.id
+        );
 
-          const driverCheck = await checkDriverAvailability(
-            updates.driver_id,
-            trip.trip_date,
-            trip.schedule_id?.route_id?.departure_time,
-            trip.schedule_id?.route_id?.arrival_time,
-            req.params.id // Exclude this trip from the check
-          );
-
-          console.log("🔧 Availability result:", driverCheck);
-
-          if (!driverCheck.available) {
-            return res.status(400).json({ message: driverCheck.message });
-          }
-        } catch (checkError) {
-          console.error("❌ Availability check failed:", checkError.message);
-          return res.status(400).json({
-            message: "Driver availability check failed: " + checkError.message,
-          });
+        if (!driverCheck.available) {
+          return res.status(400).json({ message: driverCheck.message });
         }
+      } catch (checkError) {
+        console.error("❌ Availability check failed:", checkError.message);
+        return res.status(400).json({
+          message: "Driver availability check failed: " + checkError.message,
+        });
       }
     }
 

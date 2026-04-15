@@ -122,9 +122,12 @@ const ManagePackageBookings = () => {
 
   const formatRoute = (pkg) => {
     if (!pkg) return "-";
-    const source = pkg.source_city || "Unknown";
-    const dest = pkg.destination || "Unknown";
-    return `${source} ➔ ${dest}`;
+    const source = String(pkg.source_city || "").trim();
+    const dest = String(pkg.destination || "").trim();
+    if (source && dest) return `${source} ➔ ${dest}`;
+    if (source) return source;
+    if (dest) return dest;
+    return pkg.package_name || "-";
   };
 
   return (
@@ -133,14 +136,6 @@ const ManagePackageBookings = () => {
         <h2 className="manage-package-bookings-title">
           Package Booking Requests
         </h2>
-        <div className="d-flex align-items-center gap-2 mb-3">
-          <span className="badge bg-primary px-3 py-2">Tour</span>
-          <span className="fw-bold fs-5 text-dark">
-            {bookings.length > 0
-              ? formatRoute(bookings[0].package_id)
-              : "- ➔ -"}
-          </span>
-        </div>
         <p className="manage-package-bookings-subtitle mb-0">
           Review, approve, or reject tour booking requests.
         </p>

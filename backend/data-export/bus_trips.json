@@ -1,625 +1,9 @@
 [
   {
-    "_id": "69dfd59e5765144ac939b5b8",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
-    "trip_date": "2026-04-11T18:30:00.000Z",
-    "status": "Completed",
-    "boarding_points": [
-      "Nehrunagar"
-    ],
-    "drop_points": [
-      "Kamrej"
-    ],
-    "seats": [
-      {
-        "seat_number": "B01",
-        "row": 1,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5b9"
-      },
-      {
-        "seat_number": "B02",
-        "row": 1,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5ba"
-      },
-      {
-        "seat_number": "B03",
-        "row": 1,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5bb"
-      },
-      {
-        "seat_number": "B04",
-        "row": 1,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5bc"
-      },
-      {
-        "seat_number": "B05",
-        "row": 2,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5bd"
-      },
-      {
-        "seat_number": "B06",
-        "row": 2,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5be"
-      },
-      {
-        "seat_number": "B07",
-        "row": 2,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5bf"
-      },
-      {
-        "seat_number": "B08",
-        "row": 2,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c0"
-      },
-      {
-        "seat_number": "B09",
-        "row": 3,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c1"
-      },
-      {
-        "seat_number": "B10",
-        "row": 3,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c2"
-      },
-      {
-        "seat_number": "B11",
-        "row": 3,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c3"
-      },
-      {
-        "seat_number": "B12",
-        "row": 3,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c4"
-      },
-      {
-        "seat_number": "B13",
-        "row": 4,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c5"
-      },
-      {
-        "seat_number": "B14",
-        "row": 4,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c6"
-      },
-      {
-        "seat_number": "B15",
-        "row": 4,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c7"
-      },
-      {
-        "seat_number": "B16",
-        "row": 4,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c8"
-      },
-      {
-        "seat_number": "B17",
-        "row": 5,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5c9"
-      },
-      {
-        "seat_number": "B18",
-        "row": 5,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ca"
-      },
-      {
-        "seat_number": "B19",
-        "row": 5,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5cb"
-      },
-      {
-        "seat_number": "B20",
-        "row": 5,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5cc"
-      },
-      {
-        "seat_number": "B21",
-        "row": 6,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5cd"
-      },
-      {
-        "seat_number": "B22",
-        "row": 6,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ce"
-      },
-      {
-        "seat_number": "B23",
-        "row": 6,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5cf"
-      },
-      {
-        "seat_number": "B24",
-        "row": 6,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d0"
-      },
-      {
-        "seat_number": "B25",
-        "row": 7,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d1"
-      },
-      {
-        "seat_number": "B26",
-        "row": 7,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d2"
-      },
-      {
-        "seat_number": "B27",
-        "row": 7,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d3"
-      },
-      {
-        "seat_number": "B28",
-        "row": 7,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d4"
-      },
-      {
-        "seat_number": "B29",
-        "row": 8,
-        "column": 1,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d5"
-      },
-      {
-        "seat_number": "B30",
-        "row": 8,
-        "column": 2,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d6"
-      },
-      {
-        "seat_number": "B31",
-        "row": 8,
-        "column": 3,
-        "type": "aisle",
-        "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d7"
-      },
-      {
-        "seat_number": "B32",
-        "row": 8,
-        "column": 4,
-        "type": "window",
-        "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5d8"
-      }
-    ],
-    "is_return_trip": false,
-    "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.877Z",
-    "updatedAt": "2026-04-15T18:14:55.136Z"
-  },
-  {
-    "_id": "69dfd59e5765144ac939b5d9",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
-    "trip_date": "2026-04-11T18:30:00.000Z",
-    "status": "Completed",
-    "boarding_points": [
-      "Athwa"
-    ],
-    "drop_points": [
-      "Narol"
-    ],
-    "seats": [
-      {
-        "seat_number": "B01",
-        "row": 1,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5da"
-      },
-      {
-        "seat_number": "B02",
-        "row": 1,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5db"
-      },
-      {
-        "seat_number": "B03",
-        "row": 1,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5dc"
-      },
-      {
-        "seat_number": "B04",
-        "row": 1,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b5dd"
-      },
-      {
-        "seat_number": "B05",
-        "row": 2,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5de"
-      },
-      {
-        "seat_number": "B06",
-        "row": 2,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5df"
-      },
-      {
-        "seat_number": "B07",
-        "row": 2,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e0"
-      },
-      {
-        "seat_number": "B08",
-        "row": 2,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e1"
-      },
-      {
-        "seat_number": "B09",
-        "row": 3,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e2"
-      },
-      {
-        "seat_number": "B10",
-        "row": 3,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e3"
-      },
-      {
-        "seat_number": "B11",
-        "row": 3,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e4"
-      },
-      {
-        "seat_number": "B12",
-        "row": 3,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e5"
-      },
-      {
-        "seat_number": "B13",
-        "row": 4,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e6"
-      },
-      {
-        "seat_number": "B14",
-        "row": 4,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e7"
-      },
-      {
-        "seat_number": "B15",
-        "row": 4,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e8"
-      },
-      {
-        "seat_number": "B16",
-        "row": 4,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5e9"
-      },
-      {
-        "seat_number": "B17",
-        "row": 5,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ea"
-      },
-      {
-        "seat_number": "B18",
-        "row": 5,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5eb"
-      },
-      {
-        "seat_number": "B19",
-        "row": 5,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ec"
-      },
-      {
-        "seat_number": "B20",
-        "row": 5,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ed"
-      },
-      {
-        "seat_number": "B21",
-        "row": 6,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ee"
-      },
-      {
-        "seat_number": "B22",
-        "row": 6,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ef"
-      },
-      {
-        "seat_number": "B23",
-        "row": 6,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f0"
-      },
-      {
-        "seat_number": "B24",
-        "row": 6,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f1"
-      },
-      {
-        "seat_number": "B25",
-        "row": 7,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f2"
-      },
-      {
-        "seat_number": "B26",
-        "row": 7,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f3"
-      },
-      {
-        "seat_number": "B27",
-        "row": 7,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f4"
-      },
-      {
-        "seat_number": "B28",
-        "row": 7,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f5"
-      },
-      {
-        "seat_number": "B29",
-        "row": 8,
-        "column": 1,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f6"
-      },
-      {
-        "seat_number": "B30",
-        "row": 8,
-        "column": 2,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f7"
-      },
-      {
-        "seat_number": "B31",
-        "row": 8,
-        "column": 3,
-        "type": "aisle",
-        "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f8"
-      },
-      {
-        "seat_number": "B32",
-        "row": 8,
-        "column": 4,
-        "type": "window",
-        "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5f9"
-      }
-    ],
-    "is_return_trip": true,
-    "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.878Z",
-    "updatedAt": "2026-04-15T18:14:55.151Z"
-  },
-  {
-    "_id": "69dfd59e5765144ac939b5fa",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8141",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-12T18:30:00.000Z",
     "status": "Completed",
     "boarding_points": [
@@ -635,8 +19,8 @@
         "column": 1,
         "type": "window",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5fb"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8142"
       },
       {
         "seat_number": "B02",
@@ -644,8 +28,8 @@
         "column": 2,
         "type": "aisle",
         "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5fc"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8143"
       },
       {
         "seat_number": "B03",
@@ -653,8 +37,8 @@
         "column": 3,
         "type": "aisle",
         "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5fd"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8144"
       },
       {
         "seat_number": "B04",
@@ -662,8 +46,8 @@
         "column": 4,
         "type": "window",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b5fe"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8145"
       },
       {
         "seat_number": "B05",
@@ -672,7 +56,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b5ff"
+        "_id": "69dfe4fa91996778049a8146"
       },
       {
         "seat_number": "B06",
@@ -681,7 +65,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b600"
+        "_id": "69dfe4fa91996778049a8147"
       },
       {
         "seat_number": "B07",
@@ -690,7 +74,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b601"
+        "_id": "69dfe4fa91996778049a8148"
       },
       {
         "seat_number": "B08",
@@ -699,7 +83,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b602"
+        "_id": "69dfe4fa91996778049a8149"
       },
       {
         "seat_number": "B09",
@@ -708,7 +92,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b603"
+        "_id": "69dfe4fa91996778049a814a"
       },
       {
         "seat_number": "B10",
@@ -717,7 +101,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b604"
+        "_id": "69dfe4fa91996778049a814b"
       },
       {
         "seat_number": "B11",
@@ -726,7 +110,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b605"
+        "_id": "69dfe4fa91996778049a814c"
       },
       {
         "seat_number": "B12",
@@ -735,7 +119,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b606"
+        "_id": "69dfe4fa91996778049a814d"
       },
       {
         "seat_number": "B13",
@@ -744,7 +128,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b607"
+        "_id": "69dfe4fa91996778049a814e"
       },
       {
         "seat_number": "B14",
@@ -753,7 +137,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b608"
+        "_id": "69dfe4fa91996778049a814f"
       },
       {
         "seat_number": "B15",
@@ -762,7 +146,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b609"
+        "_id": "69dfe4fa91996778049a8150"
       },
       {
         "seat_number": "B16",
@@ -771,7 +155,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60a"
+        "_id": "69dfe4fa91996778049a8151"
       },
       {
         "seat_number": "B17",
@@ -780,7 +164,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60b"
+        "_id": "69dfe4fa91996778049a8152"
       },
       {
         "seat_number": "B18",
@@ -789,7 +173,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60c"
+        "_id": "69dfe4fa91996778049a8153"
       },
       {
         "seat_number": "B19",
@@ -798,7 +182,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60d"
+        "_id": "69dfe4fa91996778049a8154"
       },
       {
         "seat_number": "B20",
@@ -807,7 +191,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60e"
+        "_id": "69dfe4fa91996778049a8155"
       },
       {
         "seat_number": "B21",
@@ -816,7 +200,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b60f"
+        "_id": "69dfe4fa91996778049a8156"
       },
       {
         "seat_number": "B22",
@@ -825,7 +209,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b610"
+        "_id": "69dfe4fa91996778049a8157"
       },
       {
         "seat_number": "B23",
@@ -834,7 +218,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b611"
+        "_id": "69dfe4fa91996778049a8158"
       },
       {
         "seat_number": "B24",
@@ -843,7 +227,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b612"
+        "_id": "69dfe4fa91996778049a8159"
       },
       {
         "seat_number": "B25",
@@ -852,7 +236,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b613"
+        "_id": "69dfe4fa91996778049a815a"
       },
       {
         "seat_number": "B26",
@@ -861,7 +245,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b614"
+        "_id": "69dfe4fa91996778049a815b"
       },
       {
         "seat_number": "B27",
@@ -870,7 +254,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b615"
+        "_id": "69dfe4fa91996778049a815c"
       },
       {
         "seat_number": "B28",
@@ -879,7 +263,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b616"
+        "_id": "69dfe4fa91996778049a815d"
       },
       {
         "seat_number": "B29",
@@ -888,7 +272,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b617"
+        "_id": "69dfe4fa91996778049a815e"
       },
       {
         "seat_number": "B30",
@@ -897,7 +281,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b618"
+        "_id": "69dfe4fa91996778049a815f"
       },
       {
         "seat_number": "B31",
@@ -906,7 +290,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b619"
+        "_id": "69dfe4fa91996778049a8160"
       },
       {
         "seat_number": "B32",
@@ -915,19 +299,19 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b61a"
+        "_id": "69dfe4fa91996778049a8161"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.879Z",
-    "updatedAt": "2026-04-15T18:14:54.879Z"
+    "createdAt": "2026-04-15T19:20:26.556Z",
+    "updatedAt": "2026-04-15T19:20:26.831Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b61b",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8162",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-12T18:30:00.000Z",
     "status": "Completed",
     "boarding_points": [
@@ -943,8 +327,8 @@
         "column": 1,
         "type": "window",
         "price": 760,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b61c"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8163"
       },
       {
         "seat_number": "B02",
@@ -952,8 +336,8 @@
         "column": 2,
         "type": "aisle",
         "price": 700,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b61d"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8164"
       },
       {
         "seat_number": "B03",
@@ -962,7 +346,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b61e"
+        "_id": "69dfe4fa91996778049a8165"
       },
       {
         "seat_number": "B04",
@@ -971,7 +355,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b61f"
+        "_id": "69dfe4fa91996778049a8166"
       },
       {
         "seat_number": "B05",
@@ -980,7 +364,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b620"
+        "_id": "69dfe4fa91996778049a8167"
       },
       {
         "seat_number": "B06",
@@ -989,7 +373,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b621"
+        "_id": "69dfe4fa91996778049a8168"
       },
       {
         "seat_number": "B07",
@@ -998,7 +382,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b622"
+        "_id": "69dfe4fa91996778049a8169"
       },
       {
         "seat_number": "B08",
@@ -1007,7 +391,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b623"
+        "_id": "69dfe4fa91996778049a816a"
       },
       {
         "seat_number": "B09",
@@ -1016,7 +400,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b624"
+        "_id": "69dfe4fa91996778049a816b"
       },
       {
         "seat_number": "B10",
@@ -1025,7 +409,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b625"
+        "_id": "69dfe4fa91996778049a816c"
       },
       {
         "seat_number": "B11",
@@ -1034,7 +418,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b626"
+        "_id": "69dfe4fa91996778049a816d"
       },
       {
         "seat_number": "B12",
@@ -1043,7 +427,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b627"
+        "_id": "69dfe4fa91996778049a816e"
       },
       {
         "seat_number": "B13",
@@ -1052,7 +436,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b628"
+        "_id": "69dfe4fa91996778049a816f"
       },
       {
         "seat_number": "B14",
@@ -1061,7 +445,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b629"
+        "_id": "69dfe4fa91996778049a8170"
       },
       {
         "seat_number": "B15",
@@ -1070,7 +454,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62a"
+        "_id": "69dfe4fa91996778049a8171"
       },
       {
         "seat_number": "B16",
@@ -1079,7 +463,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62b"
+        "_id": "69dfe4fa91996778049a8172"
       },
       {
         "seat_number": "B17",
@@ -1088,7 +472,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62c"
+        "_id": "69dfe4fa91996778049a8173"
       },
       {
         "seat_number": "B18",
@@ -1097,7 +481,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62d"
+        "_id": "69dfe4fa91996778049a8174"
       },
       {
         "seat_number": "B19",
@@ -1106,7 +490,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62e"
+        "_id": "69dfe4fa91996778049a8175"
       },
       {
         "seat_number": "B20",
@@ -1115,7 +499,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b62f"
+        "_id": "69dfe4fa91996778049a8176"
       },
       {
         "seat_number": "B21",
@@ -1124,7 +508,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b630"
+        "_id": "69dfe4fa91996778049a8177"
       },
       {
         "seat_number": "B22",
@@ -1133,7 +517,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b631"
+        "_id": "69dfe4fa91996778049a8178"
       },
       {
         "seat_number": "B23",
@@ -1142,7 +526,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b632"
+        "_id": "69dfe4fa91996778049a8179"
       },
       {
         "seat_number": "B24",
@@ -1151,7 +535,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b633"
+        "_id": "69dfe4fa91996778049a817a"
       },
       {
         "seat_number": "B25",
@@ -1160,7 +544,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b634"
+        "_id": "69dfe4fa91996778049a817b"
       },
       {
         "seat_number": "B26",
@@ -1169,7 +553,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b635"
+        "_id": "69dfe4fa91996778049a817c"
       },
       {
         "seat_number": "B27",
@@ -1178,7 +562,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b636"
+        "_id": "69dfe4fa91996778049a817d"
       },
       {
         "seat_number": "B28",
@@ -1187,7 +571,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b637"
+        "_id": "69dfe4fa91996778049a817e"
       },
       {
         "seat_number": "B29",
@@ -1196,7 +580,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b638"
+        "_id": "69dfe4fa91996778049a817f"
       },
       {
         "seat_number": "B30",
@@ -1205,7 +589,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b639"
+        "_id": "69dfe4fa91996778049a8180"
       },
       {
         "seat_number": "B31",
@@ -1214,7 +598,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b63a"
+        "_id": "69dfe4fa91996778049a8181"
       },
       {
         "seat_number": "B32",
@@ -1223,19 +607,19 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b63b"
+        "_id": "69dfe4fa91996778049a8182"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.880Z",
-    "updatedAt": "2026-04-15T18:14:55.175Z"
+    "createdAt": "2026-04-15T19:20:26.557Z",
+    "updatedAt": "2026-04-15T19:20:26.557Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b63c",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8183",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-13T18:30:00.000Z",
     "status": "Completed",
     "boarding_points": [
@@ -1251,8 +635,8 @@
         "column": 1,
         "type": "window",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b63d"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8184"
       },
       {
         "seat_number": "B02",
@@ -1260,8 +644,8 @@
         "column": 2,
         "type": "aisle",
         "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b63e"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8185"
       },
       {
         "seat_number": "B03",
@@ -1269,8 +653,8 @@
         "column": 3,
         "type": "aisle",
         "price": 680,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b63f"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8186"
       },
       {
         "seat_number": "B04",
@@ -1278,8 +662,8 @@
         "column": 4,
         "type": "window",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b640"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8187"
       },
       {
         "seat_number": "B05",
@@ -1288,7 +672,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b641"
+        "_id": "69dfe4fa91996778049a8188"
       },
       {
         "seat_number": "B06",
@@ -1297,7 +681,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b642"
+        "_id": "69dfe4fa91996778049a8189"
       },
       {
         "seat_number": "B07",
@@ -1306,7 +690,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b643"
+        "_id": "69dfe4fa91996778049a818a"
       },
       {
         "seat_number": "B08",
@@ -1315,7 +699,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b644"
+        "_id": "69dfe4fa91996778049a818b"
       },
       {
         "seat_number": "B09",
@@ -1324,7 +708,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b645"
+        "_id": "69dfe4fa91996778049a818c"
       },
       {
         "seat_number": "B10",
@@ -1333,7 +717,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b646"
+        "_id": "69dfe4fa91996778049a818d"
       },
       {
         "seat_number": "B11",
@@ -1342,7 +726,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b647"
+        "_id": "69dfe4fa91996778049a818e"
       },
       {
         "seat_number": "B12",
@@ -1351,7 +735,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b648"
+        "_id": "69dfe4fa91996778049a818f"
       },
       {
         "seat_number": "B13",
@@ -1360,7 +744,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b649"
+        "_id": "69dfe4fa91996778049a8190"
       },
       {
         "seat_number": "B14",
@@ -1369,7 +753,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64a"
+        "_id": "69dfe4fa91996778049a8191"
       },
       {
         "seat_number": "B15",
@@ -1378,7 +762,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64b"
+        "_id": "69dfe4fa91996778049a8192"
       },
       {
         "seat_number": "B16",
@@ -1387,7 +771,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64c"
+        "_id": "69dfe4fa91996778049a8193"
       },
       {
         "seat_number": "B17",
@@ -1396,7 +780,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64d"
+        "_id": "69dfe4fa91996778049a8194"
       },
       {
         "seat_number": "B18",
@@ -1405,7 +789,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64e"
+        "_id": "69dfe4fa91996778049a8195"
       },
       {
         "seat_number": "B19",
@@ -1414,7 +798,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b64f"
+        "_id": "69dfe4fa91996778049a8196"
       },
       {
         "seat_number": "B20",
@@ -1423,7 +807,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b650"
+        "_id": "69dfe4fa91996778049a8197"
       },
       {
         "seat_number": "B21",
@@ -1432,7 +816,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b651"
+        "_id": "69dfe4fa91996778049a8198"
       },
       {
         "seat_number": "B22",
@@ -1441,7 +825,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b652"
+        "_id": "69dfe4fa91996778049a8199"
       },
       {
         "seat_number": "B23",
@@ -1450,7 +834,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b653"
+        "_id": "69dfe4fa91996778049a819a"
       },
       {
         "seat_number": "B24",
@@ -1459,7 +843,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b654"
+        "_id": "69dfe4fa91996778049a819b"
       },
       {
         "seat_number": "B25",
@@ -1468,7 +852,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b655"
+        "_id": "69dfe4fa91996778049a819c"
       },
       {
         "seat_number": "B26",
@@ -1477,7 +861,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b656"
+        "_id": "69dfe4fa91996778049a819d"
       },
       {
         "seat_number": "B27",
@@ -1486,7 +870,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b657"
+        "_id": "69dfe4fa91996778049a819e"
       },
       {
         "seat_number": "B28",
@@ -1495,7 +879,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b658"
+        "_id": "69dfe4fa91996778049a819f"
       },
       {
         "seat_number": "B29",
@@ -1504,7 +888,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b659"
+        "_id": "69dfe4fa91996778049a81a0"
       },
       {
         "seat_number": "B30",
@@ -1513,7 +897,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b65a"
+        "_id": "69dfe4fa91996778049a81a1"
       },
       {
         "seat_number": "B31",
@@ -1522,7 +906,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b65b"
+        "_id": "69dfe4fa91996778049a81a2"
       },
       {
         "seat_number": "B32",
@@ -1531,19 +915,19 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b65c"
+        "_id": "69dfe4fa91996778049a81a3"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.880Z",
-    "updatedAt": "2026-04-15T18:14:54.880Z"
+    "createdAt": "2026-04-15T19:20:26.558Z",
+    "updatedAt": "2026-04-15T19:20:26.860Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b65d",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a81a4",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-13T18:30:00.000Z",
     "status": "Completed",
     "boarding_points": [
@@ -1559,8 +943,8 @@
         "column": 1,
         "type": "window",
         "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b65e"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a81a5"
       },
       {
         "seat_number": "B02",
@@ -1568,8 +952,8 @@
         "column": 2,
         "type": "aisle",
         "price": 700,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b65f"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a81a6"
       },
       {
         "seat_number": "B03",
@@ -1578,7 +962,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b660"
+        "_id": "69dfe4fa91996778049a81a7"
       },
       {
         "seat_number": "B04",
@@ -1587,7 +971,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b661"
+        "_id": "69dfe4fa91996778049a81a8"
       },
       {
         "seat_number": "B05",
@@ -1596,7 +980,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b662"
+        "_id": "69dfe4fa91996778049a81a9"
       },
       {
         "seat_number": "B06",
@@ -1605,7 +989,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b663"
+        "_id": "69dfe4fa91996778049a81aa"
       },
       {
         "seat_number": "B07",
@@ -1614,7 +998,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b664"
+        "_id": "69dfe4fa91996778049a81ab"
       },
       {
         "seat_number": "B08",
@@ -1623,7 +1007,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b665"
+        "_id": "69dfe4fa91996778049a81ac"
       },
       {
         "seat_number": "B09",
@@ -1632,7 +1016,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b666"
+        "_id": "69dfe4fa91996778049a81ad"
       },
       {
         "seat_number": "B10",
@@ -1641,7 +1025,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b667"
+        "_id": "69dfe4fa91996778049a81ae"
       },
       {
         "seat_number": "B11",
@@ -1650,7 +1034,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b668"
+        "_id": "69dfe4fa91996778049a81af"
       },
       {
         "seat_number": "B12",
@@ -1659,7 +1043,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b669"
+        "_id": "69dfe4fa91996778049a81b0"
       },
       {
         "seat_number": "B13",
@@ -1668,7 +1052,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66a"
+        "_id": "69dfe4fa91996778049a81b1"
       },
       {
         "seat_number": "B14",
@@ -1677,7 +1061,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66b"
+        "_id": "69dfe4fa91996778049a81b2"
       },
       {
         "seat_number": "B15",
@@ -1686,7 +1070,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66c"
+        "_id": "69dfe4fa91996778049a81b3"
       },
       {
         "seat_number": "B16",
@@ -1695,7 +1079,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66d"
+        "_id": "69dfe4fa91996778049a81b4"
       },
       {
         "seat_number": "B17",
@@ -1704,7 +1088,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66e"
+        "_id": "69dfe4fa91996778049a81b5"
       },
       {
         "seat_number": "B18",
@@ -1713,7 +1097,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b66f"
+        "_id": "69dfe4fa91996778049a81b6"
       },
       {
         "seat_number": "B19",
@@ -1722,7 +1106,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b670"
+        "_id": "69dfe4fa91996778049a81b7"
       },
       {
         "seat_number": "B20",
@@ -1731,7 +1115,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b671"
+        "_id": "69dfe4fa91996778049a81b8"
       },
       {
         "seat_number": "B21",
@@ -1740,7 +1124,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b672"
+        "_id": "69dfe4fa91996778049a81b9"
       },
       {
         "seat_number": "B22",
@@ -1749,7 +1133,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b673"
+        "_id": "69dfe4fa91996778049a81ba"
       },
       {
         "seat_number": "B23",
@@ -1758,7 +1142,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b674"
+        "_id": "69dfe4fa91996778049a81bb"
       },
       {
         "seat_number": "B24",
@@ -1767,7 +1151,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b675"
+        "_id": "69dfe4fa91996778049a81bc"
       },
       {
         "seat_number": "B25",
@@ -1776,7 +1160,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b676"
+        "_id": "69dfe4fa91996778049a81bd"
       },
       {
         "seat_number": "B26",
@@ -1785,7 +1169,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b677"
+        "_id": "69dfe4fa91996778049a81be"
       },
       {
         "seat_number": "B27",
@@ -1794,7 +1178,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b678"
+        "_id": "69dfe4fa91996778049a81bf"
       },
       {
         "seat_number": "B28",
@@ -1803,7 +1187,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b679"
+        "_id": "69dfe4fa91996778049a81c0"
       },
       {
         "seat_number": "B29",
@@ -1812,7 +1196,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b67a"
+        "_id": "69dfe4fa91996778049a81c1"
       },
       {
         "seat_number": "B30",
@@ -1821,7 +1205,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b67b"
+        "_id": "69dfe4fa91996778049a81c2"
       },
       {
         "seat_number": "B31",
@@ -1830,7 +1214,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b67c"
+        "_id": "69dfe4fa91996778049a81c3"
       },
       {
         "seat_number": "B32",
@@ -1839,21 +1223,21 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b67d"
+        "_id": "69dfe4fa91996778049a81c4"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.880Z",
-    "updatedAt": "2026-04-15T18:14:54.880Z"
+    "createdAt": "2026-04-15T19:20:26.558Z",
+    "updatedAt": "2026-04-15T19:20:26.874Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b67e",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a81c5",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-14T18:30:00.000Z",
-    "status": "Scheduled",
+    "status": "Completed",
     "boarding_points": [
       "Nehrunagar"
     ],
@@ -1868,7 +1252,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b67f"
+        "_id": "69dfe4fa91996778049a81c6"
       },
       {
         "seat_number": "B02",
@@ -1877,7 +1261,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b680"
+        "_id": "69dfe4fa91996778049a81c7"
       },
       {
         "seat_number": "B03",
@@ -1886,7 +1270,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b681"
+        "_id": "69dfe4fa91996778049a81c8"
       },
       {
         "seat_number": "B04",
@@ -1895,7 +1279,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b682"
+        "_id": "69dfe4fa91996778049a81c9"
       },
       {
         "seat_number": "B05",
@@ -1904,7 +1288,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b683"
+        "_id": "69dfe4fa91996778049a81ca"
       },
       {
         "seat_number": "B06",
@@ -1913,7 +1297,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b684"
+        "_id": "69dfe4fa91996778049a81cb"
       },
       {
         "seat_number": "B07",
@@ -1922,7 +1306,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b685"
+        "_id": "69dfe4fa91996778049a81cc"
       },
       {
         "seat_number": "B08",
@@ -1931,7 +1315,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b686"
+        "_id": "69dfe4fa91996778049a81cd"
       },
       {
         "seat_number": "B09",
@@ -1940,7 +1324,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b687"
+        "_id": "69dfe4fa91996778049a81ce"
       },
       {
         "seat_number": "B10",
@@ -1949,7 +1333,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b688"
+        "_id": "69dfe4fa91996778049a81cf"
       },
       {
         "seat_number": "B11",
@@ -1958,7 +1342,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b689"
+        "_id": "69dfe4fa91996778049a81d0"
       },
       {
         "seat_number": "B12",
@@ -1967,7 +1351,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68a"
+        "_id": "69dfe4fa91996778049a81d1"
       },
       {
         "seat_number": "B13",
@@ -1976,7 +1360,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68b"
+        "_id": "69dfe4fa91996778049a81d2"
       },
       {
         "seat_number": "B14",
@@ -1985,7 +1369,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68c"
+        "_id": "69dfe4fa91996778049a81d3"
       },
       {
         "seat_number": "B15",
@@ -1994,7 +1378,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68d"
+        "_id": "69dfe4fa91996778049a81d4"
       },
       {
         "seat_number": "B16",
@@ -2003,7 +1387,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68e"
+        "_id": "69dfe4fa91996778049a81d5"
       },
       {
         "seat_number": "B17",
@@ -2012,7 +1396,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b68f"
+        "_id": "69dfe4fa91996778049a81d6"
       },
       {
         "seat_number": "B18",
@@ -2021,7 +1405,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b690"
+        "_id": "69dfe4fa91996778049a81d7"
       },
       {
         "seat_number": "B19",
@@ -2030,7 +1414,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b691"
+        "_id": "69dfe4fa91996778049a81d8"
       },
       {
         "seat_number": "B20",
@@ -2039,7 +1423,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b692"
+        "_id": "69dfe4fa91996778049a81d9"
       },
       {
         "seat_number": "B21",
@@ -2048,7 +1432,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b693"
+        "_id": "69dfe4fa91996778049a81da"
       },
       {
         "seat_number": "B22",
@@ -2057,7 +1441,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b694"
+        "_id": "69dfe4fa91996778049a81db"
       },
       {
         "seat_number": "B23",
@@ -2066,7 +1450,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b695"
+        "_id": "69dfe4fa91996778049a81dc"
       },
       {
         "seat_number": "B24",
@@ -2075,7 +1459,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b696"
+        "_id": "69dfe4fa91996778049a81dd"
       },
       {
         "seat_number": "B25",
@@ -2084,7 +1468,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b697"
+        "_id": "69dfe4fa91996778049a81de"
       },
       {
         "seat_number": "B26",
@@ -2093,7 +1477,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b698"
+        "_id": "69dfe4fa91996778049a81df"
       },
       {
         "seat_number": "B27",
@@ -2102,7 +1486,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b699"
+        "_id": "69dfe4fa91996778049a81e0"
       },
       {
         "seat_number": "B28",
@@ -2111,7 +1495,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b69a"
+        "_id": "69dfe4fa91996778049a81e1"
       },
       {
         "seat_number": "B29",
@@ -2120,7 +1504,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b69b"
+        "_id": "69dfe4fa91996778049a81e2"
       },
       {
         "seat_number": "B30",
@@ -2129,7 +1513,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b69c"
+        "_id": "69dfe4fa91996778049a81e3"
       },
       {
         "seat_number": "B31",
@@ -2138,7 +1522,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b69d"
+        "_id": "69dfe4fa91996778049a81e4"
       },
       {
         "seat_number": "B32",
@@ -2147,21 +1531,21 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b69e"
+        "_id": "69dfe4fa91996778049a81e5"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.880Z",
-    "updatedAt": "2026-04-15T18:14:54.880Z"
+    "createdAt": "2026-04-15T19:20:26.559Z",
+    "updatedAt": "2026-04-15T19:20:26.559Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b69f",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a81e6",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-14T18:30:00.000Z",
-    "status": "Scheduled",
+    "status": "Completed",
     "boarding_points": [
       "Athwa"
     ],
@@ -2176,7 +1560,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a0"
+        "_id": "69dfe4fa91996778049a81e7"
       },
       {
         "seat_number": "B02",
@@ -2185,7 +1569,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a1"
+        "_id": "69dfe4fa91996778049a81e8"
       },
       {
         "seat_number": "B03",
@@ -2194,7 +1578,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a2"
+        "_id": "69dfe4fa91996778049a81e9"
       },
       {
         "seat_number": "B04",
@@ -2203,7 +1587,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a3"
+        "_id": "69dfe4fa91996778049a81ea"
       },
       {
         "seat_number": "B05",
@@ -2212,7 +1596,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a4"
+        "_id": "69dfe4fa91996778049a81eb"
       },
       {
         "seat_number": "B06",
@@ -2221,7 +1605,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a5"
+        "_id": "69dfe4fa91996778049a81ec"
       },
       {
         "seat_number": "B07",
@@ -2230,7 +1614,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a6"
+        "_id": "69dfe4fa91996778049a81ed"
       },
       {
         "seat_number": "B08",
@@ -2239,7 +1623,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a7"
+        "_id": "69dfe4fa91996778049a81ee"
       },
       {
         "seat_number": "B09",
@@ -2248,7 +1632,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a8"
+        "_id": "69dfe4fa91996778049a81ef"
       },
       {
         "seat_number": "B10",
@@ -2257,7 +1641,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6a9"
+        "_id": "69dfe4fa91996778049a81f0"
       },
       {
         "seat_number": "B11",
@@ -2266,7 +1650,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6aa"
+        "_id": "69dfe4fa91996778049a81f1"
       },
       {
         "seat_number": "B12",
@@ -2275,7 +1659,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ab"
+        "_id": "69dfe4fa91996778049a81f2"
       },
       {
         "seat_number": "B13",
@@ -2284,7 +1668,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ac"
+        "_id": "69dfe4fa91996778049a81f3"
       },
       {
         "seat_number": "B14",
@@ -2293,7 +1677,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ad"
+        "_id": "69dfe4fa91996778049a81f4"
       },
       {
         "seat_number": "B15",
@@ -2302,7 +1686,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ae"
+        "_id": "69dfe4fa91996778049a81f5"
       },
       {
         "seat_number": "B16",
@@ -2311,7 +1695,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6af"
+        "_id": "69dfe4fa91996778049a81f6"
       },
       {
         "seat_number": "B17",
@@ -2320,7 +1704,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b0"
+        "_id": "69dfe4fa91996778049a81f7"
       },
       {
         "seat_number": "B18",
@@ -2329,7 +1713,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b1"
+        "_id": "69dfe4fa91996778049a81f8"
       },
       {
         "seat_number": "B19",
@@ -2338,7 +1722,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b2"
+        "_id": "69dfe4fa91996778049a81f9"
       },
       {
         "seat_number": "B20",
@@ -2347,7 +1731,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b3"
+        "_id": "69dfe4fa91996778049a81fa"
       },
       {
         "seat_number": "B21",
@@ -2356,7 +1740,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b4"
+        "_id": "69dfe4fa91996778049a81fb"
       },
       {
         "seat_number": "B22",
@@ -2365,7 +1749,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b5"
+        "_id": "69dfe4fa91996778049a81fc"
       },
       {
         "seat_number": "B23",
@@ -2374,7 +1758,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b6"
+        "_id": "69dfe4fa91996778049a81fd"
       },
       {
         "seat_number": "B24",
@@ -2383,7 +1767,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b7"
+        "_id": "69dfe4fa91996778049a81fe"
       },
       {
         "seat_number": "B25",
@@ -2392,7 +1776,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b8"
+        "_id": "69dfe4fa91996778049a81ff"
       },
       {
         "seat_number": "B26",
@@ -2401,7 +1785,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6b9"
+        "_id": "69dfe4fa91996778049a8200"
       },
       {
         "seat_number": "B27",
@@ -2410,7 +1794,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ba"
+        "_id": "69dfe4fa91996778049a8201"
       },
       {
         "seat_number": "B28",
@@ -2419,7 +1803,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6bb"
+        "_id": "69dfe4fa91996778049a8202"
       },
       {
         "seat_number": "B29",
@@ -2428,7 +1812,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6bc"
+        "_id": "69dfe4fa91996778049a8203"
       },
       {
         "seat_number": "B30",
@@ -2437,7 +1821,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6bd"
+        "_id": "69dfe4fa91996778049a8204"
       },
       {
         "seat_number": "B31",
@@ -2446,7 +1830,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6be"
+        "_id": "69dfe4fa91996778049a8205"
       },
       {
         "seat_number": "B32",
@@ -2455,19 +1839,19 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6bf"
+        "_id": "69dfe4fa91996778049a8206"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.880Z",
-    "updatedAt": "2026-04-15T18:14:54.880Z"
+    "createdAt": "2026-04-15T19:20:26.559Z",
+    "updatedAt": "2026-04-15T19:20:26.559Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b6c0",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8207",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-15T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -2484,7 +1868,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c1"
+        "_id": "69dfe4fa91996778049a8208"
       },
       {
         "seat_number": "B02",
@@ -2493,7 +1877,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c2"
+        "_id": "69dfe4fa91996778049a8209"
       },
       {
         "seat_number": "B03",
@@ -2502,7 +1886,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c3"
+        "_id": "69dfe4fa91996778049a820a"
       },
       {
         "seat_number": "B04",
@@ -2511,7 +1895,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c4"
+        "_id": "69dfe4fa91996778049a820b"
       },
       {
         "seat_number": "B05",
@@ -2520,7 +1904,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c5"
+        "_id": "69dfe4fa91996778049a820c"
       },
       {
         "seat_number": "B06",
@@ -2529,7 +1913,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c6"
+        "_id": "69dfe4fa91996778049a820d"
       },
       {
         "seat_number": "B07",
@@ -2538,7 +1922,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c7"
+        "_id": "69dfe4fa91996778049a820e"
       },
       {
         "seat_number": "B08",
@@ -2547,7 +1931,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c8"
+        "_id": "69dfe4fa91996778049a820f"
       },
       {
         "seat_number": "B09",
@@ -2556,7 +1940,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6c9"
+        "_id": "69dfe4fa91996778049a8210"
       },
       {
         "seat_number": "B10",
@@ -2565,7 +1949,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ca"
+        "_id": "69dfe4fa91996778049a8211"
       },
       {
         "seat_number": "B11",
@@ -2574,7 +1958,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6cb"
+        "_id": "69dfe4fa91996778049a8212"
       },
       {
         "seat_number": "B12",
@@ -2583,7 +1967,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6cc"
+        "_id": "69dfe4fa91996778049a8213"
       },
       {
         "seat_number": "B13",
@@ -2592,7 +1976,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6cd"
+        "_id": "69dfe4fa91996778049a8214"
       },
       {
         "seat_number": "B14",
@@ -2601,7 +1985,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ce"
+        "_id": "69dfe4fa91996778049a8215"
       },
       {
         "seat_number": "B15",
@@ -2610,7 +1994,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6cf"
+        "_id": "69dfe4fa91996778049a8216"
       },
       {
         "seat_number": "B16",
@@ -2619,7 +2003,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d0"
+        "_id": "69dfe4fa91996778049a8217"
       },
       {
         "seat_number": "B17",
@@ -2628,7 +2012,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d1"
+        "_id": "69dfe4fa91996778049a8218"
       },
       {
         "seat_number": "B18",
@@ -2637,7 +2021,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d2"
+        "_id": "69dfe4fa91996778049a8219"
       },
       {
         "seat_number": "B19",
@@ -2646,7 +2030,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d3"
+        "_id": "69dfe4fa91996778049a821a"
       },
       {
         "seat_number": "B20",
@@ -2655,7 +2039,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d4"
+        "_id": "69dfe4fa91996778049a821b"
       },
       {
         "seat_number": "B21",
@@ -2664,7 +2048,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d5"
+        "_id": "69dfe4fa91996778049a821c"
       },
       {
         "seat_number": "B22",
@@ -2673,7 +2057,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d6"
+        "_id": "69dfe4fa91996778049a821d"
       },
       {
         "seat_number": "B23",
@@ -2682,7 +2066,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d7"
+        "_id": "69dfe4fa91996778049a821e"
       },
       {
         "seat_number": "B24",
@@ -2691,7 +2075,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d8"
+        "_id": "69dfe4fa91996778049a821f"
       },
       {
         "seat_number": "B25",
@@ -2700,7 +2084,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6d9"
+        "_id": "69dfe4fa91996778049a8220"
       },
       {
         "seat_number": "B26",
@@ -2709,7 +2093,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6da"
+        "_id": "69dfe4fa91996778049a8221"
       },
       {
         "seat_number": "B27",
@@ -2718,7 +2102,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6db"
+        "_id": "69dfe4fa91996778049a8222"
       },
       {
         "seat_number": "B28",
@@ -2727,7 +2111,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6dc"
+        "_id": "69dfe4fa91996778049a8223"
       },
       {
         "seat_number": "B29",
@@ -2736,7 +2120,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6dd"
+        "_id": "69dfe4fa91996778049a8224"
       },
       {
         "seat_number": "B30",
@@ -2745,7 +2129,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6de"
+        "_id": "69dfe4fa91996778049a8225"
       },
       {
         "seat_number": "B31",
@@ -2754,7 +2138,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6df"
+        "_id": "69dfe4fa91996778049a8226"
       },
       {
         "seat_number": "B32",
@@ -2763,19 +2147,19 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e0"
+        "_id": "69dfe4fa91996778049a8227"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.881Z",
-    "updatedAt": "2026-04-15T18:14:54.881Z"
+    "createdAt": "2026-04-15T19:20:26.559Z",
+    "updatedAt": "2026-04-15T19:20:26.559Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b6e1",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8228",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-15T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -2792,7 +2176,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e2"
+        "_id": "69dfe4fa91996778049a8229"
       },
       {
         "seat_number": "B02",
@@ -2801,7 +2185,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e3"
+        "_id": "69dfe4fa91996778049a822a"
       },
       {
         "seat_number": "B03",
@@ -2810,7 +2194,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e4"
+        "_id": "69dfe4fa91996778049a822b"
       },
       {
         "seat_number": "B04",
@@ -2819,7 +2203,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e5"
+        "_id": "69dfe4fa91996778049a822c"
       },
       {
         "seat_number": "B05",
@@ -2828,7 +2212,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e6"
+        "_id": "69dfe4fa91996778049a822d"
       },
       {
         "seat_number": "B06",
@@ -2837,7 +2221,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e7"
+        "_id": "69dfe4fa91996778049a822e"
       },
       {
         "seat_number": "B07",
@@ -2846,7 +2230,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e8"
+        "_id": "69dfe4fa91996778049a822f"
       },
       {
         "seat_number": "B08",
@@ -2855,7 +2239,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6e9"
+        "_id": "69dfe4fa91996778049a8230"
       },
       {
         "seat_number": "B09",
@@ -2864,7 +2248,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ea"
+        "_id": "69dfe4fa91996778049a8231"
       },
       {
         "seat_number": "B10",
@@ -2873,7 +2257,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6eb"
+        "_id": "69dfe4fa91996778049a8232"
       },
       {
         "seat_number": "B11",
@@ -2882,7 +2266,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ec"
+        "_id": "69dfe4fa91996778049a8233"
       },
       {
         "seat_number": "B12",
@@ -2891,7 +2275,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ed"
+        "_id": "69dfe4fa91996778049a8234"
       },
       {
         "seat_number": "B13",
@@ -2900,7 +2284,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ee"
+        "_id": "69dfe4fa91996778049a8235"
       },
       {
         "seat_number": "B14",
@@ -2909,7 +2293,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ef"
+        "_id": "69dfe4fa91996778049a8236"
       },
       {
         "seat_number": "B15",
@@ -2918,7 +2302,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f0"
+        "_id": "69dfe4fa91996778049a8237"
       },
       {
         "seat_number": "B16",
@@ -2927,7 +2311,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f1"
+        "_id": "69dfe4fa91996778049a8238"
       },
       {
         "seat_number": "B17",
@@ -2936,7 +2320,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f2"
+        "_id": "69dfe4fa91996778049a8239"
       },
       {
         "seat_number": "B18",
@@ -2945,7 +2329,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f3"
+        "_id": "69dfe4fa91996778049a823a"
       },
       {
         "seat_number": "B19",
@@ -2954,7 +2338,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f4"
+        "_id": "69dfe4fa91996778049a823b"
       },
       {
         "seat_number": "B20",
@@ -2963,7 +2347,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f5"
+        "_id": "69dfe4fa91996778049a823c"
       },
       {
         "seat_number": "B21",
@@ -2972,7 +2356,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f6"
+        "_id": "69dfe4fa91996778049a823d"
       },
       {
         "seat_number": "B22",
@@ -2981,7 +2365,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f7"
+        "_id": "69dfe4fa91996778049a823e"
       },
       {
         "seat_number": "B23",
@@ -2990,7 +2374,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f8"
+        "_id": "69dfe4fa91996778049a823f"
       },
       {
         "seat_number": "B24",
@@ -2999,7 +2383,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6f9"
+        "_id": "69dfe4fa91996778049a8240"
       },
       {
         "seat_number": "B25",
@@ -3008,7 +2392,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6fa"
+        "_id": "69dfe4fa91996778049a8241"
       },
       {
         "seat_number": "B26",
@@ -3017,7 +2401,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6fb"
+        "_id": "69dfe4fa91996778049a8242"
       },
       {
         "seat_number": "B27",
@@ -3026,7 +2410,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6fc"
+        "_id": "69dfe4fa91996778049a8243"
       },
       {
         "seat_number": "B28",
@@ -3035,7 +2419,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6fd"
+        "_id": "69dfe4fa91996778049a8244"
       },
       {
         "seat_number": "B29",
@@ -3044,7 +2428,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6fe"
+        "_id": "69dfe4fa91996778049a8245"
       },
       {
         "seat_number": "B30",
@@ -3053,7 +2437,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b6ff"
+        "_id": "69dfe4fa91996778049a8246"
       },
       {
         "seat_number": "B31",
@@ -3062,7 +2446,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b700"
+        "_id": "69dfe4fa91996778049a8247"
       },
       {
         "seat_number": "B32",
@@ -3071,19 +2455,19 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b701"
+        "_id": "69dfe4fa91996778049a8248"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.881Z",
-    "updatedAt": "2026-04-15T18:14:54.881Z"
+    "createdAt": "2026-04-15T19:20:26.560Z",
+    "updatedAt": "2026-04-15T19:20:26.560Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b702",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a8249",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-16T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -3100,7 +2484,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b703"
+        "_id": "69dfe4fa91996778049a824a"
       },
       {
         "seat_number": "B02",
@@ -3109,7 +2493,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b704"
+        "_id": "69dfe4fa91996778049a824b"
       },
       {
         "seat_number": "B03",
@@ -3118,7 +2502,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b705"
+        "_id": "69dfe4fa91996778049a824c"
       },
       {
         "seat_number": "B04",
@@ -3127,7 +2511,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b706"
+        "_id": "69dfe4fa91996778049a824d"
       },
       {
         "seat_number": "B05",
@@ -3136,7 +2520,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b707"
+        "_id": "69dfe4fa91996778049a824e"
       },
       {
         "seat_number": "B06",
@@ -3145,7 +2529,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b708"
+        "_id": "69dfe4fa91996778049a824f"
       },
       {
         "seat_number": "B07",
@@ -3154,7 +2538,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b709"
+        "_id": "69dfe4fa91996778049a8250"
       },
       {
         "seat_number": "B08",
@@ -3163,7 +2547,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70a"
+        "_id": "69dfe4fa91996778049a8251"
       },
       {
         "seat_number": "B09",
@@ -3172,7 +2556,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70b"
+        "_id": "69dfe4fa91996778049a8252"
       },
       {
         "seat_number": "B10",
@@ -3181,7 +2565,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70c"
+        "_id": "69dfe4fa91996778049a8253"
       },
       {
         "seat_number": "B11",
@@ -3190,7 +2574,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70d"
+        "_id": "69dfe4fa91996778049a8254"
       },
       {
         "seat_number": "B12",
@@ -3199,7 +2583,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70e"
+        "_id": "69dfe4fa91996778049a8255"
       },
       {
         "seat_number": "B13",
@@ -3208,7 +2592,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b70f"
+        "_id": "69dfe4fa91996778049a8256"
       },
       {
         "seat_number": "B14",
@@ -3217,7 +2601,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b710"
+        "_id": "69dfe4fa91996778049a8257"
       },
       {
         "seat_number": "B15",
@@ -3226,7 +2610,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b711"
+        "_id": "69dfe4fa91996778049a8258"
       },
       {
         "seat_number": "B16",
@@ -3235,7 +2619,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b712"
+        "_id": "69dfe4fa91996778049a8259"
       },
       {
         "seat_number": "B17",
@@ -3244,7 +2628,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b713"
+        "_id": "69dfe4fa91996778049a825a"
       },
       {
         "seat_number": "B18",
@@ -3253,7 +2637,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b714"
+        "_id": "69dfe4fa91996778049a825b"
       },
       {
         "seat_number": "B19",
@@ -3262,7 +2646,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b715"
+        "_id": "69dfe4fa91996778049a825c"
       },
       {
         "seat_number": "B20",
@@ -3271,7 +2655,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b716"
+        "_id": "69dfe4fa91996778049a825d"
       },
       {
         "seat_number": "B21",
@@ -3280,7 +2664,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b717"
+        "_id": "69dfe4fa91996778049a825e"
       },
       {
         "seat_number": "B22",
@@ -3289,7 +2673,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b718"
+        "_id": "69dfe4fa91996778049a825f"
       },
       {
         "seat_number": "B23",
@@ -3298,7 +2682,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b719"
+        "_id": "69dfe4fa91996778049a8260"
       },
       {
         "seat_number": "B24",
@@ -3307,7 +2691,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71a"
+        "_id": "69dfe4fa91996778049a8261"
       },
       {
         "seat_number": "B25",
@@ -3316,7 +2700,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71b"
+        "_id": "69dfe4fa91996778049a8262"
       },
       {
         "seat_number": "B26",
@@ -3325,7 +2709,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71c"
+        "_id": "69dfe4fa91996778049a8263"
       },
       {
         "seat_number": "B27",
@@ -3334,7 +2718,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71d"
+        "_id": "69dfe4fa91996778049a8264"
       },
       {
         "seat_number": "B28",
@@ -3343,7 +2727,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71e"
+        "_id": "69dfe4fa91996778049a8265"
       },
       {
         "seat_number": "B29",
@@ -3352,7 +2736,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b71f"
+        "_id": "69dfe4fa91996778049a8266"
       },
       {
         "seat_number": "B30",
@@ -3361,7 +2745,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b720"
+        "_id": "69dfe4fa91996778049a8267"
       },
       {
         "seat_number": "B31",
@@ -3370,7 +2754,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b721"
+        "_id": "69dfe4fa91996778049a8268"
       },
       {
         "seat_number": "B32",
@@ -3379,19 +2763,19 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b722"
+        "_id": "69dfe4fa91996778049a8269"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.881Z",
-    "updatedAt": "2026-04-15T18:14:54.881Z"
+    "createdAt": "2026-04-15T19:20:26.560Z",
+    "updatedAt": "2026-04-15T19:20:26.560Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b723",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a826a",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-16T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -3408,7 +2792,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b724"
+        "_id": "69dfe4fa91996778049a826b"
       },
       {
         "seat_number": "B02",
@@ -3417,7 +2801,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b725"
+        "_id": "69dfe4fa91996778049a826c"
       },
       {
         "seat_number": "B03",
@@ -3426,7 +2810,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b726"
+        "_id": "69dfe4fa91996778049a826d"
       },
       {
         "seat_number": "B04",
@@ -3435,7 +2819,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b727"
+        "_id": "69dfe4fa91996778049a826e"
       },
       {
         "seat_number": "B05",
@@ -3444,7 +2828,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b728"
+        "_id": "69dfe4fa91996778049a826f"
       },
       {
         "seat_number": "B06",
@@ -3453,7 +2837,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b729"
+        "_id": "69dfe4fa91996778049a8270"
       },
       {
         "seat_number": "B07",
@@ -3462,7 +2846,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72a"
+        "_id": "69dfe4fa91996778049a8271"
       },
       {
         "seat_number": "B08",
@@ -3471,7 +2855,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72b"
+        "_id": "69dfe4fa91996778049a8272"
       },
       {
         "seat_number": "B09",
@@ -3480,7 +2864,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72c"
+        "_id": "69dfe4fa91996778049a8273"
       },
       {
         "seat_number": "B10",
@@ -3489,7 +2873,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72d"
+        "_id": "69dfe4fa91996778049a8274"
       },
       {
         "seat_number": "B11",
@@ -3498,7 +2882,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72e"
+        "_id": "69dfe4fa91996778049a8275"
       },
       {
         "seat_number": "B12",
@@ -3507,7 +2891,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b72f"
+        "_id": "69dfe4fa91996778049a8276"
       },
       {
         "seat_number": "B13",
@@ -3516,7 +2900,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b730"
+        "_id": "69dfe4fa91996778049a8277"
       },
       {
         "seat_number": "B14",
@@ -3525,7 +2909,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b731"
+        "_id": "69dfe4fa91996778049a8278"
       },
       {
         "seat_number": "B15",
@@ -3534,7 +2918,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b732"
+        "_id": "69dfe4fa91996778049a8279"
       },
       {
         "seat_number": "B16",
@@ -3543,7 +2927,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b733"
+        "_id": "69dfe4fa91996778049a827a"
       },
       {
         "seat_number": "B17",
@@ -3552,7 +2936,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b734"
+        "_id": "69dfe4fa91996778049a827b"
       },
       {
         "seat_number": "B18",
@@ -3561,7 +2945,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b735"
+        "_id": "69dfe4fa91996778049a827c"
       },
       {
         "seat_number": "B19",
@@ -3570,7 +2954,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b736"
+        "_id": "69dfe4fa91996778049a827d"
       },
       {
         "seat_number": "B20",
@@ -3579,7 +2963,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b737"
+        "_id": "69dfe4fa91996778049a827e"
       },
       {
         "seat_number": "B21",
@@ -3588,7 +2972,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b738"
+        "_id": "69dfe4fa91996778049a827f"
       },
       {
         "seat_number": "B22",
@@ -3597,7 +2981,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b739"
+        "_id": "69dfe4fa91996778049a8280"
       },
       {
         "seat_number": "B23",
@@ -3606,7 +2990,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73a"
+        "_id": "69dfe4fa91996778049a8281"
       },
       {
         "seat_number": "B24",
@@ -3615,7 +2999,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73b"
+        "_id": "69dfe4fa91996778049a8282"
       },
       {
         "seat_number": "B25",
@@ -3624,7 +3008,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73c"
+        "_id": "69dfe4fa91996778049a8283"
       },
       {
         "seat_number": "B26",
@@ -3633,7 +3017,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73d"
+        "_id": "69dfe4fa91996778049a8284"
       },
       {
         "seat_number": "B27",
@@ -3642,7 +3026,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73e"
+        "_id": "69dfe4fa91996778049a8285"
       },
       {
         "seat_number": "B28",
@@ -3651,7 +3035,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b73f"
+        "_id": "69dfe4fa91996778049a8286"
       },
       {
         "seat_number": "B29",
@@ -3660,7 +3044,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b740"
+        "_id": "69dfe4fa91996778049a8287"
       },
       {
         "seat_number": "B30",
@@ -3669,7 +3053,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b741"
+        "_id": "69dfe4fa91996778049a8288"
       },
       {
         "seat_number": "B31",
@@ -3678,7 +3062,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b742"
+        "_id": "69dfe4fa91996778049a8289"
       },
       {
         "seat_number": "B32",
@@ -3687,19 +3071,19 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b743"
+        "_id": "69dfe4fa91996778049a828a"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.881Z",
-    "updatedAt": "2026-04-15T18:14:54.881Z"
+    "createdAt": "2026-04-15T19:20:26.560Z",
+    "updatedAt": "2026-04-15T19:20:26.560Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b744",
-    "schedule_id": "69dfd59e5765144ac939b5a7",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a828b",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-17T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -3716,7 +3100,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b745"
+        "_id": "69dfe4fa91996778049a828c"
       },
       {
         "seat_number": "B02",
@@ -3725,7 +3109,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b746"
+        "_id": "69dfe4fa91996778049a828d"
       },
       {
         "seat_number": "B03",
@@ -3734,7 +3118,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b747"
+        "_id": "69dfe4fa91996778049a828e"
       },
       {
         "seat_number": "B04",
@@ -3743,7 +3127,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b748"
+        "_id": "69dfe4fa91996778049a828f"
       },
       {
         "seat_number": "B05",
@@ -3752,7 +3136,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b749"
+        "_id": "69dfe4fa91996778049a8290"
       },
       {
         "seat_number": "B06",
@@ -3761,7 +3145,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74a"
+        "_id": "69dfe4fa91996778049a8291"
       },
       {
         "seat_number": "B07",
@@ -3770,7 +3154,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74b"
+        "_id": "69dfe4fa91996778049a8292"
       },
       {
         "seat_number": "B08",
@@ -3779,7 +3163,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74c"
+        "_id": "69dfe4fa91996778049a8293"
       },
       {
         "seat_number": "B09",
@@ -3788,7 +3172,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74d"
+        "_id": "69dfe4fa91996778049a8294"
       },
       {
         "seat_number": "B10",
@@ -3797,7 +3181,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74e"
+        "_id": "69dfe4fa91996778049a8295"
       },
       {
         "seat_number": "B11",
@@ -3806,7 +3190,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b74f"
+        "_id": "69dfe4fa91996778049a8296"
       },
       {
         "seat_number": "B12",
@@ -3815,7 +3199,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b750"
+        "_id": "69dfe4fa91996778049a8297"
       },
       {
         "seat_number": "B13",
@@ -3824,7 +3208,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b751"
+        "_id": "69dfe4fa91996778049a8298"
       },
       {
         "seat_number": "B14",
@@ -3833,7 +3217,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b752"
+        "_id": "69dfe4fa91996778049a8299"
       },
       {
         "seat_number": "B15",
@@ -3842,7 +3226,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b753"
+        "_id": "69dfe4fa91996778049a829a"
       },
       {
         "seat_number": "B16",
@@ -3851,7 +3235,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b754"
+        "_id": "69dfe4fa91996778049a829b"
       },
       {
         "seat_number": "B17",
@@ -3860,7 +3244,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b755"
+        "_id": "69dfe4fa91996778049a829c"
       },
       {
         "seat_number": "B18",
@@ -3869,7 +3253,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b756"
+        "_id": "69dfe4fa91996778049a829d"
       },
       {
         "seat_number": "B19",
@@ -3878,7 +3262,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b757"
+        "_id": "69dfe4fa91996778049a829e"
       },
       {
         "seat_number": "B20",
@@ -3887,7 +3271,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b758"
+        "_id": "69dfe4fa91996778049a829f"
       },
       {
         "seat_number": "B21",
@@ -3896,7 +3280,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b759"
+        "_id": "69dfe4fa91996778049a82a0"
       },
       {
         "seat_number": "B22",
@@ -3905,7 +3289,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75a"
+        "_id": "69dfe4fa91996778049a82a1"
       },
       {
         "seat_number": "B23",
@@ -3914,7 +3298,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75b"
+        "_id": "69dfe4fa91996778049a82a2"
       },
       {
         "seat_number": "B24",
@@ -3923,7 +3307,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75c"
+        "_id": "69dfe4fa91996778049a82a3"
       },
       {
         "seat_number": "B25",
@@ -3932,7 +3316,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75d"
+        "_id": "69dfe4fa91996778049a82a4"
       },
       {
         "seat_number": "B26",
@@ -3941,7 +3325,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75e"
+        "_id": "69dfe4fa91996778049a82a5"
       },
       {
         "seat_number": "B27",
@@ -3950,7 +3334,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b75f"
+        "_id": "69dfe4fa91996778049a82a6"
       },
       {
         "seat_number": "B28",
@@ -3959,7 +3343,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b760"
+        "_id": "69dfe4fa91996778049a82a7"
       },
       {
         "seat_number": "B29",
@@ -3968,7 +3352,7 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b761"
+        "_id": "69dfe4fa91996778049a82a8"
       },
       {
         "seat_number": "B30",
@@ -3977,7 +3361,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b762"
+        "_id": "69dfe4fa91996778049a82a9"
       },
       {
         "seat_number": "B31",
@@ -3986,7 +3370,7 @@
         "type": "aisle",
         "price": 680,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b763"
+        "_id": "69dfe4fa91996778049a82aa"
       },
       {
         "seat_number": "B32",
@@ -3995,19 +3379,19 @@
         "type": "window",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b764"
+        "_id": "69dfe4fa91996778049a82ab"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.882Z",
-    "updatedAt": "2026-04-15T18:14:54.882Z"
+    "createdAt": "2026-04-15T19:20:26.560Z",
+    "updatedAt": "2026-04-15T19:20:26.560Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b765",
-    "schedule_id": "69dfd59e5765144ac939b5a8",
-    "bus_id": "69dfd59e5765144ac939b595",
-    "driver_id": "69dfd59e5765144ac939b588",
+    "_id": "69dfe4fa91996778049a82ac",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
     "trip_date": "2026-04-17T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
@@ -4024,7 +3408,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b766"
+        "_id": "69dfe4fa91996778049a82ad"
       },
       {
         "seat_number": "B02",
@@ -4033,7 +3417,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b767"
+        "_id": "69dfe4fa91996778049a82ae"
       },
       {
         "seat_number": "B03",
@@ -4042,7 +3426,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b768"
+        "_id": "69dfe4fa91996778049a82af"
       },
       {
         "seat_number": "B04",
@@ -4051,7 +3435,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b769"
+        "_id": "69dfe4fa91996778049a82b0"
       },
       {
         "seat_number": "B05",
@@ -4060,7 +3444,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76a"
+        "_id": "69dfe4fa91996778049a82b1"
       },
       {
         "seat_number": "B06",
@@ -4069,7 +3453,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76b"
+        "_id": "69dfe4fa91996778049a82b2"
       },
       {
         "seat_number": "B07",
@@ -4078,7 +3462,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76c"
+        "_id": "69dfe4fa91996778049a82b3"
       },
       {
         "seat_number": "B08",
@@ -4087,7 +3471,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76d"
+        "_id": "69dfe4fa91996778049a82b4"
       },
       {
         "seat_number": "B09",
@@ -4096,7 +3480,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76e"
+        "_id": "69dfe4fa91996778049a82b5"
       },
       {
         "seat_number": "B10",
@@ -4105,7 +3489,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b76f"
+        "_id": "69dfe4fa91996778049a82b6"
       },
       {
         "seat_number": "B11",
@@ -4114,7 +3498,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b770"
+        "_id": "69dfe4fa91996778049a82b7"
       },
       {
         "seat_number": "B12",
@@ -4123,7 +3507,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b771"
+        "_id": "69dfe4fa91996778049a82b8"
       },
       {
         "seat_number": "B13",
@@ -4132,7 +3516,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b772"
+        "_id": "69dfe4fa91996778049a82b9"
       },
       {
         "seat_number": "B14",
@@ -4141,7 +3525,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b773"
+        "_id": "69dfe4fa91996778049a82ba"
       },
       {
         "seat_number": "B15",
@@ -4150,7 +3534,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b774"
+        "_id": "69dfe4fa91996778049a82bb"
       },
       {
         "seat_number": "B16",
@@ -4159,7 +3543,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b775"
+        "_id": "69dfe4fa91996778049a82bc"
       },
       {
         "seat_number": "B17",
@@ -4168,7 +3552,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b776"
+        "_id": "69dfe4fa91996778049a82bd"
       },
       {
         "seat_number": "B18",
@@ -4177,7 +3561,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b777"
+        "_id": "69dfe4fa91996778049a82be"
       },
       {
         "seat_number": "B19",
@@ -4186,7 +3570,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b778"
+        "_id": "69dfe4fa91996778049a82bf"
       },
       {
         "seat_number": "B20",
@@ -4195,7 +3579,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b779"
+        "_id": "69dfe4fa91996778049a82c0"
       },
       {
         "seat_number": "B21",
@@ -4204,7 +3588,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77a"
+        "_id": "69dfe4fa91996778049a82c1"
       },
       {
         "seat_number": "B22",
@@ -4213,7 +3597,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77b"
+        "_id": "69dfe4fa91996778049a82c2"
       },
       {
         "seat_number": "B23",
@@ -4222,7 +3606,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77c"
+        "_id": "69dfe4fa91996778049a82c3"
       },
       {
         "seat_number": "B24",
@@ -4231,7 +3615,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77d"
+        "_id": "69dfe4fa91996778049a82c4"
       },
       {
         "seat_number": "B25",
@@ -4240,7 +3624,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77e"
+        "_id": "69dfe4fa91996778049a82c5"
       },
       {
         "seat_number": "B26",
@@ -4249,7 +3633,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b77f"
+        "_id": "69dfe4fa91996778049a82c6"
       },
       {
         "seat_number": "B27",
@@ -4258,7 +3642,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b780"
+        "_id": "69dfe4fa91996778049a82c7"
       },
       {
         "seat_number": "B28",
@@ -4267,7 +3651,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b781"
+        "_id": "69dfe4fa91996778049a82c8"
       },
       {
         "seat_number": "B29",
@@ -4276,7 +3660,7 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b782"
+        "_id": "69dfe4fa91996778049a82c9"
       },
       {
         "seat_number": "B30",
@@ -4285,7 +3669,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b783"
+        "_id": "69dfe4fa91996778049a82ca"
       },
       {
         "seat_number": "B31",
@@ -4294,7 +3678,7 @@
         "type": "aisle",
         "price": 700,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b784"
+        "_id": "69dfe4fa91996778049a82cb"
       },
       {
         "seat_number": "B32",
@@ -4303,20 +3687,636 @@
         "type": "window",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b785"
+        "_id": "69dfe4fa91996778049a82cc"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.882Z",
-    "updatedAt": "2026-04-15T18:14:54.882Z"
+    "createdAt": "2026-04-15T19:20:26.562Z",
+    "updatedAt": "2026-04-15T19:20:26.562Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b786",
-    "schedule_id": "69dfd59e5765144ac939b5a9",
-    "bus_id": "69dfd59e5765144ac939b596",
-    "driver_id": "69dfd59e5765144ac939b589",
-    "trip_date": "2026-04-12T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a82cd",
+    "schedule_id": "69dfe4fa91996778049a8130",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
+    "trip_date": "2026-04-18T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Nehrunagar"
+    ],
+    "drop_points": [
+      "Kamrej"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ce"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82cf"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d0"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d1"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d2"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d3"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d4"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d5"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d6"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d7"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d8"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82d9"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82da"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82db"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82dc"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82dd"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82de"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82df"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e0"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e1"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e2"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e3"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e4"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e5"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e6"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e7"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e8"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82e9"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ea"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82eb"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 680,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ec"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 740,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ed"
+      }
+    ],
+    "is_return_trip": false,
+    "__v": 0,
+    "createdAt": "2026-04-15T19:20:26.562Z",
+    "updatedAt": "2026-04-15T19:20:26.562Z"
+  },
+  {
+    "_id": "69dfe4fa91996778049a82ee",
+    "schedule_id": "69dfe4fa91996778049a8131",
+    "bus_id": "69dfe4fa91996778049a811e",
+    "driver_id": "69dfe4fa91996778049a810d",
+    "trip_date": "2026-04-18T18:30:00.000Z",
+    "status": "Scheduled",
+    "boarding_points": [
+      "Athwa"
+    ],
+    "drop_points": [
+      "Narol"
+    ],
+    "seats": [
+      {
+        "seat_number": "B01",
+        "row": 1,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ef"
+      },
+      {
+        "seat_number": "B02",
+        "row": 1,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f0"
+      },
+      {
+        "seat_number": "B03",
+        "row": 1,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f1"
+      },
+      {
+        "seat_number": "B04",
+        "row": 1,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f2"
+      },
+      {
+        "seat_number": "B05",
+        "row": 2,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f3"
+      },
+      {
+        "seat_number": "B06",
+        "row": 2,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f4"
+      },
+      {
+        "seat_number": "B07",
+        "row": 2,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f5"
+      },
+      {
+        "seat_number": "B08",
+        "row": 2,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f6"
+      },
+      {
+        "seat_number": "B09",
+        "row": 3,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f7"
+      },
+      {
+        "seat_number": "B10",
+        "row": 3,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f8"
+      },
+      {
+        "seat_number": "B11",
+        "row": 3,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82f9"
+      },
+      {
+        "seat_number": "B12",
+        "row": 3,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82fa"
+      },
+      {
+        "seat_number": "B13",
+        "row": 4,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82fb"
+      },
+      {
+        "seat_number": "B14",
+        "row": 4,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82fc"
+      },
+      {
+        "seat_number": "B15",
+        "row": 4,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82fd"
+      },
+      {
+        "seat_number": "B16",
+        "row": 4,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82fe"
+      },
+      {
+        "seat_number": "B17",
+        "row": 5,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a82ff"
+      },
+      {
+        "seat_number": "B18",
+        "row": 5,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8300"
+      },
+      {
+        "seat_number": "B19",
+        "row": 5,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8301"
+      },
+      {
+        "seat_number": "B20",
+        "row": 5,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8302"
+      },
+      {
+        "seat_number": "B21",
+        "row": 6,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8303"
+      },
+      {
+        "seat_number": "B22",
+        "row": 6,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8304"
+      },
+      {
+        "seat_number": "B23",
+        "row": 6,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8305"
+      },
+      {
+        "seat_number": "B24",
+        "row": 6,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8306"
+      },
+      {
+        "seat_number": "B25",
+        "row": 7,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8307"
+      },
+      {
+        "seat_number": "B26",
+        "row": 7,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8308"
+      },
+      {
+        "seat_number": "B27",
+        "row": 7,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8309"
+      },
+      {
+        "seat_number": "B28",
+        "row": 7,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a830a"
+      },
+      {
+        "seat_number": "B29",
+        "row": 8,
+        "column": 1,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a830b"
+      },
+      {
+        "seat_number": "B30",
+        "row": 8,
+        "column": 2,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a830c"
+      },
+      {
+        "seat_number": "B31",
+        "row": 8,
+        "column": 3,
+        "type": "aisle",
+        "price": 700,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a830d"
+      },
+      {
+        "seat_number": "B32",
+        "row": 8,
+        "column": 4,
+        "type": "window",
+        "price": 760,
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a830e"
+      }
+    ],
+    "is_return_trip": true,
+    "__v": 0,
+    "createdAt": "2026-04-15T19:20:26.562Z",
+    "updatedAt": "2026-04-15T19:20:26.562Z"
+  },
+  {
+    "_id": "69dfe4fa91996778049a830f",
+    "schedule_id": "69dfe4fa91996778049a8132",
+    "bus_id": "69dfe4fa91996778049a811f",
+    "driver_id": "69dfe4fa91996778049a810e",
+    "trip_date": "2026-04-13T18:30:00.000Z",
     "status": "Completed",
     "boarding_points": [
       "Geeta Mandir"
@@ -4332,7 +4332,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b787"
+        "_id": "69dfe4fa91996778049a8310"
       },
       {
         "seat_number": "B02",
@@ -4341,7 +4341,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b788"
+        "_id": "69dfe4fa91996778049a8311"
       },
       {
         "seat_number": "B03",
@@ -4350,7 +4350,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b789"
+        "_id": "69dfe4fa91996778049a8312"
       },
       {
         "seat_number": "B04",
@@ -4359,7 +4359,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78a"
+        "_id": "69dfe4fa91996778049a8313"
       },
       {
         "seat_number": "B05",
@@ -4368,7 +4368,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78b"
+        "_id": "69dfe4fa91996778049a8314"
       },
       {
         "seat_number": "B06",
@@ -4377,7 +4377,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78c"
+        "_id": "69dfe4fa91996778049a8315"
       },
       {
         "seat_number": "B07",
@@ -4386,7 +4386,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78d"
+        "_id": "69dfe4fa91996778049a8316"
       },
       {
         "seat_number": "B08",
@@ -4395,7 +4395,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78e"
+        "_id": "69dfe4fa91996778049a8317"
       },
       {
         "seat_number": "B09",
@@ -4404,7 +4404,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b78f"
+        "_id": "69dfe4fa91996778049a8318"
       },
       {
         "seat_number": "B10",
@@ -4413,7 +4413,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b790"
+        "_id": "69dfe4fa91996778049a8319"
       },
       {
         "seat_number": "B11",
@@ -4422,7 +4422,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b791"
+        "_id": "69dfe4fa91996778049a831a"
       },
       {
         "seat_number": "B12",
@@ -4431,7 +4431,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b792"
+        "_id": "69dfe4fa91996778049a831b"
       },
       {
         "seat_number": "B13",
@@ -4440,7 +4440,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b793"
+        "_id": "69dfe4fa91996778049a831c"
       },
       {
         "seat_number": "B14",
@@ -4449,7 +4449,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b794"
+        "_id": "69dfe4fa91996778049a831d"
       },
       {
         "seat_number": "B15",
@@ -4458,7 +4458,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b795"
+        "_id": "69dfe4fa91996778049a831e"
       },
       {
         "seat_number": "B16",
@@ -4467,7 +4467,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b796"
+        "_id": "69dfe4fa91996778049a831f"
       },
       {
         "seat_number": "B17",
@@ -4476,7 +4476,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b797"
+        "_id": "69dfe4fa91996778049a8320"
       },
       {
         "seat_number": "B18",
@@ -4485,7 +4485,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b798"
+        "_id": "69dfe4fa91996778049a8321"
       },
       {
         "seat_number": "B19",
@@ -4494,7 +4494,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b799"
+        "_id": "69dfe4fa91996778049a8322"
       },
       {
         "seat_number": "B20",
@@ -4503,7 +4503,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79a"
+        "_id": "69dfe4fa91996778049a8323"
       },
       {
         "seat_number": "B21",
@@ -4512,7 +4512,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79b"
+        "_id": "69dfe4fa91996778049a8324"
       },
       {
         "seat_number": "B22",
@@ -4521,7 +4521,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79c"
+        "_id": "69dfe4fa91996778049a8325"
       },
       {
         "seat_number": "B23",
@@ -4530,7 +4530,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79d"
+        "_id": "69dfe4fa91996778049a8326"
       },
       {
         "seat_number": "B24",
@@ -4539,7 +4539,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79e"
+        "_id": "69dfe4fa91996778049a8327"
       },
       {
         "seat_number": "B25",
@@ -4548,7 +4548,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b79f"
+        "_id": "69dfe4fa91996778049a8328"
       },
       {
         "seat_number": "B26",
@@ -4557,7 +4557,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a0"
+        "_id": "69dfe4fa91996778049a8329"
       },
       {
         "seat_number": "B27",
@@ -4566,7 +4566,7 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a1"
+        "_id": "69dfe4fa91996778049a832a"
       },
       {
         "seat_number": "B28",
@@ -4575,7 +4575,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a2"
+        "_id": "69dfe4fa91996778049a832b"
       },
       {
         "seat_number": "B29",
@@ -4584,7 +4584,7 @@
         "type": "window",
         "price": 620,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a3"
+        "_id": "69dfe4fa91996778049a832c"
       },
       {
         "seat_number": "B30",
@@ -4593,20 +4593,20 @@
         "type": "aisle",
         "price": 560,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a4"
+        "_id": "69dfe4fa91996778049a832d"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.882Z",
-    "updatedAt": "2026-04-15T18:14:54.882Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.563Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b7a5",
-    "schedule_id": "69dfd59e5765144ac939b5aa",
-    "bus_id": "69dfd59e5765144ac939b596",
-    "driver_id": "69dfd59e5765144ac939b58a",
-    "trip_date": "2026-04-15T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a832e",
+    "schedule_id": "69dfe4fa91996778049a8133",
+    "bus_id": "69dfe4fa91996778049a811f",
+    "driver_id": "69dfe4fa91996778049a810f",
+    "trip_date": "2026-04-16T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
       "Raiya Circle"
@@ -4622,7 +4622,7 @@
         "type": "window",
         "price": 640,
         "is_available": false,
-        "_id": "69dfd59e5765144ac939b7a6"
+        "_id": "69dfe4fa91996778049a832f"
       },
       {
         "seat_number": "B02",
@@ -4630,8 +4630,8 @@
         "column": 2,
         "type": "aisle",
         "price": 580,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7a7"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8330"
       },
       {
         "seat_number": "B03",
@@ -4639,8 +4639,8 @@
         "column": 3,
         "type": "aisle",
         "price": 580,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7a8"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8331"
       },
       {
         "seat_number": "B04",
@@ -4649,7 +4649,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7a9"
+        "_id": "69dfe4fa91996778049a8332"
       },
       {
         "seat_number": "B05",
@@ -4658,7 +4658,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7aa"
+        "_id": "69dfe4fa91996778049a8333"
       },
       {
         "seat_number": "B06",
@@ -4667,7 +4667,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ab"
+        "_id": "69dfe4fa91996778049a8334"
       },
       {
         "seat_number": "B07",
@@ -4676,7 +4676,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ac"
+        "_id": "69dfe4fa91996778049a8335"
       },
       {
         "seat_number": "B08",
@@ -4685,7 +4685,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ad"
+        "_id": "69dfe4fa91996778049a8336"
       },
       {
         "seat_number": "B09",
@@ -4694,7 +4694,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ae"
+        "_id": "69dfe4fa91996778049a8337"
       },
       {
         "seat_number": "B10",
@@ -4703,7 +4703,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7af"
+        "_id": "69dfe4fa91996778049a8338"
       },
       {
         "seat_number": "B11",
@@ -4712,7 +4712,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b0"
+        "_id": "69dfe4fa91996778049a8339"
       },
       {
         "seat_number": "B12",
@@ -4721,7 +4721,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b1"
+        "_id": "69dfe4fa91996778049a833a"
       },
       {
         "seat_number": "B13",
@@ -4730,7 +4730,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b2"
+        "_id": "69dfe4fa91996778049a833b"
       },
       {
         "seat_number": "B14",
@@ -4739,7 +4739,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b3"
+        "_id": "69dfe4fa91996778049a833c"
       },
       {
         "seat_number": "B15",
@@ -4748,7 +4748,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b4"
+        "_id": "69dfe4fa91996778049a833d"
       },
       {
         "seat_number": "B16",
@@ -4757,7 +4757,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b5"
+        "_id": "69dfe4fa91996778049a833e"
       },
       {
         "seat_number": "B17",
@@ -4766,7 +4766,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b6"
+        "_id": "69dfe4fa91996778049a833f"
       },
       {
         "seat_number": "B18",
@@ -4775,7 +4775,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b7"
+        "_id": "69dfe4fa91996778049a8340"
       },
       {
         "seat_number": "B19",
@@ -4784,7 +4784,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b8"
+        "_id": "69dfe4fa91996778049a8341"
       },
       {
         "seat_number": "B20",
@@ -4793,7 +4793,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7b9"
+        "_id": "69dfe4fa91996778049a8342"
       },
       {
         "seat_number": "B21",
@@ -4802,7 +4802,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ba"
+        "_id": "69dfe4fa91996778049a8343"
       },
       {
         "seat_number": "B22",
@@ -4811,7 +4811,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7bb"
+        "_id": "69dfe4fa91996778049a8344"
       },
       {
         "seat_number": "B23",
@@ -4820,7 +4820,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7bc"
+        "_id": "69dfe4fa91996778049a8345"
       },
       {
         "seat_number": "B24",
@@ -4829,7 +4829,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7bd"
+        "_id": "69dfe4fa91996778049a8346"
       },
       {
         "seat_number": "B25",
@@ -4838,7 +4838,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7be"
+        "_id": "69dfe4fa91996778049a8347"
       },
       {
         "seat_number": "B26",
@@ -4847,7 +4847,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7bf"
+        "_id": "69dfe4fa91996778049a8348"
       },
       {
         "seat_number": "B27",
@@ -4856,7 +4856,7 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c0"
+        "_id": "69dfe4fa91996778049a8349"
       },
       {
         "seat_number": "B28",
@@ -4865,7 +4865,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c1"
+        "_id": "69dfe4fa91996778049a834a"
       },
       {
         "seat_number": "B29",
@@ -4874,7 +4874,7 @@
         "type": "window",
         "price": 640,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c2"
+        "_id": "69dfe4fa91996778049a834b"
       },
       {
         "seat_number": "B30",
@@ -4883,20 +4883,20 @@
         "type": "aisle",
         "price": 580,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c3"
+        "_id": "69dfe4fa91996778049a834c"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.883Z",
-    "updatedAt": "2026-04-15T18:14:55.193Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.897Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b7c4",
-    "schedule_id": "69dfd59e5765144ac939b5ab",
-    "bus_id": "69dfd59e5765144ac939b597",
-    "driver_id": "69dfd59e5765144ac939b58b",
-    "trip_date": "2026-04-16T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a834d",
+    "schedule_id": "69dfe4fa91996778049a8134",
+    "bus_id": "69dfe4fa91996778049a8120",
+    "driver_id": "69dfe4fa91996778049a8110",
+    "trip_date": "2026-04-17T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
       "Alkapuri"
@@ -4911,8 +4911,8 @@
         "column": 1,
         "type": "window",
         "price": 1040,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7c5"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a834e"
       },
       {
         "seat_number": "B02",
@@ -4920,8 +4920,8 @@
         "column": 2,
         "type": "aisle",
         "price": 980,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7c6"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a834f"
       },
       {
         "seat_number": "B03",
@@ -4929,8 +4929,8 @@
         "column": 3,
         "type": "aisle",
         "price": 980,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7c7"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a8350"
       },
       {
         "seat_number": "B04",
@@ -4939,7 +4939,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c8"
+        "_id": "69dfe4fa91996778049a8351"
       },
       {
         "seat_number": "B05",
@@ -4948,7 +4948,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7c9"
+        "_id": "69dfe4fa91996778049a8352"
       },
       {
         "seat_number": "B06",
@@ -4957,7 +4957,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ca"
+        "_id": "69dfe4fa91996778049a8353"
       },
       {
         "seat_number": "B07",
@@ -4966,7 +4966,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7cb"
+        "_id": "69dfe4fa91996778049a8354"
       },
       {
         "seat_number": "B08",
@@ -4975,7 +4975,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7cc"
+        "_id": "69dfe4fa91996778049a8355"
       },
       {
         "seat_number": "B09",
@@ -4984,7 +4984,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7cd"
+        "_id": "69dfe4fa91996778049a8356"
       },
       {
         "seat_number": "B10",
@@ -4993,7 +4993,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ce"
+        "_id": "69dfe4fa91996778049a8357"
       },
       {
         "seat_number": "B11",
@@ -5002,7 +5002,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7cf"
+        "_id": "69dfe4fa91996778049a8358"
       },
       {
         "seat_number": "B12",
@@ -5011,7 +5011,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d0"
+        "_id": "69dfe4fa91996778049a8359"
       },
       {
         "seat_number": "B13",
@@ -5020,7 +5020,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d1"
+        "_id": "69dfe4fa91996778049a835a"
       },
       {
         "seat_number": "B14",
@@ -5029,7 +5029,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d2"
+        "_id": "69dfe4fa91996778049a835b"
       },
       {
         "seat_number": "B15",
@@ -5038,7 +5038,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d3"
+        "_id": "69dfe4fa91996778049a835c"
       },
       {
         "seat_number": "B16",
@@ -5047,7 +5047,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d4"
+        "_id": "69dfe4fa91996778049a835d"
       },
       {
         "seat_number": "B17",
@@ -5056,7 +5056,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d5"
+        "_id": "69dfe4fa91996778049a835e"
       },
       {
         "seat_number": "B18",
@@ -5065,7 +5065,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d6"
+        "_id": "69dfe4fa91996778049a835f"
       },
       {
         "seat_number": "B19",
@@ -5074,7 +5074,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d7"
+        "_id": "69dfe4fa91996778049a8360"
       },
       {
         "seat_number": "B20",
@@ -5083,7 +5083,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d8"
+        "_id": "69dfe4fa91996778049a8361"
       },
       {
         "seat_number": "B21",
@@ -5092,7 +5092,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7d9"
+        "_id": "69dfe4fa91996778049a8362"
       },
       {
         "seat_number": "B22",
@@ -5101,7 +5101,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7da"
+        "_id": "69dfe4fa91996778049a8363"
       },
       {
         "seat_number": "B23",
@@ -5110,7 +5110,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7db"
+        "_id": "69dfe4fa91996778049a8364"
       },
       {
         "seat_number": "B24",
@@ -5119,7 +5119,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7dc"
+        "_id": "69dfe4fa91996778049a8365"
       },
       {
         "seat_number": "B25",
@@ -5128,7 +5128,7 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7dd"
+        "_id": "69dfe4fa91996778049a8366"
       },
       {
         "seat_number": "B26",
@@ -5137,7 +5137,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7de"
+        "_id": "69dfe4fa91996778049a8367"
       },
       {
         "seat_number": "B27",
@@ -5146,7 +5146,7 @@
         "type": "aisle",
         "price": 980,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7df"
+        "_id": "69dfe4fa91996778049a8368"
       },
       {
         "seat_number": "B28",
@@ -5155,20 +5155,20 @@
         "type": "window",
         "price": 1040,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e0"
+        "_id": "69dfe4fa91996778049a8369"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.883Z",
-    "updatedAt": "2026-04-15T18:14:55.204Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.563Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b7e1",
-    "schedule_id": "69dfd59e5765144ac939b5ac",
-    "bus_id": "69dfd59e5765144ac939b597",
-    "driver_id": "69dfd59e5765144ac939b58c",
-    "trip_date": "2026-04-17T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a836a",
+    "schedule_id": "69dfe4fa91996778049a8135",
+    "bus_id": "69dfe4fa91996778049a8120",
+    "driver_id": "69dfe4fa91996778049a8111",
+    "trip_date": "2026-04-18T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
       "Andheri"
@@ -5183,8 +5183,8 @@
         "column": 1,
         "type": "window",
         "price": 1020,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7e2"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a836b"
       },
       {
         "seat_number": "B02",
@@ -5192,8 +5192,8 @@
         "column": 2,
         "type": "aisle",
         "price": 960,
-        "is_available": false,
-        "_id": "69dfd59e5765144ac939b7e3"
+        "is_available": true,
+        "_id": "69dfe4fa91996778049a836c"
       },
       {
         "seat_number": "B03",
@@ -5202,7 +5202,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e4"
+        "_id": "69dfe4fa91996778049a836d"
       },
       {
         "seat_number": "B04",
@@ -5211,7 +5211,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e5"
+        "_id": "69dfe4fa91996778049a836e"
       },
       {
         "seat_number": "B05",
@@ -5220,7 +5220,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e6"
+        "_id": "69dfe4fa91996778049a836f"
       },
       {
         "seat_number": "B06",
@@ -5229,7 +5229,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e7"
+        "_id": "69dfe4fa91996778049a8370"
       },
       {
         "seat_number": "B07",
@@ -5238,7 +5238,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e8"
+        "_id": "69dfe4fa91996778049a8371"
       },
       {
         "seat_number": "B08",
@@ -5247,7 +5247,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7e9"
+        "_id": "69dfe4fa91996778049a8372"
       },
       {
         "seat_number": "B09",
@@ -5256,7 +5256,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ea"
+        "_id": "69dfe4fa91996778049a8373"
       },
       {
         "seat_number": "B10",
@@ -5265,7 +5265,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7eb"
+        "_id": "69dfe4fa91996778049a8374"
       },
       {
         "seat_number": "B11",
@@ -5274,7 +5274,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ec"
+        "_id": "69dfe4fa91996778049a8375"
       },
       {
         "seat_number": "B12",
@@ -5283,7 +5283,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ed"
+        "_id": "69dfe4fa91996778049a8376"
       },
       {
         "seat_number": "B13",
@@ -5292,7 +5292,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ee"
+        "_id": "69dfe4fa91996778049a8377"
       },
       {
         "seat_number": "B14",
@@ -5301,7 +5301,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7ef"
+        "_id": "69dfe4fa91996778049a8378"
       },
       {
         "seat_number": "B15",
@@ -5310,7 +5310,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f0"
+        "_id": "69dfe4fa91996778049a8379"
       },
       {
         "seat_number": "B16",
@@ -5319,7 +5319,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f1"
+        "_id": "69dfe4fa91996778049a837a"
       },
       {
         "seat_number": "B17",
@@ -5328,7 +5328,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f2"
+        "_id": "69dfe4fa91996778049a837b"
       },
       {
         "seat_number": "B18",
@@ -5337,7 +5337,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f3"
+        "_id": "69dfe4fa91996778049a837c"
       },
       {
         "seat_number": "B19",
@@ -5346,7 +5346,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f4"
+        "_id": "69dfe4fa91996778049a837d"
       },
       {
         "seat_number": "B20",
@@ -5355,7 +5355,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f5"
+        "_id": "69dfe4fa91996778049a837e"
       },
       {
         "seat_number": "B21",
@@ -5364,7 +5364,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f6"
+        "_id": "69dfe4fa91996778049a837f"
       },
       {
         "seat_number": "B22",
@@ -5373,7 +5373,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f7"
+        "_id": "69dfe4fa91996778049a8380"
       },
       {
         "seat_number": "B23",
@@ -5382,7 +5382,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f8"
+        "_id": "69dfe4fa91996778049a8381"
       },
       {
         "seat_number": "B24",
@@ -5391,7 +5391,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7f9"
+        "_id": "69dfe4fa91996778049a8382"
       },
       {
         "seat_number": "B25",
@@ -5400,7 +5400,7 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7fa"
+        "_id": "69dfe4fa91996778049a8383"
       },
       {
         "seat_number": "B26",
@@ -5409,7 +5409,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7fb"
+        "_id": "69dfe4fa91996778049a8384"
       },
       {
         "seat_number": "B27",
@@ -5418,7 +5418,7 @@
         "type": "aisle",
         "price": 960,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7fc"
+        "_id": "69dfe4fa91996778049a8385"
       },
       {
         "seat_number": "B28",
@@ -5427,20 +5427,20 @@
         "type": "window",
         "price": 1020,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b7fd"
+        "_id": "69dfe4fa91996778049a8386"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.883Z",
-    "updatedAt": "2026-04-15T18:14:55.216Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.563Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b7fe",
-    "schedule_id": "69dfd59e5765144ac939b5ad",
-    "bus_id": "69dfd59e5765144ac939b598",
-    "driver_id": "69dfd59e5765144ac939b58d",
-    "trip_date": "2026-04-18T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a8387",
+    "schedule_id": "69dfe4fa91996778049a8136",
+    "bus_id": "69dfe4fa91996778049a8121",
+    "driver_id": "69dfe4fa91996778049a8112",
+    "trip_date": "2026-04-19T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
       "RTO"
@@ -5456,7 +5456,7 @@
         "type": "window",
         "price": 800,
         "is_available": false,
-        "_id": "69dfd59e5765144ac939b7ff"
+        "_id": "69dfe4fa91996778049a8388"
       },
       {
         "seat_number": "B02",
@@ -5464,8 +5464,8 @@
         "column": 2,
         "type": "aisle",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b800"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a8389"
       },
       {
         "seat_number": "B03",
@@ -5473,8 +5473,8 @@
         "column": 3,
         "type": "aisle",
         "price": 740,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b801"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a838a"
       },
       {
         "seat_number": "B04",
@@ -5483,7 +5483,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b802"
+        "_id": "69dfe4fa91996778049a838b"
       },
       {
         "seat_number": "B05",
@@ -5492,7 +5492,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b803"
+        "_id": "69dfe4fa91996778049a838c"
       },
       {
         "seat_number": "B06",
@@ -5501,7 +5501,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b804"
+        "_id": "69dfe4fa91996778049a838d"
       },
       {
         "seat_number": "B07",
@@ -5510,7 +5510,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b805"
+        "_id": "69dfe4fa91996778049a838e"
       },
       {
         "seat_number": "B08",
@@ -5519,7 +5519,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b806"
+        "_id": "69dfe4fa91996778049a838f"
       },
       {
         "seat_number": "B09",
@@ -5528,7 +5528,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b807"
+        "_id": "69dfe4fa91996778049a8390"
       },
       {
         "seat_number": "B10",
@@ -5537,7 +5537,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b808"
+        "_id": "69dfe4fa91996778049a8391"
       },
       {
         "seat_number": "B11",
@@ -5546,7 +5546,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b809"
+        "_id": "69dfe4fa91996778049a8392"
       },
       {
         "seat_number": "B12",
@@ -5555,7 +5555,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80a"
+        "_id": "69dfe4fa91996778049a8393"
       },
       {
         "seat_number": "B13",
@@ -5564,7 +5564,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80b"
+        "_id": "69dfe4fa91996778049a8394"
       },
       {
         "seat_number": "B14",
@@ -5573,7 +5573,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80c"
+        "_id": "69dfe4fa91996778049a8395"
       },
       {
         "seat_number": "B15",
@@ -5582,7 +5582,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80d"
+        "_id": "69dfe4fa91996778049a8396"
       },
       {
         "seat_number": "B16",
@@ -5591,7 +5591,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80e"
+        "_id": "69dfe4fa91996778049a8397"
       },
       {
         "seat_number": "B17",
@@ -5600,7 +5600,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b80f"
+        "_id": "69dfe4fa91996778049a8398"
       },
       {
         "seat_number": "B18",
@@ -5609,7 +5609,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b810"
+        "_id": "69dfe4fa91996778049a8399"
       },
       {
         "seat_number": "B19",
@@ -5618,7 +5618,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b811"
+        "_id": "69dfe4fa91996778049a839a"
       },
       {
         "seat_number": "B20",
@@ -5627,7 +5627,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b812"
+        "_id": "69dfe4fa91996778049a839b"
       },
       {
         "seat_number": "B21",
@@ -5636,7 +5636,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b813"
+        "_id": "69dfe4fa91996778049a839c"
       },
       {
         "seat_number": "B22",
@@ -5645,7 +5645,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b814"
+        "_id": "69dfe4fa91996778049a839d"
       },
       {
         "seat_number": "B23",
@@ -5654,7 +5654,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b815"
+        "_id": "69dfe4fa91996778049a839e"
       },
       {
         "seat_number": "B24",
@@ -5663,7 +5663,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b816"
+        "_id": "69dfe4fa91996778049a839f"
       },
       {
         "seat_number": "B25",
@@ -5672,7 +5672,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b817"
+        "_id": "69dfe4fa91996778049a83a0"
       },
       {
         "seat_number": "B26",
@@ -5681,7 +5681,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b818"
+        "_id": "69dfe4fa91996778049a83a1"
       },
       {
         "seat_number": "B27",
@@ -5690,7 +5690,7 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b819"
+        "_id": "69dfe4fa91996778049a83a2"
       },
       {
         "seat_number": "B28",
@@ -5699,7 +5699,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b81a"
+        "_id": "69dfe4fa91996778049a83a3"
       },
       {
         "seat_number": "B29",
@@ -5708,7 +5708,7 @@
         "type": "window",
         "price": 800,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b81b"
+        "_id": "69dfe4fa91996778049a83a4"
       },
       {
         "seat_number": "B30",
@@ -5717,20 +5717,20 @@
         "type": "aisle",
         "price": 740,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b81c"
+        "_id": "69dfe4fa91996778049a83a5"
       }
     ],
     "is_return_trip": false,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.884Z",
-    "updatedAt": "2026-04-15T18:14:55.224Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.928Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b81d",
-    "schedule_id": "69dfd59e5765144ac939b5ae",
-    "bus_id": "69dfd59e5765144ac939b598",
-    "driver_id": "69dfd59e5765144ac939b58e",
-    "trip_date": "2026-04-19T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a83a6",
+    "schedule_id": "69dfe4fa91996778049a8137",
+    "bus_id": "69dfe4fa91996778049a8121",
+    "driver_id": "69dfe4fa91996778049a8113",
+    "trip_date": "2026-04-20T18:30:00.000Z",
     "status": "Scheduled",
     "boarding_points": [
       "Udaipole"
@@ -5745,8 +5745,8 @@
         "column": 1,
         "type": "window",
         "price": 820,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b81e"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a83a7"
       },
       {
         "seat_number": "B02",
@@ -5754,8 +5754,8 @@
         "column": 2,
         "type": "aisle",
         "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b81f"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a83a8"
       },
       {
         "seat_number": "B03",
@@ -5763,8 +5763,8 @@
         "column": 3,
         "type": "aisle",
         "price": 760,
-        "is_available": true,
-        "_id": "69dfd59e5765144ac939b820"
+        "is_available": false,
+        "_id": "69dfe4fa91996778049a83a9"
       },
       {
         "seat_number": "B04",
@@ -5773,7 +5773,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b821"
+        "_id": "69dfe4fa91996778049a83aa"
       },
       {
         "seat_number": "B05",
@@ -5782,7 +5782,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b822"
+        "_id": "69dfe4fa91996778049a83ab"
       },
       {
         "seat_number": "B06",
@@ -5791,7 +5791,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b823"
+        "_id": "69dfe4fa91996778049a83ac"
       },
       {
         "seat_number": "B07",
@@ -5800,7 +5800,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b824"
+        "_id": "69dfe4fa91996778049a83ad"
       },
       {
         "seat_number": "B08",
@@ -5809,7 +5809,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b825"
+        "_id": "69dfe4fa91996778049a83ae"
       },
       {
         "seat_number": "B09",
@@ -5818,7 +5818,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b826"
+        "_id": "69dfe4fa91996778049a83af"
       },
       {
         "seat_number": "B10",
@@ -5827,7 +5827,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b827"
+        "_id": "69dfe4fa91996778049a83b0"
       },
       {
         "seat_number": "B11",
@@ -5836,7 +5836,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b828"
+        "_id": "69dfe4fa91996778049a83b1"
       },
       {
         "seat_number": "B12",
@@ -5845,7 +5845,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b829"
+        "_id": "69dfe4fa91996778049a83b2"
       },
       {
         "seat_number": "B13",
@@ -5854,7 +5854,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82a"
+        "_id": "69dfe4fa91996778049a83b3"
       },
       {
         "seat_number": "B14",
@@ -5863,7 +5863,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82b"
+        "_id": "69dfe4fa91996778049a83b4"
       },
       {
         "seat_number": "B15",
@@ -5872,7 +5872,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82c"
+        "_id": "69dfe4fa91996778049a83b5"
       },
       {
         "seat_number": "B16",
@@ -5881,7 +5881,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82d"
+        "_id": "69dfe4fa91996778049a83b6"
       },
       {
         "seat_number": "B17",
@@ -5890,7 +5890,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82e"
+        "_id": "69dfe4fa91996778049a83b7"
       },
       {
         "seat_number": "B18",
@@ -5899,7 +5899,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b82f"
+        "_id": "69dfe4fa91996778049a83b8"
       },
       {
         "seat_number": "B19",
@@ -5908,7 +5908,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b830"
+        "_id": "69dfe4fa91996778049a83b9"
       },
       {
         "seat_number": "B20",
@@ -5917,7 +5917,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b831"
+        "_id": "69dfe4fa91996778049a83ba"
       },
       {
         "seat_number": "B21",
@@ -5926,7 +5926,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b832"
+        "_id": "69dfe4fa91996778049a83bb"
       },
       {
         "seat_number": "B22",
@@ -5935,7 +5935,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b833"
+        "_id": "69dfe4fa91996778049a83bc"
       },
       {
         "seat_number": "B23",
@@ -5944,7 +5944,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b834"
+        "_id": "69dfe4fa91996778049a83bd"
       },
       {
         "seat_number": "B24",
@@ -5953,7 +5953,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b835"
+        "_id": "69dfe4fa91996778049a83be"
       },
       {
         "seat_number": "B25",
@@ -5962,7 +5962,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b836"
+        "_id": "69dfe4fa91996778049a83bf"
       },
       {
         "seat_number": "B26",
@@ -5971,7 +5971,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b837"
+        "_id": "69dfe4fa91996778049a83c0"
       },
       {
         "seat_number": "B27",
@@ -5980,7 +5980,7 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b838"
+        "_id": "69dfe4fa91996778049a83c1"
       },
       {
         "seat_number": "B28",
@@ -5989,7 +5989,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b839"
+        "_id": "69dfe4fa91996778049a83c2"
       },
       {
         "seat_number": "B29",
@@ -5998,7 +5998,7 @@
         "type": "window",
         "price": 820,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b83a"
+        "_id": "69dfe4fa91996778049a83c3"
       },
       {
         "seat_number": "B30",
@@ -6007,12 +6007,12 @@
         "type": "aisle",
         "price": 760,
         "is_available": true,
-        "_id": "69dfd59e5765144ac939b83b"
+        "_id": "69dfe4fa91996778049a83c4"
       }
     ],
     "is_return_trip": true,
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.884Z",
-    "updatedAt": "2026-04-15T18:14:54.884Z"
+    "createdAt": "2026-04-15T19:20:26.563Z",
+    "updatedAt": "2026-04-15T19:20:26.943Z"
   }
 ]

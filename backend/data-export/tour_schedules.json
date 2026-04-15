@@ -1,13 +1,13 @@
 [
   {
-    "_id": "69dfd59e5765144ac939b854",
-    "package_id": "69dfd59e5765144ac939b83d",
-    "start_date": "2026-04-02T18:30:00.000Z",
-    "end_date": "2026-04-07T18:30:00.000Z",
-    "departure_time": "08:30",
-    "bus_id": "69dfd59e5765144ac939b599",
-    "driver_id": "69dfd59e5765144ac939b58f",
-    "guide_id": "69dfd59e5765144ac939b590",
+    "_id": "69dfe4fa91996778049a83dd",
+    "package_id": "69dfe4fa91996778049a83c6",
+    "start_date": "2026-04-03T18:30:00.000Z",
+    "end_date": "2026-04-08T18:30:00.000Z",
+    "departure_time": "06:00",
+    "bus_id": "69dfe4fa91996778049a8122",
+    "driver_id": "69dfe4fa91996778049a8115",
+    "guide_id": "69dfe4fa91996778049a8119",
     "price": 28900,
     "price_per_person": 28900,
     "total_seats": 30,
@@ -19,9 +19,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b855"
+        "_id": "69dfe4fa91996778049a83de"
       },
       {
         "seat_number": "T02",
@@ -29,9 +29,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b856"
+        "_id": "69dfe4fa91996778049a83df"
       },
       {
         "seat_number": "T03",
@@ -39,9 +39,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b857"
+        "_id": "69dfe4fa91996778049a83e0"
       },
       {
         "seat_number": "T04",
@@ -49,9 +49,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b858"
+        "_id": "69dfe4fa91996778049a83e1"
       },
       {
         "seat_number": "T05",
@@ -59,9 +59,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b859"
+        "_id": "69dfe4fa91996778049a83e2"
       },
       {
         "seat_number": "T06",
@@ -69,9 +69,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85a"
+        "_id": "69dfe4fa91996778049a83e3"
       },
       {
         "seat_number": "T07",
@@ -79,9 +79,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85b"
+        "_id": "69dfe4fa91996778049a83e4"
       },
       {
         "seat_number": "T08",
@@ -89,9 +89,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85c"
+        "_id": "69dfe4fa91996778049a83e5"
       },
       {
         "seat_number": "T09",
@@ -99,9 +99,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85d"
+        "_id": "69dfe4fa91996778049a83e6"
       },
       {
         "seat_number": "T10",
@@ -109,9 +109,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85e"
+        "_id": "69dfe4fa91996778049a83e7"
       },
       {
         "seat_number": "T11",
@@ -119,9 +119,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b85f"
+        "_id": "69dfe4fa91996778049a83e8"
       },
       {
         "seat_number": "T12",
@@ -129,9 +129,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59e5765144ac939b911",
+        "booked_by": "69dfe4fa91996778049a849a",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b860"
+        "_id": "69dfe4fa91996778049a83e9"
       },
       {
         "seat_number": "T13",
@@ -141,7 +141,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b861"
+        "_id": "69dfe4fa91996778049a83ea"
       },
       {
         "seat_number": "T14",
@@ -151,7 +151,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b862"
+        "_id": "69dfe4fa91996778049a83eb"
       },
       {
         "seat_number": "T15",
@@ -161,7 +161,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b863"
+        "_id": "69dfe4fa91996778049a83ec"
       },
       {
         "seat_number": "T16",
@@ -171,7 +171,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b864"
+        "_id": "69dfe4fa91996778049a83ed"
       },
       {
         "seat_number": "T17",
@@ -181,7 +181,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b865"
+        "_id": "69dfe4fa91996778049a83ee"
       },
       {
         "seat_number": "T18",
@@ -191,7 +191,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b866"
+        "_id": "69dfe4fa91996778049a83ef"
       },
       {
         "seat_number": "T19",
@@ -201,7 +201,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b867"
+        "_id": "69dfe4fa91996778049a83f0"
       },
       {
         "seat_number": "T20",
@@ -211,7 +211,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b868"
+        "_id": "69dfe4fa91996778049a83f1"
       },
       {
         "seat_number": "T21",
@@ -221,7 +221,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b869"
+        "_id": "69dfe4fa91996778049a83f2"
       },
       {
         "seat_number": "T22",
@@ -231,7 +231,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86a"
+        "_id": "69dfe4fa91996778049a83f3"
       },
       {
         "seat_number": "T23",
@@ -241,7 +241,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86b"
+        "_id": "69dfe4fa91996778049a83f4"
       },
       {
         "seat_number": "T24",
@@ -251,7 +251,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86c"
+        "_id": "69dfe4fa91996778049a83f5"
       },
       {
         "seat_number": "T25",
@@ -261,7 +261,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86d"
+        "_id": "69dfe4fa91996778049a83f6"
       },
       {
         "seat_number": "T26",
@@ -271,7 +271,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86e"
+        "_id": "69dfe4fa91996778049a83f7"
       },
       {
         "seat_number": "T27",
@@ -281,7 +281,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b86f"
+        "_id": "69dfe4fa91996778049a83f8"
       },
       {
         "seat_number": "T28",
@@ -291,7 +291,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b870"
+        "_id": "69dfe4fa91996778049a83f9"
       },
       {
         "seat_number": "T29",
@@ -301,7 +301,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b871"
+        "_id": "69dfe4fa91996778049a83fa"
       },
       {
         "seat_number": "T30",
@@ -311,25 +311,25 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b872"
+        "_id": "69dfe4fa91996778049a83fb"
       }
     ],
     "departure_status": "Completed",
     "has_bookings": true,
     "notes": "Kashmir Valley Signature Escape departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.974Z",
-    "updatedAt": "2026-04-15T18:14:55.107Z"
+    "createdAt": "2026-04-15T19:20:26.662Z",
+    "updatedAt": "2026-04-15T19:20:26.800Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b873",
-    "package_id": "69dfd59e5765144ac939b83e",
-    "start_date": "2026-04-06T18:30:00.000Z",
-    "end_date": "2026-04-10T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a83fc",
+    "package_id": "69dfe4fa91996778049a83c7",
+    "start_date": "2026-04-07T18:30:00.000Z",
+    "end_date": "2026-04-11T18:30:00.000Z",
     "departure_time": "07:00",
-    "bus_id": "69dfd59e5765144ac939b59a",
-    "driver_id": "69dfd59e5765144ac939b58e",
-    "guide_id": "69dfd59e5765144ac939b591",
+    "bus_id": "69dfe4fa91996778049a8123",
+    "driver_id": "69dfe4fa91996778049a8116",
+    "guide_id": "69dfe4fa91996778049a811a",
     "price": 21900,
     "price_per_person": 21900,
     "total_seats": 32,
@@ -341,9 +341,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b874"
+        "_id": "69dfe4fa91996778049a83fd"
       },
       {
         "seat_number": "T02",
@@ -351,9 +351,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b875"
+        "_id": "69dfe4fa91996778049a83fe"
       },
       {
         "seat_number": "T03",
@@ -361,9 +361,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b876"
+        "_id": "69dfe4fa91996778049a83ff"
       },
       {
         "seat_number": "T04",
@@ -371,9 +371,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b877"
+        "_id": "69dfe4fa91996778049a8400"
       },
       {
         "seat_number": "T05",
@@ -381,9 +381,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b878"
+        "_id": "69dfe4fa91996778049a8401"
       },
       {
         "seat_number": "T06",
@@ -391,9 +391,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b879"
+        "_id": "69dfe4fa91996778049a8402"
       },
       {
         "seat_number": "T07",
@@ -401,9 +401,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87a"
+        "_id": "69dfe4fa91996778049a8403"
       },
       {
         "seat_number": "T08",
@@ -411,9 +411,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87b"
+        "_id": "69dfe4fa91996778049a8404"
       },
       {
         "seat_number": "T09",
@@ -421,9 +421,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87c"
+        "_id": "69dfe4fa91996778049a8405"
       },
       {
         "seat_number": "T10",
@@ -431,9 +431,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87d"
+        "_id": "69dfe4fa91996778049a8406"
       },
       {
         "seat_number": "T11",
@@ -441,9 +441,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b938",
+        "booked_by": "69dfe4fa91996778049a84c1",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87e"
+        "_id": "69dfe4fa91996778049a8407"
       },
       {
         "seat_number": "T12",
@@ -453,7 +453,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b87f"
+        "_id": "69dfe4fa91996778049a8408"
       },
       {
         "seat_number": "T13",
@@ -463,7 +463,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b880"
+        "_id": "69dfe4fa91996778049a8409"
       },
       {
         "seat_number": "T14",
@@ -473,7 +473,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b881"
+        "_id": "69dfe4fa91996778049a840a"
       },
       {
         "seat_number": "T15",
@@ -483,7 +483,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b882"
+        "_id": "69dfe4fa91996778049a840b"
       },
       {
         "seat_number": "T16",
@@ -493,7 +493,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b883"
+        "_id": "69dfe4fa91996778049a840c"
       },
       {
         "seat_number": "T17",
@@ -503,7 +503,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b884"
+        "_id": "69dfe4fa91996778049a840d"
       },
       {
         "seat_number": "T18",
@@ -513,7 +513,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b885"
+        "_id": "69dfe4fa91996778049a840e"
       },
       {
         "seat_number": "T19",
@@ -523,7 +523,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b886"
+        "_id": "69dfe4fa91996778049a840f"
       },
       {
         "seat_number": "T20",
@@ -533,7 +533,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b887"
+        "_id": "69dfe4fa91996778049a8410"
       },
       {
         "seat_number": "T21",
@@ -543,7 +543,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b888"
+        "_id": "69dfe4fa91996778049a8411"
       },
       {
         "seat_number": "T22",
@@ -553,7 +553,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b889"
+        "_id": "69dfe4fa91996778049a8412"
       },
       {
         "seat_number": "T23",
@@ -563,7 +563,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88a"
+        "_id": "69dfe4fa91996778049a8413"
       },
       {
         "seat_number": "T24",
@@ -573,7 +573,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88b"
+        "_id": "69dfe4fa91996778049a8414"
       },
       {
         "seat_number": "T25",
@@ -583,7 +583,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88c"
+        "_id": "69dfe4fa91996778049a8415"
       },
       {
         "seat_number": "T26",
@@ -593,7 +593,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88d"
+        "_id": "69dfe4fa91996778049a8416"
       },
       {
         "seat_number": "T27",
@@ -603,7 +603,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88e"
+        "_id": "69dfe4fa91996778049a8417"
       },
       {
         "seat_number": "T28",
@@ -613,7 +613,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b88f"
+        "_id": "69dfe4fa91996778049a8418"
       },
       {
         "seat_number": "T29",
@@ -623,7 +623,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b890"
+        "_id": "69dfe4fa91996778049a8419"
       },
       {
         "seat_number": "T30",
@@ -633,7 +633,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b891"
+        "_id": "69dfe4fa91996778049a841a"
       },
       {
         "seat_number": "T31",
@@ -643,7 +643,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b892"
+        "_id": "69dfe4fa91996778049a841b"
       },
       {
         "seat_number": "T32",
@@ -653,25 +653,25 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b893"
+        "_id": "69dfe4fa91996778049a841c"
       }
     ],
     "departure_status": "Completed",
     "has_bookings": true,
     "notes": "Goa Coastal Leisure Break departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.974Z",
-    "updatedAt": "2026-04-15T18:14:55.113Z"
+    "createdAt": "2026-04-15T19:20:26.662Z",
+    "updatedAt": "2026-04-15T19:20:26.805Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b894",
-    "package_id": "69dfd59e5765144ac939b83f",
-    "start_date": "2026-04-15T18:30:00.000Z",
-    "end_date": "2026-04-19T18:30:00.000Z",
-    "departure_time": "07:00",
-    "bus_id": "69dfd59e5765144ac939b59b",
-    "driver_id": "69dfd59e5765144ac939b58d",
-    "guide_id": "69dfd59e5765144ac939b592",
+    "_id": "69dfe4fa91996778049a841d",
+    "package_id": "69dfe4fa91996778049a83c8",
+    "start_date": "2026-04-16T18:30:00.000Z",
+    "end_date": "2026-04-20T18:30:00.000Z",
+    "departure_time": "08:30",
+    "bus_id": "69dfe4fa91996778049a8124",
+    "driver_id": "69dfe4fa91996778049a8115",
+    "guide_id": "69dfe4fa91996778049a811b",
     "price": 18900,
     "price_per_person": 18900,
     "total_seats": 30,
@@ -683,9 +683,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b95c",
+        "booked_by": "69dfe4fa91996778049a84e5",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b895"
+        "_id": "69dfe4fa91996778049a841e"
       },
       {
         "seat_number": "T02",
@@ -693,9 +693,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b95c",
+        "booked_by": "69dfe4fa91996778049a84e5",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b896"
+        "_id": "69dfe4fa91996778049a841f"
       },
       {
         "seat_number": "T03",
@@ -703,9 +703,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b95c",
+        "booked_by": "69dfe4fa91996778049a84e5",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b897"
+        "_id": "69dfe4fa91996778049a8420"
       },
       {
         "seat_number": "T04",
@@ -713,9 +713,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b95c",
+        "booked_by": "69dfe4fa91996778049a84e5",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b898"
+        "_id": "69dfe4fa91996778049a8421"
       },
       {
         "seat_number": "T05",
@@ -725,7 +725,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b899"
+        "_id": "69dfe4fa91996778049a8422"
       },
       {
         "seat_number": "T06",
@@ -735,7 +735,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89a"
+        "_id": "69dfe4fa91996778049a8423"
       },
       {
         "seat_number": "T07",
@@ -745,7 +745,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89b"
+        "_id": "69dfe4fa91996778049a8424"
       },
       {
         "seat_number": "T08",
@@ -755,7 +755,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89c"
+        "_id": "69dfe4fa91996778049a8425"
       },
       {
         "seat_number": "T09",
@@ -765,7 +765,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89d"
+        "_id": "69dfe4fa91996778049a8426"
       },
       {
         "seat_number": "T10",
@@ -775,7 +775,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89e"
+        "_id": "69dfe4fa91996778049a8427"
       },
       {
         "seat_number": "T11",
@@ -785,7 +785,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b89f"
+        "_id": "69dfe4fa91996778049a8428"
       },
       {
         "seat_number": "T12",
@@ -795,7 +795,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a0"
+        "_id": "69dfe4fa91996778049a8429"
       },
       {
         "seat_number": "T13",
@@ -805,7 +805,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a1"
+        "_id": "69dfe4fa91996778049a842a"
       },
       {
         "seat_number": "T14",
@@ -815,7 +815,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a2"
+        "_id": "69dfe4fa91996778049a842b"
       },
       {
         "seat_number": "T15",
@@ -825,7 +825,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a3"
+        "_id": "69dfe4fa91996778049a842c"
       },
       {
         "seat_number": "T16",
@@ -835,7 +835,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a4"
+        "_id": "69dfe4fa91996778049a842d"
       },
       {
         "seat_number": "T17",
@@ -845,7 +845,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a5"
+        "_id": "69dfe4fa91996778049a842e"
       },
       {
         "seat_number": "T18",
@@ -855,7 +855,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a6"
+        "_id": "69dfe4fa91996778049a842f"
       },
       {
         "seat_number": "T19",
@@ -865,7 +865,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a7"
+        "_id": "69dfe4fa91996778049a8430"
       },
       {
         "seat_number": "T20",
@@ -875,7 +875,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a8"
+        "_id": "69dfe4fa91996778049a8431"
       },
       {
         "seat_number": "T21",
@@ -885,7 +885,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8a9"
+        "_id": "69dfe4fa91996778049a8432"
       },
       {
         "seat_number": "T22",
@@ -895,7 +895,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8aa"
+        "_id": "69dfe4fa91996778049a8433"
       },
       {
         "seat_number": "T23",
@@ -905,7 +905,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ab"
+        "_id": "69dfe4fa91996778049a8434"
       },
       {
         "seat_number": "T24",
@@ -915,7 +915,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ac"
+        "_id": "69dfe4fa91996778049a8435"
       },
       {
         "seat_number": "T25",
@@ -925,7 +925,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ad"
+        "_id": "69dfe4fa91996778049a8436"
       },
       {
         "seat_number": "T26",
@@ -935,7 +935,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ae"
+        "_id": "69dfe4fa91996778049a8437"
       },
       {
         "seat_number": "T27",
@@ -945,7 +945,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8af"
+        "_id": "69dfe4fa91996778049a8438"
       },
       {
         "seat_number": "T28",
@@ -955,7 +955,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b0"
+        "_id": "69dfe4fa91996778049a8439"
       },
       {
         "seat_number": "T29",
@@ -965,7 +965,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b1"
+        "_id": "69dfe4fa91996778049a843a"
       },
       {
         "seat_number": "T30",
@@ -975,25 +975,25 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b2"
+        "_id": "69dfe4fa91996778049a843b"
       }
     ],
     "departure_status": "Open",
     "has_bookings": true,
     "notes": "Rajasthan Royal Heritage Circuit departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.974Z",
-    "updatedAt": "2026-04-15T18:14:55.118Z"
+    "createdAt": "2026-04-15T19:20:26.663Z",
+    "updatedAt": "2026-04-15T19:20:26.810Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b8b3",
-    "package_id": "69dfd59e5765144ac939b840",
-    "start_date": "2026-04-17T18:30:00.000Z",
-    "end_date": "2026-04-22T18:30:00.000Z",
-    "departure_time": "08:30",
-    "bus_id": "69dfd59e5765144ac939b59c",
-    "driver_id": "69dfd59e5765144ac939b58c",
-    "guide_id": "69dfd59e5765144ac939b593",
+    "_id": "69dfe4fa91996778049a843c",
+    "package_id": "69dfe4fa91996778049a83c9",
+    "start_date": "2026-04-18T18:30:00.000Z",
+    "end_date": "2026-04-23T18:30:00.000Z",
+    "departure_time": "06:00",
+    "bus_id": "69dfe4fa91996778049a8125",
+    "driver_id": "69dfe4fa91996778049a8116",
+    "guide_id": "69dfe4fa91996778049a811c",
     "price": 16900,
     "price_per_person": 16900,
     "total_seats": 28,
@@ -1005,9 +1005,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b96b",
+        "booked_by": "69dfe4fa91996778049a84f4",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b4"
+        "_id": "69dfe4fa91996778049a843d"
       },
       {
         "seat_number": "T02",
@@ -1015,9 +1015,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b96b",
+        "booked_by": "69dfe4fa91996778049a84f4",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b5"
+        "_id": "69dfe4fa91996778049a843e"
       },
       {
         "seat_number": "T03",
@@ -1025,9 +1025,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b96b",
+        "booked_by": "69dfe4fa91996778049a84f4",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b6"
+        "_id": "69dfe4fa91996778049a843f"
       },
       {
         "seat_number": "T04",
@@ -1037,7 +1037,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b7"
+        "_id": "69dfe4fa91996778049a8440"
       },
       {
         "seat_number": "T05",
@@ -1047,7 +1047,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b8"
+        "_id": "69dfe4fa91996778049a8441"
       },
       {
         "seat_number": "T06",
@@ -1057,7 +1057,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8b9"
+        "_id": "69dfe4fa91996778049a8442"
       },
       {
         "seat_number": "T07",
@@ -1067,7 +1067,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ba"
+        "_id": "69dfe4fa91996778049a8443"
       },
       {
         "seat_number": "T08",
@@ -1077,7 +1077,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8bb"
+        "_id": "69dfe4fa91996778049a8444"
       },
       {
         "seat_number": "T09",
@@ -1087,7 +1087,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8bc"
+        "_id": "69dfe4fa91996778049a8445"
       },
       {
         "seat_number": "T10",
@@ -1097,7 +1097,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8bd"
+        "_id": "69dfe4fa91996778049a8446"
       },
       {
         "seat_number": "T11",
@@ -1107,7 +1107,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8be"
+        "_id": "69dfe4fa91996778049a8447"
       },
       {
         "seat_number": "T12",
@@ -1117,7 +1117,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8bf"
+        "_id": "69dfe4fa91996778049a8448"
       },
       {
         "seat_number": "T13",
@@ -1127,7 +1127,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c0"
+        "_id": "69dfe4fa91996778049a8449"
       },
       {
         "seat_number": "T14",
@@ -1137,7 +1137,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c1"
+        "_id": "69dfe4fa91996778049a844a"
       },
       {
         "seat_number": "T15",
@@ -1147,7 +1147,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c2"
+        "_id": "69dfe4fa91996778049a844b"
       },
       {
         "seat_number": "T16",
@@ -1157,7 +1157,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c3"
+        "_id": "69dfe4fa91996778049a844c"
       },
       {
         "seat_number": "T17",
@@ -1167,7 +1167,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c4"
+        "_id": "69dfe4fa91996778049a844d"
       },
       {
         "seat_number": "T18",
@@ -1177,7 +1177,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c5"
+        "_id": "69dfe4fa91996778049a844e"
       },
       {
         "seat_number": "T19",
@@ -1187,7 +1187,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c6"
+        "_id": "69dfe4fa91996778049a844f"
       },
       {
         "seat_number": "T20",
@@ -1197,7 +1197,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c7"
+        "_id": "69dfe4fa91996778049a8450"
       },
       {
         "seat_number": "T21",
@@ -1207,7 +1207,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c8"
+        "_id": "69dfe4fa91996778049a8451"
       },
       {
         "seat_number": "T22",
@@ -1217,7 +1217,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8c9"
+        "_id": "69dfe4fa91996778049a8452"
       },
       {
         "seat_number": "T23",
@@ -1227,7 +1227,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ca"
+        "_id": "69dfe4fa91996778049a8453"
       },
       {
         "seat_number": "T24",
@@ -1237,7 +1237,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8cb"
+        "_id": "69dfe4fa91996778049a8454"
       },
       {
         "seat_number": "T25",
@@ -1247,7 +1247,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8cc"
+        "_id": "69dfe4fa91996778049a8455"
       },
       {
         "seat_number": "T26",
@@ -1257,7 +1257,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8cd"
+        "_id": "69dfe4fa91996778049a8456"
       },
       {
         "seat_number": "T27",
@@ -1267,7 +1267,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ce"
+        "_id": "69dfe4fa91996778049a8457"
       },
       {
         "seat_number": "T28",
@@ -1277,25 +1277,25 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8cf"
+        "_id": "69dfe4fa91996778049a8458"
       }
     ],
     "departure_status": "Open",
     "has_bookings": true,
     "notes": "Himachal Snow and Valley Retreat departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.974Z",
-    "updatedAt": "2026-04-15T18:14:55.122Z"
+    "createdAt": "2026-04-15T19:20:26.663Z",
+    "updatedAt": "2026-04-15T19:20:26.814Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b8d0",
-    "package_id": "69dfd59e5765144ac939b841",
-    "start_date": "2026-04-18T18:30:00.000Z",
-    "end_date": "2026-04-21T18:30:00.000Z",
+    "_id": "69dfe4fa91996778049a8459",
+    "package_id": "69dfe4fa91996778049a83ca",
+    "start_date": "2026-04-19T18:30:00.000Z",
+    "end_date": "2026-04-22T18:30:00.000Z",
     "departure_time": "06:00",
-    "bus_id": "69dfd59e5765144ac939b599",
-    "driver_id": "69dfd59e5765144ac939b58b",
-    "guide_id": "69dfd59e5765144ac939b590",
+    "bus_id": "69dfe4fa91996778049a8122",
+    "driver_id": "69dfe4fa91996778049a8117",
+    "guide_id": "69dfe4fa91996778049a8119",
     "price": 14900,
     "price_per_person": 14900,
     "total_seats": 30,
@@ -1307,9 +1307,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b977",
+        "booked_by": "69dfe4fa91996778049a8500",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d1"
+        "_id": "69dfe4fa91996778049a845a"
       },
       {
         "seat_number": "T02",
@@ -1317,9 +1317,9 @@
         "column": 2,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b977",
+        "booked_by": "69dfe4fa91996778049a8500",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d2"
+        "_id": "69dfe4fa91996778049a845b"
       },
       {
         "seat_number": "T03",
@@ -1327,9 +1327,9 @@
         "column": 3,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b977",
+        "booked_by": "69dfe4fa91996778049a8500",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d3"
+        "_id": "69dfe4fa91996778049a845c"
       },
       {
         "seat_number": "T04",
@@ -1337,9 +1337,9 @@
         "column": 4,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b977",
+        "booked_by": "69dfe4fa91996778049a8500",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d4"
+        "_id": "69dfe4fa91996778049a845d"
       },
       {
         "seat_number": "T05",
@@ -1347,9 +1347,9 @@
         "column": 1,
         "type": "seat",
         "is_booked": true,
-        "booked_by": "69dfd59f5765144ac939b977",
+        "booked_by": "69dfe4fa91996778049a8500",
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d5"
+        "_id": "69dfe4fa91996778049a845e"
       },
       {
         "seat_number": "T06",
@@ -1359,7 +1359,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d6"
+        "_id": "69dfe4fa91996778049a845f"
       },
       {
         "seat_number": "T07",
@@ -1369,7 +1369,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d7"
+        "_id": "69dfe4fa91996778049a8460"
       },
       {
         "seat_number": "T08",
@@ -1379,7 +1379,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d8"
+        "_id": "69dfe4fa91996778049a8461"
       },
       {
         "seat_number": "T09",
@@ -1389,7 +1389,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8d9"
+        "_id": "69dfe4fa91996778049a8462"
       },
       {
         "seat_number": "T10",
@@ -1399,7 +1399,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8da"
+        "_id": "69dfe4fa91996778049a8463"
       },
       {
         "seat_number": "T11",
@@ -1409,7 +1409,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8db"
+        "_id": "69dfe4fa91996778049a8464"
       },
       {
         "seat_number": "T12",
@@ -1419,7 +1419,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8dc"
+        "_id": "69dfe4fa91996778049a8465"
       },
       {
         "seat_number": "T13",
@@ -1429,7 +1429,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8dd"
+        "_id": "69dfe4fa91996778049a8466"
       },
       {
         "seat_number": "T14",
@@ -1439,7 +1439,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8de"
+        "_id": "69dfe4fa91996778049a8467"
       },
       {
         "seat_number": "T15",
@@ -1449,7 +1449,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8df"
+        "_id": "69dfe4fa91996778049a8468"
       },
       {
         "seat_number": "T16",
@@ -1459,7 +1459,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e0"
+        "_id": "69dfe4fa91996778049a8469"
       },
       {
         "seat_number": "T17",
@@ -1469,7 +1469,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e1"
+        "_id": "69dfe4fa91996778049a846a"
       },
       {
         "seat_number": "T18",
@@ -1479,7 +1479,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e2"
+        "_id": "69dfe4fa91996778049a846b"
       },
       {
         "seat_number": "T19",
@@ -1489,7 +1489,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e3"
+        "_id": "69dfe4fa91996778049a846c"
       },
       {
         "seat_number": "T20",
@@ -1499,7 +1499,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e4"
+        "_id": "69dfe4fa91996778049a846d"
       },
       {
         "seat_number": "T21",
@@ -1509,7 +1509,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e5"
+        "_id": "69dfe4fa91996778049a846e"
       },
       {
         "seat_number": "T22",
@@ -1519,7 +1519,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e6"
+        "_id": "69dfe4fa91996778049a846f"
       },
       {
         "seat_number": "T23",
@@ -1529,7 +1529,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e7"
+        "_id": "69dfe4fa91996778049a8470"
       },
       {
         "seat_number": "T24",
@@ -1539,7 +1539,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e8"
+        "_id": "69dfe4fa91996778049a8471"
       },
       {
         "seat_number": "T25",
@@ -1549,7 +1549,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8e9"
+        "_id": "69dfe4fa91996778049a8472"
       },
       {
         "seat_number": "T26",
@@ -1559,7 +1559,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ea"
+        "_id": "69dfe4fa91996778049a8473"
       },
       {
         "seat_number": "T27",
@@ -1569,7 +1569,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8eb"
+        "_id": "69dfe4fa91996778049a8474"
       },
       {
         "seat_number": "T28",
@@ -1579,7 +1579,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ec"
+        "_id": "69dfe4fa91996778049a8475"
       },
       {
         "seat_number": "T29",
@@ -1589,7 +1589,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ed"
+        "_id": "69dfe4fa91996778049a8476"
       },
       {
         "seat_number": "T30",
@@ -1599,25 +1599,25 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ee"
+        "_id": "69dfe4fa91996778049a8477"
       }
     ],
     "departure_status": "Open",
     "has_bookings": true,
     "notes": "Uttarakhand Spiritual Serenity Tour departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.975Z",
-    "updatedAt": "2026-04-15T18:14:55.125Z"
+    "createdAt": "2026-04-15T19:20:26.663Z",
+    "updatedAt": "2026-04-15T19:20:26.818Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b8ef",
-    "package_id": "69dfd59e5765144ac939b842",
-    "start_date": "2026-04-20T18:30:00.000Z",
-    "end_date": "2026-04-26T18:30:00.000Z",
-    "departure_time": "07:00",
-    "bus_id": "69dfd59e5765144ac939b59a",
-    "driver_id": "69dfd59e5765144ac939b58a",
-    "guide_id": "69dfd59e5765144ac939b592",
+    "_id": "69dfe4fa91996778049a8478",
+    "package_id": "69dfe4fa91996778049a83cb",
+    "start_date": "2026-04-21T18:30:00.000Z",
+    "end_date": "2026-04-27T18:30:00.000Z",
+    "departure_time": "06:00",
+    "bus_id": "69dfe4fa91996778049a8123",
+    "driver_id": "69dfe4fa91996778049a8118",
+    "guide_id": "69dfe4fa91996778049a811b",
     "price": 23900,
     "price_per_person": 23900,
     "total_seats": 32,
@@ -1631,7 +1631,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f0"
+        "_id": "69dfe4fa91996778049a8479"
       },
       {
         "seat_number": "T02",
@@ -1641,7 +1641,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f1"
+        "_id": "69dfe4fa91996778049a847a"
       },
       {
         "seat_number": "T03",
@@ -1651,7 +1651,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f2"
+        "_id": "69dfe4fa91996778049a847b"
       },
       {
         "seat_number": "T04",
@@ -1661,7 +1661,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f3"
+        "_id": "69dfe4fa91996778049a847c"
       },
       {
         "seat_number": "T05",
@@ -1671,7 +1671,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f4"
+        "_id": "69dfe4fa91996778049a847d"
       },
       {
         "seat_number": "T06",
@@ -1681,7 +1681,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f5"
+        "_id": "69dfe4fa91996778049a847e"
       },
       {
         "seat_number": "T07",
@@ -1691,7 +1691,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f6"
+        "_id": "69dfe4fa91996778049a847f"
       },
       {
         "seat_number": "T08",
@@ -1701,7 +1701,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f7"
+        "_id": "69dfe4fa91996778049a8480"
       },
       {
         "seat_number": "T09",
@@ -1711,7 +1711,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f8"
+        "_id": "69dfe4fa91996778049a8481"
       },
       {
         "seat_number": "T10",
@@ -1721,7 +1721,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8f9"
+        "_id": "69dfe4fa91996778049a8482"
       },
       {
         "seat_number": "T11",
@@ -1731,7 +1731,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8fa"
+        "_id": "69dfe4fa91996778049a8483"
       },
       {
         "seat_number": "T12",
@@ -1741,7 +1741,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8fb"
+        "_id": "69dfe4fa91996778049a8484"
       },
       {
         "seat_number": "T13",
@@ -1751,7 +1751,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8fc"
+        "_id": "69dfe4fa91996778049a8485"
       },
       {
         "seat_number": "T14",
@@ -1761,7 +1761,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8fd"
+        "_id": "69dfe4fa91996778049a8486"
       },
       {
         "seat_number": "T15",
@@ -1771,7 +1771,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8fe"
+        "_id": "69dfe4fa91996778049a8487"
       },
       {
         "seat_number": "T16",
@@ -1781,7 +1781,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b8ff"
+        "_id": "69dfe4fa91996778049a8488"
       },
       {
         "seat_number": "T17",
@@ -1791,7 +1791,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b900"
+        "_id": "69dfe4fa91996778049a8489"
       },
       {
         "seat_number": "T18",
@@ -1801,7 +1801,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b901"
+        "_id": "69dfe4fa91996778049a848a"
       },
       {
         "seat_number": "T19",
@@ -1811,7 +1811,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b902"
+        "_id": "69dfe4fa91996778049a848b"
       },
       {
         "seat_number": "T20",
@@ -1821,7 +1821,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b903"
+        "_id": "69dfe4fa91996778049a848c"
       },
       {
         "seat_number": "T21",
@@ -1831,7 +1831,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b904"
+        "_id": "69dfe4fa91996778049a848d"
       },
       {
         "seat_number": "T22",
@@ -1841,7 +1841,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b905"
+        "_id": "69dfe4fa91996778049a848e"
       },
       {
         "seat_number": "T23",
@@ -1851,7 +1851,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b906"
+        "_id": "69dfe4fa91996778049a848f"
       },
       {
         "seat_number": "T24",
@@ -1861,7 +1861,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b907"
+        "_id": "69dfe4fa91996778049a8490"
       },
       {
         "seat_number": "T25",
@@ -1871,7 +1871,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b908"
+        "_id": "69dfe4fa91996778049a8491"
       },
       {
         "seat_number": "T26",
@@ -1881,7 +1881,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b909"
+        "_id": "69dfe4fa91996778049a8492"
       },
       {
         "seat_number": "T27",
@@ -1891,7 +1891,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90a"
+        "_id": "69dfe4fa91996778049a8493"
       },
       {
         "seat_number": "T28",
@@ -1901,7 +1901,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90b"
+        "_id": "69dfe4fa91996778049a8494"
       },
       {
         "seat_number": "T29",
@@ -1911,7 +1911,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90c"
+        "_id": "69dfe4fa91996778049a8495"
       },
       {
         "seat_number": "T30",
@@ -1921,7 +1921,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90d"
+        "_id": "69dfe4fa91996778049a8496"
       },
       {
         "seat_number": "T31",
@@ -1931,7 +1931,7 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90e"
+        "_id": "69dfe4fa91996778049a8497"
       },
       {
         "seat_number": "T32",
@@ -1941,14 +1941,14 @@
         "is_booked": false,
         "booked_by": null,
         "price": 0,
-        "_id": "69dfd59e5765144ac939b90f"
+        "_id": "69dfe4fa91996778049a8498"
       }
     ],
     "departure_status": "Open",
     "has_bookings": false,
     "notes": "South India Heritage and Coastline Trail departure",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.975Z",
-    "updatedAt": "2026-04-15T18:14:54.975Z"
+    "createdAt": "2026-04-15T19:20:26.663Z",
+    "updatedAt": "2026-04-15T19:20:26.663Z"
   }
 ]

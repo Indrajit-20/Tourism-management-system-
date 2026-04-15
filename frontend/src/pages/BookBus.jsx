@@ -167,7 +167,12 @@ const BookBus = () => {
       }
 
       navigate("/book-seats", {
-        state: { trip, schedule: selectedSchedule, date: bookingDetails.date },
+        state: {
+          route: selectedSchedule.route_id,
+          trip,
+          schedule: selectedSchedule,
+          date: bookingDetails.date,
+        },
       });
     } catch (err) {
       console.error("Error finding trip", err);

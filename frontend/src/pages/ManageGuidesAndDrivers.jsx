@@ -29,7 +29,7 @@ const ManageGuidesAndDrivers = () => {
     name: "",
     designation: "driver",
     contact_no: "",
-    email_id: "",
+    email: "",
     password: "",
     dob: "",
     address: "",
@@ -52,7 +52,7 @@ const ManageGuidesAndDrivers = () => {
       filtered = filtered.filter(
         (s) =>
           s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          s.email_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          s.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
           s.contact_no.includes(searchTerm)
       );
     }
@@ -113,7 +113,7 @@ const ManageGuidesAndDrivers = () => {
       name: "",
       designation: "driver",
       contact_no: "",
-      email_id: "",
+      email: "",
       password: "",
       dob: "",
       address: "",
@@ -291,7 +291,7 @@ const ManageGuidesAndDrivers = () => {
                       </td>
                       <td>{member.contact_no}</td>
                       <td className="text-break" style={{ maxWidth: "200px" }}>
-                        {member.email_id}
+                        {member.email}
                       </td>
                       <td style={{ maxWidth: "150px" }}>
                         <small>{member.address}</small>
@@ -439,11 +439,11 @@ const ManageGuidesAndDrivers = () => {
                       type="email"
                       className="form-control"
                       required
-                      value={formData.email_id}
+                      value={formData.email}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          email_id: e.target.value,
+                          email: e.target.value,
                         })
                       }
                       placeholder="Enter email address"

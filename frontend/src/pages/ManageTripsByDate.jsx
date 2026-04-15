@@ -9,6 +9,8 @@ const ManageTripsByDate = () => {
   const [trips, setTrips] = useState([]);
   const [drivers, setDrivers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState(null); // ✅ NEW: For modal
+  const [showModal, setShowModal] = useState(false); // ✅ NEW: Modal state
 
   // Run fetchTrips and drivers every time date changes
   useEffect(() => {
@@ -63,17 +65,24 @@ const ManageTripsByDate = () => {
       const token = sessionStorage.getItem("token");
 
       // ✅ FIX: Send driver_id (MongoDB ObjectId)
-      await axios.put(
+      const res = await axios.put(
         `${API}/api/bus-trips/${tripId}`,
         { driver_id: driverId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      alert("Driver updated!");
+      alert("Driver updated successfully!");
       fetchTrips();
     } catch (err) {
-      console.error("Error updating driver", err);
-      alert("Failed to update driver.");
+      console.error(
+        "Error updating driver:",
+        err.response?.data || err.message
+      );
+      const errorMsg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Failed to update driver";
+      alert(errorMsg);
     }
   };
 
@@ -135,6 +144,12 @@ const ManageTripsByDate = () => {
     return (
       <span className={`badge ${map[status] || "bg-secondary"}`}>{status}</span>
     );
+  };
+
+  // ── Format time ──
+  const formatTime = (timeStr) => {
+    if (!timeStr) return "-";
+    return timeStr;
   };
 
   return (
@@ -218,15 +233,24 @@ const ManageTripsByDate = () => {
 
                   <td>{statusBadge(trip.status)}</td>
 
-                  {/* ✅ FIX: cancel actually works now */}
+                  {/* ✅ NEW: Actions with View Details and Cancel */}
                   <td>
+                    <button
+                      className="btn btn-primary btn-sm me-2"
+                      onClick={() => {
+                        setSelectedTrip(trip);
+                        setShowModal(true);
+                      }}
+                    >
+                      View Details
+                    </button>
                     {trip.status !== "Cancelled" &&
                     trip.status !== "Completed" ? (
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => cancelTrip(trip._id)}
                       >
-                        Cancel Trip
+                        Cancel
                       </button>
                     ) : (
                       <span className="text-muted small">—</span>
@@ -236,6 +260,120 @@ const ManageTripsByDate = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* ✅ NEW: Trip Details Modal */}
+      {showModal && selectedTrip && (
+        <div
+          className="modal d-block"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.5)",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 2200,
+            overflow: "auto",
+          }}
+        >
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title fw-bold">Trip Details</h5>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={() => setShowModal(false)}
+                />
+              </div>
+              <div className="modal-body">
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <strong>Route:</strong>
+                    <p>{getRoute(selectedTrip)}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <strong>Date:</strong>
+                    <p>
+                      {new Date(selectedTrip.trip_date).toLocaleDateString(
+                        "en-IN"
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <strong>Bus:</strong>
+                    <p>{getBus(selectedTrip)}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <strong>Driver:</strong>
+                    <p>{getDriver(selectedTrip)}</p>
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <strong>Departure:</strong>
+                    <p>
+                      {formatTime(selectedTrip.schedule_id?.departure_time)}
+                    </p>
+                  </div>
+                  <div className="col-md-6">
+                    <strong>Arrival:</strong>
+                    <p>{formatTime(selectedTrip.schedule_id?.arrival_time)}</p>
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <strong>Seats:</strong>
+                    <p>{getSeats(selectedTrip)}</p>
+                  </div>
+                  <div className="col-md-6">
+                    <strong>Status:</strong>
+                    <p>{statusBadge(selectedTrip.status)}</p>
+                  </div>
+                </div>
+
+                {selectedTrip.boarding_points &&
+                  selectedTrip.boarding_points.length > 0 && (
+                    <div className="mb-3">
+                      <strong>Boarding Points:</strong>
+                      <ul className="mb-0">
+                        {selectedTrip.boarding_points.map((point, idx) => (
+                          <li key={idx}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                {selectedTrip.drop_points &&
+                  selectedTrip.drop_points.length > 0 && (
+                    <div className="mb-3">
+                      <strong>Drop Points:</strong>
+                      <ul className="mb-0">
+                        {selectedTrip.drop_points.map((point, idx) => (
+                          <li key={idx}>{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowModal(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

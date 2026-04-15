@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { to12HourDisplay } from "../utils/timeFormat";
 import "../css/manageSchedules.css";
 
 const findCityKey = (value) => {
@@ -53,6 +54,9 @@ const ManageSchedules = () => {
   const [routeId, setRouteId] = useState("");
   const [frequency, setFrequency] = useState("Daily");
   const [daysOfWeek, setDaysOfWeek] = useState([]);
+  const [departureTime, setDepartureTime] = useState("");
+  const [arrivalTime, setArrivalTime] = useState("");
+  const [basePrice, setBasePrice] = useState("");
   const [boardingPoint, setBoardingPoint] = useState("");
   const [dropPoint, setDropPoint] = useState("");
   const [driverIds, setDriverIds] = useState(["", ""]); // ✅ Array for min 2 drivers
@@ -138,6 +142,9 @@ const ManageSchedules = () => {
     setRouteId("");
     setFrequency("Daily");
     setDaysOfWeek([]);
+    setDepartureTime("");
+    setArrivalTime("");
+    setBasePrice("");
     setBoardingPoint("");
     setDropPoint("");
     setDriverIds(["", ""]); // ✅ Reset to min 2 drivers
@@ -156,6 +163,9 @@ const ManageSchedules = () => {
     if (!dropPoint) {
       const drop = suggestDropPoint(selectedRoute.destination);
       setDropPoint(drop);
+    }
+    if (!basePrice) {
+      setBasePrice(selectedRoute.price_per_seat || "");
     }
   };
 
@@ -191,6 +201,9 @@ const ManageSchedules = () => {
       const payload = {
         title: title,
         route_id: routeId,
+        departure_time: departureTime,
+        arrival_time: arrivalTime,
+        base_price: basePrice ? Number(basePrice) : undefined,
         driver_ids: driverIds.filter((id) => id && id.trim()), // ✅ Send only selected drivers
         frequency: frequency,
         // Only send days_of_week if frequency is Custom
@@ -235,6 +248,9 @@ const ManageSchedules = () => {
     setTitle(schedule.title || "");
     // ✅ FIX: route_id from backend is a populated object, so use ._id
     setRouteId(schedule.route_id?._id || schedule.route_id || "");
+    setDepartureTime(schedule.departure_time || "");
+    setArrivalTime(schedule.arrival_time || "");
+    setBasePrice(schedule.base_price || "");
     setFrequency(schedule.frequency || "Daily");
     setDaysOfWeek(schedule.days_of_week || []);
     setBoardingPoint((schedule.boarding_points || [])[0] || "");
@@ -411,6 +427,46 @@ const ManageSchedules = () => {
             </div>
 
             {/* Status */}
+            <div className="col-md-3">
+              <label className="form-label manage-schedules-label">
+                Ticket Price (₹) *
+              </label>
+              <input
+                type="number"
+                className="form-control manage-schedules-input"
+                placeholder="e.g. 500"
+                value={basePrice}
+                onChange={(e) => setBasePrice(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="col-md-3">
+              <label className="form-label manage-schedules-label">
+                Departure Time *
+              </label>
+              <input
+                type="time"
+                className="form-control manage-schedules-input"
+                value={departureTime}
+                onChange={(e) => setDepartureTime(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="col-md-3">
+              <label className="form-label manage-schedules-label">
+                Arrival Time *
+              </label>
+              <input
+                type="time"
+                className="form-control manage-schedules-input"
+                value={arrivalTime}
+                onChange={(e) => setArrivalTime(e.target.value)}
+                required
+              />
+            </div>
+
             <div className="col-md-6">
               <label className="form-label manage-schedules-label">
                 Status
@@ -632,7 +688,8 @@ const ManageSchedules = () => {
                   </td>
 
                   <td>
-                    {schedule.departure_time} → {schedule.arrival_time}
+                    {to12HourDisplay(schedule.departure_time)} →{" "}
+                    {to12HourDisplay(schedule.arrival_time)}
                   </td>
 
                   <td>₹{schedule.base_price || 0}</td>

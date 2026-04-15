@@ -72,7 +72,7 @@ const login = async (req, res) => {
     }
     // 3️Check Staff
     if (!user) {
-      user = await Staff.findOne({ email_id: email });
+      user = await Staff.findOne({ email });
 
       if (user) {
         role = user.designation; // driver or guide
@@ -85,13 +85,11 @@ const login = async (req, res) => {
     }
 
     // Verify Password
-    // Check if the stored password 
+    // Check if the stored password
     let isMatch = false;
     if (user.password && !user.password.startsWith("$2")) {
-  
       isMatch = password === user.password;
     } else {
-    
       isMatch = await bcrypt.compare(password, user.password);
     }
 
@@ -99,16 +97,19 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    // Generate Token
+    const displayName =
+      user.name ||
+      (user.first_name ? `${user.first_name} ${user.last_name}` : user.email);
+    const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key_123";
+
+    // Create Token
     const token = jwt.sign(
-      { id: user._id, role: role, name: user.name || user.first_name },
-      "tsm",
-      { expiresIn: "6h" }
+      { id: user._id, role, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "1d" }
     );
 
-    // include name for frontend display
-    const displayName = user.name || user.first_name || user.email;
-    return res.status(200).json({
+    res.status(200).json({
       message: `Login successful as ${role}`,
       token: token,
       role: role,

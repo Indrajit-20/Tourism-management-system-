@@ -65,7 +65,7 @@ const ManagePackageBookings = () => {
       await axios.put(
         `http://localhost:4000/api/bookings/update-status/${id}`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       alert(`Booking ${newStatus}!`);
       fetchBookings();
@@ -90,10 +90,11 @@ const ManagePackageBookings = () => {
       continue;
     }
 
-    const fullName =
-      `${booking.customer_id?.first_name || ""} ${booking.customer_id?.last_name || ""}`
-        .trim()
-        .toLowerCase();
+    const fullName = `${booking.customer_id?.first_name || ""} ${
+      booking.customer_id?.last_name || ""
+    }`
+      .trim()
+      .toLowerCase();
     const packageName = lower(booking.package_id?.package_name);
     const bookingId = lower(booking._id);
 
@@ -119,7 +120,12 @@ const ManagePackageBookings = () => {
 
   const totalCount = bookings.length;
 
-  if (loading) return <div>Loading bookings...</div>;
+  const formatRoute = (pkg) => {
+    if (!pkg) return "-";
+    const source = pkg.source_city || "Unknown";
+    const dest = pkg.destination || "Unknown";
+    return `${source} ➔ ${dest}`;
+  };
 
   return (
     <div className="container mt-4 manage-package-bookings-page">
@@ -127,6 +133,14 @@ const ManagePackageBookings = () => {
         <h2 className="manage-package-bookings-title">
           Package Booking Requests
         </h2>
+        <div className="d-flex align-items-center gap-2 mb-3">
+          <span className="badge bg-primary px-3 py-2">Tour</span>
+          <span className="fw-bold fs-5 text-dark">
+            {bookings.length > 0
+              ? formatRoute(bookings[0].package_id)
+              : "- ➔ -"}
+          </span>
+        </div>
         <p className="manage-package-bookings-subtitle mb-0">
           Review, approve, or reject tour booking requests.
         </p>
@@ -269,6 +283,22 @@ const ManagePackageBookings = () => {
                           Reject
                         </button>
                       </div>
+                    ) : lower(b.booking_status) === "approved" ||
+                      lower(b.booking_status) === "confirmed" ? (
+                      <button
+                        className="btn btn-sm btn-outline-danger w-100"
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              "Are you sure you want to cancel this booking? This will change status to 'cancelled'."
+                            )
+                          ) {
+                            handleStatus(b._id, "cancelled");
+                          }
+                        }}
+                      >
+                        Cancel
+                      </button>
                     ) : (
                       <span className="text-muted small">No action</span>
                     )}

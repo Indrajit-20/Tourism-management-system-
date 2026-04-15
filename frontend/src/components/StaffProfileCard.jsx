@@ -65,7 +65,7 @@ const StaffProfileCard = ({ staff }) => {
               />
               <div>
                 <small className="text-muted d-block">Email</small>
-                <strong>{staff.email_id}</strong>
+                <strong>{staff.email}</strong>
               </div>
             </div>
           </div>

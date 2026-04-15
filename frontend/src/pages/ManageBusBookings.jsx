@@ -221,9 +221,12 @@ const ManageBusBookings = () => {
                 const stops = `${
                   route?.board_point || route?.boarding_from || "-"
                 } → ${route?.drop_point || route?.destination || "-"}`;
-                const canCancel = !["Cancelled"].includes(
-                  String(b.booking_status || "")
-                );
+
+                const isCompleted =
+                  String(b.booking_status || "").toLowerCase() === "completed";
+                const isCancelled =
+                  String(b.booking_status || "").toLowerCase() === "cancelled";
+                const canCancel = !isCancelled && !isCompleted;
 
                 return (
                   <tr key={b._id}>

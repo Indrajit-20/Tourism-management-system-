@@ -9,14 +9,15 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const token = authheader.split(" ")[1];
-    const verified = jwt.verify(token, "tsm");
+    const JWT_SECRET = process.env.JWT_SECRET || "default_secret_key_123";
+    const verified = jwt.verify(token, JWT_SECRET);
     req.user = verified;
     next();
   } catch (err) {
     console.error("Auth middleware error:", err.message);
     return res.status(401).json({ message: "Invalid or expired token." });
   }
-};  
+};
 
 // isadmin middleware
 const isadmin = (req, res, next) => {

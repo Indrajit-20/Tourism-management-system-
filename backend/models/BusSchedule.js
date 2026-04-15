@@ -24,6 +24,14 @@ const BusScheduleSchema = new mongoose.Schema(
       ref: "Staff",
     },
 
+    // ✅ Array of driver IDs for this schedule (min 1 required, supports up to 2)
+    driver_ids: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Staff",
+      },
+    ],
+
     // The time of day this schedule runs (e.g., "08:00")
     departure_time: { type: String, required: true },
     arrival_time: { type: String, required: true },
@@ -49,6 +57,12 @@ const BusScheduleSchema = new mongoose.Schema(
 
     // Active / Inactive schedule
     status: { type: String, enum: ["Active", "Inactive"], default: "Active" },
+
+    // ✅ NEW: Optional return/reverse schedule (e.g., Vadodara→CMC for CMC→Vadodara)
+    return_schedule_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "BusSchedule",
+    },
   },
   { timestamps: true }
 );

@@ -18,7 +18,7 @@ const StaffProfile = () => {
     name: "",
     contact_no: "",
     address: "",
-    email_id: "",
+    email: "",
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -43,14 +43,14 @@ const StaffProfile = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const currentStaff = res.data.find((s) => s.email_id === user.email);
+      const currentStaff = res.data.find((s) => s.email === user.email);
       if (currentStaff) {
         setStaff(currentStaff);
         setFormData({
           name: currentStaff.name,
           contact_no: currentStaff.contact_no,
           address: currentStaff.address,
-          email_id: currentStaff.email_id,
+          email: currentStaff.email,
         });
       }
       setError(null);
@@ -219,7 +219,7 @@ const StaffProfile = () => {
                       <div className="bg-light p-3 rounded">
                         <small className="text-muted d-block mb-1">Email</small>
                         <strong className="d-block text-break">
-                          {staff?.email_id}
+                          {staff?.email}
                         </strong>
                       </div>
                     </div>
@@ -268,11 +268,11 @@ const StaffProfile = () => {
                         <input
                           type="email"
                           className="form-control form-control-lg"
-                          value={formData.email_id}
+                          value={formData.email}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              email_id: e.target.value,
+                              email: e.target.value,
                             })
                           }
                           disabled

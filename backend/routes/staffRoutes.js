@@ -6,10 +6,12 @@ const {
   deleteStaff,
   updateStaff, // ✅ NEW
   changePassword, // ✅ NEW
+  getAvailableStaff, // ✅ NEW
 } = require("../controllers/staffController");
 const router = express.Router();
 
 router.get("/", authMiddleware, isadmin, getStaff);
+router.get("/available", authMiddleware, isadmin, getAvailableStaff); // ✅ NEW
 router.post("/add", authMiddleware, isadmin, addStaff);
 router.put("/update/:id", authMiddleware, isadmin, updateStaff); // ✅ NEW
 router.put("/change-password/:id", authMiddleware, changePassword); // ✅ NEW

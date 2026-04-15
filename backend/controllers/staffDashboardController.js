@@ -9,9 +9,9 @@ const getStaffDashboard = async (req, res) => {
   try {
     const staff_id = req.user.id;
 
-    // Get staff details
+    // Get staff details including new fields
     const staff = await Staff.findById(staff_id).select(
-      "name designation email_id contact_no"
+      "name designation email contact_no date_of_joining experience driver_license"
     );
     if (!staff) {
       return res.status(404).json({ message: "Staff not found" });
@@ -28,12 +28,13 @@ const getStaffDashboard = async (req, res) => {
       status: { $in: ["Scheduled", "Running"] },
     })
       .populate("bus_id", "bus_number bus_type capacity")
+      .populate("driver_id", "name designation")
       .populate({
         path: "schedule_id",
+        select: "departure_time arrival_time route_id",
         populate: {
           path: "route_id",
-          select:
-            "boarding_from destination price_per_seat departure_time arrival_time",
+          select: "boarding_from destination price_per_seat",
         },
       })
       .sort({ trip_date: 1 })
@@ -49,12 +50,13 @@ const getStaffDashboard = async (req, res) => {
       status: { $in: ["Scheduled", "Running"] },
     })
       .populate("bus_id", "bus_number bus_type capacity")
+      .populate("driver_id", "name designation")
       .populate({
         path: "schedule_id",
+        select: "departure_time arrival_time route_id",
         populate: {
           path: "route_id",
-          select:
-            "boarding_from destination price_per_seat departure_time arrival_time",
+          select: "boarding_from destination price_per_seat",
         },
       })
       .sort({ trip_date: 1 });
@@ -65,8 +67,10 @@ const getStaffDashboard = async (req, res) => {
       status: "Completed",
     })
       .populate("bus_id", "bus_number bus_type")
+      .populate("driver_id", "name designation")
       .populate({
         path: "schedule_id",
+        select: "departure_time arrival_time route_id",
         populate: {
           path: "route_id",
           select: "boarding_from destination",
@@ -88,7 +92,6 @@ const getStaffDashboard = async (req, res) => {
       });
     }
 
-    // ====== ADDED LOGIC FOR TOUR SCHEDULES ======
     // Get tours assigned to this staff (driver_id OR guide_id)
     const upcomingTours = await TourSchedule.find({
       $or: [{ driver_id: staff_id }, { guide_id: staff_id }],
@@ -110,10 +113,7 @@ const getStaffDashboard = async (req, res) => {
     const todayTours = await TourSchedule.find({
       $or: [{ driver_id: staff_id }, { guide_id: staff_id }],
       start_date: { $lte: today },
-      $or: [
-        { end_date: { $gte: today } },
-        { end_date: null }, // if there's no end date, maybe it's just today
-      ],
+      end_date: { $gte: today },
       departure_status: { $in: ["Open", "BookingFull", "Locked"] },
     })
       .populate("bus_id", "bus_number bus_type")
@@ -147,8 +147,11 @@ const getStaffDashboard = async (req, res) => {
         id: staff._id,
         name: staff.name,
         designation: staff.designation,
-        email: staff.email_id,
-        contact: staff.contact_no,
+        email: staff.email,
+        contact_no: staff.contact_no,
+        date_of_joining: staff.date_of_joining,
+        experience: staff.experience,
+        driver_license: staff.driver_license,
       },
       upcomingTrips,
       todayTrips,
@@ -182,10 +185,10 @@ const getTripDetails = async (req, res) => {
       .populate("bus_id", "bus_number bus_type capacity")
       .populate({
         path: "schedule_id",
+        select: "departure_time arrival_time route_id",
         populate: {
           path: "route_id",
-          select:
-            "boarding_from destination price_per_seat departure_time arrival_time",
+          select: "boarding_from destination price_per_seat",
         },
       });
 
@@ -193,8 +196,8 @@ const getTripDetails = async (req, res) => {
       return res.status(404).json({ message: "Trip not found" });
     }
 
-    // Verify staff is assigned to this trip
-    if (trip.driver_id.toString() !== staff_id) {
+    // Verify staff is assigned to this trip (allow if driver_id exists and matches)
+    if (!trip.driver_id || trip.driver_id.toString() !== staff_id) {
       return res.status(403).json({ message: "Unauthorized: Not your trip" });
     }
 
@@ -227,8 +230,8 @@ const getTripDetails = async (req, res) => {
         route: {
           from: trip.schedule_id.route_id.boarding_from,
           to: trip.schedule_id.route_id.destination,
-          departureTime: trip.schedule_id.route_id.departure_time,
-          arrivalTime: trip.schedule_id.route_id.arrival_time,
+          departureTime: trip.schedule_id.departure_time,
+          arrivalTime: trip.schedule_id.arrival_time,
         },
         tripDate: trip.trip_date,
         status: trip.status,

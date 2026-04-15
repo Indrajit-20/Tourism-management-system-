@@ -11,10 +11,13 @@ const ManageStaff = () => {
     name: "",
     designation: "driver",
     contact_no: "",
-    email_id: "",
+    email: "",
     password: "",
     dob: "",
     address: "",
+    driver_license: "",
+    date_of_joining: "",
+    experience: "",
   });
 
   useEffect(() => {
@@ -44,10 +47,13 @@ const ManageStaff = () => {
       name: "",
       designation: "driver",
       contact_no: "",
-      email_id: "",
+      email: "",
       password: "",
       dob: "",
       address: "",
+      driver_license: "",
+      date_of_joining: "",
+      experience: "",
     });
   };
 
@@ -93,7 +99,7 @@ const ManageStaff = () => {
         await axios.put(
           `http://localhost:4000/api/staff/update/${editingStaffId}`,
           payload,
-          { headers },
+          { headers }
         );
         alert("Staff updated successfully!");
       } else {
@@ -119,10 +125,13 @@ const ManageStaff = () => {
       name: staff.name || "",
       designation: staff.designation || "driver",
       contact_no: staff.contact_no || "",
-      email_id: staff.email_id || "",
+      email: staff.email || "",
       password: "",
       dob: toInputDate(staff.dob),
       address: staff.address || "",
+      driver_license: staff.driver_license || "",
+      date_of_joining: toInputDate(staff.date_of_joining) || "",
+      experience: staff.experience || "",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -152,7 +161,7 @@ const ManageStaff = () => {
       String(staff.name || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
-      String(staff.email_id || "")
+      String(staff.email || "")
         .toLowerCase()
         .includes(searchText.toLowerCase()) ||
       String(staff.contact_no || "")
@@ -163,10 +172,10 @@ const ManageStaff = () => {
 
   const totalStaff = staffList.length;
   const totalDrivers = staffList.filter(
-    (staff) => staff.designation === "driver",
+    (staff) => staff.designation === "driver"
   ).length;
   const totalGuides = staffList.filter(
-    (staff) => staff.designation === "guide",
+    (staff) => staff.designation === "guide"
   ).length;
 
   return (
@@ -216,8 +225,8 @@ const ManageStaff = () => {
               <label>Email ID</label>
               <input
                 type="email"
-                name="email_id"
-                value={form.email_id}
+                name="email"
+                value={form.email}
                 className="form-control"
                 onChange={handleChange}
                 required
@@ -260,6 +269,44 @@ const ManageStaff = () => {
                 onChange={handleChange}
                 required
               />
+            </div>
+            <div className="col-md-4 mb-3 manage-staff-field">
+              <label>Date of Joining</label>
+              <input
+                type="date"
+                name="date_of_joining"
+                value={form.date_of_joining}
+                className="form-control"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-4 mb-3 manage-staff-field">
+              <label>Experience (Years/Months)</label>
+              <input
+                type="text"
+                name="experience"
+                value={form.experience}
+                className="form-control"
+                onChange={handleChange}
+                placeholder="e.g., 5 years"
+                required
+              />
+            </div>
+            <div className="col-md-4 mb-3 manage-staff-field">
+              <label>Driving Licence</label>
+              <input
+                type="text"
+                name="driver_license"
+                value={form.driver_license}
+                className="form-control"
+                onChange={handleChange}
+                placeholder="License number"
+                required={form.designation === "driver"}
+              />
+              {form.designation === "driver" && !form.driver_license && (
+                <small className="text-danger">Required for drivers</small>
+              )}
             </div>
           </div>
           <div className="d-flex gap-2">
@@ -335,6 +382,9 @@ const ManageStaff = () => {
               <th>Email</th>
               <th>DOB</th>
               <th>Address</th>
+              <th>Date of Joining</th>
+              <th>Experience</th>
+              <th>Driving Licence</th>
               <th className="text-center">Actions</th>
             </tr>
           </thead>
@@ -345,9 +395,12 @@ const ManageStaff = () => {
                 <td>{staff.name}</td>
                 <td>{staff.designation}</td>
                 <td>{staff.contact_no}</td>
-                <td>{staff.email_id}</td>
+                <td>{staff.email}</td>
                 <td>{formatIndianDate(staff.dob)}</td>
                 <td>{staff.address || "-"}</td>
+                <td>{formatIndianDate(staff.date_of_joining)}</td>
+                <td>{staff.experience || "-"}</td>
+                <td>{staff.driver_license || "-"}</td>
                 <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                     <button

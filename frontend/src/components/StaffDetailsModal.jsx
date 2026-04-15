@@ -79,7 +79,7 @@ const StaffDetailsModal = ({ staff, onClose }) => {
                     📧 Email Address
                   </small>
                   <strong className="d-block text-break">
-                    {staff.email_id}
+                    {staff.email}
                   </strong>
                 </div>
               </div>

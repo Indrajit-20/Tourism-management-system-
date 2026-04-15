@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const BusTrip = require("../models/BusTrip");
 const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
@@ -28,6 +29,145 @@ const parseTimeToMinutes = (value) => {
   h = h % 12;
   if (meridiem === "PM") h += 12;
   return h * 60 + m;
+};
+
+// ✅ NEW: Check if driver has 2-hour rest between trips
+const checkDriverAvailability = async (
+  driver_id,
+  trip_date,
+  trip_start_time,
+  trip_end_time,
+  excludeTripId = null // Exclude current trip from check when updating
+) => {
+  if (!driver_id) return { available: true }; // No driver assigned yet
+
+  const tripDate = new Date(trip_date);
+  tripDate.setHours(0, 0, 0, 0);
+
+  // Check trips on the same day
+  const query = {
+    driver_id,
+    trip_date: {
+      $gte: tripDate,
+      $lt: new Date(tripDate.getTime() + 86400000),
+    },
+    status: { $in: ["Scheduled", "Running"] },
+  };
+
+  // Exclude the current trip if updating (convert to ObjectId for comparison)
+  if (excludeTripId) {
+    query._id = { $ne: new mongoose.Types.ObjectId(excludeTripId) };
+  }
+
+  const sameDayTrips = await BusTrip.find(query).populate({
+    path: "schedule_id",
+    populate: { path: "route_id" },
+  });
+
+  // Check if driver is already running a trip
+  const runningTrip = sameDayTrips.find((t) => t.status === "Running");
+  if (runningTrip) {
+    return {
+      available: false,
+      message: `Driver is already running trip. Cannot assign until current trip is completed.`,
+    };
+  }
+
+  // Check if there's enough gap between trips (2 hours minimum rest)
+  const MIN_REST_MINUTES = 120; // 2 hours
+
+  for (let existingTrip of sameDayTrips) {
+    const existingEnd =
+      existingTrip.schedule_id?.route_id?.arrival_time || "17:00";
+    const existingEndMinutes = parseTimeToMinutes(existingEnd);
+    const newStartMinutes = parseTimeToMinutes(trip_start_time);
+
+    if (existingEndMinutes && newStartMinutes) {
+      const restGap = newStartMinutes - existingEndMinutes;
+      if (restGap > 0 && restGap < MIN_REST_MINUTES) {
+        return {
+          available: false,
+          message: `Insufficient rest time. Driver needs minimum 2 hours rest. Current gap: ${restGap} minutes.`,
+        };
+      }
+    }
+  }
+
+  return { available: true };
+};
+
+// ✅ NEW: Helper to calculate return trip time by adding 2 hours to arrival time
+const addHoursToTime = (timeStr, hoursToAdd) => {
+  if (!timeStr) return null;
+  const minutes = parseTimeToMinutes(timeStr);
+  if (minutes === null) return null;
+
+  const totalMinutes = minutes + hoursToAdd * 60;
+  const hours = Math.floor(totalMinutes / 60) % 24;
+  const mins = totalMinutes % 60;
+
+  return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`;
+};
+
+// ✅ NEW: Create return trip (e.g., Vadodara→CMC after CMC→Vadodara)
+const createReturnTrip = async (
+  originalTrip,
+  originalSchedule,
+  returnScheduleId
+) => {
+  try {
+    if (!returnScheduleId) {
+      console.log("⚠️ Return schedule not linked, skipping auto return trip");
+      return null;
+    }
+
+    const returnSchedule = await BusSchedule.findById(
+      returnScheduleId
+    ).populate("route_id");
+    if (!returnSchedule) {
+      console.log("⚠️ Return schedule not found");
+      return null;
+    }
+
+    // Check if return trip already exists for same day
+    const existingReturn = await BusTrip.findOne({
+      schedule_id: returnScheduleId,
+      trip_date: originalTrip.trip_date,
+      status: { $in: ["Scheduled", "Running", "Completed"] },
+    });
+
+    if (existingReturn) {
+      console.log("✓ Return trip already exists");
+      return existingReturn;
+    }
+
+    // Create return trip with 2-hour rest
+    const returnTrip = new BusTrip({
+      schedule_id: returnScheduleId,
+      bus_id: originalTrip.bus_id,
+      driver_id: originalTrip.driver_id,
+      trip_date: originalTrip.trip_date,
+      boarding_points: returnSchedule.boarding_points || [],
+      drop_points: returnSchedule.drop_points || [],
+      is_return_trip: true,
+      related_trip_id: originalTrip._id,
+      seats: buildSeatLayout({
+        totalSeats:
+          (await Bus.findById(originalTrip.bus_id))?.total_seats || 35,
+        layoutType: (await Bus.findById(originalTrip.bus_id))?.layout_type,
+        busType: (await Bus.findById(originalTrip.bus_id))?.bus_type,
+        basePrice: returnSchedule.route_id?.price_per_seat || 500,
+        includeAvailability: true,
+      }),
+    });
+
+    await returnTrip.save();
+    console.log("✓ Return trip created:", returnTrip._id);
+    return returnTrip;
+  } catch (error) {
+    console.error("Error creating return trip:", error.message);
+    return null;
+  }
 };
 
 // HELPER: Does this schedule run on this date?
@@ -112,8 +252,14 @@ const autoGenerateTrips = async (schedule, bus) => {
 // ─────────────────────────────────────────────
 const createTrip = async (req, res) => {
   try {
-    const { schedule_id, bus_id, driver_id, trip_date, boarding_points } =
-      req.body;
+    const {
+      schedule_id,
+      bus_id,
+      driver_id,
+      trip_date,
+      boarding_points,
+      create_return_trip,
+    } = req.body;
 
     if (!schedule_id || !bus_id || !trip_date) {
       return res
@@ -141,13 +287,27 @@ const createTrip = async (req, res) => {
         .json({ message: "Trip date must be today or future." });
     }
 
+    // ✅ Check driver availability (2-hour rest requirement)
+    const assignedDriver = driver_id || schedule.driver_id || bus.driver_id;
+    if (assignedDriver) {
+      const driverCheck = await checkDriverAvailability(
+        assignedDriver,
+        trip_date,
+        schedule.route_id?.departure_time,
+        schedule.route_id?.arrival_time
+      );
+      if (!driverCheck.available) {
+        return res.status(400).json({ message: driverCheck.message });
+      }
+    }
+
     const basePrice =
       schedule.route_id?.price_per_seat || schedule.base_price || 500;
 
     const trip = new BusTrip({
       schedule_id,
       bus_id,
-      driver_id: driver_id || schedule.driver_id || bus.driver_id,
+      driver_id: assignedDriver,
       trip_date,
       boarding_points: boarding_points || schedule.boarding_points || [],
       drop_points: schedule.drop_points || [],
@@ -161,7 +321,22 @@ const createTrip = async (req, res) => {
     });
 
     await trip.save();
-    res.status(201).json({ message: "Trip created", trip });
+
+    // ✅ NEW: Auto-create return trip if requested
+    let returnTrip = null;
+    if (create_return_trip && schedule.return_schedule_id) {
+      returnTrip = await createReturnTrip(
+        trip,
+        schedule,
+        schedule.return_schedule_id
+      );
+    }
+
+    res.status(201).json({
+      message: "Trip created successfully",
+      trip,
+      returnTrip: returnTrip || undefined,
+    });
   } catch (error) {
     res
       .status(500)
@@ -203,7 +378,7 @@ const getTrips = async (req, res) => {
           $lt: new Date(tripDate.getTime() + 86400000),
         },
       })
-        .populate("schedule_id")
+        .populate({ path: "schedule_id", populate: { path: "route_id" } })
         .populate("bus_id")
         .populate("driver_id", "name");
 
@@ -246,7 +421,7 @@ const getTrips = async (req, res) => {
       await newTrip.save();
 
       const saved = await BusTrip.findById(newTrip._id)
-        .populate("schedule_id")
+        .populate({ path: "schedule_id", populate: { path: "route_id" } })
         .populate("bus_id")
         .populate("driver_id", "name");
 
@@ -307,7 +482,7 @@ const getTrips = async (req, res) => {
           $lt: new Date(tripDate.getTime() + 86400000),
         },
       })
-        .populate("schedule_id")
+        .populate({ path: "schedule_id", populate: { path: "route_id" } })
         .populate("bus_id")
         .populate("driver_id", "name");
 
@@ -380,7 +555,53 @@ const getTripById = async (req, res) => {
 
 const updateTrip = async (req, res) => {
   try {
+    console.log("🔧 UPDATE TRIP - Trip ID:", req.params.id);
+    console.log("🔧 UPDATE TRIP - Updates:", req.body);
+
+    const trip = await BusTrip.findById(req.params.id).populate({
+      path: "schedule_id",
+      populate: { path: "route_id" },
+    });
+
+    if (!trip) return res.status(404).json({ message: "Trip not found" });
+
     const updates = { ...req.body };
+
+    // ✅ NEW: If updating driver, validate 2-hour rest requirement
+    if (updates.driver_id && updates.driver_id.trim()) {
+      const currentDriverId = trip.driver_id ? trip.driver_id.toString() : null;
+      const newDriverId = updates.driver_id.toString();
+
+      console.log(
+        `🔧 Driver validation: Current=${currentDriverId}, New=${newDriverId}`
+      );
+
+      // Only check availability if driver is actually changing to a different one
+      if (currentDriverId && currentDriverId !== newDriverId) {
+        try {
+          console.log("🔧 Running availability check...");
+
+          const driverCheck = await checkDriverAvailability(
+            updates.driver_id,
+            trip.trip_date,
+            trip.schedule_id?.route_id?.departure_time,
+            trip.schedule_id?.route_id?.arrival_time,
+            req.params.id // Exclude this trip from the check
+          );
+
+          console.log("🔧 Availability result:", driverCheck);
+
+          if (!driverCheck.available) {
+            return res.status(400).json({ message: driverCheck.message });
+          }
+        } catch (checkError) {
+          console.error("❌ Availability check failed:", checkError.message);
+          return res.status(400).json({
+            message: "Driver availability check failed: " + checkError.message,
+          });
+        }
+      }
+    }
 
     // Only allow seat update if no bookings exist yet
     if (updates.seats) {
@@ -391,19 +612,23 @@ const updateTrip = async (req, res) => {
       if (hasBookings) delete updates.seats;
     }
 
-    const trip = await BusTrip.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-    })
+    const updatedTrip = await BusTrip.findByIdAndUpdate(
+      req.params.id,
+      updates,
+      { new: true }
+    )
       .populate({ path: "schedule_id", populate: { path: "route_id" } })
       .populate("bus_id")
       .populate("driver_id", "name contact_no");
 
-    if (!trip) return res.status(404).json({ message: "Trip not found" });
-    res.status(200).json({ message: "Trip updated", trip });
+    console.log("✅ Trip updated successfully");
+    res.status(200).json({ message: "Trip updated", trip: updatedTrip });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error updating trip", error: error.message });
+    console.error("❌ Update error:", error.message);
+    res.status(500).json({
+      message: "Error updating trip",
+      error: error.message,
+    });
   }
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const API_BASE_URL = "http://localhost:4000";
-const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 3;
+const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 0;
 
 const addDays = (date, days) => {
   const copy = new Date(date);
@@ -47,8 +47,11 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [buses, setBuses] = useState([]);
-  const [staff, setStaff] = useState([]); // ✅ Added staff state
+  const [staff, setStaff] = useState([]); // All staff (initial load)
+  const [availableDrivers, setAvailableDrivers] = useState([]); // Filtered drivers
+  const [availableGuides, setAvailableGuides] = useState([]); // Filtered guides
   const [loading, setLoading] = useState(true);
+  const [loadingStaff, setLoadingStaff] = useState(false);
   const [formData, setFormData] = useState({
     start_date: "",
     end_date: "",
@@ -68,8 +71,44 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
   useEffect(() => {
     fetchSchedules();
     fetchBuses();
-    fetchStaff(); // ✅ Fetch drivers and guides
+    fetchStaff(); // Fetch all staff for initial display or fallback
   }, [packageId]);
+
+  // Fetch available staff when dates change
+  useEffect(() => {
+    if (formData.start_date && formData.end_date) {
+      fetchAvailableStaff(formData.start_date, formData.end_date);
+    } else {
+      setAvailableDrivers([]);
+      setAvailableGuides([]);
+    }
+  }, [formData.start_date, formData.end_date]);
+
+  const fetchAvailableStaff = async (start, end) => {
+    setLoadingStaff(true);
+    try {
+      const token = sessionStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
+
+      // Fetch available drivers
+      const driverRes = await axios.get(
+        `${API_BASE_URL}/api/staff/available?start_date=${start}&end_date=${end}&designation=driver`,
+        { headers }
+      );
+      setAvailableDrivers(driverRes.data);
+
+      // Fetch available guides
+      const guideRes = await axios.get(
+        `${API_BASE_URL}/api/staff/available?start_date=${start}&end_date=${end}&designation=guide`,
+        { headers }
+      );
+      setAvailableGuides(guideRes.data);
+    } catch (err) {
+      console.error("❌ Error fetching available staff:", err);
+    } finally {
+      setLoadingStaff(false);
+    }
+  };
 
   const fetchStaff = async () => {
     try {
@@ -476,24 +515,32 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                   onChange={handleInputChange}
                   required
                   style={{ borderWidth: "2px", borderColor: "#667eea" }}
+                  disabled={!formData.start_date || loadingStaff}
                 >
-                  <option value="">-- Select Driver --</option>
-                  {staff.filter((s) => s.designation === "driver").length ===
-                  0 ? (
-                    <option disabled>No drivers found</option>
-                  ) : (
-                    staff
-                      .filter((s) => s.designation === "driver")
-                      .map((d) => (
+                  <option value="">
+                    {!formData.start_date
+                      ? "-- Select Start Date First --"
+                      : loadingStaff
+                      ? "Loading..."
+                      : "-- Select Driver --"}
+                  </option>
+                  {availableDrivers.length === 0
+                    ? formData.start_date &&
+                      !loadingStaff && (
+                        <option disabled>
+                          No available drivers for these dates
+                        </option>
+                      )
+                    : availableDrivers.map((d) => (
                         <option key={d._id} value={d._id}>
                           {d.name} - {d.contact_no}
                         </option>
-                      ))
-                  )}
+                      ))}
                 </select>
                 <small className="text-muted d-block mt-1">
-                  {staff.filter((s) => s.designation === "driver").length}{" "}
-                  drivers available
+                  {loadingStaff
+                    ? "Checking availability..."
+                    : `${availableDrivers.length} drivers available`}
                 </small>
               </div>
 
@@ -508,24 +555,32 @@ const ManageTourSchedules = ({ packageId, packageName, packageDuration }) => {
                   onChange={handleInputChange}
                   required
                   style={{ borderWidth: "2px", borderColor: "#f5576c" }}
+                  disabled={!formData.start_date || loadingStaff}
                 >
-                  <option value="">-- Select Guide --</option>
-                  {staff.filter((s) => s.designation === "guide").length ===
-                  0 ? (
-                    <option disabled>No guides found</option>
-                  ) : (
-                    staff
-                      .filter((s) => s.designation === "guide")
-                      .map((g) => (
+                  <option value="">
+                    {!formData.start_date
+                      ? "-- Select Start Date First --"
+                      : loadingStaff
+                      ? "Loading..."
+                      : "-- Select Guide --"}
+                  </option>
+                  {availableGuides.length === 0
+                    ? formData.start_date &&
+                      !loadingStaff && (
+                        <option disabled>
+                          No available guides for these dates
+                        </option>
+                      )
+                    : availableGuides.map((g) => (
                         <option key={g._id} value={g._id}>
                           {g.name} - {g.contact_no}
                         </option>
-                      ))
-                  )}
+                      ))}
                 </select>
                 <small className="text-muted d-block mt-1">
-                  {staff.filter((s) => s.designation === "guide").length} guides
-                  available
+                  {loadingStaff
+                    ? "Checking availability..."
+                    : `${availableGuides.length} guides available`}
                 </small>
               </div>
 

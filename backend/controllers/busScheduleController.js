@@ -42,7 +42,7 @@ const validateOverrideDriver = async (driverId, routeBusId) => {
 
 const createSchedule = async (req, res) => {
   try {
-    const { driver_id, ...rest } = req.body;
+    const { driver_ids, ...rest } = req.body;
 
     const route = await BusRoute.findById(rest.route_id).select(
       "bus_id departure_time arrival_time price_per_seat"
@@ -51,23 +51,32 @@ const createSchedule = async (req, res) => {
       return res.status(404).json({ message: "Route not found" });
     }
 
-    const driverValidationError = await validateOverrideDriver(
-      driver_id,
-      route.bus_id
-    );
-    if (driverValidationError) {
-      return res.status(400).json({ message: driverValidationError });
+    // ✅ Validate driver_ids (both drivers if provided)
+    const validatedDriverIds = [];
+    if (driver_ids && Array.isArray(driver_ids)) {
+      for (const driverId of driver_ids) {
+        if (driverId && driverId.trim()) {
+          const validationError = await validateOverrideDriver(
+            driverId,
+            route.bus_id
+          );
+          if (validationError) {
+            return res.status(400).json({ message: validationError });
+          }
+          validatedDriverIds.push(driverId);
+        }
+      }
     }
 
     const schedule = new BusSchedule({
       ...rest,
       bus_id: route.bus_id,
-      departure_time: route.departure_time,
-      arrival_time: route.arrival_time,
-      base_price: Number(route.price_per_seat || 0),
+      // departure_time and arrival_time now come from req.body (rest)
+      base_price: rest.base_price || Number(route.price_per_seat || 0),
       boarding_points: normalizeSinglePoint(rest.boarding_points),
       drop_points: normalizeSinglePoint(rest.drop_points),
-      driver_id: driver_id || undefined,
+      driver_ids:
+        validatedDriverIds.length > 0 ? validatedDriverIds : undefined,
     });
     await schedule.save();
 
@@ -110,8 +119,9 @@ const getSchedules = async (req, res) => {
     const schedules = await BusSchedule.find()
       .populate("route_id")
       .populate("bus_id")
-      // ✅ FIX: Staff model uses 'name' not 'first_name last_name'
-      .populate("driver_id", "name contact_no");
+      // ✅ FIX: Staff model uses 'name' not 'first_name last_name', populate both driver_id and driver_ids
+      .populate("driver_id", "name contact_no")
+      .populate("driver_ids", "name contact_no");
 
     res.status(200).json(schedules);
   } catch (error) {
@@ -125,11 +135,12 @@ const getSchedules = async (req, res) => {
 
 const getScheduleById = async (req, res) => {
   try {
-    // ✅ FIX: populate route, bus, and driver
+    // ✅ FIX: populate route, bus, and drivers
     const schedule = await BusSchedule.findById(req.params.id)
       .populate("route_id")
       .populate("bus_id")
-      .populate("driver_id", "name");
+      .populate("driver_id", "name")
+      .populate("driver_ids", "name");
 
     if (!schedule)
       return res.status(404).json({ message: "Schedule not found" });
@@ -145,7 +156,7 @@ const getScheduleById = async (req, res) => {
 
 const updateSchedule = async (req, res) => {
   try {
-    const { driver_id, ...rest } = req.body;
+    const { driver_ids, ...rest } = req.body;
 
     const existing = await BusSchedule.findById(req.params.id);
     if (!existing)
@@ -159,12 +170,21 @@ const updateSchedule = async (req, res) => {
       return res.status(404).json({ message: "Route not found" });
     }
 
-    const driverValidationError = await validateOverrideDriver(
-      driver_id,
-      route.bus_id
-    );
-    if (driverValidationError) {
-      return res.status(400).json({ message: driverValidationError });
+    // ✅ Validate driver_ids (both drivers if provided)
+    const validatedDriverIds = [];
+    if (driver_ids && Array.isArray(driver_ids)) {
+      for (const driverId of driver_ids) {
+        if (driverId && driverId.trim()) {
+          const validationError = await validateOverrideDriver(
+            driverId,
+            route.bus_id
+          );
+          if (validationError) {
+            return res.status(400).json({ message: validationError });
+          }
+          validatedDriverIds.push(driverId);
+        }
+      }
     }
 
     const schedule = await BusSchedule.findByIdAndUpdate(
@@ -172,12 +192,12 @@ const updateSchedule = async (req, res) => {
       {
         ...rest,
         bus_id: route.bus_id,
-        departure_time: route.departure_time,
-        arrival_time: route.arrival_time,
-        base_price: Number(route.price_per_seat || 0),
+        // departure_time and arrival_time now come from req.body (rest)
+        base_price: rest.base_price || Number(route.price_per_seat || 0),
         boarding_points: normalizeSinglePoint(rest.boarding_points),
         drop_points: normalizeSinglePoint(rest.drop_points),
-        driver_id: driver_id || undefined,
+        driver_ids:
+          validatedDriverIds.length > 0 ? validatedDriverIds : undefined,
       },
       { new: true }
     );

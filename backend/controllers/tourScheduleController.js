@@ -13,7 +13,7 @@ const SCHEDULE_STATUS = {
   ARCHIVED: "Archived",
 };
 
-const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 3;
+const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 0;
 
 const DEPARTURE_TIME_REGEX = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
@@ -172,6 +172,63 @@ const ensureGuideAvailability = async ({
   return { ok: true };
 };
 
+const ensureStaffAvailability = async ({
+  staffId,
+  designation,
+  startDate,
+  endDate,
+  excludeScheduleId = null,
+}) => {
+  if (!staffId) {
+    return { ok: true };
+  }
+
+  // 1. Check Tour Schedules
+  const tourQuery = {
+    $or: [{ driver_id: staffId }, { guide_id: staffId }],
+    departure_status: {
+      $nin: [SCHEDULE_STATUS.COMPLETED, SCHEDULE_STATUS.ARCHIVED],
+    },
+  };
+
+  if (excludeScheduleId) {
+    tourQuery._id = { $ne: excludeScheduleId };
+  }
+
+  const existingTours = await TourSchedule.find(tourQuery).lean();
+  for (const tour of existingTours) {
+    const itemStart = new Date(tour.start_date);
+    const itemEnd = tour.end_date ? new Date(tour.end_date) : itemStart;
+    if (hasRangeOverlap(startDate, endDate, itemStart, itemEnd)) {
+      return {
+        ok: false,
+        message: `Selected ${designation} is already assigned to another tour (${
+          tour.notes || tour._id
+        }) in this date range`,
+      };
+    }
+  }
+
+  // 2. Check Bus Trips (only for drivers)
+  if (String(designation).toLowerCase().includes("driver")) {
+    const busTrips = await BusTrip.find({
+      driver_id: staffId,
+      trip_date: { $gte: startDate, $lte: endDate },
+    }).lean();
+
+    if (busTrips.length > 0) {
+      return {
+        ok: false,
+        message: `Selected driver has a scheduled bus trip on ${new Date(
+          busTrips[0].trip_date
+        ).toLocaleDateString()}. Cannot assign to tour.`,
+      };
+    }
+  }
+
+  return { ok: true };
+};
+
 const recalculateScheduleStatus = (schedule) => {
   const today = toDayStart(new Date());
   const endDate = schedule.end_date
@@ -299,6 +356,33 @@ const createTourDeparture = async (req, res) => {
       startDate,
       endDate: finalEndDate,
     });
+
+    // Validate driver availability
+    if (driver_id) {
+      const driverCheck = await ensureStaffAvailability({
+        staffId: driver_id,
+        designation: "driver",
+        startDate,
+        endDate: finalEndDate,
+      });
+      if (!driverCheck.ok) {
+        return res.status(400).json({ message: driverCheck.message });
+      }
+    }
+
+    // Validate guide availability
+    if (guide_id) {
+      const guideCheck = await ensureStaffAvailability({
+        staffId: guide_id,
+        designation: "guide",
+        startDate,
+        endDate: finalEndDate,
+      });
+      if (!guideCheck.ok) {
+        return res.status(400).json({ message: guideCheck.message });
+      }
+    }
+
     const guideCheck = await ensureGuideAvailability({
       guideId: pkg.tour_guide,
       startDate,
@@ -547,12 +631,31 @@ const updateTourDeparture = async (req, res) => {
       });
     }
 
+    const isDateChanged = (val, current) => {
+      if (val === undefined || val === null || val === "") return false;
+      const d1 = new Date(val);
+      const d2 = new Date(current);
+      if (Number.isNaN(d1.getTime()) || Number.isNaN(d2.getTime()))
+        return false;
+      return (
+        d1.getUTCFullYear() !== d2.getUTCFullYear() ||
+        d1.getUTCMonth() !== d2.getUTCMonth() ||
+        d1.getUTCDate() !== d2.getUTCDate()
+      );
+    };
+
     const hasCoreChange =
-      start_date !== undefined ||
-      end_date !== undefined ||
-      bus_id !== undefined ||
-      price !== undefined ||
-      price_per_person !== undefined;
+      isDateChanged(start_date, departure.start_date) ||
+      isDateChanged(end_date, departure.end_date) ||
+      (bus_id !== undefined &&
+        bus_id !== "" &&
+        String(bus_id) !== String(departure.bus_id)) ||
+      (price !== undefined &&
+        price !== "" &&
+        Number(price) !== Number(departure.price)) ||
+      (price_per_person !== undefined &&
+        price_per_person !== "" &&
+        Number(price_per_person) !== Number(departure.price_per_person));
 
     if (departure.has_bookings === true && hasCoreChange) {
       return res.status(400).json({
@@ -616,19 +719,32 @@ const updateTourDeparture = async (req, res) => {
       }
     }
 
-    const guideCheck = await ensureGuideAvailability({
-      guideId: packageData?.tour_guide,
-      startDate: nextStartDate,
-      endDate: nextEndDate,
-      excludeScheduleId: departure._id,
-    });
-    if (!guideCheck.ok) {
-      return res.status(400).json({ message: guideCheck.message });
+    // Validate updated driver availability
+    if (driver_id !== undefined && driver_id) {
+      const driverCheck = await ensureStaffAvailability({
+        staffId: driver_id,
+        designation: "driver",
+        startDate: nextStartDate,
+        endDate: nextEndDate,
+        excludeScheduleId: departure._id,
+      });
+      if (!driverCheck.ok) {
+        return res.status(400).json({ message: driverCheck.message });
+      }
     }
 
-    if (isDraftOrOpen) {
-      departure.start_date = nextStartDate;
-      departure.end_date = nextEndDate;
+    // Validate updated guide availability
+    if (guide_id !== undefined && guide_id) {
+      const gCheck = await ensureStaffAvailability({
+        staffId: guide_id,
+        designation: "guide",
+        startDate: nextStartDate,
+        endDate: nextEndDate,
+        excludeScheduleId: departure._id,
+      });
+      if (!gCheck.ok) {
+        return res.status(400).json({ message: gCheck.message });
+      }
     }
 
     // ✅ Apply Driver and Guide assignment checks

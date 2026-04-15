@@ -112,7 +112,7 @@ const mapPassengers = (raw) => {
   let passengers = firstArray(
     raw.passengers,
     raw.passenger_details,
-    raw.passengerDetails,
+    raw.passengerDetails
   );
 
   passengers = passengers.map((item, index) => ({
@@ -154,6 +154,8 @@ const mapBusInfo = (raw) => {
     raw.busType,
     scheduleBus.bus_type,
     raw.trip_id?.bus_id?.bus_type,
+    raw.package_id?.transport,
+    raw.Package_id?.transport
   );
 
   const layoutRaw = firstNonEmpty(
@@ -162,28 +164,40 @@ const mapBusInfo = (raw) => {
     scheduleBus.layout_type,
     raw.trip_id?.bus_id?.layout_type,
     detectLayoutFromText(raw.transport),
-    detectLayoutFromText(busTypeRaw),
+    detectLayoutFromText(raw.package_id?.transport),
+    detectLayoutFromText(raw.Package_id?.transport),
+    detectLayoutFromText(busTypeRaw)
   );
 
   const busName = firstNonEmpty(
     raw.busName,
     scheduleBus.bus_name,
     raw.trip_id?.bus_id?.bus_name,
-    "-",
+    "-"
   );
 
   const busNo = firstNonEmpty(
     raw.busNo,
     scheduleBus.bus_number,
     raw.trip_id?.bus_id?.bus_number,
-    "-",
+    "-"
   );
 
-  const transport = toLayoutLabel(layoutRaw || raw.transport);
+  const transport = toLayoutLabel(
+    layoutRaw ||
+      raw.transport ||
+      raw.package_id?.transport ||
+      raw.Package_id?.transport
+  );
   const busAC =
     typeof raw.busAC === "boolean"
       ? raw.busAC
-      : detectAcFromText(busTypeRaw || raw.transport);
+      : detectAcFromText(
+          busTypeRaw ||
+            raw.transport ||
+            raw.package_id?.transport ||
+            raw.Package_id?.transport
+        );
   const busType = toBusTypeLabel(busTypeRaw, busAC);
 
   return { transport, busType, busName, busNo, busAC };
@@ -193,7 +207,8 @@ export const toUiBooking = (raw) => {
   // 1) Identify booking type
   const typeText = normalize(raw.type || raw.booking_type || raw.mode);
   const looksLikeTour =
-    Boolean(raw.Package_id || raw.tour_schedule_id) && !Boolean(raw.trip_id);
+    Boolean(raw.package_id || raw.Package_id || raw.tour_schedule_id) &&
+    !Boolean(raw.trip_id);
   const type =
     typeText === "tour" || typeText === "package" || looksLikeTour
       ? "tour"
@@ -210,30 +225,34 @@ export const toUiBooking = (raw) => {
 
   const fromCity =
     raw.from ||
+    raw.package_id?.source_city ||
     raw.Package_id?.source_city ||
     raw.trip_id?.schedule_id?.route_id?.boarding_from;
   const toCity =
     raw.to ||
+    raw.package_id?.destination ||
     raw.Package_id?.destination ||
     raw.trip_id?.schedule_id?.route_id?.destination;
 
   const departure = firstNonEmpty(
     raw.departure,
     raw.tour_schedule_id?.departure_time,
-    raw.trip_id?.schedule_id?.departure_time,
+    raw.trip_id?.schedule_id?.departure_time
   );
 
   const arrival = firstNonEmpty(
     raw.arrival,
-    raw.trip_id?.schedule_id?.arrival_time,
+    raw.trip_id?.schedule_id?.arrival_time
   );
 
   // 4) Bus display fields (transport, AC type, bus name/no)
   const { transport, busType, busName, busNo, busAC } = mapBusInfo(raw);
 
   // 5) Hotel text for tour bookings
-  const hotelNames = Array.isArray(raw.Package_id?.hotels)
-    ? raw.Package_id.hotels
+  const hotelNames = Array.isArray(
+    raw.package_id?.hotels || raw.Package_id?.hotels
+  )
+    ? (raw.package_id?.hotels || raw.Package_id?.hotels)
         .map((hotel) => hotel?.name || hotel?.hotel_name)
         .filter(Boolean)
         .join(", ")
@@ -245,8 +264,8 @@ export const toUiBooking = (raw) => {
   const seatCount = Array.isArray(raw.seat_numbers)
     ? raw.seat_numbers.length
     : Array.isArray(raw.seats)
-      ? raw.seats.length
-      : 0;
+    ? raw.seats.length
+    : 0;
 
   const travellers = Number(
     raw.travellers ||
@@ -255,7 +274,7 @@ export const toUiBooking = (raw) => {
       raw.passenger_count ||
       passengers.length ||
       seatCount ||
-      0,
+      0
   );
 
   if (passengers.length === 0 && (travellers > 0 || seatCount > 0)) {
@@ -273,18 +292,19 @@ export const toUiBooking = (raw) => {
   const seats = Array.isArray(raw.seats)
     ? raw.seats
     : Array.isArray(raw.seat_numbers)
-      ? raw.seat_numbers
-      : [];
+    ? raw.seat_numbers
+    : [];
 
   // 7) Duration from raw value, else auto-calculate from times
   const resolvedDuration = deriveDuration(
     raw.duration ||
+      raw.package_id?.duration ||
       raw.Package_id?.duration ||
       raw.trip_id?.duration ||
       raw.trip_id?.schedule_id?.duration ||
       raw.trip_id?.schedule_id?.route_id?.duration,
     departure,
-    arrival,
+    arrival
   );
 
   return {
@@ -294,6 +314,7 @@ export const toUiBooking = (raw) => {
     paymentStatus: toTitle(paymentStatus),
     name:
       raw.name ||
+      raw.package_id?.package_name ||
       raw.Package_id?.package_name ||
       `${fromCity || "-"} → ${toCity || "-"}`,
     from: fromCity || "-",

@@ -41,6 +41,8 @@ const custmerSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
   },
   { timestamps: true }
 );

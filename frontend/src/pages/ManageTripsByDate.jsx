@@ -215,7 +215,7 @@ const ManageTripsByDate = () => {
                   <td>
                     <select
                       className="form-select form-select-sm"
-                      defaultValue={trip.driver_id?._id || ""}
+                      value={trip.driver_id?._id || trip.driver_id || ""}
                       onChange={(e) => updateDriver(trip._id, e.target.value)}
                       style={{ width: 180 }}
                     >

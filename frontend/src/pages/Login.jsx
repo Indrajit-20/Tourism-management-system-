@@ -89,6 +89,10 @@ const Login = () => {
               <span>First time visit? </span>
               <Link to="/register">Register</Link>
             </div>
+
+            <div className="text-center mt-2">
+              <Link to="/forgot-password">Forgot Password?</Link>
+            </div>
           </form>
         </div>
       </div>

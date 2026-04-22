@@ -13,18 +13,31 @@ const Register = () => {
     password: "",
     confirm_password: "",
   });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setformdata({ ...formdata, [e.target.name]: e.target.value });
+    setError(""); // Clear error when user starts typing
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
 
     if (formdata.password !== formdata.confirm_password) {
-      alert("Passwords do not match!");
+      setError("❌ Passwords do not match!");
       return;
     }
+
+    if (formdata.password.length < 6) {
+      setError("❌ Password must be at least 6 characters long");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const payload = {
@@ -42,26 +55,66 @@ const Register = () => {
       );
 
       if (response.status === 201 || response.status === 200) {
-        alert(`Registration successful!`);
-        navigate("/login");
+        setSuccess("✅ Registration successful! Redirecting to login...");
+        setTimeout(() => navigate("/login"), 2000);
       }
     } catch (err) {
-      console.log("Error during registration:", err.response || err.message || err);
-      const message = err.response?.data?.message || err.message || "Registration failed";
-      alert(`Registration failed: ${message}`);
+      console.log(
+        "Error during registration:",
+        err.response || err.message || err
+      );
+
+      // Display specific error message from backend
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.details ||
+        err.message ||
+        "Registration failed. Please try again";
+
+      setError(`❌ ${errorMessage}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-6"> 
+        <div className="col-md-6">
           <div className="card shadow-sm border-0 bg-light p-4">
             <h2 className="text-center mb-4 text-primary">Register Now</h2>
-            
+
+            {error && (
+              <div
+                className="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                {error}
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setError("")}
+                  aria-label="Close"
+                ></button>
+              </div>
+            )}
+
+            {success && (
+              <div
+                className="alert alert-success alert-dismissible fade show"
+                role="alert"
+              >
+                {success}
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setSuccess("")}
+                  aria-label="Close"
+                ></button>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit}>
-              
-    
               <div className="row mb-3">
                 <div className="col-md-6">
                   <label className="form-label fw-bold">First Name</label>
@@ -87,7 +140,6 @@ const Register = () => {
                 </div>
               </div>
 
-
               <div className="mb-3">
                 <label className="form-label fw-bold">Email</label>
                 <input
@@ -100,7 +152,6 @@ const Register = () => {
                 />
               </div>
 
-     
               <div className="row mb-3">
                 <div className="col-md-6">
                   <label className="form-label fw-bold">Date Of Birth</label>
@@ -155,19 +206,20 @@ const Register = () => {
                 </div>
               </div>
 
-            
-              <button type="submit" className="btn btn-primary w-100 py-2 mb-3 fw-bold">
-                Register Now
+              <button
+                type="submit"
+                className="btn btn-primary w-100 py-2 mb-3 fw-bold"
+                disabled={loading}
+              >
+                {loading ? "Registering..." : "Register Now"}
               </button>
 
-              
               <div className="text-center">
                 <span className="text-muted small">Already a member? </span>
                 <Link to="/login" className="text-decoration-none fw-bold">
                   Login here
                 </Link>
               </div>
-
             </form>
           </div>
         </div>

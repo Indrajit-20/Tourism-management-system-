@@ -32,6 +32,22 @@ const calculatePackageRefund = ({ booking, schedule }) => {
     };
   }
 
+  // Grace Period: 3 hours for 100% refund (instead of just 3 mins, to be fair)
+  const createdAt = new Date(booking.createdAt || booking.booking_date);
+  const now = new Date();
+  const minutesSinceBooking = (now - createdAt) / (1000 * 60);
+
+  if (minutesSinceBooking <= 180) {
+    // 3 hours grace period
+    return {
+      allowed: true,
+      refundAmount: totalPaid,
+      refundPercent: 100,
+      nonRefundableAmount: 0,
+      reason: "Full refund within 3-hour booking grace period",
+    };
+  }
+
   if (bookingStatus === "pending" || bookingStatus === "approved") {
     return {
       allowed: true,

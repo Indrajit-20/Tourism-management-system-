@@ -3,6 +3,7 @@ import Register from "./pages/Register";
 import Hompage from "./pages/Hompage";
 import PackagesList from "./pages/PackagesList";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import PackageManagment from "./pages/PackageManagment";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -45,6 +46,7 @@ function App() {
         {/* Pages WITHOUT Header/Footer */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Public Routes WITH Header/Footer */}
         <Route element={<PublicLayout />}>

@@ -39,6 +39,9 @@ const staffSchema = new mongoose.Schema(
     },
 
     experience: { type: String, description: "Experience in years or months" },
+
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
   },
   { timestamps: true }
 );

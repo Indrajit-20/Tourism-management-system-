@@ -658,6 +658,7 @@ const ManageSchedules = () => {
                 <th>Route</th>
                 <th>Title</th>
                 <th>Frequency</th>
+                <th>Drivers</th>
                 <th>Time</th>
                 <th>Price</th>
                 <th>Boarding Point</th>
@@ -685,6 +686,19 @@ const ManageSchedules = () => {
                           Days: {schedule.days_of_week.join(", ")}
                         </div>
                       )}
+                  </td>
+
+                  <td>
+                    {Array.isArray(schedule.driver_ids) &&
+                    schedule.driver_ids.length > 0 ? (
+                      <div className="small">
+                        {schedule.driver_ids
+                          .map((d) => d?.name || "Driver")
+                          .join(", ")}
+                      </div>
+                    ) : (
+                      <span className="text-muted small">Not set</span>
+                    )}
                   </td>
 
                   <td>

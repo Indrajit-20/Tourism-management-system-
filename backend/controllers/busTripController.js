@@ -7,7 +7,7 @@ const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 const parseTimeToMinutes = (value) => {
   const text = String(value || "")
     .trim()
-    .toUpperCase();
+    .toUpper_CASE();
   if (!text) return null;
 
   const hhmm = text.match(/^(\d{1,2}):(\d{2})$/);
@@ -227,7 +227,8 @@ const autoGenerateTrips = async (schedule, bus) => {
     const newTrip = new BusTrip({
       schedule_id: schedule._id,
       bus_id: bus._id,
-      driver_id: schedule.driver_id || bus.driver_id,
+      driver_id:
+        schedule.driver_ids?.[0] || schedule.driver_id || bus.driver_id,
       trip_date: tripDate,
       boarding_points: schedule.boarding_points || [],
       drop_points: schedule.drop_points || [],
@@ -361,7 +362,8 @@ const getTrips = async (req, res) => {
 
       const schedule = await BusSchedule.findById(schedule_id)
         .populate({ path: "route_id" })
-        .populate({ path: "bus_id" });
+        .populate({ path: "bus_id" })
+        .populate("driver_ids");
 
       if (!schedule) {
         return res.status(404).json({ message: "Schedule not found" });
@@ -406,7 +408,8 @@ const getTrips = async (req, res) => {
       const newTrip = new BusTrip({
         schedule_id,
         bus_id: bus._id,
-        driver_id: schedule.driver_id,
+        driver_id:
+          schedule.driver_ids?.[0] || schedule.driver_id || bus.driver_id,
         trip_date: tripDate,
         boarding_points: schedule.boarding_points || [],
         drop_points: schedule.drop_points || [],
@@ -448,7 +451,8 @@ const getTrips = async (req, res) => {
         status: "Active",
       })
         .populate("route_id")
-        .populate("bus_id");
+        .populate("bus_id")
+        .populate("driver_ids");
 
       if (schedules.length === 0) {
         console.log(`⚠️ No active schedules found for route ${route_id}`);
@@ -496,7 +500,8 @@ const getTrips = async (req, res) => {
       const newTrip = new BusTrip({
         schedule_id: schedule._id,
         bus_id: bus._id,
-        driver_id: schedule.driver_id,
+        driver_id:
+          schedule.driver_ids?.[0] || schedule.driver_id || bus.driver_id,
         trip_date: tripDate,
         boarding_points: schedule.boarding_points || [],
         drop_points: schedule.drop_points || [],
@@ -576,23 +581,23 @@ const updateTrip = async (req, res) => {
         `🔧 Driver validation: Current=${currentDriverId}, New=${newDriverId}`
       );
 
-      // Only check availability if driver is actually changing to a different one
-      if (currentDriverId && currentDriverId !== newDriverId) {
+      // Only check availability if driver is actually changing to a different one OR if it was previously "Not assigned"
+      if (currentDriverId !== newDriverId) {
         try {
           console.log("🔧 Running availability check...");
 
-          const driverCheck = await checkDriverAvailability(
-            updates.driver_id,
+          const availability = await checkDriverAvailability(
+            newDriverId,
             trip.trip_date,
             trip.schedule_id?.route_id?.departure_time,
             trip.schedule_id?.route_id?.arrival_time,
             req.params.id // Exclude this trip from the check
           );
 
-          console.log("🔧 Availability result:", driverCheck);
+          console.log("🔧 Availability result:", availability);
 
-          if (!driverCheck.available) {
-            return res.status(400).json({ message: driverCheck.message });
+          if (!availability.available) {
+            return res.status(400).json({ message: availability.message });
           }
         } catch (checkError) {
           console.error("❌ Availability check failed:", checkError.message);

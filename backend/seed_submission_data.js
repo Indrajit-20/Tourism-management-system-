@@ -286,6 +286,10 @@ const main = async () => {
       ["Mahesh Chauhan", "driver"],
       ["Bhavesh Rathod", "driver"],
       ["Dilip Yadav", "driver"],
+      ["Vikram Desai", "driver"],
+      ["Nilesh Rana", "driver"],
+      ["Rahul Choksi", "driver"],
+      ["Prakash Solanki", "driver"],
       ["Neha Trivedi", "guide"],
       ["Pooja Sharma", "guide"],
       ["Aarav Mehta", "guide"],
@@ -746,12 +750,12 @@ const main = async () => {
     );
 
     const tourScheduleDefs = [
-      { pkg: 0, bus: 0, driver: 7, guide: 0, startOffset: -12, days: 6, price: 28900, departure_status: "Completed" },
-      { pkg: 1, bus: 1, driver: 6, guide: 1, startOffset: -8, days: 5, price: 21900, departure_status: "Completed" },
-      { pkg: 2, bus: 2, driver: 5, guide: 2, startOffset: 1, days: 5, price: 18900, departure_status: "Open" },
-      { pkg: 3, bus: 3, driver: 4, guide: 3, startOffset: 3, days: 6, price: 16900, departure_status: "Open" },
-      { pkg: 4, bus: 0, driver: 3, guide: 0, startOffset: 4, days: 4, price: 14900, departure_status: "Open" },
-      { pkg: 5, bus: 1, driver: 2, guide: 2, startOffset: 6, days: 7, price: 23900, departure_status: "Open" },
+      { pkg: 0, bus: 0, driver: 8, guide: 0, startOffset: -12, days: 6, price: 28900, departure_status: "Completed" },
+      { pkg: 1, bus: 1, driver: 9, guide: 1, startOffset: -8, days: 5, price: 21900, departure_status: "Completed" },
+      { pkg: 2, bus: 2, driver: 8, guide: 2, startOffset: 1, days: 5, price: 18900, departure_status: "Open" },
+      { pkg: 3, bus: 3, driver: 9, guide: 3, startOffset: 3, days: 6, price: 16900, departure_status: "Open" },
+      { pkg: 4, bus: 0, driver: 10, guide: 0, startOffset: 4, days: 4, price: 14900, departure_status: "Open" },
+      { pkg: 5, bus: 1, driver: 11, guide: 2, startOffset: 6, days: 7, price: 23900, departure_status: "Open" },
     ];
 
     const tourSchedules = await TourSchedule.insertMany(
@@ -812,7 +816,24 @@ const main = async () => {
       const pkg = packages.find((p) => String(p._id) === String(schedule.package_id));
       const customer = customers[plan.customerIndex];
       const minDaysBeforeDeparture = Math.max(3, Number(plan.daysBeforeDeparture || 3));
-      const bookingDate = new Date(schedule.start_date.getTime() - minDaysBeforeDeparture * dayMs);
+      const bookingDateFromDeparture = new Date(
+        schedule.start_date.getTime() - minDaysBeforeDeparture * dayMs
+      );
+      // Booking date should never be in the future.
+      const bookingDate =
+        bookingDateFromDeparture > new Date()
+          ? new Date(Date.now() - rand(2, 8) * 60 * 60 * 1000)
+          : bookingDateFromDeparture;
+
+      const approvalDeadline =
+        plan.bookingStatus === "pending"
+          ? new Date(Date.now() + 2 * dayMs)
+          : new Date(bookingDate.getTime() + 2 * dayMs);
+      const paymentDeadline =
+        plan.bookingStatus === "pending"
+          ? null
+          : new Date(bookingDate.getTime() + 3 * dayMs);
+
       const doc = new PackageBooking({
         package_id: schedule.package_id,
         tour_schedule_id: schedule._id,
@@ -824,8 +845,8 @@ const main = async () => {
         booking_date: bookingDate,
         booking_status: plan.bookingStatus,
         payment_status: plan.paymentStatus,
-        approval_deadline: new Date(bookingDate.getTime() + 2 * dayMs),
-        payment_deadline: new Date(bookingDate.getTime() + 3 * dayMs),
+        approval_deadline: approvalDeadline,
+        payment_deadline: paymentDeadline,
         cancelled_by: plan.bookingStatus === "cancelled" ? "customer" : undefined,
         cancellation_reason: plan.bookingStatus === "cancelled" ? "Plan changed" : undefined,
         cancelled_at: plan.bookingStatus === "cancelled" ? new Date() : undefined,

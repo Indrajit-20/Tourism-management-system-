@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const BusTrip = require("../models/BusTrip");
 const BusSchedule = require("../models/BusSchedule");
 const Bus = require("../models/Bus");
+const TourSchedule = require("../models/TourSchedule");
 const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 
 const parseTimeToMinutes = (value) => {
@@ -70,6 +71,31 @@ const checkDriverAvailability = async (
     return {
       available: false,
       message: `Driver is already running trip. Cannot assign until current trip is completed.`,
+    };
+  }
+
+  // Driver should not be assigned to a tour on the same day.
+  const activeTours = await TourSchedule.find({
+    $or: [{ driver_id }, { guide_id: driver_id }],
+    departure_status: { $nin: ["Completed", "Archived"] },
+  })
+    .populate("package_id", "package_name")
+    .lean();
+
+  const conflictingTour = activeTours.find((tour) => {
+    const tourStart = new Date(tour.start_date);
+    const tourEnd = tour.end_date ? new Date(tour.end_date) : tourStart;
+    const tripDay = new Date(tripDate);
+    tripDay.setHours(0, 0, 0, 0);
+    return tripDay >= new Date(tourStart.setHours(0, 0, 0, 0)) && tripDay <= new Date(tourEnd.setHours(0, 0, 0, 0));
+  });
+
+  if (conflictingTour) {
+    return {
+      available: false,
+      message: `Driver is already assigned to tour '${
+        conflictingTour.package_id?.package_name || conflictingTour._id
+      }' for this date range.`,
     };
   }
 
@@ -581,23 +607,23 @@ const updateTrip = async (req, res) => {
         `🔧 Driver validation: Current=${currentDriverId}, New=${newDriverId}`
       );
 
-      // Only check availability if driver is actually changing to a different one OR if it was previously "Not assigned"
-      if (currentDriverId !== newDriverId) {
+      // Only check availability if driver is actually changing to a different one
+      if (currentDriverId && currentDriverId !== newDriverId) {
         try {
           console.log("🔧 Running availability check...");
 
-          const availability = await checkDriverAvailability(
-            newDriverId,
+          const driverCheck = await checkDriverAvailability(
+            updates.driver_id,
             trip.trip_date,
             trip.schedule_id?.route_id?.departure_time,
             trip.schedule_id?.route_id?.arrival_time,
             req.params.id // Exclude this trip from the check
           );
 
-          console.log("🔧 Availability result:", availability);
+          console.log("🔧 Availability result:", driverCheck);
 
-          if (!availability.available) {
-            return res.status(400).json({ message: availability.message });
+          if (!driverCheck.available) {
+            return res.status(400).json({ message: driverCheck.message });
           }
         } catch (checkError) {
           console.error("❌ Availability check failed:", checkError.message);

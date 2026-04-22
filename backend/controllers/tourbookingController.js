@@ -251,12 +251,20 @@ const packageBooking = async (req, res) => {
         .json({ message: "Tour schedule seat data is not configured" });
     }
 
+    const scheduleSeatNumbers = Array.isArray(tourSchedule.seats)
+      ? tourSchedule.seats
+          .map((seat) => String(seat?.seat_number || "").trim().toUpperCase())
+          .filter(Boolean)
+      : [];
+
     const validSeatNumbers = new Set(
-      buildSeatNumbers(
-        totalSeats,
-        tourSchedule?.bus_id?.layout_type,
-        tourSchedule?.bus_id?.bus_type
-      )
+      scheduleSeatNumbers.length > 0
+        ? scheduleSeatNumbers
+        : buildSeatNumbers(
+            totalSeats,
+            tourSchedule?.bus_id?.layout_type,
+            tourSchedule?.bus_id?.bus_type
+          )
     );
     const invalidSeats = normalizedSeats.filter(
       (seat) => !validSeatNumbers.has(seat)

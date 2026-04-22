@@ -1,6 +1,6 @@
 [
   {
-    "_id": "69dfd59e5765144ac939b595",
+    "_id": "69dfe4fa91996778049a811e",
     "bus_number": "GJ01BT1001",
     "bus_name": "TMS Swiftline",
     "bus_category": "route",
@@ -9,11 +9,11 @@
     "total_seats": 32,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.395Z",
+    "updatedAt": "2026-04-15T19:20:26.395Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b596",
+    "_id": "69dfe4fa91996778049a811f",
     "bus_number": "GJ01BT1002",
     "bus_name": "TMS Highway King",
     "bus_category": "route",
@@ -22,11 +22,11 @@
     "total_seats": 30,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b597",
+    "_id": "69dfe4fa91996778049a8120",
     "bus_number": "GJ01BT1003",
     "bus_name": "TMS Express Star",
     "bus_category": "route",
@@ -35,11 +35,11 @@
     "total_seats": 28,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b598",
+    "_id": "69dfe4fa91996778049a8121",
     "bus_number": "GJ01BT1004",
     "bus_name": "TMS Coastal Ride",
     "bus_category": "route",
@@ -48,11 +48,11 @@
     "total_seats": 30,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b599",
+    "_id": "69dfe4fa91996778049a8122",
     "bus_number": "GJ01TT2001",
     "bus_name": "TMS Tour Queen",
     "bus_category": "tour",
@@ -61,11 +61,11 @@
     "total_seats": 30,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b59a",
+    "_id": "69dfe4fa91996778049a8123",
     "bus_number": "GJ01TT2002",
     "bus_name": "TMS Heritage Coach",
     "bus_category": "tour",
@@ -74,11 +74,11 @@
     "total_seats": 32,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b59b",
+    "_id": "69dfe4fa91996778049a8124",
     "bus_number": "GJ01TT2003",
     "bus_name": "TMS Desert Runner",
     "bus_category": "tour",
@@ -87,11 +87,11 @@
     "total_seats": 30,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   },
   {
-    "_id": "69dfd59e5765144ac939b59c",
+    "_id": "69dfe4fa91996778049a8125",
     "bus_number": "GJ01TT2004",
     "bus_name": "TMS Pilgrim Special",
     "bus_category": "tour",
@@ -100,7 +100,7 @@
     "total_seats": 28,
     "status": "Active",
     "__v": 0,
-    "createdAt": "2026-04-15T18:14:54.715Z",
-    "updatedAt": "2026-04-15T18:14:54.715Z"
+    "createdAt": "2026-04-15T19:20:26.396Z",
+    "updatedAt": "2026-04-15T19:20:26.396Z"
   }
 ]

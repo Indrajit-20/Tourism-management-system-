@@ -78,9 +78,9 @@ const ManageSchedules = () => {
       const token = sessionStorage.getItem("token");
 
       const [schedulesRes, routesRes, busesRes] = await Promise.all([
-        axios.get("http://localhost:4000/api/bus-schedules"),
-        axios.get("http://localhost:4000/api/bus-routes"),
-        axios.get("http://localhost:4000/api/bus"),
+        axios.get(`${import.meta.env.VITE_API_URL}/bus-schedules`),
+        axios.get(`${import.meta.env.VITE_API_URL}/bus-routes`),
+        axios.get(`${import.meta.env.VITE_API_URL}/bus`),
       ]);
 
       setSchedules(schedulesRes.data || []);
@@ -91,7 +91,7 @@ const ManageSchedules = () => {
       // Keep route/schedule dropdown usable even if staff token is expired.
       if (token) {
         try {
-          const staffRes = await axios.get("http://localhost:4000/api/staff", {
+          const staffRes = await axios.get(`${import.meta.env.VITE_API_URL}/staff`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           const onlyDrivers = (staffRes.data || []).filter((s) =>
@@ -219,14 +219,14 @@ const ManageSchedules = () => {
       if (editingId) {
         // Update existing schedule
         await axios.put(
-          `http://localhost:4000/api/bus-schedules/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/bus-schedules/${editingId}`,
           payload,
           { headers }
         );
         alert("Schedule updated!");
       } else {
         // Create new schedule
-        await axios.post("http://localhost:4000/api/bus-schedules", payload, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/bus-schedules`, payload, {
           headers,
         });
         alert("Schedule created!");
@@ -288,7 +288,7 @@ const ManageSchedules = () => {
       return;
     const token = sessionStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:4000/api/bus-schedules/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/bus-schedules/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Schedule deleted!");

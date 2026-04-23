@@ -20,7 +20,7 @@ const Dashboard = () => {
         const token = sessionStorage.getItem("token");
         console.log("Fetching dashboard stats...");
         const res = await axios.get(
-          "http://localhost:4000/api/admin-stats/dashboard-stats",
+          `${import.meta.env.VITE_API_URL}/admin-stats/dashboard-stats`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

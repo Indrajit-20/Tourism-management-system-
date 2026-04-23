@@ -6,7 +6,7 @@ const PaymentButton = ({ amount }) => {
     try {
       // 1. Call your backend to create an order
       const res = await axios.post(
-        "http://localhost:4000/api/payment/create-order",
+        `${import.meta.env.VITE_API_URL}/payment/create-order`,
         { amount }
       );
       const order = res.data;

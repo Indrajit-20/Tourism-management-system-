@@ -100,7 +100,7 @@ const PackageSeatSelection = () => {
     const fetchData = async () => {
       try {
         const packageReq = axios.get(
-          `http://localhost:4000/api/packages/${id}`,
+          `${import.meta.env.VITE_API_URL}/packages/${id}`,
         );
         const departureId = selectedDeparture?._id || scheduleIdFromQuery;
 
@@ -112,9 +112,9 @@ const PackageSeatSelection = () => {
 
         const [packageRes, departureRes, seatsRes] = await Promise.all([
           packageReq,
-          axios.get(`http://localhost:4000/api/tour-schedules/${departureId}`),
+          axios.get(`${import.meta.env.VITE_API_URL}/tour-schedules/${departureId}`),
           axios.get(
-            `http://localhost:4000/api/tour-schedules/${departureId}/seats`,
+            `${import.meta.env.VITE_API_URL}/tour-schedules/${departureId}/seats`,
           ),
         ]);
 

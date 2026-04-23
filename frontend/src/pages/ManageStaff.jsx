@@ -28,7 +28,7 @@ const ManageStaff = () => {
     try {
       const token = sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.get("http://localhost:4000/api/staff", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/staff`, {
         headers,
       });
       setStaffList(res.data);
@@ -97,13 +97,13 @@ const ManageStaff = () => {
         }
 
         await axios.put(
-          `http://localhost:4000/api/staff/update/${editingStaffId}`,
+          `${import.meta.env.VITE_API_URL}/staff/update/${editingStaffId}`,
           payload,
           { headers }
         );
         alert("Staff updated successfully!");
       } else {
-        await axios.post("http://localhost:4000/api/staff/add", form, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/staff/add`, form, {
           headers,
         });
         alert("Staff added successfully!");
@@ -141,7 +141,7 @@ const ManageStaff = () => {
       try {
         const token = sessionStorage.getItem("token");
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        await axios.delete(`http://localhost:4000/api/staff/delete/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/staff/delete/${id}`, {
           headers,
         });
         alert("Staff deleted successfully");

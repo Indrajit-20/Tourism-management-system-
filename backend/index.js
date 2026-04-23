@@ -38,13 +38,37 @@ const ticketRoutes = require("./routes/ticketRoutes"); // ✅ NEW
 const staffDashboardRoutes = require("./routes/staffDashboardRoutes"); // ✅ NEW
 const tourScheduleRoutes = require("./routes/tourScheduleRoutes"); // ✅ NEW: Tour departures
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 const app = express();
 // parse incoming JSON bodies
 app.use(express.json());
-//cors
 
-app.use(cors());
+// Set allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:5173", // Local Vite dev
+  "http://localhost:3000", // Standard React dev
+  process.env.FRONTEND_URL, // Production Frontend
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.indexOf(origin) !== -1 ||
+        origin.startsWith("http://localhost:")
+      ) {
+        callback(null, true);
+      } else {
+        console.log("CORS blocked origin:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 // Serve static files (images) from the 'uploads' directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -141,7 +165,10 @@ const migrateLegacyLockedTourSchedules = async () => {
       );
     }
   } catch (error) {
-    console.error("[Startup Migration] Failed to migrate legacy Locked schedules:", error.message);
+    console.error(
+      "[Startup Migration] Failed to migrate legacy Locked schedules:",
+      error.message
+    );
   }
 };
 
@@ -160,7 +187,7 @@ const startServer = async () => {
   });
 
   app.listen(port, () =>
-    console.log(`server started at http://localhost:${port}`)
+    console.log(`Server started at http://localhost:${port}`)
   );
 };
 

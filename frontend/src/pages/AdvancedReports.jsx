@@ -50,19 +50,19 @@ const AdvancedReports = () => {
     try {
       // Fetch all data
       const bookingRes = await axios.get(
-        "http://localhost:4000/api/bookings/all",
+        `${import.meta.env.VITE_API_URL}/bookings/all`,
         { headers },
       );
       setBookings(bookingRes.data || []);
 
       const busRes = await axios.get(
-        "http://localhost:4000/api/bus-bookings/all",
+        `${import.meta.env.VITE_API_URL}/bus-bookings/all`,
         { headers },
       );
       setBusBookings(busRes.data || []);
 
       const statsRes = await axios.get(
-        "http://localhost:4000/api/admin-stats/dashboard-stats",
+        `${import.meta.env.VITE_API_URL}/admin-stats/dashboard-stats`,
         { headers },
       );
       setStats(statsRes.data || {});

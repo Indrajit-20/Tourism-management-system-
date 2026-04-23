@@ -39,7 +39,7 @@ const PackagesList = () => {
     const fetchPackages = async () => {
       try {
         const packageRes = await axios.get(
-          "http://localhost:4000/api/packages",
+          `${import.meta.env.VITE_API_URL}/packages`,
         );
         const packageList = Array.isArray(packageRes.data)
           ? packageRes.data
@@ -49,7 +49,7 @@ const PackagesList = () => {
         for (const item of packageList) {
           try {
             const scheduleRes = await axios.get(
-              `http://localhost:4000/api/tour-schedules/package/${item._id}/departures`,
+              `${import.meta.env.VITE_API_URL}/tour-schedules/package/${item._id}/departures`,
             );
             const departures = Array.isArray(scheduleRes.data)
               ? scheduleRes.data

@@ -19,7 +19,7 @@ const ManageCustmer = () => {
     try {
       const token = sessionStorage.getItem("token");
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.get("http://localhost:4000/api/cust", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/cust`, {
         headers,
       });
       console.log(res);
@@ -32,23 +32,6 @@ const ManageCustmer = () => {
   useEffect(() => {
     fetchCustmer();
   }, []);
-
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this customer?")) {
-      try {
-        const token = sessionStorage.getItem("token");
-        const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        await axios.delete(`http://localhost:4000/api/cust/delete/${id}`, {
-          headers,
-        });
-        alert("Customer deleted successfully");
-        fetchCustmer();
-      } catch (err) {
-        console.error("Error deleting customer", err);
-        alert("Error deleting customer");
-      }
-    }
-  };
 
   return (
     <>
@@ -64,7 +47,6 @@ const ManageCustmer = () => {
                 <th>Mobile No</th>
                 <th>Gender</th>
                 <th>dob</th>
-                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -76,14 +58,6 @@ const ManageCustmer = () => {
                   <td>{cust.phone_no}</td>
                   <td>{cust.gender}</td>
                   <td>{formatIndianDate(cust.dob)}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(cust._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

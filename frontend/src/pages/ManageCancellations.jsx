@@ -19,7 +19,7 @@ const ManageCancellations = () => {
       setError("");
       const token = Storage.getToken();
       const response = await axios.get(
-        "http://localhost:4000/api/cancellation/admin/all",
+        `${import.meta.env.VITE_API_URL}/cancellation/admin/all`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ const ManageCancellations = () => {
 
       // First create refund record
       await axios.post(
-        "http://localhost:4000/api/refunds/create",
+        `${import.meta.env.VITE_API_URL}/refunds/create`,
         {
           cancellation_id: cancellationId,
           refund_mode: "Online",

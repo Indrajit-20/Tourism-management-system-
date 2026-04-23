@@ -767,6 +767,10 @@ const updateTourDeparture = async (req, res) => {
       departure.price_per_person = Number(nextPrice);
     }
     if (isDraftOrOpen && bus_id) departure.bus_id = bus_id;
+    if (isDraftOrOpen && (start_date || end_date)) {
+      departure.start_date = nextStartDate;
+      departure.end_date = nextEndDate;
+    }
     if (typeof notes === "string") departure.notes = notes;
     if (
       departure_status &&

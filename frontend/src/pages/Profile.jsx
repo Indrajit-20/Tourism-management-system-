@@ -60,7 +60,7 @@ const Profile = () => {
       }
 
       const response = await axios.get(
-        "http://localhost:4000/api/cust/profile/me",
+        `${import.meta.env.VITE_API_URL}/cust/profile/me`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -90,7 +90,7 @@ const Profile = () => {
     try {
       const token = Storage.getToken();
       const response = await axios.put(
-        "http://localhost:4000/api/cust/profile/update",
+        `${import.meta.env.VITE_API_URL}/cust/profile/update`,
         {
           first_name: firstName,
           last_name: lastName,

@@ -48,7 +48,7 @@ const ManagePackageBookings = () => {
   const fetchBookings = async () => {
     try {
       const token = sessionStorage.getItem("token");
-      const res = await axios.get("http://localhost:4000/api/bookings/all", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bookings/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBookings(res.data);
@@ -63,7 +63,7 @@ const ManagePackageBookings = () => {
     const token = sessionStorage.getItem("token");
     try {
       await axios.put(
-        `http://localhost:4000/api/bookings/update-status/${id}`,
+        `${import.meta.env.VITE_API_URL}/bookings/update-status/${id}`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } },
       );

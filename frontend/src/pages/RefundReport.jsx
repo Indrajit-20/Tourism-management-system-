@@ -12,7 +12,7 @@ const RefundReport = () => {
   const fetchRefunds = async () => {
     try {
       const token = sessionStorage.getItem("token");
-      const res = await axios.get("http://localhost:4000/api/refunds/all", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/refunds/all`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRefunds(res.data);

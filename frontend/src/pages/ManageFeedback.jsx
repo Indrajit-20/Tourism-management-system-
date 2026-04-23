@@ -15,7 +15,7 @@ const ManageFeedback = () => {
     try {
       const token = sessionStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:4000/api/feedback/admin/all",
+        `${import.meta.env.VITE_API_URL}/feedback/admin/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

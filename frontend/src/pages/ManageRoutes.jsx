@@ -21,7 +21,7 @@ const ManageRoutes = () => {
 
   const fetchRoutes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/bus-routes/");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-routes/`);
       setRoutes(res.data);
     } catch (err) {
       console.error(err);
@@ -31,7 +31,7 @@ const ManageRoutes = () => {
   const fetchBuses = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/bus?category=route",
+        `${import.meta.env.VITE_API_URL}/bus?category=route`,
       );
       setBuses(res.data);
     } catch (err) {
@@ -50,7 +50,7 @@ const ManageRoutes = () => {
       if (editingId) {
         // Update
         await axios.put(
-          `http://localhost:4000/api/bus-routes/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/bus-routes/${editingId}`,
           formData,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -60,7 +60,7 @@ const ManageRoutes = () => {
         setEditingId(null);
       } else {
         // Create
-        await axios.post("http://localhost:4000/api/bus-routes/add", formData, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/bus-routes/add`, formData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Route Added!");
@@ -92,7 +92,7 @@ const ManageRoutes = () => {
     if (window.confirm("Delete this route?")) {
       const token = sessionStorage.getItem("token");
       try {
-        await axios.delete(`http://localhost:4000/api/bus-routes/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/bus-routes/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Route Deleted!");

@@ -112,14 +112,14 @@ const Hompage = () => {
   // Fetch only packages that have at least one open schedule.
   const fetchpkg = async () => {
     try {
-      const packageRes = await axios.get("http://localhost:4000/api/packages");
+      const packageRes = await axios.get(`${import.meta.env.VITE_API_URL}/packages`);
       const packages = Array.isArray(packageRes.data) ? packageRes.data : [];
       const cards = [];
 
       for (const packageItem of packages) {
         try {
           const scheduleRes = await axios.get(
-            `http://localhost:4000/api/tour-schedules/package/${packageItem._id}/departures`,
+            `${import.meta.env.VITE_API_URL}/tour-schedules/package/${packageItem._id}/departures`,
           );
           const departures = Array.isArray(scheduleRes.data)
             ? scheduleRes.data
@@ -152,7 +152,7 @@ const Hompage = () => {
   // Fetch Featured Bus Routes (Limit to first 3 for proper display)
   const fetchRoutes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/bus-routes");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-routes`);
       setFeaturedRoutes(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
       console.error("Error fetching bus routes", err);
@@ -161,7 +161,7 @@ const Hompage = () => {
 
   const fetchHomeImages = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/home-images");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/home-images`);
       const images = Array.isArray(res.data) ? res.data : [];
       const safeImageUrls = images
         .map((item) => String(item?.image_url || ""))
@@ -193,7 +193,7 @@ const Hompage = () => {
 
         try {
           const res = await axios.get(
-            `http://localhost:4000/api/bus-trips?route_id=${route._id}&date=${dateStr}`,
+            `${import.meta.env.VITE_API_URL}/bus-trips?route_id=${route._id}&date=${dateStr}`,
           );
           if (res.data && res.data.length > 0) {
             tripsData.push(...res.data);

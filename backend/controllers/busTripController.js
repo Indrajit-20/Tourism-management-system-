@@ -8,7 +8,7 @@ const { buildSeatLayout } = require("../utils/seatLayoutHelper");
 const parseTimeToMinutes = (value) => {
   const text = String(value || "")
     .trim()
-    .toUpper_CASE();
+    .toUpperCase();
   if (!text) return null;
 
   const hhmm = text.match(/^(\d{1,2}):(\d{2})$/);
@@ -87,7 +87,10 @@ const checkDriverAvailability = async (
     const tourEnd = tour.end_date ? new Date(tour.end_date) : tourStart;
     const tripDay = new Date(tripDate);
     tripDay.setHours(0, 0, 0, 0);
-    return tripDay >= new Date(tourStart.setHours(0, 0, 0, 0)) && tripDay <= new Date(tourEnd.setHours(0, 0, 0, 0));
+    return (
+      tripDay >= new Date(tourStart.setHours(0, 0, 0, 0)) &&
+      tripDay <= new Date(tourEnd.setHours(0, 0, 0, 0))
+    );
   });
 
   if (conflictingTour) {

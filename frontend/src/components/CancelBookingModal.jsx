@@ -26,7 +26,7 @@ const CancelBookingModal = ({
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:4000/api/cancellation/cancel",
+        `${import.meta.env.VITE_API_URL}/cancellation/cancel`,
         {
           booking_id: bookingId,
           booking_type: bookingType,

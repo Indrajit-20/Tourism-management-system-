@@ -30,7 +30,7 @@ const ManageBus = () => {
 
   const fetchBuses = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/bus");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus`);
       const sorted = [...res.data].sort((a, b) =>
         String(a.bus_number || "").localeCompare(String(b.bus_number || ""))
       );
@@ -44,7 +44,7 @@ const ManageBus = () => {
     try {
       const token = Storage.getToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      const res = await axios.get("http://localhost:4000/api/staff", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/staff`, {
         headers,
       });
       setStaffList(res.data);
@@ -170,7 +170,7 @@ const ManageBus = () => {
 
       if (editingBusId) {
         await axios.put(
-          `http://localhost:4000/api/bus/update/${editingBusId}`,
+          `${import.meta.env.VITE_API_URL}/bus/update/${editingBusId}`,
           payload,
           {
             headers,
@@ -178,7 +178,7 @@ const ManageBus = () => {
         );
         alert("Bus updated successfully!");
       } else {
-        await axios.post("http://localhost:4000/api/bus/add", payload, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/bus/add`, payload, {
           headers,
         });
         alert("Bus added successfully!");
@@ -211,7 +211,7 @@ const ManageBus = () => {
       try {
         const token = Storage.getToken();
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        await axios.delete(`http://localhost:4000/api/bus/delete/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/bus/delete/${id}`, {
           headers,
         });
         fetchBuses();

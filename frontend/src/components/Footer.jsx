@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2024 Tourism Management System. All rights reserved.</p>
+        <p>&copy; 2026 Team Arise developers. All rights reserved.</p>
       </div>
     </footer>
   );

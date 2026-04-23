@@ -82,8 +82,8 @@ const BookPackage = () => {
         }
 
         const [pkgRes, depRes] = await Promise.all([
-          axios.get(`http://localhost:4000/api/packages/${id}`),
-          axios.get(`http://localhost:4000/api/tour-schedules/${departureId}`),
+          axios.get(`${import.meta.env.VITE_API_URL}/packages/${id}`),
+          axios.get(`${import.meta.env.VITE_API_URL}/tour-schedules/${departureId}`),
         ]);
 
         setPackageData(pkgRes.data);
@@ -179,7 +179,7 @@ const BookPackage = () => {
         seat_numbers: selectedSeats,
       };
 
-      await axios.post("http://localhost:4000/api/bookings/book", payload, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/bookings/book`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

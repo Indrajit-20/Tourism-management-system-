@@ -10,7 +10,10 @@ const BookBus = () => {
   const [schedules, setSchedules] = useState([]);
   const [tripInfo, setTripInfo] = useState({}); // ✅ seat info per schedule
   const [selectedSchedule, setSelectedSchedule] = useState(null);
-  const [bookingDetails, setBookingDetails] = useState({ date: "", seats: 1 });
+  const [bookingDetails, setBookingDetails] = useState({
+    date: new Date().toISOString().split("T")[0],
+    seats: 1,
+  });
   const [searchFrom, setSearchFrom] = useState("");
   const [searchTo, setSearchTo] = useState("");
   const todayIso = new Date().toISOString().split("T")[0];
@@ -21,18 +24,11 @@ const BookBus = () => {
   useEffect(() => {
     fetchRoutes();
     fetchSchedules();
-  }, []);
-
-  // ✅ When date changes — reload seat availability for all schedules
-  useEffect(() => {
-    if (schedules.length > 0 && bookingDetails.date) {
-      fetchSeatAvailability(schedules, bookingDetails.date);
-    }
-  }, [bookingDetails.date]);
+  }, [bookingDetails.date]); // ✅ Refetch when date changes
 
   const fetchRoutes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/bus-routes/");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-routes/`);
       setRoutes(res.data);
     } catch (err) {
       console.error("Error fetching routes", err);
@@ -41,10 +37,10 @@ const BookBus = () => {
 
   const fetchSchedules = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/bus-schedules");
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-schedules`);
       setSchedules(res.data);
-      // Fetch seat availability for today by default
-      fetchSeatAvailability(res.data, todayIso);
+      // Fetch seat availability for the currently selected date
+      fetchSeatAvailability(res.data, bookingDetails.date);
     } catch (err) {
       console.error("Error fetching schedules", err);
     }
@@ -53,21 +49,38 @@ const BookBus = () => {
   // ✅ Fetch seat availability for each schedule
   const fetchSeatAvailability = async (schedulesList, selectedDate) => {
     const info = {};
+    const now = new Date();
+    const isToday = selectedDate === now.toISOString().split("T")[0];
+
     await Promise.all(
       schedulesList.map(async (schedule) => {
         try {
+          const depMinutes = toMinutes(schedule.departure_time);
+          const nowMinutes = now.getHours() * 60 + now.getMinutes();
+          const hasDeparted =
+            isToday && depMinutes !== null && nowMinutes >= depMinutes;
+
+          // If departed, skip fetching and mark as hidden (we'll filter them out)
+          if (hasDeparted) {
+            info[schedule._id] = { departed: true };
+            return;
+          }
+
           // Get trip for this schedule on the selected date
           const res = await axios.get(
-            `http://localhost:4000/api/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
+            `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
           );
           const trip = (res.data || [])[0];
           if (trip) {
             const total = trip.seats?.length || 0;
             const booked =
               trip.seats?.filter((s) => !s.is_available).length || 0;
-            info[schedule._id] = { total, booked, available: total - booked };
+            info[schedule._id] = {
+              total,
+              booked,
+              available: total - booked,
+            };
           } else {
-            // No trip yet — show total seats as available
             const bus = schedule.bus_id || {};
             info[schedule._id] = {
               total: bus.total_seats || 0,
@@ -113,8 +126,12 @@ const BookBus = () => {
     return nowMinutes >= depMinutes;
   };
 
-  // ✅ Filter schedules based on route search (match route's boarding_from & destination)
+  // ✅ Filter schedules based on route search and departure time
   const filteredSchedules = schedules.filter((schedule) => {
+    const info = tripInfo[schedule._id];
+    // Hide buses that have already departed for the selected date
+    if (info?.departed) return false;
+
     const route = schedule.route_id || {};
     const from = String(route.boarding_from || "").toLowerCase();
     const to = String(route.destination || "").toLowerCase();
@@ -123,14 +140,14 @@ const BookBus = () => {
     return matchFrom && matchTo;
   });
 
-  // ✅ KEPT: Handle input changes
+  // ✅ Handle input changes
   const handleChange = (e) => {
-    setBookingDetails({ ...bookingDetails, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setBookingDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ✅ KEPT: Submit booking
-  const handleBook = async (e) => {
-    e.preventDefault();
+  // ✅ Updated: Direct booking with selected date
+  const handleBook = async (schedule) => {
     const token = Storage.getToken();
     if (!token) {
       alert("Please login to book a ticket");
@@ -139,21 +156,14 @@ const BookBus = () => {
     }
 
     const selectedDate = bookingDetails.date;
-    if (selectedDate < minDate) {
-      alert("Please select today or a future date.");
-      return;
-    }
-
-    if (isDeparturePassedToday(selectedSchedule.departure_time, selectedDate)) {
-      alert(
-        "This schedule departure time has already passed for today. Please choose another date."
-      );
+    if (!selectedDate) {
+      alert("Please select a travel date first.");
       return;
     }
 
     try {
       const res = await axios.get(
-        `http://localhost:4000/api/bus-trips?schedule_id=${selectedSchedule._id}&date=${selectedDate}`
+        `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
       );
       const trips = res.data || [];
       const trip = trips[0];
@@ -161,17 +171,17 @@ const BookBus = () => {
       if (!trip) {
         alert(
           "No trip is available for this schedule on the selected date. " +
-            "This is usually because the schedule does not run that day. Please try another date."
+            "Please try another date."
         );
         return;
       }
 
       navigate("/book-seats", {
         state: {
-          route: selectedSchedule.route_id,
+          route: schedule.route_id,
           trip,
-          schedule: selectedSchedule,
-          date: bookingDetails.date,
+          schedule: schedule,
+          date: selectedDate,
         },
       });
     } catch (err) {
@@ -182,54 +192,68 @@ const BookBus = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Available Bus Routes</h2>
+      <h2 className="text-center mb-4">Search & Book Bus</h2>
 
-      <SearchFilterContainer
-        title="Search Bus Tickets"
-        subtitle="Filter routes by boarding and destination"
-        resultText={`Showing ${filteredSchedules.length} of ${schedules.length} schedules`}
-        onClear={() => {
-          setSearchFrom("");
-          setSearchTo("");
-        }}
-        clearDisabled={!searchFrom && !searchTo}
-      >
-        <div className="row g-2 align-items-end">
-          <div className="col-md-6">
-            <label className="form-label fw-bold mb-1">From</label>
-            <input
-              type="text"
-              className="form-control sfc-input"
-              placeholder="e.g. Ahmedabad"
-              value={searchFrom}
-              onChange={(e) => setSearchFrom(e.target.value)}
-            />
-          </div>
-          <div className="col-md-6">
-            <label className="form-label fw-bold mb-1">To</label>
-            <input
-              type="text"
-              className="form-control sfc-input"
-              placeholder="e.g. Rajkot"
-              value={searchTo}
-              onChange={(e) => setSearchTo(e.target.value)}
-            />
+      {/* ── STEP 1: DATE & ROUTE SELECTION ── */}
+      <div className="card shadow-sm border mb-4" style={{ borderRadius: 12 }}>
+        <div className="card-body p-4">
+          <div className="row g-3 align-items-end">
+            <div className="col-md-3">
+              <label className="form-label fw-bold">From</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Ahmedabad"
+                value={searchFrom}
+                onChange={(e) => setSearchFrom(e.target.value)}
+              />
+            </div>
+            <div className="col-md-3">
+              <label className="form-label fw-bold">To</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Rajkot"
+                value={searchTo}
+                onChange={(e) => setSearchTo(e.target.value)}
+              />
+            </div>
+            <div className="col-md-3">
+              <label className="form-label fw-bold">Travel Date</label>
+              <input
+                type="date"
+                name="date"
+                className="form-control"
+                min={minDate}
+                value={bookingDetails.date}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="col-md-3">
+              <button
+                className="btn btn-primary w-100 fw-bold"
+                onClick={() => fetchSchedules()}
+              >
+                Search Buses
+              </button>
+            </div>
           </div>
         </div>
-      </SearchFilterContainer>
+      </div>
 
-      {/* ✅ Schedule note when schedule selected */}
-      {selectedSchedule && (
-        <div className="alert alert-info">
-          <strong>Schedule:</strong> {selectedSchedule.title} (
-          {selectedSchedule.frequency})
-        </div>
-      )}
+      <div className="mb-3 text-muted">
+        Showing {filteredSchedules.length} buses for{" "}
+        {new Date(bookingDetails.date).toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })}
+      </div>
 
-      {/* ✅ Schedule cards — now with seat info and duration */}
+      {/* ✅ Schedule cards */}
       <div className="d-flex flex-column gap-3">
         {filteredSchedules.map((schedule) => {
-          // Get seat info for this schedule
           const info = tripInfo[schedule._id] || {
             total: 0,
             booked: 0,
@@ -242,6 +266,7 @@ const BookBus = () => {
             schedule.arrival_time
           );
           const isLow = info.available > 0 && info.available <= 5;
+          const isSoldOut = info.available === 0;
 
           return (
             <div
@@ -250,17 +275,14 @@ const BookBus = () => {
               style={{ borderRadius: 12 }}
             >
               <div className="card-body p-3">
-                {/* ── Main row ── */}
                 <div className="row align-items-center">
-                  {/* Left — Bus info */}
                   <div className="col-md-3">
                     <h6 className="fw-bold mb-0 text-primary">
                       {bus?.bus_name || schedule.title}
                     </h6>
                     <small className="text-muted">
-                      {bus?.bus_type || "Standard"} · {bus?.bus_number}
+                      {bus?.bus_type} · {bus?.bus_number}
                     </small>
-                    {/* Schedule frequency badge */}
                     <div className="mt-1">
                       <span
                         className="badge bg-light text-dark border"
@@ -271,10 +293,8 @@ const BookBus = () => {
                     </div>
                   </div>
 
-                  {/* Middle — Time + Duration */}
                   <div className="col-md-5">
                     <div className="d-flex align-items-center justify-content-center gap-2">
-                      {/* Departure */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
                           {to12HourDisplay(schedule.departure_time)}
@@ -283,8 +303,6 @@ const BookBus = () => {
                           {route.boarding_from}
                         </small>
                       </div>
-
-                      {/* Duration line */}
                       <div className="flex-grow-1 text-center px-1">
                         <div style={{ fontSize: "0.7rem", color: "#888" }}>
                           {duration}
@@ -299,8 +317,6 @@ const BookBus = () => {
                           {bus?.bus_type}
                         </div>
                       </div>
-
-                      {/* Arrival */}
                       <div className="text-center">
                         <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
                           {to12HourDisplay(schedule.arrival_time)}
@@ -312,9 +328,8 @@ const BookBus = () => {
                     </div>
                   </div>
 
-                  {/* Right — Price + Button + Seats left */}
                   <div className="col-md-4 text-md-end mt-3 mt-md-0">
-                    <div className="mb-1">
+                    <div className="mb-2">
                       <small className="text-muted">From </small>
                       <span
                         className="fw-bold text-success"
@@ -324,122 +339,54 @@ const BookBus = () => {
                       </span>
                     </div>
 
-                    {/* Book Ticket button or booking form */}
-                    {selectedSchedule?._id !== schedule._id && (
-                      <button
-                        className="btn btn-danger fw-bold w-100 mb-1"
-                        style={{ borderRadius: 8 }}
-                        onClick={() => setSelectedSchedule(schedule)}
-                        disabled={info.available === 0}
-                      >
-                        {info.available === 0 ? "Sold Out" : "Select Seats"}
-                      </button>
-                    )}
+                    <button
+                      className={`btn w-100 fw-bold mb-2 ${
+                        isSoldOut ? "btn-secondary" : "btn-danger"
+                      }`}
+                      disabled={isSoldOut}
+                      onClick={() => handleBook(schedule)}
+                    >
+                      {isSoldOut ? "Sold Out" : "Select Seats"}
+                    </button>
 
-                    {/* Seats left badge */}
                     <div
                       className={`text-center small fw-bold ${
-                        info.available === 0
+                        isSoldOut
                           ? "text-danger"
                           : isLow
                           ? "text-warning"
                           : "text-success"
                       }`}
                     >
-                      {info.available === 0
-                        ? "❌ Sold Out"
+                      {isSoldOut
+                        ? "❌ Fully Booked"
                         : isLow
                         ? `⚠️ Only ${info.available} seats left!`
-                        : `✅ ${info.available} Seats Left`}
+                        : `✅ ${info.available} Seats Available`}
                     </div>
-                    <small className="text-muted d-block mt-2 text-center">
-                      Boarding: {route.boarding_from} | Drop:{" "}
-                      {route.destination}
-                    </small>
                   </div>
                 </div>
 
-                {/* Booking form when schedule selected */}
-                {selectedSchedule?._id === schedule._id && (
-                  <form
-                    onSubmit={handleBook}
-                    className="mt-3 p-3 bg-light rounded"
-                  >
-                    <div className="mb-2">
-                      <label className="small fw-bold">Travel Date</label>
-                      <input
-                        type="date"
-                        name="date"
-                        className="form-control form-control-sm"
-                        required
-                        min={minDate}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <small className="text-muted">
-                        Select date → choose seats on next page
-                      </small>
-                      <div>
-                        <button
-                          type="button"
-                          className="btn btn-sm btn-secondary me-2"
-                          onClick={() => setSelectedSchedule(null)}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="btn btn-sm btn-success"
-                        >
-                          Find Seats →
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                )}
-
-                {/* Bottom stats row */}
-                <div className="border-top mt-3 pt-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
-                  <div className="d-flex gap-2 flex-wrap">
-                    <span
-                      className="badge bg-light text-dark border"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      💺 {info.total} Total
-                    </span>
-                    <span
-                      className="badge bg-light text-dark border"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      🔴 {info.booked} Booked
-                    </span>
-                    <span
-                      className="badge bg-light text-dark border"
-                      style={{ fontSize: "0.7rem" }}
-                    >
-                      🟢 {info.available} Available
-                    </span>
+                <div className="border-top mt-3 pt-2 d-flex justify-content-between align-items-center">
+                  <div className="d-flex gap-3">
+                    <small className="text-muted">
+                      Total: <strong>{info.total}</strong>
+                    </small>
+                    <small className="text-muted">
+                      Booked:{" "}
+                      <strong className="text-danger">{info.booked}</strong>
+                    </small>
+                    <small className="text-muted">
+                      Remaining:{" "}
+                      <strong className="text-success">{info.available}</strong>
+                    </small>
                   </div>
-                  <small className="text-muted">{schedule.title}</small>
+                  <small className="text-muted italic">{schedule.title}</small>
                 </div>
               </div>
             </div>
           );
         })}
-
-        {/* Empty state */}
-        {filteredSchedules.length === 0 && (
-          <div className="text-center text-muted py-5">
-            {schedules.length === 0 ? (
-              <p>No bus schedules available at the moment.</p>
-            ) : (
-              <p>
-                No schedules found for your search. Try different city names.
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

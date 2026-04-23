@@ -18,7 +18,7 @@ const ManageBusBookings = () => {
     try {
       const token = Storage.getToken();
       const res = await axios.get(
-        "http://localhost:4000/api/bus-bookings/all",
+        `${import.meta.env.VITE_API_URL}/bus-bookings/all`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -43,7 +43,7 @@ const ManageBusBookings = () => {
     const token = Storage.getToken();
     try {
       await axios.put(
-        `http://localhost:4000/api/bus-bookings/status/${id}`,
+        `${import.meta.env.VITE_API_URL}/bus-bookings/status/${id}`,
         { status: "Cancelled", reason: reason.trim() },
         { headers: { Authorization: `Bearer ${token}` } },
       );

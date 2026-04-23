@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     setMessage("");
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/auth/forgot-password",
+        `${import.meta.env.VITE_API_URL}/auth/forgot-password`,
         { email }
       );
       setMessage(`✅ ${data.message}`);
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/auth/reset-password",
+        `${import.meta.env.VITE_API_URL}/auth/reset-password`,
         {
           email,
           otp,

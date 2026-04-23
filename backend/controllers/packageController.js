@@ -119,7 +119,8 @@ const getPackage = async (req, res) => {
     const packageWithAvailability = await attachAvailableSeats(packageList);
     res.status(200).json(packageWithAvailability);
   } catch (err) {
-    res.status(500).json({ message: "Server Error" }, err);
+    console.error("Get Packages Error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 
@@ -322,7 +323,8 @@ const deletepackage = async (req, res) => {
 
     res.status(200).json({ message: "Package deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Server Error" }, err);
+    console.error("Delete Package Error:", err);
+    res.status(500).json({ message: "Server Error", error: err.message });
   }
 };
 

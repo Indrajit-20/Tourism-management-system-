@@ -15,7 +15,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "normalize:package-status": "node scripts/normalizePackageBookingStatus.js",
     "seed:submission": "node seed_submission_data.js",
     "migrate:emails": "node migrate_simple_gmail_emails.js",

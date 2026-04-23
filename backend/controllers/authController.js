@@ -1,5 +1,5 @@
 const Custmer = require("../models/Custmer");
-const Admin = require("../models/admin");
+const Admin = require("../models/Admin");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Staff = require("../models/Staff");
@@ -61,12 +61,10 @@ const register = async (req, res) => {
 
     const exitsuser = await Custmer.findOne({ email });
     if (exitsuser) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "Email already registered. Please login or use a different email",
-        });
+      return res.status(400).json({
+        message:
+          "Email already registered. Please login or use a different email",
+      });
     }
 
     // Check if phone already exists
@@ -79,11 +77,9 @@ const register = async (req, res) => {
 
     const normalizedDob = toDMY(dob);
     if (!normalizedDob) {
-      return res
-        .status(400)
-        .json({
-          message: "Invalid date of birth. Use DD-MM-YYYY or YYYY-MM-DD format",
-        });
+      return res.status(400).json({
+        message: "Invalid date of birth. Use DD-MM-YYYY or YYYY-MM-DD format",
+      });
     }
 
     // hash password before saving
@@ -234,11 +230,9 @@ const forgotPassword = async (req, res) => {
     }
 
     if (!user) {
-      return res
-        .status(404)
-        .json({
-          message: "Email not found in our system. Please check and try again",
-        });
+      return res.status(404).json({
+        message: "Email not found in our system. Please check and try again",
+      });
     }
 
     // Generate random 6-digit OTP
@@ -259,12 +253,10 @@ const forgotPassword = async (req, res) => {
         message,
       });
 
-      res
-        .status(200)
-        .json({
-          message:
-            "OTP sent successfully to your registered email. Please check your inbox (or spam folder)",
-        });
+      res.status(200).json({
+        message:
+          "OTP sent successfully to your registered email. Please check your inbox (or spam folder)",
+      });
     } catch (err) {
       console.error("EMAIL ERROR:", err);
       user.resetPasswordToken = undefined;
@@ -328,12 +320,10 @@ const resetPassword = async (req, res) => {
     }
 
     if (!user) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "Invalid OTP or OTP has expired (valid for 10 minutes only). Please request a new OTP",
-        });
+      return res.status(400).json({
+        message:
+          "Invalid OTP or OTP has expired (valid for 10 minutes only). Please request a new OTP",
+      });
     }
 
     // Hash new password
@@ -344,12 +334,10 @@ const resetPassword = async (req, res) => {
 
     await user.save();
 
-    res
-      .status(200)
-      .json({
-        message:
-          "Password updated successfully. Please login with your new password",
-      });
+    res.status(200).json({
+      message:
+        "Password updated successfully. Please login with your new password",
+    });
   } catch (err) {
     console.error("Reset Password error:", err);
     res.status(500).json({

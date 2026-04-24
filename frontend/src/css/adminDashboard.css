@@ -182,6 +182,8 @@
   padding: 1rem 0.75rem;
   border-top: 2px solid rgba(255, 255, 255, 0.15);
   margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .btn-logout {
@@ -405,8 +407,9 @@
   }
 
   .sidebar-nav-wrapper {
-    max-height: calc(100vh - 200px);
+    max-height: calc(100vh - 300px);
     overflow-y: auto;
+    flex: 1;
   }
 
   .admin-main-content {

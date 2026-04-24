@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({ loggedIn: false, name: "" });
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -10,19 +11,16 @@ const Header = () => {
   const location = useLocation();
 
   const handleLogout = () => {
-    // Clear from sessionStorage (per-tab storage)
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("role");
-
-    // Also clear sessionStorage for backward compatibility
+    // Clear all session data
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
 
     setUser({ loggedIn: false, name: "" });
     setDropdownOpen(false);
-    window.location.href = "/login";
+
+    // Use navigate for immediate redirect
+    navigate("/login", { replace: true });
   };
 
   // Check for existing session on component mount

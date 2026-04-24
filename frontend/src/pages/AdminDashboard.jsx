@@ -28,10 +28,16 @@ const AdminDashboard = () => {
   };
 
   const handleLogout = () => {
+    // Clear all session data
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("username");
-    window.location.href = "/login";
+
+    // Clear body class
+    document.body.classList.remove("sidebar-open");
+
+    // Use navigate for immediate redirect
+    navigate("/login", { replace: true });
   };
 
   return (

@@ -8,6 +8,7 @@ import Storage from "../../utils/storage";
 import "../../css/booking.css";
 import { normalize, STATUSES } from "./bookingConfig";
 import { toUiBooking } from "./bookingMapper";
+import { LoadingSkeleton } from "../../components/LoadingComponents";
 
 const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
@@ -573,67 +574,76 @@ const MyBookings = () => {
           Manage all your bus tickets and tour packages
         </p>
 
-        {/* Tabs + status pills + search */}
-        <BookingFilters
-          bookings={bookings}
-          mainTab={mainTab}
-          setMainTab={setMainTab}
-          statusTab={statusTab}
-          setStatusTab={setStatusTab}
-          search={search}
-          setSearch={setSearch}
-          resultCount={filteredBookings.length}
-        />
-
-        {/* Booking cards list */}
-        {filteredBookings.length === 0 ? (
-          <div className="alert alert-light border">
-            No bookings found for selected filters.
-          </div>
+        {/* Loading state */}
+        {loading ? (
+          <>
+            <LoadingSkeleton count={3} height="150px" />
+          </>
         ) : (
           <>
-            {busResults.length > 0 && (
-              <div className="fv-group-wrap">
-                <h5 className="fv-group-title">Bus Ticket Bookings</h5>
-                {busResults.map((booking) => (
-                  <BookingCard
-                    key={booking._id}
-                    booking={booking}
-                    onView={setSelectedBooking}
-                    onCancel={handleCancelBooking}
-                    onPrint={handlePrintBooking}
-                    onPay={handlePayTourBooking}
-                    onGenerateInvoice={handleGenerateInvoice}
-                  />
-                ))}
+            {/* Tabs + status pills + search */}
+            <BookingFilters
+              bookings={bookings}
+              mainTab={mainTab}
+              setMainTab={setMainTab}
+              statusTab={statusTab}
+              setStatusTab={setStatusTab}
+              search={search}
+              setSearch={setSearch}
+              resultCount={filteredBookings.length}
+            />
+
+            {/* Booking cards list */}
+            {filteredBookings.length === 0 ? (
+              <div className="alert alert-light border">
+                No bookings found for selected filters.
               </div>
+            ) : (
+              <>
+                {busResults.length > 0 && (
+                  <div className="fv-group-wrap">
+                    <h5 className="fv-group-title">Bus Ticket Bookings</h5>
+                    {busResults.map((booking) => (
+                      <BookingCard
+                        key={booking._id}
+                        booking={booking}
+                        onView={setSelectedBooking}
+                        onCancel={handleCancelBooking}
+                        onPrint={handlePrintBooking}
+                        onPay={handlePayTourBooking}
+                        onGenerateInvoice={handleGenerateInvoice}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {tourResults.length > 0 && (
+                  <div className="fv-group-wrap">
+                    <h5 className="fv-group-title">Tour Package Bookings</h5>
+                    {tourResults.map((booking) => (
+                      <BookingCard
+                        key={booking._id}
+                        booking={booking}
+                        onView={setSelectedBooking}
+                        onCancel={handleCancelBooking}
+                        onPrint={handlePrintBooking}
+                        onPay={handlePayTourBooking}
+                        onGenerateInvoice={handleGenerateInvoice}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
 
-            {tourResults.length > 0 && (
-              <div className="fv-group-wrap">
-                <h5 className="fv-group-title">Tour Package Bookings</h5>
-                {tourResults.map((booking) => (
-                  <BookingCard
-                    key={booking._id}
-                    booking={booking}
-                    onView={setSelectedBooking}
-                    onCancel={handleCancelBooking}
-                    onPrint={handlePrintBooking}
-                    onPay={handlePayTourBooking}
-                    onGenerateInvoice={handleGenerateInvoice}
-                  />
-                ))}
-              </div>
-            )}
+            {/* Details modal */}
+            <BookingModal
+              booking={selectedBooking}
+              onClose={() => setSelectedBooking(null)}
+              onPrint={handlePrintBooking}
+            />
           </>
         )}
-
-        {/* Details modal */}
-        <BookingModal
-          booking={selectedBooking}
-          onClose={() => setSelectedBooking(null)}
-          onPrint={handlePrintBooking}
-        />
       </div>
     </div>
   );

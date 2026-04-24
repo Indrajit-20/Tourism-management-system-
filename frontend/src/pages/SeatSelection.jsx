@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BusLayout from "../components/BusLayout";
+import { LoadingSpinner } from "../components/LoadingComponents";
 
 // ✅ Single place to change your API URL
 const API = import.meta.env.VITE_API_URL.replace("/api", "");
@@ -302,204 +303,219 @@ const SeatSelection = () => {
 
   return (
     <div className="container mt-4">
-      {/* ── Page Header ── */}
-      <div className="text-center mb-4">
-        <h3 className="fw-bold">Select {isSleeper ? "Berths" : "Seats"}</h3>
-        <p className="text-muted mb-2">
-          {route.boarding_from} → {route.destination} · {formatDateDMY(date)}
-        </p>
-        <small className="text-muted d-block mb-2">
-          Boarding:{" "}
-          {trip?.boarding_points?.[0] ||
-            route.board_point ||
-            route.boarding_from}{" "}
-          | Drop:{" "}
-          {trip?.drop_points?.[0] || route.drop_point || route.destination}
-        </small>
-        <span
-          className={`badge me-2 ${
-            isSleeper
-              ? "bg-primary"
-              : isDoubleDecker
-              ? "bg-warning text-dark"
-              : "bg-info"
-          }`}
-        >
-          {isSleeper ? "Sleeper" : isDoubleDecker ? "Double Decker" : busType}{" "}
-          Bus
-        </span>
-        <span className="badge bg-secondary">
-          Bus No: {route.bus_id?.bus_number}
-        </span>
-      </div>
+      {/* ── Loading State ── */}
+      {loading && <LoadingSpinner />}
 
-      {/* ── How booking works ── */}
-      <div className="alert alert-info mb-4">
-        <strong>How booking works:</strong>
-        <ol className="mb-0 mt-1">
-          <li>Select your {isSleeper ? "berths" : "seats"} below</li>
-          <li>Click "Book & Pay Now"</li>
-          <li>Complete payment via Razorpay</li>
-          <li>Ticket confirmed instantly ✅</li>
-        </ol>
-      </div>
-
-      {/* ── Seat availability summary ── */}
-      <div className="alert alert-success mb-4">
-        <div className="row g-3 text-center">
-          <div className="col-md-4">
-            <h5 className="mb-1">{seatLayout.length}</h5>
-            <small className="text-muted">Total Seats</small>
-          </div>
-          <div className="col-md-4">
-            <h5 className="mb-1 text-danger">{bookedSeats.length}</h5>
-            <small className="text-muted">Booked</small>
-          </div>
-          <div className="col-md-4">
-            <h5 className="mb-1 text-success">
-              {seatLayout.length - bookedSeats.length}
-            </h5>
-            <small className="text-muted">Available</small>
-          </div>
-        </div>
-      </div>
-
-      <div className="row justify-content-center">
-        {/* ── Seat Layout ── */}
-        <div className="col-md-7 mb-4">
-          <BusLayout
-            seatLayout={seatLayout}
-            bookedSeats={bookedSeats}
-            selectedSeats={selectedSeats}
-            onSeatClick={handleSeatClick}
-            busType={busType}
-            layoutType={layoutType}
-          />
-        </div>
-
-        {/* ── Booking Summary ── */}
-        <div className="col-md-4">
-          <div
-            className="card shadow-sm p-3"
-            style={{ position: "sticky", top: 20 }}
-          >
-            <h5 className="fw-bold border-bottom pb-2 mb-3">Booking Summary</h5>
-
-            <div className="mb-2">
-              <small className="text-muted d-block">Route</small>
-              <strong>
-                {route.boarding_from} → {route.destination}
-              </strong>
-            </div>
-
-            <div className="mb-2">
-              <small className="text-muted d-block">Boarding / Drop</small>
-              <strong>
-                {trip?.boarding_points?.[0] ||
-                  route.board_point ||
-                  route.boarding_from}{" "}
-                →{" "}
-                {trip?.drop_points?.[0] ||
-                  route.drop_point ||
-                  route.destination}
-              </strong>
-            </div>
-
-            <div className="mb-2">
-              <small className="text-muted d-block">Travel Date</small>
-              <strong>{formatDateDMY(date)}</strong>
-            </div>
-
-            <div className="mb-3 pb-2 border-bottom">
-              <small className="text-muted d-block">Bus Type</small>
-              <strong>{busType}</strong>
-            </div>
-
-            {/* Boarding Points */}
-            {trip?.boarding_points?.length > 0 && (
-              <div className="mb-3 pb-2 border-bottom">
-                <small className="text-muted d-block mb-1">
-                  Boarding Points
-                </small>
-                <div className="d-flex flex-wrap gap-1">
-                  {trip.boarding_points.map((point, idx) => (
-                    <span key={idx} className="badge bg-success">
-                      {point}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Selected seats */}
-            <div className="mb-3 pb-2 border-bottom">
-              <small className="text-muted d-block mb-1">
-                Selected {isSleeper ? "Berths" : "Seats"}
-              </small>
-
-              {selectedSeats.length === 0 ? (
-                <small className="text-muted">No seats selected yet</small>
-              ) : (
-                selectedSeats.map((seatNumber) => {
-                  const seat = trip?.seats?.find(
-                    (s) => s.seat_number === seatNumber
-                  );
-                  return (
-                    <div
-                      key={seatNumber}
-                      className="d-flex justify-content-between align-items-center mb-1"
-                    >
-                      <span>
-                        <strong>{seatNumber}</strong>
-                        <small className="text-muted ms-1">
-                          ({seat?.type})
-                        </small>
-                      </span>
-                      <span className="text-primary fw-bold">
-                        ₹{seat?.price || 0}
-                      </span>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            {/* Total */}
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-muted">Total Amount</span>
-              <h4 className="text-success fw-bold mb-0">₹{total}</h4>
-            </div>
-
-            {/* Book Button */}
-            <button
-              className="btn btn-success w-100 py-2"
-              onClick={handleSubmitRequest}
-              disabled={selectedSeats.length === 0 || submitting}
-            >
-              {submitting
-                ? "Processing..."
-                : `Book & Pay Now (${selectedSeats.length} ${
-                    isSleeper ? "berth" : "seat"
-                  }${selectedSeats.length !== 1 ? "s" : ""})`}
-            </button>
-
-            {/* Back Button */}
-            <button
-              className="btn btn-outline-secondary w-100 mt-2"
-              onClick={() => navigate("/book-bus")}
-            >
-              ← Change Route
-            </button>
-
-            <p
-              className="text-muted text-center mt-2 mb-0"
-              style={{ fontSize: "0.78rem" }}
-            >
-              Razorpay will open after you click "Book & Pay Now"
+      {/* ── Page content (shown when not loading) ── */}
+      {!loading && (
+        <>
+          {/* ── Page Header ── */}
+          <div className="text-center mb-4">
+            <h3 className="fw-bold">Select {isSleeper ? "Berths" : "Seats"}</h3>
+            <p className="text-muted mb-2">
+              {route.boarding_from} → {route.destination} ·{" "}
+              {formatDateDMY(date)}
             </p>
+            <small className="text-muted d-block mb-2">
+              Boarding:{" "}
+              {trip?.boarding_points?.[0] ||
+                route.board_point ||
+                route.boarding_from}{" "}
+              | Drop:{" "}
+              {trip?.drop_points?.[0] || route.drop_point || route.destination}
+            </small>
+            <span
+              className={`badge me-2 ${
+                isSleeper
+                  ? "bg-primary"
+                  : isDoubleDecker
+                  ? "bg-warning text-dark"
+                  : "bg-info"
+              }`}
+            >
+              {isSleeper
+                ? "Sleeper"
+                : isDoubleDecker
+                ? "Double Decker"
+                : busType}{" "}
+              Bus
+            </span>
+            <span className="badge bg-secondary">
+              Bus No: {route.bus_id?.bus_number}
+            </span>
           </div>
-        </div>
-      </div>
+
+          {/* ── How booking works ── */}
+          <div className="alert alert-info mb-4">
+            <strong>How booking works:</strong>
+            <ol className="mb-0 mt-1">
+              <li>Select your {isSleeper ? "berths" : "seats"} below</li>
+              <li>Click "Book & Pay Now"</li>
+              <li>Complete payment via Razorpay</li>
+              <li>Ticket confirmed instantly ✅</li>
+            </ol>
+          </div>
+
+          {/* ── Seat availability summary ── */}
+          <div className="alert alert-success mb-4">
+            <div className="row g-3 text-center">
+              <div className="col-md-4">
+                <h5 className="mb-1">{seatLayout.length}</h5>
+                <small className="text-muted">Total Seats</small>
+              </div>
+              <div className="col-md-4">
+                <h5 className="mb-1 text-danger">{bookedSeats.length}</h5>
+                <small className="text-muted">Booked</small>
+              </div>
+              <div className="col-md-4">
+                <h5 className="mb-1 text-success">
+                  {seatLayout.length - bookedSeats.length}
+                </h5>
+                <small className="text-muted">Available</small>
+              </div>
+            </div>
+          </div>
+
+          <div className="row justify-content-center">
+            {/* ── Seat Layout ── */}
+            <div className="col-md-7 mb-4">
+              <BusLayout
+                seatLayout={seatLayout}
+                bookedSeats={bookedSeats}
+                selectedSeats={selectedSeats}
+                onSeatClick={handleSeatClick}
+                busType={busType}
+                layoutType={layoutType}
+              />
+            </div>
+
+            {/* ── Booking Summary ── */}
+            <div className="col-md-4">
+              <div
+                className="card shadow-sm p-3"
+                style={{ position: "sticky", top: 20 }}
+              >
+                <h5 className="fw-bold border-bottom pb-2 mb-3">
+                  Booking Summary
+                </h5>
+
+                <div className="mb-2">
+                  <small className="text-muted d-block">Route</small>
+                  <strong>
+                    {route.boarding_from} → {route.destination}
+                  </strong>
+                </div>
+
+                <div className="mb-2">
+                  <small className="text-muted d-block">Boarding / Drop</small>
+                  <strong>
+                    {trip?.boarding_points?.[0] ||
+                      route.board_point ||
+                      route.boarding_from}{" "}
+                    →{" "}
+                    {trip?.drop_points?.[0] ||
+                      route.drop_point ||
+                      route.destination}
+                  </strong>
+                </div>
+
+                <div className="mb-2">
+                  <small className="text-muted d-block">Travel Date</small>
+                  <strong>{formatDateDMY(date)}</strong>
+                </div>
+
+                <div className="mb-3 pb-2 border-bottom">
+                  <small className="text-muted d-block">Bus Type</small>
+                  <strong>{busType}</strong>
+                </div>
+
+                {/* Boarding Points */}
+                {trip?.boarding_points?.length > 0 && (
+                  <div className="mb-3 pb-2 border-bottom">
+                    <small className="text-muted d-block mb-1">
+                      Boarding Points
+                    </small>
+                    <div className="d-flex flex-wrap gap-1">
+                      {trip.boarding_points.map((point, idx) => (
+                        <span key={idx} className="badge bg-success">
+                          {point}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Selected seats */}
+                <div className="mb-3 pb-2 border-bottom">
+                  <small className="text-muted d-block mb-1">
+                    Selected {isSleeper ? "Berths" : "Seats"}
+                  </small>
+
+                  {selectedSeats.length === 0 ? (
+                    <small className="text-muted">No seats selected yet</small>
+                  ) : (
+                    selectedSeats.map((seatNumber) => {
+                      const seat = trip?.seats?.find(
+                        (s) => s.seat_number === seatNumber
+                      );
+                      return (
+                        <div
+                          key={seatNumber}
+                          className="d-flex justify-content-between align-items-center mb-1"
+                        >
+                          <span>
+                            <strong>{seatNumber}</strong>
+                            <small className="text-muted ms-1">
+                              ({seat?.type})
+                            </small>
+                          </span>
+                          <span className="text-primary fw-bold">
+                            ₹{seat?.price || 0}
+                          </span>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+
+                {/* Total */}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <span className="text-muted">Total Amount</span>
+                  <h4 className="text-success fw-bold mb-0">₹{total}</h4>
+                </div>
+
+                {/* Book Button */}
+                <button
+                  className="btn btn-success w-100 py-2"
+                  onClick={handleSubmitRequest}
+                  disabled={selectedSeats.length === 0 || submitting}
+                >
+                  {submitting
+                    ? "Processing..."
+                    : `Book & Pay Now (${selectedSeats.length} ${
+                        isSleeper ? "berth" : "seat"
+                      }${selectedSeats.length !== 1 ? "s" : ""})`}
+                </button>
+
+                {/* Back Button */}
+                <button
+                  className="btn btn-outline-secondary w-100 mt-2"
+                  onClick={() => navigate("/book-bus")}
+                >
+                  ← Change Route
+                </button>
+
+                <p
+                  className="text-muted text-center mt-2 mb-0"
+                  style={{ fontSize: "0.78rem" }}
+                >
+                  Razorpay will open after you click "Book & Pay Now"
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

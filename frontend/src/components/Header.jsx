@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import logo from "../assets/logo.jpg";
 
 const Header = () => {
   const [user, setUser] = useState({ loggedIn: false, name: "" });
@@ -86,7 +87,7 @@ const Header = () => {
         <div className="container fh-container">
           <Link to="/" className="fh-brand">
             <img
-              src="/src/assets/logo.jpg"
+              src={logo}
               alt="logo"
               className="site-logo"
               onError={(e) => (e.target.style.display = "none")}

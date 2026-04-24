@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { to12HourDisplay, toMinutes } from "../utils/timeFormat";
 import Storage from "../utils/storage";
 import SearchFilterContainer from "../components/SearchFilterContainer";
+import { LoadingSkeleton } from "../components/LoadingComponents";
 
 const BookBus = () => {
   const [routes, setRoutes] = useState([]);
   const [schedules, setSchedules] = useState([]);
   const [tripInfo, setTripInfo] = useState({}); // ✅ seat info per schedule
   const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [bookingDetails, setBookingDetails] = useState({
     date: new Date().toISOString().split("T")[0],
     seats: 1,
@@ -28,7 +30,9 @@ const BookBus = () => {
 
   const fetchRoutes = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-routes/`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/bus-routes/`
+      );
       setRoutes(res.data);
     } catch (err) {
       console.error("Error fetching routes", err);
@@ -36,13 +40,18 @@ const BookBus = () => {
   };
 
   const fetchSchedules = async () => {
+    setIsLoading(true);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/bus-schedules`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/bus-schedules`
+      );
       setSchedules(res.data);
       // Fetch seat availability for the currently selected date
-      fetchSeatAvailability(res.data, bookingDetails.date);
+      await fetchSeatAvailability(res.data, bookingDetails.date);
     } catch (err) {
       console.error("Error fetching schedules", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +77,9 @@ const BookBus = () => {
 
           // Get trip for this schedule on the selected date
           const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
+            `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${
+              schedule._id
+            }&date=${selectedDate}`
           );
           const trip = (res.data || [])[0];
           if (trip) {
@@ -163,7 +174,9 @@ const BookBus = () => {
 
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${schedule._id}&date=${selectedDate}`
+        `${import.meta.env.VITE_API_URL}/bus-trips?schedule_id=${
+          schedule._id
+        }&date=${selectedDate}`
       );
       const trips = res.data || [];
       const trip = trips[0];
@@ -251,143 +264,158 @@ const BookBus = () => {
         })}
       </div>
 
+      {/* ✅ Loading Skeleton */}
+      {isLoading && <LoadingSkeleton count={3} height="150px" />}
+
       {/* ✅ Schedule cards */}
-      <div className="d-flex flex-column gap-3">
-        {filteredSchedules.map((schedule) => {
-          const info = tripInfo[schedule._id] || {
-            total: 0,
-            booked: 0,
-            available: 0,
-          };
-          const route = schedule.route_id || {};
-          const bus = schedule.bus_id || {};
-          const duration = getDuration(
-            schedule.departure_time,
-            schedule.arrival_time
-          );
-          const isLow = info.available > 0 && info.available <= 5;
-          const isSoldOut = info.available === 0;
+      {!isLoading && (
+        <div className="d-flex flex-column gap-3">
+          {filteredSchedules.map((schedule) => {
+            const info = tripInfo[schedule._id] || {
+              total: 0,
+              booked: 0,
+              available: 0,
+            };
+            const route = schedule.route_id || {};
+            const bus = schedule.bus_id || {};
+            const duration = getDuration(
+              schedule.departure_time,
+              schedule.arrival_time
+            );
+            const isLow = info.available > 0 && info.available <= 5;
+            const isSoldOut = info.available === 0;
 
-          return (
-            <div
-              key={schedule._id}
-              className="card shadow-sm border"
-              style={{ borderRadius: 12 }}
-            >
-              <div className="card-body p-3">
-                <div className="row align-items-center">
-                  <div className="col-md-3">
-                    <h6 className="fw-bold mb-0 text-primary">
-                      {bus?.bus_name || schedule.title}
-                    </h6>
-                    <small className="text-muted">
-                      {bus?.bus_type} · {bus?.bus_number}
-                    </small>
-                    <div className="mt-1">
-                      <span
-                        className="badge bg-light text-dark border"
-                        style={{ fontSize: "0.7rem" }}
+            return (
+              <div
+                key={schedule._id}
+                className="card shadow-sm border"
+                style={{ borderRadius: 12 }}
+              >
+                <div className="card-body p-3">
+                  <div className="row align-items-center">
+                    <div className="col-md-3">
+                      <h6 className="fw-bold mb-0 text-primary">
+                        {bus?.bus_name || schedule.title}
+                      </h6>
+                      <small className="text-muted">
+                        {bus?.bus_type} · {bus?.bus_number}
+                      </small>
+                      <div className="mt-1">
+                        <span
+                          className="badge bg-light text-dark border"
+                          style={{ fontSize: "0.7rem" }}
+                        >
+                          🔄 {schedule.frequency}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="col-md-5">
+                      <div className="d-flex align-items-center justify-content-center gap-2">
+                        <div className="text-center">
+                          <div
+                            className="fw-bold"
+                            style={{ fontSize: "1.2rem" }}
+                          >
+                            {to12HourDisplay(schedule.departure_time)}
+                          </div>
+                          <small className="text-muted">
+                            {route.boarding_from}
+                          </small>
+                        </div>
+                        <div className="flex-grow-1 text-center px-1">
+                          <div style={{ fontSize: "0.7rem", color: "#888" }}>
+                            {duration}
+                          </div>
+                          <div
+                            style={{
+                              borderTop: "1px solid #ccc",
+                              margin: "4px 0",
+                            }}
+                          />
+                          <div style={{ fontSize: "0.65rem", color: "#aaa" }}>
+                            {bus?.bus_type}
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div
+                            className="fw-bold"
+                            style={{ fontSize: "1.2rem" }}
+                          >
+                            {to12HourDisplay(schedule.arrival_time)}
+                          </div>
+                          <small className="text-muted">
+                            {route.destination}
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-md-4 text-md-end mt-3 mt-md-0">
+                      <div className="mb-2">
+                        <small className="text-muted">From </small>
+                        <span
+                          className="fw-bold text-success"
+                          style={{ fontSize: "1.3rem" }}
+                        >
+                          ₹{schedule.base_price}
+                        </span>
+                      </div>
+
+                      <button
+                        className={`btn w-100 fw-bold mb-2 ${
+                          isSoldOut ? "btn-secondary" : "btn-danger"
+                        }`}
+                        disabled={isSoldOut}
+                        onClick={() => handleBook(schedule)}
                       >
-                        🔄 {schedule.frequency}
-                      </span>
-                    </div>
-                  </div>
+                        {isSoldOut ? "Sold Out" : "Select Seats"}
+                      </button>
 
-                  <div className="col-md-5">
-                    <div className="d-flex align-items-center justify-content-center gap-2">
-                      <div className="text-center">
-                        <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {to12HourDisplay(schedule.departure_time)}
-                        </div>
-                        <small className="text-muted">
-                          {route.boarding_from}
-                        </small>
-                      </div>
-                      <div className="flex-grow-1 text-center px-1">
-                        <div style={{ fontSize: "0.7rem", color: "#888" }}>
-                          {duration}
-                        </div>
-                        <div
-                          style={{
-                            borderTop: "1px solid #ccc",
-                            margin: "4px 0",
-                          }}
-                        />
-                        <div style={{ fontSize: "0.65rem", color: "#aaa" }}>
-                          {bus?.bus_type}
-                        </div>
-                      </div>
-                      <div className="text-center">
-                        <div className="fw-bold" style={{ fontSize: "1.2rem" }}>
-                          {to12HourDisplay(schedule.arrival_time)}
-                        </div>
-                        <small className="text-muted">
-                          {route.destination}
-                        </small>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-md-4 text-md-end mt-3 mt-md-0">
-                    <div className="mb-2">
-                      <small className="text-muted">From </small>
-                      <span
-                        className="fw-bold text-success"
-                        style={{ fontSize: "1.3rem" }}
+                      <div
+                        className={`text-center small fw-bold ${
+                          isSoldOut
+                            ? "text-danger"
+                            : isLow
+                            ? "text-warning"
+                            : "text-success"
+                        }`}
                       >
-                        ₹{schedule.base_price}
-                      </span>
-                    </div>
-
-                    <button
-                      className={`btn w-100 fw-bold mb-2 ${
-                        isSoldOut ? "btn-secondary" : "btn-danger"
-                      }`}
-                      disabled={isSoldOut}
-                      onClick={() => handleBook(schedule)}
-                    >
-                      {isSoldOut ? "Sold Out" : "Select Seats"}
-                    </button>
-
-                    <div
-                      className={`text-center small fw-bold ${
-                        isSoldOut
-                          ? "text-danger"
+                        {isSoldOut
+                          ? "❌ Fully Booked"
                           : isLow
-                          ? "text-warning"
-                          : "text-success"
-                      }`}
-                    >
-                      {isSoldOut
-                        ? "❌ Fully Booked"
-                        : isLow
-                        ? `⚠️ Only ${info.available} seats left!`
-                        : `✅ ${info.available} Seats Available`}
+                          ? `⚠️ Only ${info.available} seats left!`
+                          : `✅ ${info.available} Seats Available`}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="border-top mt-3 pt-2 d-flex justify-content-between align-items-center">
-                  <div className="d-flex gap-3">
-                    <small className="text-muted">
-                      Total: <strong>{info.total}</strong>
-                    </small>
-                    <small className="text-muted">
-                      Booked:{" "}
-                      <strong className="text-danger">{info.booked}</strong>
-                    </small>
-                    <small className="text-muted">
-                      Remaining:{" "}
-                      <strong className="text-success">{info.available}</strong>
+                  <div className="border-top mt-3 pt-2 d-flex justify-content-between align-items-center">
+                    <div className="d-flex gap-3">
+                      <small className="text-muted">
+                        Total: <strong>{info.total}</strong>
+                      </small>
+                      <small className="text-muted">
+                        Booked:{" "}
+                        <strong className="text-danger">{info.booked}</strong>
+                      </small>
+                      <small className="text-muted">
+                        Remaining:{" "}
+                        <strong className="text-success">
+                          {info.available}
+                        </strong>
+                      </small>
+                    </div>
+                    <small className="text-muted italic">
+                      {schedule.title}
                     </small>
                   </div>
-                  <small className="text-muted italic">{schedule.title}</small>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

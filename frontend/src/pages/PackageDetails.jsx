@@ -5,7 +5,7 @@ import ReviewsDisplay from "../components/ReviewsDisplay";
 import TourDepartureSelector from "../components/TourDepartureSelector";
 import "../css/packageDetails.css";
 
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const formatDate = (value) => {
   if (!value) return "-";
@@ -57,7 +57,9 @@ const PackageDetails = () => {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/packages/${id}`);
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/packages/${id}`
+        );
         setPackageData(res.data);
       } catch (err) {
         console.error("Error fetching package details", err);

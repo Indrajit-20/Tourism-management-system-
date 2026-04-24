@@ -9,7 +9,7 @@ import "../../css/booking.css";
 import { normalize, STATUSES } from "./bookingConfig";
 import { toUiBooking } from "./bookingMapper";
 
-const API = "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const toDateLabel = (value) => {
   if (!value) return "-";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 
 /**
  * Shows available tour schedules for a package
@@ -23,7 +23,7 @@ const TourDepartureSelector = ({ packageId, onSelect, initialSelectedId }) => {
     const fetchSchedules = async () => {
       try {
         const res = await axios.get(
-          `${API_BASE_URL}/api/tour-schedules/package/${packageId}/schedules`,
+          `${API_BASE_URL}/api/tour-schedules/package/${packageId}/schedules`
         );
         setSchedules(res.data);
       } catch (err) {
@@ -47,12 +47,12 @@ const TourDepartureSelector = ({ packageId, onSelect, initialSelectedId }) => {
       ? schedules.find(
           (schedule) =>
             String(schedule._id) === String(initialSelectedId) &&
-            isScheduleBookable(schedule),
+            isScheduleBookable(schedule)
         )
       : null;
 
     const firstBookableSchedule = schedules.find((schedule) =>
-      isScheduleBookable(schedule),
+      isScheduleBookable(schedule)
     );
     const defaultSchedule =
       scheduleFromQuery || firstBookableSchedule || schedules[0];

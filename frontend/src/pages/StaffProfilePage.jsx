@@ -4,7 +4,7 @@ import { FaUser, FaLock, FaEdit, FaSave, FaTimes } from "react-icons/fa";
 import StaffProfileCard from "../components/StaffProfileCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API = "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const StaffProfile = () => {
   const [staff, setStaff] = useState(null);

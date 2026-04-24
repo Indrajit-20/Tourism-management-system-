@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { to12HourDisplay } from "../utils/timeFormat";
 import staffLogo from "../assets/staff-logo.svg";
 
-const API = "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const StaffDashboard = () => {
   const [staff, setStaff] = useState(null);
@@ -75,7 +75,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/tour/${tour_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
 
       setSelectedTour(res.data.tour);
@@ -92,7 +92,7 @@ const StaffDashboard = () => {
         `${API}/api/staff-dashboard/trip/${trip_id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
 
       setSelectedTrip(res.data.trip);
@@ -110,7 +110,7 @@ const StaffDashboard = () => {
       await axios.put(
         `${API}/api/staff-dashboard/trip/${trip_id}/status`,
         { status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       alert(`✅ Trip status updated to ${newStatus}`);
@@ -571,8 +571,8 @@ const StaffDashboard = () => {
                                   trip.status === "Running"
                                     ? "#ff9800"
                                     : trip.status === "Completed"
-                                      ? "#4caf50"
-                                      : "#2196f3",
+                                    ? "#4caf50"
+                                    : "#2196f3",
                                 padding: "8px 12px",
                                 fontSize: "12px",
                                 fontWeight: "bold",
@@ -610,7 +610,7 @@ const StaffDashboard = () => {
                               <strong>⏰ Time:</strong>
                               <br />
                               {to12HourDisplay(
-                                trip.schedule_id?.departure_time,
+                                trip.schedule_id?.departure_time
                               )}{" "}
                               -{" "}
                               {to12HourDisplay(trip.schedule_id?.arrival_time)}
@@ -712,8 +712,8 @@ const StaffDashboard = () => {
                                 tour.departure_status === "Open"
                                   ? "success"
                                   : tour.departure_status === "Draft"
-                                    ? "warning"
-                                    : "secondary"
+                                  ? "warning"
+                                  : "secondary"
                               }`}
                               style={{
                                 padding: "8px 12px",
@@ -818,7 +818,7 @@ const StaffDashboard = () => {
                             <p className="mb-2">
                               <strong>Time:</strong>{" "}
                               {to12HourDisplay(
-                                trip.schedule_id?.departure_time,
+                                trip.schedule_id?.departure_time
                               )}
                             </p>
                           </div>
@@ -1186,7 +1186,7 @@ const StaffDashboard = () => {
                               passengers.reduce(
                                 (sum, p) =>
                                   sum + (p.passengerDetails?.length || 0),
-                                0,
+                                0
                               )}
                           </span>
                         </p>

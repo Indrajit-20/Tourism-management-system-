@@ -7,7 +7,7 @@ const FeedbackModal = ({ booking, onClose, onSuccess }) => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  const API = "http://localhost:4000";
+  const API = import.meta.env.VITE_API_URL.replace("/api", "");
   const isTour = booking?.type?.toLowerCase() === "tour";
 
   const handleSubmit = async (e) => {

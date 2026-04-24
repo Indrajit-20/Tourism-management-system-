@@ -4,7 +4,7 @@ import axios from "axios";
 import BusLayout from "../components/BusLayout";
 
 // ✅ Single place to change your API URL
-const API = "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
 // ✅ Load Razorpay script dynamically
 const loadRazorpay = () => {
@@ -55,7 +55,7 @@ const SeatSelection = () => {
     setError(null);
     try {
       const res = await axios.get(
-        `${API}/api/bus-trips?route_id=${route._id}&date=${date}`,
+        `${API}/api/bus-trips?route_id=${route._id}&date=${date}`
       );
       const foundTrip = (res.data || [])[0];
 
@@ -78,7 +78,7 @@ const SeatSelection = () => {
   const fetchBookedSeats = async (tripId) => {
     try {
       const res = await axios.get(
-        `${API}/api/bus-bookings/seats?trip_id=${tripId}`,
+        `${API}/api/bus-bookings/seats?trip_id=${tripId}`
       );
       setBookedSeats(res.data || []);
     } catch (err) {
@@ -136,22 +136,22 @@ const SeatSelection = () => {
     try {
       // ── STEP 1: Re-check seats are still free ──
       const checkRes = await axios.get(
-        `${API}/api/bus-bookings/seats?trip_id=${trip._id}`,
+        `${API}/api/bus-bookings/seats?trip_id=${trip._id}`
       );
       const latestBooked = checkRes.data || [];
       const conflictSeats = selectedSeats.filter((s) =>
-        latestBooked.includes(s),
+        latestBooked.includes(s)
       );
 
       if (conflictSeats.length > 0) {
         alert(
           `Seat(s) ${conflictSeats.join(
-            ", ",
-          )} were just booked. Please reselect.`,
+            ", "
+          )} were just booked. Please reselect.`
         );
         setBookedSeats(latestBooked);
         setSelectedSeats(
-          selectedSeats.filter((s) => !conflictSeats.includes(s)),
+          selectedSeats.filter((s) => !conflictSeats.includes(s))
         );
         setSubmitting(false);
         return;
@@ -164,7 +164,7 @@ const SeatSelection = () => {
       const orderRes = await axios.post(
         `${API}/api/payment/create-order`,
         { amount: totalAmount },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       const { id: orderId } = orderRes.data;
 
@@ -193,7 +193,7 @@ const SeatSelection = () => {
                 trip_id: trip._id,
                 seat_numbers: selectedSeats,
               },
-              { headers: { Authorization: `Bearer ${token}` } },
+              { headers: { Authorization: `Bearer ${token}` } }
             );
 
             const booking = bookingRes.data.booking;
@@ -205,7 +205,7 @@ const SeatSelection = () => {
                 booking_id: booking._id,
                 payment_id: response.razorpay_payment_id,
               },
-              { headers: { Authorization: `Bearer ${token}` } },
+              { headers: { Authorization: `Bearer ${token}` } }
             );
 
             // Create invoice for this paid booking (safe if already exists)
@@ -217,11 +217,11 @@ const SeatSelection = () => {
                   booking_type: "Bus",
                   transaction_id: response.razorpay_payment_id,
                 },
-                { headers: { Authorization: `Bearer ${token}` } },
+                { headers: { Authorization: `Bearer ${token}` } }
               );
             } catch (invoiceErr) {
               const message = String(
-                invoiceErr?.response?.data?.message || "",
+                invoiceErr?.response?.data?.message || ""
               ).toLowerCase();
               if (!message.includes("already exists")) {
                 console.error("Invoice creation failed:", invoiceErr);
@@ -233,7 +233,7 @@ const SeatSelection = () => {
           } catch (err) {
             console.error("Booking after payment failed:", err);
             alert(
-              "Payment received but booking failed. Please contact support.",
+              "Payment received but booking failed. Please contact support."
             );
             navigate("/my-bookings");
           }
@@ -259,8 +259,7 @@ const SeatSelection = () => {
     } catch (err) {
       console.error("Error:", err);
       alert(
-        err.response?.data?.message ||
-          "Something went wrong. Please try again.",
+        err.response?.data?.message || "Something went wrong. Please try again."
       );
       setSubmitting(false);
     }
@@ -322,8 +321,8 @@ const SeatSelection = () => {
             isSleeper
               ? "bg-primary"
               : isDoubleDecker
-                ? "bg-warning text-dark"
-                : "bg-info"
+              ? "bg-warning text-dark"
+              : "bg-info"
           }`}
         >
           {isSleeper ? "Sleeper" : isDoubleDecker ? "Double Decker" : busType}{" "}
@@ -443,7 +442,7 @@ const SeatSelection = () => {
               ) : (
                 selectedSeats.map((seatNumber) => {
                   const seat = trip?.seats?.find(
-                    (s) => s.seat_number === seatNumber,
+                    (s) => s.seat_number === seatNumber
                   );
                   return (
                     <div

@@ -13,7 +13,7 @@ import StaffDetailsModal from "../components/StaffDetailsModal";
 import StaffProfileCard from "../components/StaffProfileCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API = "http://localhost:4000";
+const API = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const ManageGuidesAndDrivers = () => {
   const [staff, setStaff] = useState([]);

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/managePackage.css";
 
-const apiBase = "http://localhost:4000";
+const apiBase = import.meta.env.VITE_API_URL.replace("/api", "");
 const MAX_HOTELS_PER_PACKAGE = 6;
 
 const initialFormState = {
@@ -98,7 +98,7 @@ const PackageManagment = () => {
 
   const updateImageInput = (index, file) => {
     setImageInputs((prev) =>
-      prev.map((item, i) => (i === index ? file : item)),
+      prev.map((item, i) => (i === index ? file : item))
     );
   };
 
@@ -119,7 +119,7 @@ const PackageManagment = () => {
   };
   const updateHotelSelect = (index, value) => {
     setSelectedHotels((prev) =>
-      prev.map((item, i) => (i === index ? value : item)),
+      prev.map((item, i) => (i === index ? value : item))
     );
   };
 
@@ -155,7 +155,7 @@ const PackageManagment = () => {
       payload.append("itinerary", formData.itinerary);
       payload.append(
         "sightseeing",
-        JSON.stringify(splitCsv(formData.sightseeing)),
+        JSON.stringify(splitCsv(formData.sightseeing))
       );
 
       const hotelsPayload = cleanStringArray(selectedHotels);
@@ -179,7 +179,7 @@ const PackageManagment = () => {
         await axios.put(
           `${apiBase}/api/packages/update/${editingId}`,
           payload,
-          { headers },
+          { headers }
         );
         alert("Package updated successfully");
       } else {
@@ -218,15 +218,15 @@ const PackageManagment = () => {
     });
 
     const hotels = (pkg.hotels || []).map((h) =>
-      typeof h === "object" ? h._id : h,
+      typeof h === "object" ? h._id : h
     );
     setSelectedHotels(hotels.length ? hotels : [""]);
 
     const points = pkg.boarding_points?.length
       ? pkg.boarding_points
       : pkg.pickup_points?.length
-        ? pkg.pickup_points
-        : [""];
+      ? pkg.pickup_points
+      : [""];
     setBoardingPoint(points[0] || "");
 
     setImageInputs([null]);
@@ -248,7 +248,7 @@ const PackageManagment = () => {
   };
 
   const guides = staffList.filter(
-    (staff) => (staff.designation || "").toLowerCase() === "guide",
+    (staff) => (staff.designation || "").toLowerCase() === "guide"
   );
 
   const getHotelOptionLabel = (hotel) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/invoice.css";
 
-const API_BASE = "http://localhost:4000";
+const API_BASE = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const toNumber = (value) => Number(value || 0);
 const isTourInvoice = (invoice) => invoice.booking_type === "Package";
@@ -23,8 +23,8 @@ const MyInvoices = () => {
         ? base
         : amount + storedDiscount
       : base > 0
-        ? base
-        : amount;
+      ? base
+      : amount;
 
     const childDiscount = isTour
       ? Math.max(0, storedDiscount || baseFare - amount)
@@ -74,7 +74,7 @@ const MyInvoices = () => {
         {
           headers: { Authorization: `Bearer ${token}` },
           responseType: "blob",
-        },
+        }
       );
 
       const blob = new Blob([response.data], { type: "text/html" });
@@ -129,19 +129,41 @@ const MyInvoices = () => {
       ----------------------------------------
       JOURNEY DETAILS
       ${invoice.description || "-"}
-      ${isTour ? `Start Date: ${toDateString(startDate)}` : `Travel Date: ${toDateString(startDate)}`}
+      ${
+        isTour
+          ? `Start Date: ${toDateString(startDate)}`
+          : `Travel Date: ${toDateString(startDate)}`
+      }
       ${isTour ? `End Date: ${toDateString(endDate)}` : ""}
       Travellers: ${invoice.travellers || 1}
       ${isTour ? `Per Traveller: ${formatMoney(perTraveller)}` : ""}
-      ${isTour ? "" : invoice.seat_numbers?.length ? `Seats: ${invoice.seat_numbers.join(", ")}` : ""}
-      ${isTour && invoice.package_duration ? `Duration: ${invoice.package_duration}` : ""}
+      ${
+        isTour
+          ? ""
+          : invoice.seat_numbers?.length
+          ? `Seats: ${invoice.seat_numbers.join(", ")}`
+          : ""
+      }
+      ${
+        isTour && invoice.package_duration
+          ? `Duration: ${invoice.package_duration}`
+          : ""
+      }
       ${!isTour && invoice.bus_details ? `Bus: ${invoice.bus_details}` : ""}
       
       ----------------------------------------
       PRICE BREAKDOWN
       Base Fare: ${formatMoney(baseFare)}
-      ${isTour && childDiscount > 0 ? `Child Discount: -${formatMoney(childDiscount)}` : ""}
-      ${!isTour && invoice.service_charges > 0 ? `Service Charges: ${formatMoney(invoice.service_charges)}` : ""}
+      ${
+        isTour && childDiscount > 0
+          ? `Child Discount: -${formatMoney(childDiscount)}`
+          : ""
+      }
+      ${
+        !isTour && invoice.service_charges > 0
+          ? `Service Charges: ${formatMoney(invoice.service_charges)}`
+          : ""
+      }
       ${tax > 0 ? `Tax (5% Included): ${formatMoney(tax)}` : ""}
       
       ----------------------------------------
@@ -159,7 +181,7 @@ const MyInvoices = () => {
     w.document.write(
       "<pre style='font-family: monospace; padding: 20px; font-size: 12px;'>" +
         content +
-        "</pre>",
+        "</pre>"
     );
     w.print();
     w.close();
@@ -201,7 +223,9 @@ const MyInvoices = () => {
               return (
                 <div key={invoice._id} className="col-md-6 col-lg-4 mb-4">
                   <div
-                    className={`invoice-card ${isTour ? "tour-card" : "bus-card"}`}
+                    className={`invoice-card ${
+                      isTour ? "tour-card" : "bus-card"
+                    }`}
                   >
                     {/* Header */}
                     <div className="invoice-card-header">

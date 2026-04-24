@@ -112,14 +112,18 @@ const Hompage = () => {
   // Fetch only packages that have at least one open schedule.
   const fetchpkg = async () => {
     try {
-      const packageRes = await axios.get(`${import.meta.env.VITE_API_URL}/packages`);
+      const packageRes = await axios.get(
+        `${import.meta.env.VITE_API_URL}/packages`
+      );
       const packages = Array.isArray(packageRes.data) ? packageRes.data : [];
       const cards = [];
 
       for (const packageItem of packages) {
         try {
           const scheduleRes = await axios.get(
-            `${import.meta.env.VITE_API_URL}/tour-schedules/package/${packageItem._id}/departures`,
+            `${import.meta.env.VITE_API_URL}/tour-schedules/package/${
+              packageItem._id
+            }/departures`
           );
           const departures = Array.isArray(scheduleRes.data)
             ? scheduleRes.data
@@ -133,14 +137,14 @@ const Hompage = () => {
         } catch (scheduleError) {
           console.error(
             `Error fetching schedules for package ${packageItem._id}`,
-            scheduleError,
+            scheduleError
           );
         }
       }
 
       cards.sort(
         (a, b) =>
-          new Date(a.start_date).getTime() - new Date(b.start_date).getTime(),
+          new Date(a.start_date).getTime() - new Date(b.start_date).getTime()
       );
 
       setpkg(cards);
@@ -161,12 +165,16 @@ const Hompage = () => {
 
   const fetchHomeImages = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/home-images`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/home-images`
+      );
       const images = Array.isArray(res.data) ? res.data : [];
       const safeImageUrls = images
         .map((item) => String(item?.image_url || ""))
         .filter((url) => url.startsWith("/uploads/homeimage/"))
-        .map((url) => `http://localhost:4000${url}`);
+        .map(
+          (url) => `${import.meta.env.VITE_API_URL.replace("/api", "")}${url}`
+        );
 
       setHeroImages(safeImageUrls);
     } catch (err) {
@@ -193,7 +201,9 @@ const Hompage = () => {
 
         try {
           const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/bus-trips?route_id=${route._id}&date=${dateStr}`,
+            `${import.meta.env.VITE_API_URL}/bus-trips?route_id=${
+              route._id
+            }&date=${dateStr}`
           );
           if (res.data && res.data.length > 0) {
             tripsData.push(...res.data);
@@ -602,7 +612,7 @@ const Hompage = () => {
                                   <h6 className="mb-1 fw-bold">
                                     📅{" "}
                                     {new Date(
-                                      trip.trip_date,
+                                      trip.trip_date
                                     ).toLocaleDateString("en-IN", {
                                       weekday: "short",
                                       month: "short",

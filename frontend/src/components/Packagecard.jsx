@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/packagecard.css";
 
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 const FALLBACK_IMAGE = "https://via.placeholder.com/800x500?text=Tour+Package";
 
 function formatDisplayDate(value) {

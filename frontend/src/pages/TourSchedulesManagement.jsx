@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ManageTourSchedules from "../components/ManageTourSchedules";
 
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 const MIN_ADMIN_SCHEDULE_LEAD_DAYS = 3;
 
 const TourSchedulesManagement = () => {

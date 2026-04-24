@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
+
 const ReviewsDisplay = ({ packageId, routeId, type = "package" }) => {
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState({ average: 0, total: 0 });
@@ -19,7 +21,7 @@ const ReviewsDisplay = ({ packageId, routeId, type = "package" }) => {
           ? `/api/feedback/package/${packageId}`
           : `/api/feedback/route/${routeId}`;
 
-      const res = await axios.get(`http://localhost:4000${endpoint}`);
+      const res = await axios.get(`${API_BASE_URL}${endpoint}`);
       setReviews(res.data);
       setLoading(false);
     } catch (err) {
@@ -35,7 +37,7 @@ const ReviewsDisplay = ({ packageId, routeId, type = "package" }) => {
           ? `/api/feedback/rating/package/${packageId}`
           : `/api/feedback/rating/route/${routeId}`;
 
-      const res = await axios.get(`http://localhost:4000${endpoint}`);
+      const res = await axios.get(`${API_BASE_URL}${endpoint}`);
       setRating(res.data);
     } catch (err) {
       console.error("Error fetching rating", err);

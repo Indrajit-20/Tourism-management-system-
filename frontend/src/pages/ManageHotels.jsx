@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../css/manageHotels.css";
 
-const apiBase = "http://localhost:4000";
+const apiBase = import.meta.env.VITE_API_URL.replace("/api", "");
 
 const initialHotelForm = {
   name: "",
@@ -112,10 +112,10 @@ const ManageHotels = () => {
 
   const totalHotels = hotels.length;
   const totalActiveHotels = hotels.filter(
-    (hotel) => hotel.status === "Active",
+    (hotel) => hotel.status === "Active"
   ).length;
   const totalInactiveHotels = hotels.filter(
-    (hotel) => hotel.status === "Inactive",
+    (hotel) => hotel.status === "Inactive"
   ).length;
 
   const handleAddHotel = async (e) => {

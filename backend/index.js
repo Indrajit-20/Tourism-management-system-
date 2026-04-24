@@ -47,7 +47,8 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173", // Local Vite dev
   "http://localhost:3000", // Standard React dev
-  process.env.FRONTEND_URL, // Production Frontend
+  "https://tourism-management-system-three.vercel.app", // Vercel Frontend (UPDATE THIS WITH YOUR EXACT URL)
+  process.env.FRONTEND_URL, // Production Frontend from .env
 ].filter(Boolean);
 
 app.use(
@@ -58,7 +59,8 @@ app.use(
 
       if (
         allowedOrigins.indexOf(origin) !== -1 ||
-        origin.startsWith("http://localhost:")
+        origin.startsWith("http://localhost:") ||
+        origin.includes("vercel.app")
       ) {
         callback(null, true);
       } else {

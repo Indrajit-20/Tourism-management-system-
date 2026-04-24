@@ -36,6 +36,7 @@ build/
 # If you have an .env in frontend for API URLs
 .env
 .env.local
+.env.production
 
 # 4. Debug Logs
 # Files created when the app crashes

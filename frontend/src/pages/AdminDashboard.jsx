@@ -37,7 +37,10 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       {/* Mobile Header - Always visible on mobile */}
-      <div className="mobile-header" style={{ display: window.innerWidth <= 768 ? 'flex' : 'none' }}>
+      <div
+        className="mobile-header"
+        style={{ display: window.innerWidth <= 768 ? "flex" : "none" }}
+      >
         <button
           className="mobile-menu-toggle"
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -77,56 +80,88 @@ const AdminDashboard = () => {
 
             <li className="nav-section-title">Management</li>
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="custmer" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="custmer"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Customers</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-package" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-package"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Package Master</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-tour-schedules" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-tour-schedules"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Tour Schedules</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-hotels" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-hotels"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Hotels</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-bus" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-bus"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Buses</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-routes" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-routes"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Routes</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-schedules" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-schedules"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Schedules</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-staff" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-staff"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Staff</span>
               </Link>
@@ -134,14 +169,22 @@ const AdminDashboard = () => {
 
             <li className="nav-section-title">Bookings & Requests</li>
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="bookings" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="bookings"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Bus Bookings</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="package-bookings" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="package-bookings"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Tour Bookings</span>
               </Link>
@@ -149,28 +192,44 @@ const AdminDashboard = () => {
 
             <li className="nav-section-title">Operations</li>
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="feedback" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="feedback"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Reviews & Feedback</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="cancellations" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="cancellations"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Cancellations</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="refunds" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="refunds"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Refunds</span>
               </Link>
             </li>
 
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link" to="manage-trips" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link"
+                to="manage-trips"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Manage Trips</span>
               </Link>
@@ -178,7 +237,11 @@ const AdminDashboard = () => {
 
             <li className="nav-section-title">Reports & Analytics</li>
             <li className="sidebar-nav-item">
-              <Link className="sidebar-nav-link report-link" to="reports" onClick={handleNavClick}>
+              <Link
+                className="sidebar-nav-link report-link"
+                to="reports"
+                onClick={handleNavClick}
+              >
                 <span className="nav-icon"></span>
                 <span className="nav-text">Sales & Revenue</span>
               </Link>

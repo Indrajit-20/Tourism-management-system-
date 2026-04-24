@@ -241,13 +241,14 @@ const ManageRoutes = () => {
       </div>
 
       <div className="table-responsive manage-routes-table-wrap">
-        <table className="table table-bordered table-striped table-sm align-middle manage-routes-table">
-          <thead className="table-dark manage-routes-table-head">
-            <tr>
-              <th>Sr No</th>
-              <th>Route</th>
-              <th>Bus Number</th>
-              <th>Bus Type</th>
+        <div className="table-responsive-wrapper">
+          <table className="table table-bordered table-striped table-sm align-middle manage-routes-table">
+            <thead className="table-dark manage-routes-table-head">
+              <tr>
+                <th>Sr No</th>
+                <th>Route</th>
+                <th>Bus Number</th>
+                <th>Bus Type</th>
               <th>Bus Name</th>
               <th>From - To (City)</th>
               <th className="text-center">Actions</th>
@@ -283,7 +284,8 @@ const ManageRoutes = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

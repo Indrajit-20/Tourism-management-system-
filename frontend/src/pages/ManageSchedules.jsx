@@ -651,13 +651,14 @@ const ManageSchedules = () => {
         </div>
       ) : (
         <div className="table-responsive manage-schedules-table-wrap">
-          <table className="table table-bordered table-striped table-sm align-middle manage-schedules-table">
-            <thead className="table-dark">
-              <tr>
-                <th>SNo</th>
-                <th>Route</th>
-                <th>Title</th>
-                <th>Frequency</th>
+          <div className="table-responsive-wrapper">
+            <table className="table table-bordered table-striped table-sm align-middle manage-schedules-table">
+              <thead className="table-dark">
+                <tr>
+                  <th>SNo</th>
+                  <th>Route</th>
+                  <th>Title</th>
+                  <th>Frequency</th>
                 <th>Drivers</th>
                 <th>Time</th>
                 <th>Price</th>
@@ -743,7 +744,8 @@ const ManageSchedules = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         </div>
       )}
     </div>

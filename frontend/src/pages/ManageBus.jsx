@@ -424,15 +424,16 @@ const ManageBus = () => {
       </div>
 
       <div className="manage-bus-table-wrap">
-        <table className="table table-bordered table-striped manage-bus-table">
-          <thead className="table-dark">
-            <tr>
-              <th>Sr No</th>
-              <th>Number</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Type</th>
-              <th>Layout</th>
+        <div className="table-responsive-wrapper">
+          <table className="table table-bordered table-striped manage-bus-table">
+            <thead className="table-dark">
+              <tr>
+                <th>Sr No</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Layout</th>
               <th>Seats</th>
               <th>Status</th>
               <th>Action</th>
@@ -466,7 +467,8 @@ const ManageBus = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

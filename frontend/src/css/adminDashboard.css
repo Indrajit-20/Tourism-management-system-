@@ -75,14 +75,20 @@
   color: var(--color-white);
   font-size: 1.25rem;
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem;
   transition: all 0.2s ease;
   display: none;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-toggle-sidebar:hover {
   transform: scale(1.1);
   color: var(--color-accent-blue-light, #5eb3ff);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Sidebar Nav Wrapper */
@@ -825,5 +831,66 @@
 
   .modal-content {
     border-radius: 4px;
+  }
+}
+
+/* ============ MOBILE HEADER WITH ALWAYS VISIBLE MENU ============ */
+@media (max-width: 768px) {
+  /* Add sticky mobile header */
+  .admin-main-content::before {
+    content: '';
+    display: block;
+    height: 60px;
+  }
+
+  .mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(135deg, var(--color-secondary-blue, #003366) 0%, var(--color-secondary-blue-dark, #001f40) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1030;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  .mobile-header-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+    margin-left: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-main-content {
+    margin-top: 60px;
   }
 }

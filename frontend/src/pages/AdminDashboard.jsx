@@ -36,6 +36,19 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
+      {/* Mobile Header - Always visible on mobile */}
+      <div className="mobile-header" style={{ display: window.innerWidth <= 768 ? 'flex' : 'none' }}>
+        <button
+          className="mobile-menu-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          title="Toggle Menu"
+          aria-label="Toggle navigation menu"
+        >
+          ☰
+        </button>
+        <h5 className="mobile-header-title">Admin Panel</h5>
+      </div>
+
       {/* Sidebar */}
       <nav className={`admin-sidebar ${sidebarOpen ? "open" : "collapsed"}`}>
         <div className="sidebar-header">

@@ -4,7 +4,7 @@ import "../css/adminDashboard.css";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
 
   // Handle body class for mobile backdrop
   useEffect(() => {
@@ -56,6 +56,14 @@ const AdminDashboard = () => {
           ☰
         </button>
         <h5 className="mobile-header-title">Admin Panel</h5>
+        <button
+          className="mobile-logout-btn"
+          onClick={handleLogout}
+          title="Logout"
+          aria-label="Logout"
+        >
+          <span className="logout-icon">🚪</span>
+        </button>
       </div>
 
       {/* Sidebar */}
